@@ -1,7 +1,7 @@
+import { IDay } from 'goal-models'
 import { omit } from 'radash'
 import { z } from 'zod'
 
-import { IDay } from '@models/day'
 import { createDayValues } from '@utils/worksheetInitials'
 
 export type TDayForm = Omit<IDay, 'periods'>

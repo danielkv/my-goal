@@ -1,7 +1,7 @@
+import { IDayModel, IWorksheet, IWorksheetModel } from 'goal-models'
 import { omit } from 'radash'
 
 import { firebaseProvider } from '@common/providers/firebase'
-import { IDayModel, IWorksheet, IWorksheetModel } from '@models/day'
 import { getWorksheetDaysUseCase } from '@useCases/days/getWorksheetDays'
 import { dayConverter, worksheetConverter } from '@utils/converters'
 import { newId } from '@utils/newId'

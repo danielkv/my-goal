@@ -1,10 +1,10 @@
+import { IWorksheetModel } from 'goal-models'
 import html2pdf from 'html2pdf.js'
 
 import { Component, createResource } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
 import WorksheetPreview from '@components/WorksheetPreview'
-import { IWorksheetModel } from '@models/day'
 import { useParams } from '@solidjs/router'
 import { getWorksheetByIdUseCase } from '@useCases/worksheet/getWorksheetById'
 

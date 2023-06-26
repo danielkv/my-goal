@@ -13,6 +13,7 @@
         "isolatedModules": true,
         "noUnusedLocals": true,
         "baseUrl": ".",
+        "skipLibCheck": true,
         "paths": {
             "@components/*": ["src/common/components/*"],
             "@interfaces/*": ["src/common/interfaces/*"],

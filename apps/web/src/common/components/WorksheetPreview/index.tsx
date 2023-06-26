@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
+import { IWorksheet } from 'goal-models'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
 
 import { Path } from '@interfaces/app'
 import { WorksheetPeace } from '@interfaces/preview'
-import { IWorksheet } from '@models/day'
 
 import DayPreview from './day'
 

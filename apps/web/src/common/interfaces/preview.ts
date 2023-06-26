@@ -1,4 +1,4 @@
-import { TPeaces } from '@models/day'
+import { TPeaces } from 'goal-models'
 
 import { Path } from './app'
 

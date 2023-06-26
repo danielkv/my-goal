@@ -1,8 +1,9 @@
+import { IRestBlock } from 'goal-models'
+
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import TimeInput from '@components/TimeInput'
-import { IRestBlock } from '@models/block'
 import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TRestBlockForm, restBlockFormSchema } from './config'

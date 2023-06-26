@@ -1,7 +1,8 @@
+import { IWorksheet } from 'goal-models'
+
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { IWorksheet } from '@models/day'
 import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TWorksheetForm, worksheetFormSchema } from './config'

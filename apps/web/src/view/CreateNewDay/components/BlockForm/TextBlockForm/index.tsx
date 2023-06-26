@@ -1,7 +1,8 @@
+import { ITextBlock } from 'goal-models'
+
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { ITextBlock } from '@models/block'
 import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TRestBlockForm, textBlockFormSchema } from './config'

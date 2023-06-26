@@ -1,9 +1,10 @@
+import { IRestBlock } from 'goal-models'
+import { restBlockDisplay } from 'goal-utils'
+
 import { Component } from 'solid-js'
 
 import { WorksheetPeace } from '@interfaces/preview'
-import { IRestBlock } from '@models/block'
 import { Stack } from '@suid/material'
-import { restBlockDisplay } from '@utils/display/restBlock'
 
 export interface EventBlockPreviewProps extends WorksheetPeace<IRestBlock> {}
 

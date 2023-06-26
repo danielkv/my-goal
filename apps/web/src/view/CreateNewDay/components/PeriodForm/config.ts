@@ -1,8 +1,8 @@
+import { IPeriod } from 'goal-models'
 import { omit } from 'radash'
 import { z } from 'zod'
 
 import { ZodShape } from '@interfaces/app'
-import { IPeriod } from '@models/day'
 import { createPeriodValues } from '@utils/worksheetInitials'
 
 export type TPeriodForm = Omit<IPeriod, 'sections'>

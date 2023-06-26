@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
+import { IWorksheetModel } from 'goal-models'
 
 import { firebaseProvider } from '@common/providers/firebase'
-import { IWorksheetModel } from '@models/day'
 import { getWorksheetDaysUseCase } from '@useCases/days/getWorksheetDays'
 import { worksheetConverter } from '@utils/converters'
 

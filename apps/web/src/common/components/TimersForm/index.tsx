@@ -1,7 +1,8 @@
+import { TTimerTypes } from 'goal-models'
+
 import { Component, Show } from 'solid-js'
 
 import TimeInput from '@components/TimeInput'
-import { TTimerTypes } from '@models/time'
 import { Field, FormState } from '@modular-forms/solid'
 
 export interface TimersFormProps {

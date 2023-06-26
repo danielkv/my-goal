@@ -1,3 +1,4 @@
+import { ISection } from 'goal-models'
 import { FiEdit } from 'solid-icons/fi'
 
 import { Component, For, Show, createMemo, createSignal, splitProps } from 'solid-js'
@@ -5,7 +6,6 @@ import { Component, For, Show, createMemo, createSignal, splitProps } from 'soli
 import PeaceControl from '@components/PeaceControl'
 import SectionEditor from '@components/SectionEditor'
 import { WorksheetPeace } from '@interfaces/preview'
-import { ISection } from '@models/day'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
 import { createSectionValues } from '@utils/worksheetInitials'

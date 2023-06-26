@@ -1,8 +1,7 @@
+import { stringTimeToSeconds } from 'goal-utils'
 import { FiPlay } from 'solid-icons/fi'
 
 import { Component, createSignal } from 'solid-js'
-
-import { stringTimeToSeconds } from '@utils/time'
 
 export interface RegressiveFormProps {
     handleNext(time: number): void

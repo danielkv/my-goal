@@ -1,7 +1,7 @@
+import { secondsToStringTime, stringTimeToSeconds } from 'goal-utils'
+
 import { Component, JSX, createEffect, createMemo, createSignal, splitProps } from 'solid-js'
 import { DOMElement } from 'solid-js/jsx-runtime'
-
-import { secondsToStringTime, stringTimeToSeconds } from '@utils/time'
 
 type TSelection = null | 'minutes' | 'seconds'
 

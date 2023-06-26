@@ -1,7 +1,7 @@
+import { IEventBlock } from 'goal-models'
 import { omit } from 'radash'
 import { z } from 'zod'
 
-import { IEventBlock } from '@models/block'
 import { createEventBlockValues } from '@utils/worksheetInitials'
 
 import { eventRoundFormSchema } from '../../RoundForm/config'

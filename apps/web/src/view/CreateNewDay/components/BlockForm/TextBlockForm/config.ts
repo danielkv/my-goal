@@ -1,7 +1,7 @@
+import { ITextBlock } from 'goal-models'
 import { z } from 'zod'
 
 import { ZodShape } from '@interfaces/app'
-import { ITextBlock } from '@models/block'
 import { createTextBlockValues } from '@utils/worksheetInitials'
 
 export type TRestBlockForm = Omit<ITextBlock, 'type'>

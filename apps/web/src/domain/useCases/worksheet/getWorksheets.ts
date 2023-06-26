@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
+import { IWorksheetModel } from 'goal-models'
 
 import { firebaseProvider } from '@common/providers/firebase'
-import { IWorksheetModel } from '@models/day'
 import { worksheetConverter } from '@utils/converters'
 
 export async function getWorksheetsUseCase(): Promise<Omit<IWorksheetModel, 'days'>[]> {

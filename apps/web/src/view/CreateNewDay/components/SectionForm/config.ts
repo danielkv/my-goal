@@ -1,7 +1,7 @@
+import { ISection } from 'goal-models'
 import { z } from 'zod'
 
 import { ZodShape } from '@interfaces/app'
-import { ISection } from '@models/day'
 import { createSectionValues } from '@utils/worksheetInitials'
 
 export type TSectionForm = Omit<ISection, 'blocks'>

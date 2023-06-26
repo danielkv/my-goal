@@ -1,6 +1,5 @@
+import { IWorksheet } from 'goal-models'
 import { ZodType } from 'zod'
-
-import { IWorksheet } from '@models/day'
 
 export type ZodShape<T extends Record<string, any>> = Required<{
     [k in keyof T]: ZodType<T[k]>

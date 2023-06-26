@@ -1,6 +1,6 @@
+import { IBlock, TBlockType } from 'goal-models'
 import { z } from 'zod'
 
-import { IBlock, TBlockType } from '@models/block'
 import { createBlockValues } from '@utils/worksheetInitials'
 
 import { eventBlockFormSchema } from './EventBlockForm/config'

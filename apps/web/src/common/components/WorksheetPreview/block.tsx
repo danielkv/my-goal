@@ -1,8 +1,9 @@
+import { IBlock, IEventBlock, IRestBlock, ITextBlock } from 'goal-models'
+
 import { Component, Match, Switch, createMemo, splitProps } from 'solid-js'
 
 import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
-import { IBlock, IEventBlock, IRestBlock, ITextBlock } from '@models/block'
 import { Stack } from '@suid/material'
 import { createBlockValues } from '@utils/worksheetInitials'
 

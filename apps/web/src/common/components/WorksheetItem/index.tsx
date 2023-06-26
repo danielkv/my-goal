@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
+import { IWorksheetModel } from 'goal-models'
 import { FiCheck, FiCopy, FiRewind, FiTrash } from 'solid-icons/fi'
 
 import { Component, Match, Show, Switch } from 'solid-js'
 
 import LogoSvg from '@assets/logo.svg?component-solid'
-import { IWorksheetModel } from '@models/day'
 
 export interface WorksheetItemProps {
     worksheet?: Omit<IWorksheetModel, 'days'>

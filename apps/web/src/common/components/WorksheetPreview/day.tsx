@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
+import { IDay } from 'goal-models'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
 
 import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
-import { IDay } from '@models/day'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
 import { createDayValues } from '@utils/worksheetInitials'

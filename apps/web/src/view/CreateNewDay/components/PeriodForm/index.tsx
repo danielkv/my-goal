@@ -1,7 +1,8 @@
+import { IPeriod } from 'goal-models'
+
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { IPeriod } from '@models/day'
 import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TPeriodForm, periodFormSchema } from './config'

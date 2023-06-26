@@ -1,9 +1,10 @@
+import { ITextBlock } from 'goal-models'
+import { textBlockDisplay } from 'goal-utils'
+
 import { Component } from 'solid-js'
 
 import { WorksheetPeace } from '@interfaces/preview'
-import { ITextBlock } from '@models/block'
 import { Stack } from '@suid/material'
-import { textBlockDisplay } from '@utils/display/textBlock'
 
 export interface EventBlockPreviewProps extends WorksheetPeace<ITextBlock> {}
 

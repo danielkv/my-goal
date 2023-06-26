@@ -1,7 +1,7 @@
+import { IEventMovement, IMovementWeight, IRound, TWeightTypes } from 'goal-models'
 import { z } from 'zod'
 
 import { ZodShape } from '@interfaces/app'
-import { IEventMovement, IMovementWeight, IRound, TWeightTypes } from '@models/block'
 import { createEventRoundValues } from '@utils/worksheetInitials'
 
 export type TRoundForm = IRound & {

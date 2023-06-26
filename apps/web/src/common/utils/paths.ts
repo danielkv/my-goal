@@ -1,7 +1,7 @@
+import { IWorksheet } from 'goal-models'
 import { get, isNumber, set } from 'radash'
 
 import { NestedKeyOf, Path } from '@interfaces/app'
-import { IWorksheet } from '@models/day'
 
 export function getPeaceFromPath<T>(object: IWorksheet, path: Path, until?: string): T {
     let normalizedPath = path.replace(/worksheet.?/, '')

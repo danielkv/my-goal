@@ -1,5 +1,7 @@
 import cloneDeep from 'clone-deep'
 import deepEqual from 'deep-equal'
+import { IWorksheet, IWorksheetModel } from 'goal-models'
+import { isWorksheetModel } from 'goal-utils'
 import { debounce } from 'radash'
 import { FiEye } from 'solid-icons/fi'
 import { VsHistory } from 'solid-icons/vs'
@@ -9,14 +11,12 @@ import { SetStoreFunction, StoreSetter, createStore, produce } from 'solid-js/st
 
 import WorksheetPreview from '@components/WorksheetPreview'
 import { Path } from '@interfaces/app'
-import { IWorksheet, IWorksheetModel } from '@models/day'
 import { useParams } from '@solidjs/router'
 import { Box, Chip, Stack, Toolbar } from '@suid/material'
 import { getTempWorksheetByIdUseCase } from '@useCases/temp-worksheet/getTempWorksheetById'
 import { saveTempWorksheetUseCase } from '@useCases/temp-worksheet/saveTempWorksheet'
 import { getWorksheetByIdUseCase } from '@useCases/worksheet/getWorksheetById'
 import { getErrorMessage } from '@utils/errors'
-import { isWorksheetModel } from '@utils/models'
 import {
     findNextIndexPath,
     findPreviousIndexPath,
@@ -33,7 +33,7 @@ import Form from './components/Form'
 const CreateNewDay: Component = () => {
     redirectToLogin()
 
-    let displayTempSavedTimout: NodeJS.Timer
+    let displayTempSavedTimout: number
     const [hasHistorySaved, setHasHistorySaved] = createSignal<IWorksheetModel | null>(null)
     const [lastTempSaved, setLastTempSaved] = createSignal<IWorksheetModel>()
     const [displayTempSaved, setDisplayTempSaved] = createSignal(false)

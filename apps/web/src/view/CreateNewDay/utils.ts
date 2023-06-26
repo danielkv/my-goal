@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
+import { IWorksheet } from 'goal-models'
+import { isBlock, isDay, isEventBlock, isPeriod, isRestBlock, isRound, isSection, isTextBlock } from 'goal-utils'
 
 import { Path } from '@interfaces/app'
-import { IWorksheet } from '@models/day'
-import { isBlock, isDay, isEventBlock, isPeriod, isRestBlock, isRound, isSection, isTextBlock } from '@utils/models'
 import { getCurrentPeace, getIndexes, getLastIndex, getPeaceFromPath } from '@utils/paths'
 import { breadCrumbLabelMaps, eventTypes } from '@utils/worksheetInitials'
 

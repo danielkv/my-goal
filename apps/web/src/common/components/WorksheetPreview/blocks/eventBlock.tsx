@@ -1,3 +1,5 @@
+import { IEventBlock } from 'goal-models'
+import { eventBlockDisplay, movementDisplay, numberHelper, roundDisplay } from 'goal-utils'
 import { FiYoutube } from 'solid-icons/fi'
 import { RiSystemTimerLine } from 'solid-icons/ri'
 
@@ -5,12 +7,7 @@ import { Component, For, Show, createMemo } from 'solid-js'
 
 import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
-import { IEventBlock } from '@models/block'
 import { Stack } from '@suid/material'
-import { eventBlockDisplay } from '@utils/display/eventBlock'
-import { movementDisplay } from '@utils/display/movement'
-import { roundDisplay } from '@utils/display/round'
-import { numberHelper } from '@utils/numbers'
 import { addToPath } from '@utils/paths'
 import { blockTimerType, checkIsTimedWorkout, roundTimerType } from '@utils/timer-display'
 import { createEventRoundValues } from '@utils/worksheetInitials'

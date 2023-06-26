@@ -1,9 +1,10 @@
+import { ISection, TPeaces } from 'goal-models'
+import { sectionTransformer } from 'goal-utils'
+
 import { Component, JSX, createEffect, createSignal, onMount } from 'solid-js'
 
 import { Path } from '@interfaces/app'
-import { ISection, TPeaces } from '@models/day'
 import { getErrorMessage } from '@utils/errors'
-import { sectionTransformer } from '@utils/transformer/section'
 
 export interface SectionEditorProps {
     onUpdate?(path: Path, newValue: TPeaces): void

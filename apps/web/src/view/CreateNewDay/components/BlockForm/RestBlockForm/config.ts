@@ -1,7 +1,7 @@
+import { IRestBlock } from 'goal-models'
 import { z } from 'zod'
 
 import { ZodShape } from '@interfaces/app'
-import { IRestBlock } from '@models/block'
 import { createRestBlockValues } from '@utils/worksheetInitials'
 
 export type TRestBlockForm = Omit<IRestBlock, 'type'>

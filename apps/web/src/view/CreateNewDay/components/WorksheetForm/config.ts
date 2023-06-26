@@ -1,7 +1,7 @@
+import { IWorksheet } from 'goal-models'
 import { omit } from 'radash'
 import { z } from 'zod'
 
-import { IWorksheet } from '@models/day'
 import { createWorksheetValues } from '@utils/worksheetInitials'
 
 export type TWorksheetForm = Omit<IWorksheet, 'days' | 'id'>

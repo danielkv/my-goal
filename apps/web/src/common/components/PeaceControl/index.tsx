@@ -1,11 +1,11 @@
 import cloneDeep from 'clone-deep'
+import { TPeaces } from 'goal-models'
 import { FiArrowDown, FiArrowUp, FiCopy, FiPlus, FiTrash2 } from 'solid-icons/fi'
 
 import { Component, JSX } from 'solid-js'
 
 import { Path } from '@interfaces/app'
 import { Controllable } from '@interfaces/preview'
-import { TPeaces } from '@models/day'
 import { pathToNextIndex } from '@utils/paths'
 
 export interface PeaceControlProps extends Omit<Controllable, 'onClickPeace'> {

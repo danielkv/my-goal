@@ -1,6 +1,5 @@
+import { IDay, IWorksheet, IWorksheetModel } from 'goal-models'
 import { omit } from 'radash'
-
-import { IDay, IWorksheet, IWorksheetModel } from '@models/day'
 
 import { getWorksheetByIdUseCase } from './getWorksheetById'
 import { saveWorksheetUseCase } from './saveWorksheet'

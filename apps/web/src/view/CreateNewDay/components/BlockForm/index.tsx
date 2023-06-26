@@ -1,7 +1,8 @@
+import { IBlock, IEventBlock, IRestBlock, ITextBlock, TBlockType } from 'goal-models'
+
 import { Component, For, Match, Switch, createEffect, createSignal } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { IBlock, IEventBlock, IRestBlock, ITextBlock, TBlockType } from '@models/block'
 
 import EventBlockForm from './EventBlockForm'
 import RestBlockForm from './RestBlockForm'

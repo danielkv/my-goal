@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
+import { IDay, IPeriod } from 'goal-models'
 import { capitalize } from 'radash'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
 
 import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
-import { IDay, IPeriod } from '@models/day'
 import { Stack } from '@suid/material'
 import { addToPath, getLastIndex } from '@utils/paths'
 import { createPeriodValues } from '@utils/worksheetInitials'

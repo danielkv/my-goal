@@ -1,7 +1,7 @@
 import { getDocs } from 'firebase/firestore'
+import { IDayModel } from 'goal-models'
 
 import { firebaseProvider } from '@common/providers/firebase'
-import { IDayModel } from '@models/day'
 import { dayConverter } from '@utils/converters'
 
 export async function getTempWorksheetDaysUseCase(tempWorksheetId: string): Promise<IDayModel[]> {

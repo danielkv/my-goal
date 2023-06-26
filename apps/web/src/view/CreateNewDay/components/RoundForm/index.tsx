@@ -1,3 +1,4 @@
+import { IRound, TTimerTypes } from 'goal-models'
 import { omit } from 'radash'
 
 import { Component, For, JSX, Show, createEffect, createMemo, on } from 'solid-js'
@@ -5,8 +6,6 @@ import { Component, For, JSX, Show, createEffect, createMemo, on } from 'solid-j
 import TextInput from '@components/TextInput'
 import TimeInput from '@components/TimeInput'
 import TimersForm from '@components/TimersForm'
-import { IRound } from '@models/block'
-import { TTimerTypes } from '@models/time'
 import {
     Field,
     FieldArray,
