@@ -1,0 +1,18 @@
+{
+	"name": "goal-utils",
+	"version": "1.0.0",
+	"main": "index.ts",
+	"types": "index.ts",
+	"license": "MIT",
+	"dependencies": {
+		"dayjs": "^1.11.8",
+		"goal-models": "*",
+		"radash": "^10.9.0"
+	},
+	"devDependencies": {
+		"vitest": "^0.32.2"
+	},
+	"scripts": {
+		"test": "vitest --reporter verbose"
+	}
+}
