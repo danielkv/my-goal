@@ -1,0 +1,42 @@
+{
+	"cli": {
+		"version": ">= 3.10.2"
+	},
+	"build": {
+		"production": {
+			"node": "18.12.1",
+			"channel": "production",
+			"env": {
+				"APP_VARIANT": "production"
+			}
+		},
+		"preview": {
+			"extends": "production",
+			"distribution": "internal",
+			"channel": "staging",
+			"env": {
+				"APP_VARIANT": "preview"
+			}
+		},
+		"development": {
+			"extends": "production",
+			"distribution": "internal",
+			"developmentClient": true,
+			"channel": "development",
+			"env": {
+				"APP_VARIANT": "development"
+			}
+		}
+	},
+	"submit": {
+		"production": {
+			"android": {
+				"track": "internal",
+				"releaseStatus": "completed"
+			},
+			"ios": {
+				"appleId": "daniel_kv@hotmail.com"
+			}
+		}
+	}
+}

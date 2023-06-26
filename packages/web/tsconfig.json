@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "types": ["vite/client", "vite-plugin-solid-svg/types"],
+        "noEmit": true,
+        "isolatedModules": true,
+        "noUnusedLocals": true,
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["src/common/components/*"],
+            "@interfaces/*": ["src/common/interfaces/*"],
+            "@models/*": ["src/common/models/*"],
+            "@utils/*": ["src/common/utils/*"],
+            "@common/*": ["src/common/*"],
+            "@useCases/*": ["src/domain/useCases/*"],
+            "@contexts/*": ["src/domain/contexts/*"],
+            "@assets/*": ["src/assets/*"],
+            "@view/*": ["src/view/*"]
+        }
+    },
+    "include": ["./src"]
+}

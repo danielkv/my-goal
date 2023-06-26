@@ -1,0 +1,27 @@
+diff --git a/dist/html2canvas.js b/dist/html2canvas.js
+index 84cb30d701da7baf13f14107fb28b3ea42db49f6..aac791316b490ca44d241a7b79a57971f1d488ca 100644
+--- a/dist/html2canvas.js
++++ b/dist/html2canvas.js
+@@ -6572,6 +6572,8 @@
+             container.style.margin = '0';
+             container.style.padding = '0';
+             container.style.whiteSpace = 'nowrap';
++			container.style.position = 'absolute';
++			container.style.top = '-1000px';
+             body.appendChild(container);
+             img.src = SMALL_IMAGE;
+             img.width = 1;
+@@ -6579,10 +6581,13 @@
+             img.style.margin = '0';
+             img.style.padding = '0';
+             img.style.verticalAlign = 'baseline';
++			img.style.display = 'inline-block';
+             span.style.fontFamily = fontFamily;
+             span.style.fontSize = fontSize;
+             span.style.margin = '0';
+             span.style.padding = '0';
++			span.style.lineHeight = 'normal';
++            span.style.height = 'auto';
+             span.appendChild(this._document.createTextNode(SAMPLE_TEXT));
+             container.appendChild(span);
+             container.appendChild(img);
