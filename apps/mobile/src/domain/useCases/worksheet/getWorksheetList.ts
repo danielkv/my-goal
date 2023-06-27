@@ -1,5 +1,6 @@
+import { IWorksheetModel } from 'goal-models'
+
 import { firebaseProvider } from '@common/providers/firebase'
-import { IWorksheetModel } from '@models/day'
 
 export function getWorksheetListUseCase(): Promise<IWorksheetModel[]> {
     const fs = firebaseProvider.getFirestore()

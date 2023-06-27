@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import dayjs from 'dayjs'
+import { IEventBlock, IRound } from 'goal-models'
+import { Stack, YStack } from 'tamagui'
+
 import { useOrientation } from '@common/hooks/useOrientation'
 import { TActivityStatus, TTimerStatus } from '@common/interfaces/timers'
 import Button from '@components/Button'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimerSounds } from '@contexts/timers/useTimerSounds'
-import { IEventBlock, IRound } from '@models/block'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { TReactNavigationStackParamList } from '@router/types'
 import { ChevronLeft } from '@tamagui/lucide-icons'
 import { EmomTimer, RegressiveTimer, StopwatchTimer, TabataTimer } from '@utils/timer'
-
-import dayjs from 'dayjs'
-import { Stack, YStack } from 'tamagui'
 
 import RoundDisplay from './RoundDisplay'
 

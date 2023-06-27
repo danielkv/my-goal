@@ -1,4 +1,5 @@
 const { getDefaultConfig } = require('expo/metro-config')
+const exclusionList = require('metro-config/src/defaults/exclusionList')
 const path = require('path')
 
 module.exports = (() => {
@@ -27,6 +28,8 @@ module.exports = (() => {
         path.resolve(projectRoot, 'node_modules'),
         path.resolve(workspaceRoot, 'node_modules'),
     ]
+
+    //config.resolver.blockList = exclusionList([/.*vitest.config.*/])
 
     config.resolver.disableHierarchicalLookup = true
 

@@ -1,7 +1,7 @@
-import InternalCard from '@components/InternalCard'
-import { ITextBlock } from '@models/block'
-
+import { ITextBlock } from 'goal-models'
 import { Text } from 'tamagui'
+
+import InternalCard from '@components/InternalCard'
 
 export interface TextBlockProps {
     block: ITextBlock

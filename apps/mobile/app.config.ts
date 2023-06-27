@@ -21,7 +21,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             resizeMode: 'cover',
             backgroundColor: '#202020',
         },
-        assetBundlePatterns: ['./src/**/*'],
+        assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
             buildNumber: '7',
             bundleIdentifier: `${ID_PREFIX}.mygoal.goal`,

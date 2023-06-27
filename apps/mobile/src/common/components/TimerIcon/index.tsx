@@ -1,11 +1,11 @@
 import { SvgProps } from 'react-native-svg'
 
+import { TTimerTypes } from 'goal-models'
 import { ColorTokens, getTokens } from 'tamagui'
 
 import EmomSvg from '@assets/svg/emom.svg'
 import StopwatchSvg from '@assets/svg/stopwatch.svg'
 import TabataSvg from '@assets/svg/tabata.svg'
-import { TTimerTypes } from '@models/time'
 
 type TAllowedTypes = Exclude<TTimerTypes, 'not_timed'>
 

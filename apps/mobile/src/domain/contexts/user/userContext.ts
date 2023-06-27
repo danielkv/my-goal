@@ -1,7 +1,7 @@
+import { create } from 'zustand'
+
 import { IUser } from '@models/user'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
-
-import { create } from 'zustand'
 
 export interface UserContextCredentials {
     sessionCookie: string

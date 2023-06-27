@@ -1,8 +1,8 @@
 import * as Linking from 'expo-linking'
+import { IEventMovement } from 'goal-models'
 import { movementDisplay } from 'goal-utils'
 import { Button, Stack, Text, XStack, useTheme } from 'tamagui'
 
-import { IEventMovement } from '@models/block'
 import { Youtube } from '@tamagui/lucide-icons'
 
 export interface EventBlockMovementProps {

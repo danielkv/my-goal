@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
+import { IDayModel } from 'goal-models'
 import { pluralize } from 'goal-utils'
 import { Circle, H3, Stack, Text, YStack } from 'tamagui'
 
 import Button from '@components/Button'
-import { IDayModel } from '@models/day'
 import { Calendar } from '@tamagui/lucide-icons'
 
 export interface WorksheetDayItemProps {

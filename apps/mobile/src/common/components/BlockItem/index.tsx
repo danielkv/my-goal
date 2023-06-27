@@ -1,6 +1,6 @@
 import RestBlock from '@components/RestBlock'
 import TextBlock from '@components/TextBlock'
-import { IBlock } from '@models/block'
+import { IBlock } from 'goal-models'
 
 import EventBlock from '../EventBlock'
 

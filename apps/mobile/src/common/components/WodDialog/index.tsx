@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
+import { IEventBlock, IRound } from 'goal-models'
+import { Dialog } from 'tamagui'
+
 import Button from '@components/Button'
 import EventBlock from '@components/EventBlock'
 import EventBlockRound from '@components/EventBlockRound'
-import { IEventBlock, IRound } from '@models/block'
 import { Eye } from '@tamagui/lucide-icons'
-
-import { Dialog } from 'tamagui'
 
 type WodDialogProps = { round: IRound; block?: never } | { block: IEventBlock; round?: never }
 

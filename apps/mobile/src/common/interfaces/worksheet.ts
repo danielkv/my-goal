@@ -1,4 +1,4 @@
-import { ISection } from '@models/day'
+import { ISection } from 'goal-models'
 
 export interface IFlatSection extends ISection {
     period: number

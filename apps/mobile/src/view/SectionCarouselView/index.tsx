@@ -8,15 +8,15 @@ import Animated, {
     useSharedValue,
 } from 'react-native-reanimated'
 
+import { IDayModel } from 'goal-models'
+import { ScrollView, Stack, Text, XStack, getTokens } from 'tamagui'
+
 import { IFlatSection } from '@common/interfaces/worksheet'
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
 import { useLoggedUser } from '@contexts/user/userContext'
-import { IDayModel } from '@models/day'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-
-import { ScrollView, Stack, Text, XStack, getTokens } from 'tamagui'
 
 export interface SectionCarouselView {
     day: IDayModel

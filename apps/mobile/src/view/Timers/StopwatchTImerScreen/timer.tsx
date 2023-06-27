@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 
+import dayjs from 'dayjs'
+import { IEventBlock, IRound } from 'goal-models'
+
 import StopwatchSvg from '@assets/svg/stopwatch.svg'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { IEventBlock, IRound } from '@models/block'
 import { StopwatchTimer } from '@utils/timer'
-
-import dayjs from 'dayjs'
 
 export interface StopwatchDisplayProps {
     finalTime: number

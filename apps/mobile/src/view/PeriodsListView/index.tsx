@@ -1,16 +1,16 @@
 import { useCallback } from 'react'
 
+import dayjs from 'dayjs'
+import { IDayModel } from 'goal-models'
+import { Stack, Text, YStack, getTokens } from 'tamagui'
+import { useTheme } from 'tamagui'
+
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
 import { useLoggedUser } from '@contexts/user/userContext'
-import { IDayModel } from '@models/day'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
-
-import dayjs from 'dayjs'
-import { Stack, Text, YStack, getTokens } from 'tamagui'
-import { useTheme } from 'tamagui'
 
 export interface PeriodsListView {
     day: IDayModel

@@ -1,4 +1,4 @@
-import { TTimerTypes } from '@models/time'
+import { TTimerTypes } from 'goal-models'
 
 export const timerTypes: Record<TTimerTypes, string> = {
     not_timed: 'Sem tempo',

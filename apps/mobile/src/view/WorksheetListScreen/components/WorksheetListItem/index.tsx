@@ -1,9 +1,9 @@
-import Button from '@components/Button'
-import { IWorksheetModel } from '@models/day'
-import { FileSpreadsheet } from '@tamagui/lucide-icons'
-
 import dayjs from 'dayjs'
+import { IWorksheetModel } from 'goal-models'
 import { Circle, H5, Stack, Text, XStack, YStack } from 'tamagui'
+
+import Button from '@components/Button'
+import { FileSpreadsheet } from '@tamagui/lucide-icons'
 
 export interface WorksheetListItemProps {
     item: IWorksheetModel

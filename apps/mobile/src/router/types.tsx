@@ -1,5 +1,4 @@
-import { IEventBlock, IRound } from '@models/block'
-import { IEMOMTimer, ITabataTimer, ITimecapTimer } from '@models/time'
+import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'goal-models'
 
 export type TReactNavigationStackParamList = {
     LoginScreen: undefined

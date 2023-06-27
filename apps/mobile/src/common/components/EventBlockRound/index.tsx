@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
 
+import { IRound } from 'goal-models'
 import { numberHelper, roundTimerType } from 'goal-utils'
 import { roundDisplay } from 'goal-utils'
 import { Stack, Text, XStack, YStack } from 'tamagui'
 
 import EventBlockMovement from '@components/EventBlockMovement'
 import OpenTimerButton from '@components/OpenTimerButton'
-import { IRound } from '@models/block'
 import { Timer } from '@tamagui/lucide-icons'
 
 export interface EventBlockRoundProps {

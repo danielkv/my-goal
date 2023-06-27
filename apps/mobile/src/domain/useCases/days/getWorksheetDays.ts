@@ -1,5 +1,6 @@
+import { IDayModel } from 'goal-models'
+
 import { firebaseProvider } from '@common/providers/firebase'
-import { IDayModel } from '@models/day'
 
 export async function getWorksheetDaysUseCase(worksheetId: string): Promise<IDayModel[]> {
     const collectionRef = firebaseProvider.getFirestore().collection<IDayModel>(`worksheets/${worksheetId}/days`)

@@ -1,8 +1,8 @@
 import { TouchableOpacity } from 'react-native'
 
+import { IEventBlock, IRound } from 'goal-models'
 import { blockTimerSettings, blockTimerType, checkIsTimedWorkout, roundTimerSettings, roundTimerType } from 'goal-utils'
 
-import { IEventBlock, IRound } from '@models/block'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 

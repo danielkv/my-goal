@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
+import dayjs from 'dayjs'
+import { IEventBlock, IRound } from 'goal-models'
+
 import TabataSvg from '@assets/svg/tabata.svg'
 import { TActivityStatus, TTimerStatus } from '@common/interfaces/timers'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { IEventBlock, IRound } from '@models/block'
 import { TabataTimer } from '@utils/timer'
-
-import dayjs from 'dayjs'
 
 export interface TabataDisplayProps {
     work: number

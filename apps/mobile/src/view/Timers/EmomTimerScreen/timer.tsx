@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
+import dayjs from 'dayjs'
+import { IEventBlock, IRound } from 'goal-models'
+
 import EmomSvg from '@assets/svg/emom.svg'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { IEventBlock, IRound } from '@models/block'
 import { EmomTimer } from '@utils/timer'
-
-import dayjs from 'dayjs'
 
 export interface EmomDisplayProps {
     each: number

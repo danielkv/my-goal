@@ -1,10 +1,9 @@
 import { memo } from 'react'
 
+import { IRound } from 'goal-models'
 import { roundDisplay } from 'goal-utils'
 import { Stack, Text } from 'tamagui'
 import { YStack } from 'tamagui'
-
-import { IRound } from '@models/block'
 
 export interface IRoundDisplayProps {
     rounds: IRound[]

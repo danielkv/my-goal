@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { IEventBlock } from 'goal-models'
 import { blockTimerType, checkIsTimedWorkout } from 'goal-utils'
 import { eventBlockDisplay } from 'goal-utils'
 import { Text } from 'tamagui'
@@ -9,7 +10,6 @@ import EventBlockRound from '@components/EventBlockRound'
 import InternalCard from '@components/InternalCard'
 import OpenTimerButton from '@components/OpenTimerButton'
 import TimerIcon from '@components/TimerIcon'
-import { IEventBlock } from '@models/block'
 
 export interface PeriodEventBlock {
     block: IEventBlock
