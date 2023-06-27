@@ -18,11 +18,7 @@ import RoundDisplay from './RoundDisplay'
 
 function flattenRounds(block: IEventBlock): IRound[] {
     const flattened = Array.from({ length: block.numberOfRounds || 1 }).flatMap(() =>
-        block.rounds.flatMap((round) =>
-            Array.from({
-                length: !['emom', 'tabata'].includes(round.type) && round.numberOfRounds ? round.numberOfRounds : 1,
-            }).map(() => round)
-        )
+        block.rounds.map((round) => round)
     )
 
     if (flattened.at(-1)?.type === 'rest') flattened.splice(-1, 1)

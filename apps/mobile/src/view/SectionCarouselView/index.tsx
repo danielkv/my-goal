@@ -127,17 +127,10 @@ const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
                                                 <Stack mb="$2">
                                                     <BlockItem block={block} />
                                                 </Stack>
-                                                <Stack
-                                                    px="$2"
-                                                    py="$1"
-                                                    btlr="$2"
-                                                    btrr="$2"
-                                                    bg="$gray5"
-                                                    position="absolute"
-                                                    bottom={0}
-                                                    right="$3"
-                                                >
-                                                    <Text fontSize="$3">{`${sectionNumber}.${index + 1}`}</Text>
+                                                <Stack position="absolute" top="100%" mt={-4} right="$2">
+                                                    <Text fontSize="$1" color="$gray5">{`${sectionNumber}.${
+                                                        index + 1
+                                                    }`}</Text>
                                                 </Stack>
                                             </Stack>
                                         ))}

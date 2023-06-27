@@ -31,7 +31,7 @@ export class RoundDisplay extends BaseDisplay {
     }
 
     displayHeader(round: IRound, sequence?: string | null): string {
-        if (round.type === 'rest') return ''
+        if (round.type === 'rest') return this.displayRest(round.time)
         if (round.type === 'complex') return super.displayNumberOfRounds(round.numberOfRounds)
 
         const _sequence = sequence || numberHelper.findSequenceReps(round.movements)

@@ -61,17 +61,10 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
                                                                 block={block}
                                                             />
                                                         </Stack>
-                                                        <Stack
-                                                            px="$2"
-                                                            py="$1"
-                                                            btlr="$2"
-                                                            btrr="$2"
-                                                            bg="$gray5"
-                                                            position="absolute"
-                                                            bottom={0}
-                                                            right="$3"
-                                                        >
-                                                            <Text fontSize="$3">{blockNumberId}</Text>
+                                                        <Stack position="absolute" top="100%" mt={-4} right="$2">
+                                                            <Text fontSize="$2" color="$gray5">
+                                                                {blockNumberId}
+                                                            </Text>
                                                         </Stack>
                                                     </Stack>
                                                 )
@@ -87,6 +80,7 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
             contentContainerStyle={{
                 paddingVertical: size['1.5'].val,
                 paddingHorizontal: size['1'].val,
+                paddingBottom: size['6'].val,
                 backgroundColor: theme.gray7.val,
             }}
             showsHorizontalScrollIndicator={false}

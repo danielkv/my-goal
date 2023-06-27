@@ -100,13 +100,13 @@ const DayViewScreen: React.FC = () => {
             {viewType === 'carousel' ? <SectionCarouselView day={data} /> : <PeriodsListView day={data} />}
 
             <Button
-                size="$6"
+                size="$5"
                 variant="icon"
                 bg="$gray6"
                 elevate
                 elevation="$4"
                 onPress={() => setViewType(viewType === 'list' ? 'carousel' : 'list')}
-                icon={viewType === 'carousel' ? <AlignJustify size="$2" /> : <PanelRightClose size="$2" />}
+                icon={viewType === 'carousel' ? <AlignJustify size="$1.5" /> : <PanelRightClose size="$1.5" />}
                 position="absolute"
                 bottom="$4"
                 right="$3"

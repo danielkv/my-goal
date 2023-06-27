@@ -17,17 +17,16 @@ export interface EventBlockRoundProps {
 const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButton = false }) => {
     const sequenceReps = useMemo(() => numberHelper.findSequenceReps(round.movements), [])
 
-    const roundTitle = roundDisplay.displayHeader(round, sequenceReps)
-
+    const roundHeader = roundDisplay.displayHeader(round, sequenceReps)
     const timerType = roundTimerType(round)
 
     return (
-        <OpenTimerButton round={round} disabled={!showTimerButton}>
+        <OpenTimerButton round={round} disabled={!showTimerButton} type={timerType}>
             <Stack>
-                {!!roundTitle && (
+                {!!roundHeader && (
                     <XStack gap="$1" ai="center" mb="$1.5">
                         <Text fontWeight="bold" fontSize="$4">
-                            {roundTitle}
+                            {roundHeader}
                         </Text>
                         {showTimerButton && timerType && <Timer size={14} color="white" />}
                     </XStack>
@@ -44,9 +43,11 @@ const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButto
                         ))}
                     </YStack>
                 ) : (
-                    <Text textBreakStrategy="balanced" fontSize="$4" color="$gray3">
-                        {roundDisplay.display(round)}
-                    </Text>
+                    round.type === 'complex' && (
+                        <Text textBreakStrategy="balanced" fontSize="$4" color="$gray3">
+                            {roundDisplay.display(round)}
+                        </Text>
+                    )
                 )}
             </Stack>
         </OpenTimerButton>

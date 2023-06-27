@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native'
 
 import { IEventBlock, IRound } from 'goal-models'
-import { blockTimerSettings, blockTimerType, checkIsTimedWorkout, roundTimerSettings, roundTimerType } from 'goal-utils'
+import { TOpenTimerAllowedTypes, blockTimerSettings, roundTimerSettings } from 'goal-utils'
 
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
@@ -9,13 +9,21 @@ import { ERouteName } from '@router/types'
 export type OpenTimerButtonProps = {
     disabled?: boolean
     children: React.ReactNode
+    isTimedWorkout?: boolean
+    type: TOpenTimerAllowedTypes | null
 } & ({ round: IRound; block?: never } | { block: IEventBlock; round?: never })
 
-const OpenTimerButton: React.FC<OpenTimerButtonProps> = ({ block, round, children, disabled }) => {
+const OpenTimerButton: React.FC<OpenTimerButtonProps> = ({
+    block,
+    round,
+    children,
+    disabled,
+    type,
+    isTimedWorkout: _isTimedWorkout,
+}) => {
     const { navigate } = useNavigation()
 
-    const isTimedWorkout = block ? checkIsTimedWorkout(block) : false
-    const type = block ? blockTimerType(block) : round ? roundTimerType(round) : null
+    const isTimedWorkout = block ? !!_isTimedWorkout : false
     const settings = block ? blockTimerSettings(block) : round ? roundTimerSettings(round) : null
 
     if (!isTimedWorkout && (!type || !settings)) {

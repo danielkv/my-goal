@@ -32,7 +32,7 @@ const RoundDisplay: React.FC<IRoundDisplayProps> = ({ rounds, selected }) => {
                 {rounds.map((round, currentIndex) => {
                     const isSelected = selected === currentIndex
 
-                    const display = roundDisplay.display(round)
+                    const display = roundDisplay.displayHeader(round)
 
                     return (
                         <Text

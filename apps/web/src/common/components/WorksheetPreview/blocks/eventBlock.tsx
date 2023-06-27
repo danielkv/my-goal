@@ -79,9 +79,9 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                                     </Stack>
                                 </Show>
 
-                                <Show when={round.type == 'rest'}>
+                                {/* <Show when={round.type == 'rest'}>
                                     <div class="font-bold text-sm">{roundDisplay.display(round)}</div>
-                                </Show>
+                                </Show> */}
                                 <Show when={round.type == 'complex'}>
                                     <div class="movement">{roundDisplay.display(round)}</div>
                                 </Show>

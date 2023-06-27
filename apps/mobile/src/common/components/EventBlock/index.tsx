@@ -22,7 +22,7 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
     const timerType = blockTimerType(block)
 
     return (
-        <OpenTimerButton block={block}>
+        <OpenTimerButton block={block} isTimedWorkout={isTimedWorkout} type={timerType}>
             {(!!block.name || !!blockHeader || !!isTimedWorkout || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">
