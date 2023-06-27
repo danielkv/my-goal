@@ -102,6 +102,18 @@ export const blockTimerType = (block: IEventBlock): TOpenTimerAllowedTypes | nul
     return null
 }
 
-export const checkIsTimedWorkout = (block: IEventBlock): boolean => {
-    return block.rounds.every((round) => ['for_time', 'emom', 'amrap', 'tabata', 'rest'].includes(round.type))
+export type TTimedMode = 'none' | 'round' | 'block'
+
+export const checkIsTimedWorkout = (block: IEventBlock): TTimedMode => {
+    const isNoneMode = block.rounds.every(
+        (round) => !['for_time', 'emom', 'amrap', 'tabata', 'rest'].includes(round.type)
+    )
+    if (isNoneMode) return 'none'
+
+    const isBlockMode =
+        block.rounds.length > 1 &&
+        block.rounds.every((round) => ['for_time', 'emom', 'amrap', 'tabata', 'rest'].includes(round.type))
+    if (isBlockMode) return 'block'
+
+    return 'round'
 }

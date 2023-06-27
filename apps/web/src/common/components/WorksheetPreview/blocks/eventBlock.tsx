@@ -24,15 +24,15 @@ export interface EventBlockPreviewProps extends WorksheetPeace<IEventBlock> {}
 const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
     const eventTitle = createMemo(() => eventBlockDisplay.displayHeader(props.item))
 
-    const isTimedWorkout = createMemo(() => checkIsTimedWorkout(props.item))
+    const timedWorkoutMode = createMemo(() => checkIsTimedWorkout(props.item))
     const timerType = createMemo(() => blockTimerType(props.item))
 
     return (
         <Stack>
-            {(!!props.item.name || !!eventTitle() || !!isTimedWorkout() || !!timerType()) && (
+            {(!!props.item.name || !!eventTitle() || timedWorkoutMode() === 'block' || !!timerType()) && (
                 <Stack direction="row" class="items-center mt-1 mb-1.5 gap-1">
                     <div class="text-sm">{eventTitle() || props.item.name || 'Clique para abrir o Timer'}</div>
-                    {(!!isTimedWorkout() || !!timerType()) && <RiSystemTimerLine />}
+                    {(timedWorkoutMode() === 'block' || !!timerType()) && <RiSystemTimerLine />}
                 </Stack>
             )}
 
@@ -75,7 +75,7 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                                 <Show when={!!roundTitle()}>
                                     <Stack direction="row" class="gap-1 items-center">
                                         <div class="title font-bold">{roundTitle()}</div>
-                                        {!isTimedWorkout() && timerType() && <RiSystemTimerLine />}
+                                        {!timedWorkoutMode() && timerType() && <RiSystemTimerLine />}
                                     </Stack>
                                 </Show>
 

@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native'
 
 import { IEventBlock, IRound } from 'goal-models'
-import { TOpenTimerAllowedTypes, blockTimerSettings, roundTimerSettings } from 'goal-utils'
+import { TOpenTimerAllowedTypes, TTimedMode, blockTimerSettings, roundTimerSettings } from 'goal-utils'
 
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
@@ -9,7 +9,7 @@ import { ERouteName } from '@router/types'
 export type OpenTimerButtonProps = {
     disabled?: boolean
     children: React.ReactNode
-    isTimedWorkout?: boolean
+    timedWorkoutMode?: TTimedMode
     type: TOpenTimerAllowedTypes | null
 } & ({ round: IRound; block?: never } | { block: IEventBlock; round?: never })
 
@@ -19,19 +19,26 @@ const OpenTimerButton: React.FC<OpenTimerButtonProps> = ({
     children,
     disabled,
     type,
-    isTimedWorkout: _isTimedWorkout,
+    timedWorkoutMode: _timedWorkoutMode,
 }) => {
     const { navigate } = useNavigation()
 
-    const isTimedWorkout = block ? !!_isTimedWorkout : false
+    const timedWorkoutMode = _timedWorkoutMode || 'round'
     const settings = block ? blockTimerSettings(block) : round ? roundTimerSettings(round) : null
 
-    if (!isTimedWorkout && (!type || !settings)) {
+    if (timedWorkoutMode === 'round' && (!type || !settings)) {
         return <>{children}</>
     }
 
     const handleOnPress = () => {
-        if (isTimedWorkout && block) return navigate(ERouteName.WodTimer, { block })
+        if (timedWorkoutMode === 'block' && block) return navigate(ERouteName.WodTimer, { block })
+
+        if (timedWorkoutMode === 'none' && !type) {
+            return navigate(ERouteName.StopwatchTimerScreen, {
+                block,
+                round,
+            })
+        }
 
         if (!type || !settings) return
 

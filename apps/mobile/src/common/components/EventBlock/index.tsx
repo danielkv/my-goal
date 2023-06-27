@@ -22,13 +22,13 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
     const timerType = blockTimerType(block)
 
     return (
-        <OpenTimerButton block={block} isTimedWorkout={isTimedWorkout} type={timerType}>
-            {(!!block.name || !!blockHeader || !!isTimedWorkout || !!timerType) && (
+        <OpenTimerButton block={block} timedWorkoutMode={isTimedWorkout} type={timerType}>
+            {(!!block.name || !!blockHeader || isTimedWorkout === 'block' || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">
                         {blockHeader || block.name || 'Clique para abrir o Timer'}
                     </Text>
-                    {(!!isTimedWorkout || !!timerType) && (
+                    {(isTimedWorkout === 'block' || !!timerType) && (
                         <TimerIcon name={timerType || 'for_time'} size={14} color="white" />
                     )}
                 </XStack>
@@ -36,7 +36,11 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
 
             <InternalCard>
                 {block.rounds.map((round, index) => (
-                    <EventBlockRound key={`${round.type}${index}`} round={round} showTimerButton={!isTimedWorkout} />
+                    <EventBlockRound
+                        key={`${round.type}${index}`}
+                        round={round}
+                        showTimerButton={isTimedWorkout === 'round'}
+                    />
                 ))}
             </InternalCard>
         </OpenTimerButton>
