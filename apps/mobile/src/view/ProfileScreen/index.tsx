@@ -1,6 +1,10 @@
 import { useCallback, useState } from 'react'
 import { Alert } from 'react-native'
 
+import Constants from 'expo-constants'
+import { getContrastColor, stringToColor, userInitials } from 'goal-utils'
+import { Avatar, Stack, Text, YStack } from 'tamagui'
+
 import Button from '@components/Button'
 import { setLoggedUser, useLoggedUser } from '@contexts/user/userContext'
 import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
@@ -9,10 +13,6 @@ import { LogOut } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { removeUserUseCase } from '@useCases/auth/removeUser'
 import { getErrorMessage } from '@utils/getErrorMessage'
-import { getContrastColor, stringToColor, userInitials } from '@utils/strings'
-
-import Constants from 'expo-constants'
-import { Avatar, Stack, Text, YStack } from 'tamagui'
 
 const ProfileScreen: React.FC = () => {
     const { dispatch } = useNavigation()

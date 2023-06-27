@@ -1,10 +1,10 @@
 import { memo } from 'react'
 
-import { IRound } from '@models/block'
-import { roundTransformer } from '@utils/transformer/round'
-
+import { roundDisplay } from 'goal-utils'
 import { Stack, Text } from 'tamagui'
 import { YStack } from 'tamagui'
+
+import { IRound } from '@models/block'
 
 export interface IRoundDisplayProps {
     rounds: IRound[]
@@ -33,10 +33,7 @@ const RoundDisplay: React.FC<IRoundDisplayProps> = ({ rounds, selected }) => {
                 {rounds.map((round, currentIndex) => {
                     const isSelected = selected === currentIndex
 
-                    const display =
-                        round.type === 'rest'
-                            ? roundTransformer.displayRestRound(round)
-                            : roundTransformer.displayShortTitle(round)
+                    const display = roundDisplay.display(round)
 
                     return (
                         <Text

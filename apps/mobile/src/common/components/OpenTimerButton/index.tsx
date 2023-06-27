@@ -1,15 +1,10 @@
 import { TouchableOpacity } from 'react-native'
 
+import { blockTimerSettings, blockTimerType, checkIsTimedWorkout, roundTimerSettings, roundTimerType } from 'goal-utils'
+
 import { IEventBlock, IRound } from '@models/block'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import {
-    blockTimerSettings,
-    blockTimerType,
-    checkIsTimedWorkout,
-    roundTimerSettings,
-    roundTimerType,
-} from '@utils/timer-display'
 
 export type OpenTimerButtonProps = {
     disabled?: boolean

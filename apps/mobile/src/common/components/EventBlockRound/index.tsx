@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
+import { numberHelper, roundTimerType } from 'goal-utils'
+import { roundDisplay } from 'goal-utils'
+import { Stack, Text, XStack, YStack } from 'tamagui'
+
 import EventBlockMovement from '@components/EventBlockMovement'
 import OpenTimerButton from '@components/OpenTimerButton'
 import { IRound } from '@models/block'
 import { Timer } from '@tamagui/lucide-icons'
-import { roundTimerType } from '@utils/timer-display'
-import { roundTransformer } from '@utils/transformer/round'
-
-import { Stack, Text, XStack, YStack } from 'tamagui'
 
 export interface EventBlockRoundProps {
     round: IRound
@@ -15,9 +15,9 @@ export interface EventBlockRoundProps {
 }
 
 const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButton = false }) => {
-    const sequenceReps = useMemo(() => roundTransformer.findSequenceReps(round.movements), [])
+    const sequenceReps = useMemo(() => numberHelper.findSequenceReps(round.movements), [])
 
-    const roundTitle = roundTransformer.displayTitle(round, sequenceReps?.join('-'))
+    const roundTitle = roundDisplay.displayHeader(round, sequenceReps)
 
     const timerType = roundTimerType(round)
 
@@ -43,13 +43,9 @@ const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButto
                             />
                         ))}
                     </YStack>
-                ) : round.type === 'complex' ? (
-                    <Text textBreakStrategy="balanced" fontSize="$4" color="$gray3">
-                        {roundTransformer.displayComplex(round)}
-                    </Text>
                 ) : (
-                    <Text textBreakStrategy="balanced" fontWeight="bold" fontSize="$4">
-                        {roundTransformer.displayRestRound(round)}
+                    <Text textBreakStrategy="balanced" fontSize="$4" color="$gray3">
+                        {roundDisplay.display(round)}
                     </Text>
                 )}
             </Stack>

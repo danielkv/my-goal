@@ -5,11 +5,13 @@
 	"types": "index.ts",
 	"license": "MIT",
 	"dependencies": {
+		"chroma-js": "^2.4.2",
 		"dayjs": "^1.11.8",
 		"goal-models": "*",
 		"radash": "^10.9.0"
 	},
 	"devDependencies": {
+		"@types/chroma-js": "^2.4.0",
 		"vitest": "^0.32.2"
 	},
 	"scripts": {

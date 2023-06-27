@@ -1,5 +1,4 @@
-import { IEventBlock, IRound } from '@models/block'
-import { IEMOMTimer, ITabataTimer, ITimecapTimer, TTimerTypes } from '@models/time'
+import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer, TTimerTypes } from 'goal-models'
 
 export type TSettings = Partial<ITabataTimer & IEMOMTimer & ITimecapTimer>
 

@@ -1,5 +1,13 @@
 import { IEventBlock } from 'goal-models'
-import { eventBlockDisplay, movementDisplay, numberHelper, roundDisplay } from 'goal-utils'
+import {
+    blockTimerType,
+    checkIsTimedWorkout,
+    eventBlockDisplay,
+    movementDisplay,
+    numberHelper,
+    roundDisplay,
+    roundTimerType,
+} from 'goal-utils'
 import { FiYoutube } from 'solid-icons/fi'
 import { RiSystemTimerLine } from 'solid-icons/ri'
 
@@ -9,7 +17,6 @@ import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
-import { blockTimerType, checkIsTimedWorkout, roundTimerType } from '@utils/timer-display'
 import { createEventRoundValues } from '@utils/worksheetInitials'
 
 export interface EventBlockPreviewProps extends WorksheetPeace<IEventBlock> {}

@@ -1,15 +1,18 @@
 import {
     IBlock,
+    IDay,
     IEventBlock,
     IEventMovement,
     IMovementWeight,
+    IPeriod,
     IRestBlock,
     IRound,
+    ISection,
     ITextBlock,
+    IWorksheet,
     TBlockType,
-} from '@models/block'
-import { IDay, IPeriod, ISection, IWorksheet } from '@models/day'
-import { TTimerTypes } from '@models/time'
+    TTimerTypes,
+} from 'goal-models'
 
 export function createMovementWeightValues(): IMovementWeight {
     return {

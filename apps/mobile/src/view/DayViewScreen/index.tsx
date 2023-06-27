@@ -1,5 +1,11 @@
 import { useEffect } from 'react'
 
+import dayjs from 'dayjs'
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
+import { capitalize } from 'goal-utils'
+import useSWR from 'swr'
+import { Stack, XStack } from 'tamagui'
+
 import { useStorage } from '@common/hooks/useStorage'
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
@@ -9,14 +15,8 @@ import { TReactNavigationStackParamList } from '@router/types'
 import { AlignJustify, Lightbulb, LightbulbOff, PanelRightClose } from '@tamagui/lucide-icons'
 import { getWorksheetDayByIdFnUseCase } from '@useCases/worksheet/getWorksheetDayById'
 import { getErrorMessage } from '@utils/getErrorMessage'
-import { capitalize } from '@utils/strings'
 import PeriodsListView from '@view/PeriodsListView'
 import SectionCarouselView from '@view/SectionCarouselView'
-
-import dayjs from 'dayjs'
-import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
-import useSWR from 'swr'
-import { Stack, XStack } from 'tamagui'
 
 import WorksheetOnboarding from './components/WorksheetOnboarding'
 

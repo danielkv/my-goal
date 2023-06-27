@@ -5,6 +5,7 @@
         "noUnusedLocals": true,
         "allowJs": false,
         "baseUrl": "./",
+        "skipLibCheck": true,
         "paths": {
             "@components/*": ["src/common/components/*"],
             "@router/*": ["./src/router/*"],

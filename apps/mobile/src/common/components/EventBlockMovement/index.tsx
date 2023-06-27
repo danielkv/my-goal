@@ -1,9 +1,9 @@
+import * as Linking from 'expo-linking'
+import { movementDisplay } from 'goal-utils'
+import { Button, Stack, Text, XStack, useTheme } from 'tamagui'
+
 import { IEventMovement } from '@models/block'
 import { Youtube } from '@tamagui/lucide-icons'
-import { movementTransformer } from '@utils/transformer/movement'
-
-import * as Linking from 'expo-linking'
-import { Button, Stack, Text, XStack, useTheme } from 'tamagui'
 
 export interface EventBlockMovementProps {
     movement: IEventMovement
@@ -13,7 +13,7 @@ export interface EventBlockMovementProps {
 const EventBlockMovement: React.FC<EventBlockMovementProps> = ({ movement, hideReps }) => {
     const theme = useTheme()
 
-    const displayMovement = movementTransformer.display(movement, hideReps)
+    const displayMovement = movementDisplay.display(movement, hideReps)
 
     const handleOnClickUrl = () => {
         if (!movement.videoUrl) return
