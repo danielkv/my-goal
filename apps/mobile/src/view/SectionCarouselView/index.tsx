@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { IDayModel } from 'goal-models'
-import { ScrollView, Stack, Text, XStack, getTokens } from 'tamagui'
+import { ScrollView, Stack, XStack, getTokens } from 'tamagui'
 
 import { IFlatSection } from '@common/interfaces/worksheet'
 import BlockItem from '@components/BlockItem'
@@ -123,16 +123,11 @@ const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
                                 <WodCard title={item.name} number={sectionNumber}>
                                     <Stack gap="$2">
                                         {item.blocks.map((block, index) => (
-                                            <Stack key={`${block.type}.${index}`}>
-                                                <Stack mb="$2">
-                                                    <BlockItem block={block} />
-                                                </Stack>
-                                                <Stack position="absolute" top="100%" mt={-4} right="$2">
-                                                    <Text fontSize="$1" color="$gray5">{`${sectionNumber}.${
-                                                        index + 1
-                                                    }`}</Text>
-                                                </Stack>
-                                            </Stack>
+                                            <BlockItem
+                                                key={`${block.type}.${index}`}
+                                                block={block}
+                                                blockNumber={`${sectionNumber}.${index + 1}`}
+                                            />
                                         ))}
                                     </Stack>
                                 </WodCard>

@@ -51,24 +51,13 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
                                             </Text>
                                         </Stack>
                                         <YStack gap="$2">
-                                            {section.blocks.map((block, blockNumber) => {
-                                                const blockNumberId = `${sectionNumberId}.${blockNumber + 1}`
-                                                return (
-                                                    <Stack key={`${block.type}.${blockNumber}`}>
-                                                        <Stack mb="$2">
-                                                            <BlockItem
-                                                                key={`${block.type}.${blockNumber}`}
-                                                                block={block}
-                                                            />
-                                                        </Stack>
-                                                        <Stack position="absolute" top="100%" mt={-4} right="$2">
-                                                            <Text fontSize="$2" color="$gray5">
-                                                                {blockNumberId}
-                                                            </Text>
-                                                        </Stack>
-                                                    </Stack>
-                                                )
-                                            })}
+                                            {section.blocks.map((block, blockNumber) => (
+                                                <BlockItem
+                                                    key={`${block.type}.${blockNumber}`}
+                                                    block={block}
+                                                    blockNumber={`${sectionNumberId}.${blockNumber + 1}`}
+                                                />
+                                            ))}
                                         </YStack>
                                     </YStack>
                                 )
