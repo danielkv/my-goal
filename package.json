@@ -9,8 +9,10 @@
 		"packages/*"
 	],
 	"devDependencies": {
+		"@faker-js/faker": "^8.0.2",
 		"barrelsby": "^2.8.0",
-		"@faker-js/faker": "^8.0.2"
+		"firebase-admin": "^11.9.0",
+		"radash": "^10.9.0"
 	},
 	"scripts": {
 		"fb:emulator": "firebase emulators:start",

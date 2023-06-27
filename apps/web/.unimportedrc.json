@@ -1,0 +1,43 @@
+{
+  "ignoreUnresolved": [
+    [
+      "@assets/logo.svg?component-solid",
+      [
+        "src/common/components/Header/index.tsx",
+        "src/common/components/WorksheetItem/index.tsx"
+      ]
+    ],
+    [
+      "@assets/svg/emom.svg?component-solid",
+      [
+        "src/view/Home/index.tsx"
+      ]
+    ],
+    [
+      "@assets/svg/regressive.svg?component-solid",
+      [
+        "src/view/Home/index.tsx"
+      ]
+    ],
+    [
+      "@assets/svg/stopwatch.svg?component-solid",
+      [
+        "src/view/Home/index.tsx"
+      ]
+    ],
+    [
+      "@assets/svg/tabata.svg?component-solid",
+      [
+        "src/view/Home/index.tsx"
+      ]
+    ]
+  ],
+  "ignoreUnused": [
+    "@suid/vite-plugin",
+    "html2canvas",
+    "jspdf",
+    "prettier",
+    "vite-tsconfig-paths"
+  ],
+  "ignoreUnimported": []
+}
