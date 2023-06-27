@@ -1,10 +1,20 @@
 import dayjs from 'dayjs'
 import { IWorksheet } from 'goal-models'
-import { isBlock, isDay, isEventBlock, isPeriod, isRestBlock, isRound, isSection, isTextBlock } from 'goal-utils'
+import {
+    LabelTranslations,
+    eventTypes,
+    isBlock,
+    isDay,
+    isEventBlock,
+    isPeriod,
+    isRestBlock,
+    isRound,
+    isSection,
+    isTextBlock,
+} from 'goal-utils'
 
 import { Path } from '@interfaces/app'
 import { getCurrentPeace, getIndexes, getLastIndex, getPeaceFromPath } from '@utils/paths'
-import { breadCrumbLabelMaps, eventTypes } from '@utils/worksheetInitials'
 
 export function getCurrentForm(path: Path): [string, number, Record<string, number>] {
     let currentForm = getCurrentPeace(path)
@@ -36,5 +46,5 @@ export function getBreadcrumbLabel(worksheet: IWorksheet, path: Path): string {
     }
     if (isRound(peace)) return `Round ${String(formIndex + 1)}`
 
-    return breadCrumbLabelMaps[form] || form
+    return LabelTranslations[form] || form
 }

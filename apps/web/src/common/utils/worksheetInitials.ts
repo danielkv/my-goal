@@ -10,8 +10,6 @@ import {
     ISection,
     ITextBlock,
     IWorksheet,
-    TBlockType,
-    TTimerTypes,
 } from 'goal-models'
 
 export function createMovementWeightValues(): IMovementWeight {
@@ -88,38 +86,4 @@ export function createWorksheetValues(): IWorksheet {
         startDate: '',
         days: [],
     }
-}
-
-export const breadCrumbLabelMaps: Record<string, string> = {
-    worksheet: 'Planilha',
-    periods: 'Período',
-    days: 'Dia',
-    sections: 'Seção',
-    blocks: 'Bloco',
-    rounds: 'Round',
-}
-
-export const blockTypesMap: Record<Exclude<TBlockType, ''>, string> = {
-    event: 'Evento ',
-    rest: 'REST',
-    text: 'Texto',
-}
-
-export const timerTypes: Record<TTimerTypes, string> = {
-    not_timed: 'Sem tempo',
-    for_time: 'For Time',
-    amrap: 'AMRAP',
-    emom: 'EMOM',
-    tabata: 'Tabata',
-}
-
-export const eventTypes = {
-    ...timerTypes,
-    max_weight: 'Carga máxima',
-}
-
-export const roundTypes = {
-    ...timerTypes,
-    complex: 'Complex',
-    rest: 'Rest',
 }

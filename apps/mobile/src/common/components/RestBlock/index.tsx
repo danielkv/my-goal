@@ -1,8 +1,8 @@
 import { IRestBlock } from 'goal-models'
+import { getTimeFromSeconds } from 'goal-utils'
 import { Text } from 'tamagui'
 
 import InternalCard from '@components/InternalCard'
-import { getTimeFromSeconds } from '@utils/time'
 
 export interface RestBlockProps {
     block: IRestBlock

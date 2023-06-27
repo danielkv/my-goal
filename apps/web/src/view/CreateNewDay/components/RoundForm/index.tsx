@@ -1,4 +1,5 @@
 import { IRound, TTimerTypes } from 'goal-models'
+import { roundTypes } from 'goal-utils'
 import { omit } from 'radash'
 
 import { Component, For, JSX, Show, createEffect, createMemo, on } from 'solid-js'
@@ -19,7 +20,7 @@ import {
     setValue,
     zodForm,
 } from '@modular-forms/solid'
-import { createRoundMovementValues, roundTypes } from '@utils/worksheetInitials'
+import { createRoundMovementValues } from '@utils/worksheetInitials'
 
 import { TRoundForm, eventRoundFormSchema, weightTypes } from './config'
 

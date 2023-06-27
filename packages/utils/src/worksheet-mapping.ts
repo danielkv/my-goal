@@ -1,5 +1,14 @@
 import { TTimerTypes } from 'goal-models'
 
+export const LabelTranslations: Record<string, string> = {
+    worksheet: 'Planilha',
+    periods: 'Período',
+    days: 'Dia',
+    sections: 'Seção',
+    blocks: 'Bloco',
+    rounds: 'Round',
+}
+
 export const timerTypes: Record<TTimerTypes, string> = {
     not_timed: 'Sem tempo',
     for_time: 'For Time',

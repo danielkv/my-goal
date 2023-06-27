@@ -4,6 +4,7 @@ export * from "./src/removeNull";
 export * from "./src/strings";
 export * from "./src/time";
 export * from "./src/timer-display";
+export * from "./src/worksheet-mapping";
 export * from "./src/display/base";
 export * from "./src/display/eventBlock";
 export * from "./src/display/movement";

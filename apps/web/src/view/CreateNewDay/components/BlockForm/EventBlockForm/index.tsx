@@ -1,11 +1,11 @@
 import { IEventBlock, TTimerTypes } from 'goal-models'
+import { eventTypes } from 'goal-utils'
 
 import { Component, For, JSX, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import TimersForm from '@components/TimersForm'
 import { Field, Form, SubmitHandler, createForm, getValue, reset, setValue, zodForm } from '@modular-forms/solid'
-import { eventTypes } from '@utils/worksheetInitials'
 
 import { TEventBlockForm, eventBlockFormSchema } from './config'
 
