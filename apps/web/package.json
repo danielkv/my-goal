@@ -1,18 +1,15 @@
 {
 	"name": "goal-web",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "",
 	"scripts": {
 		"start": "vite",
-		"fb:serve": "firebase emulators:start",
-		"dbseed": "node ./scripts/dbseed.js",
 		"dev": "vite --open",
 		"build": "vite build",
 		"serve": "vite preview"
 	},
 	"license": "MIT",
 	"devDependencies": {
-		"@faker-js/faker": "^8.0.2",
 		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
 		"@types/clone-deep": "^4.0.1",
 		"@types/deep-equal": "^1.0.1",

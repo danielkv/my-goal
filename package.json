@@ -9,6 +9,13 @@
 		"packages/*"
 	],
 	"devDependencies": {
-		"barrelsby": "^2.8.0"
+		"barrelsby": "^2.8.0",
+		"@faker-js/faker": "^8.0.2"
+	},
+	"scripts": {
+		"fb:emulator": "firebase emulators:start",
+		"dbseed": "node ./scripts/dbseed.js",
+		"dev:web": "yarn workspace goal-web dev",
+		"dev:mobile": "yarn workspace goal-mobile start --dev-client"
 	}
 }
