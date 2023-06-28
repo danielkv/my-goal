@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react'
 import { Alert, Image, ImageBackground } from 'react-native'
 
+import { FormikConfig, useFormik } from 'formik'
+import { H3, ScrollView, Stack, Text, YStack } from 'tamagui'
+
 import LoginBg from '@assets/images/login-bg.png'
 import LogoGoal from '@assets/images/logo-goal.png'
 import ActivityIndicator from '@components/ActivityIndicator'
@@ -15,9 +18,7 @@ import { sendResetPasswordEmailUseCase } from '@useCases/auth/sendResetPasswordE
 import { isAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
-import { FormikConfig, useFormik } from 'formik'
-import { H3, ScrollView, Stack, Text, YStack } from 'tamagui'
-
+import AppleLogin from './components/AppleLogin'
 import { TLoginForm, initialValues, validationSchema } from './config'
 
 const LoginScreen: React.FC = () => {
@@ -158,6 +159,7 @@ const LoginScreen: React.FC = () => {
                             </Button>
                         )}
                     </YStack>
+                    <AppleLogin />
                 </ScrollView>
             </ImageBackground>
         </SafeAreaView>
