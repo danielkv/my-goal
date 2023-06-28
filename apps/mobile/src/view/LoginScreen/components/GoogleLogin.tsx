@@ -1,36 +1,39 @@
-import { Stack } from 'tamagui'
+import { Alert } from 'react-native'
+
+import Constants from 'expo-constants'
 
 import { firebaseProvider } from '@common/providers/firebase'
+import LoginButton from '@components/LoginButton'
 import auth from '@react-native-firebase/auth'
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { useNavigation } from '@react-navigation/native'
+import { ERouteName } from '@router/types'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
-GoogleSignin.configure()
+GoogleSignin.configure({
+    webClientId: Constants.expoConfig?.extra?.GOOGLE_WEB_CLIENT_ID,
+})
 
-export default function AppleLogin() {
+export default function GoogleLogin() {
+    const navigation = useNavigation()
+
     const handleLogin = async () => {
         try {
             await GoogleSignin.hasPlayServices()
-            await GoogleSignin.signIn()
-            const { accessToken, idToken } = await GoogleSignin.getTokens()
+            console.log('1')
 
-            const appleCredential = auth.AppleAuthProvider.credential(idToken, accessToken)
+            const { idToken } = await GoogleSignin.signIn()
+            console.log('2')
 
-            return firebaseProvider.getAuth().signInWithCredential(appleCredential)
+            const appleCredential = auth.AppleAuthProvider.credential(idToken)
+            console.log('3')
+
+            await firebaseProvider.getAuth().signInWithCredential(appleCredential)
+
+            navigation.navigate(ERouteName.HomeScreen)
         } catch (error) {
-            //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // 	// user cancelled the login flow
-            //   } else if (error.code === statusCodes.IN_PROGRESS) {
-            // 	// operation (e.g. sign in) is in progress already
-            //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            // 	// play services not available or outdated
-            //   } else {
-            // 	// some other error happened
-            //   }
+            Alert.alert(getErrorMessage(error))
         }
     }
-    return (
-        <Stack>
-            <GoogleSigninButton onPress={handleLogin} />
-        </Stack>
-    )
+    return <LoginButton mode="google" onPress={handleLogin} />
 }

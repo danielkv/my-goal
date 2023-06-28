@@ -1,11 +1,24 @@
+import { useEffect, useState } from 'react'
+import { Alert } from 'react-native'
+
 import * as AppleAuthentication from 'expo-apple-authentication'
 import * as Crypto from 'expo-crypto'
-import { Stack } from 'tamagui'
 
 import { firebaseProvider } from '@common/providers/firebase'
+import LoginButton from '@components/LoginButton'
 import auth from '@react-native-firebase/auth'
+import { useNavigation } from '@react-navigation/native'
+import { ERouteName } from '@router/types'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
 export default function AppleLogin() {
+    const [available, setAvailable] = useState(false)
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        AppleAuthentication.isAvailableAsync().then(setAvailable)
+    }, [])
+
     const handleLogin = async () => {
         const nonce = Math.random().toString(36).substring(2, 10)
 
@@ -19,23 +32,19 @@ export default function AppleLogin() {
                     nonce: hashedNonce,
                 })
             )
-            .then(({ identityToken }) => {
+            .then(async ({ identityToken }) => {
                 const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
 
-                return firebaseProvider.getAuth().signInWithCredential(appleCredential)
+                await firebaseProvider.getAuth().signInWithCredential(appleCredential)
+
+                navigation.navigate(ERouteName.HomeScreen)
             })
             .catch((error) => {
-                // ...
+                Alert.alert(getErrorMessage(error))
             })
     }
-    return (
-        <Stack>
-            <AppleAuthentication.AppleAuthenticationButton
-                buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-                buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-                cornerRadius={5}
-                onPress={handleLogin}
-            />
-        </Stack>
-    )
+
+    if (!available) return null
+
+    return <LoginButton mode="apple" onPress={handleLogin} />
 }
