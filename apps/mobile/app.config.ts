@@ -16,6 +16,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         version: '1.2.2',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
+        scheme: 'mygoal',
         splash: {
             image: './src/assets/splash.png',
             resizeMode: 'cover',
@@ -55,6 +56,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             policy: 'sdkVersion',
         },
         plugins: [
+            '@react-native-google-signin/google-signin',
+            'expo-apple-authentication',
             '@react-native-firebase/app',
             '@react-native-firebase/perf',
             '@react-native-firebase/crashlytics',
