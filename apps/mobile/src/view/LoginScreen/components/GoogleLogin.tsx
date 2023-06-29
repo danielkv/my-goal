@@ -1,39 +1,50 @@
+import React, { useState } from 'react'
 import { Alert } from 'react-native'
 
 import Constants from 'expo-constants'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import LoginButton from '@components/LoginButton'
-import auth from '@react-native-firebase/auth'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { useNavigation } from '@react-navigation/native'
-import { ERouteName } from '@router/types'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
+import { AuthException } from '@utils/exceptions/AuthException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 GoogleSignin.configure({
     webClientId: Constants.expoConfig?.extra?.GOOGLE_WEB_CLIENT_ID,
 })
 
-export default function GoogleLogin() {
-    const navigation = useNavigation()
+interface GoogleLoginProps {
+    onFinish?(credential: FirebaseAuthTypes.UserCredential): void
+}
+
+const GoogleLogin: React.FC<GoogleLoginProps> = ({ onFinish }) => {
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = async () => {
         try {
-            await GoogleSignin.hasPlayServices()
-            console.log('1')
+            setLoading(true)
+
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
 
             const { idToken } = await GoogleSignin.signIn()
-            console.log('2')
 
-            const appleCredential = auth.AppleAuthProvider.credential(idToken)
-            console.log('3')
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken)
 
-            await firebaseProvider.getAuth().signInWithCredential(appleCredential)
+            const credential = await firebaseProvider.getAuth().signInWithCredential(googleCredential)
 
-            navigation.navigate(ERouteName.HomeScreen)
-        } catch (error) {
-            Alert.alert(getErrorMessage(error))
+            onFinish?.(credential)
+        } catch (error: any) {
+            const exception = new AuthException(error)
+            if (exception.code === statusCodes.SIGN_IN_CANCELLED) return
+
+            Alert.alert('Ocorreu um erro', getErrorMessage(exception))
+        } finally {
+            setLoading(false)
         }
     }
-    return <LoginButton mode="google" onPress={handleLogin} />
+
+    return <LoginButton loading={loading} mode="google" onPress={handleLogin} />
 }
+
+export default GoogleLogin

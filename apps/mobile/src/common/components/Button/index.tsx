@@ -1,4 +1,4 @@
-import { ButtonProps, Button as NButton, Spinner, styled } from 'tamagui'
+import { ButtonProps, Button as NButton, Spinner, SpinnerProps, styled } from 'tamagui'
 
 const Button = styled(NButton, {
     bg: '$backgroundStrong',
@@ -32,10 +32,11 @@ const Button = styled(NButton, {
 
 interface IButtonProps {
     loading?: boolean
+    spinnerColor?: SpinnerProps['color']
 }
 
-export default Button.styleable<IButtonProps>(({ loading, children, ...props }, ref) => (
+export default Button.styleable<IButtonProps>(({ loading, children, spinnerColor, ...props }, ref) => (
     <Button ref={ref} {...(props as ButtonProps)}>
-        {loading ? <Spinner /> : children}
+        {loading ? <Spinner color={spinnerColor} /> : children}
     </Button>
 ))

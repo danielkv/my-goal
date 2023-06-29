@@ -41,15 +41,16 @@ function getButtonBgColor(mode: TButtonMode): string {
 interface LoginButtonProps {
     mode: TButtonMode
     onPress?: () => void
+    loading?: boolean
 }
 
-const LoginButton: React.FC<LoginButtonProps> = ({ mode, onPress }) => {
+const LoginButton: React.FC<LoginButtonProps> = ({ mode, loading, onPress }) => {
     const label = getButtonLabel(mode)
     const Icon = getButtonIcon(mode)
     const bgColor = getButtonBgColor(mode)
 
     return (
-        <Button bg={bgColor} onPress={onPress} icon={Icon} gap="$1" color="black" fontWeight="700">
+        <Button loading={loading} bg={bgColor} onPress={onPress} icon={Icon} gap="$1" color="black" fontWeight="700">
             {label}
         </Button>
     )
