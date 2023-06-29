@@ -1,9 +1,10 @@
 import { Image, ImageBackground } from 'react-native'
 
-import { H3, ScrollView, Stack, Text, YStack, getTokens } from 'tamagui'
+import { H3, ScrollView, Separator, Stack, Text, YStack, getTokens } from 'tamagui'
 
 import LoginBg from '@assets/images/login-bg.png'
 import LogoGoal from '@assets/images/logo-goal.png'
+import Button from '@components/Button'
 import LoginButton from '@components/LoginButton'
 import SafeAreaView from '@components/SafeAreaView'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
@@ -40,7 +41,7 @@ const LoginScreen: React.FC = () => {
                             <H3 textAlign="center" fontWeight="900">
                                 Bem vindo
                             </H3>
-                            <Text textAlign="center">Escolha seu provedor de login</Text>
+                            <Text textAlign="center">Escolha como deseja continuar</Text>
                         </Stack>
 
                         <YStack gap="$3">
@@ -49,7 +50,18 @@ const LoginScreen: React.FC = () => {
                                 onPress={() => navigation.navigate(ERouteName.EmailLoginScreen)}
                             />
                             <AppleLogin onSuccess={handleSuccessSocialLogin} />
+
                             <GoogleLogin onSuccess={handleSuccessSocialLogin} />
+
+                            <Separator borderColor="$gray5" width={100} alignSelf="center" />
+
+                            <Button
+                                variant="primary"
+                                fontWeight="700"
+                                onPress={() => navigation.navigate(ERouteName.SubscriptionScreen)}
+                            >
+                                Criar uma nova conta
+                            </Button>
                         </YStack>
                     </YStack>
                 </ScrollView>

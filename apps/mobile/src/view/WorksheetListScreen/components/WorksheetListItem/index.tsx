@@ -35,15 +35,16 @@ const WorksheetListItem: React.FC<WorksheetListItemProps> = ({ item, onPress }) 
             >
                 <XStack f={1} py="$4" ai="center" gap="$3">
                     <FileSpreadsheet size={24} color="$gray4" />
-                    <YStack>
-                        <H5 fontWeight="700" color="$gray1">
+                    <YStack f={1}>
+                        <H5 fontWeight="700" lineHeight="$1" fontSize="$5" color="$gray1">
                             {item.name}
                         </H5>
-                        <Text color="$gray3" fontSize="$2">
+
+                        <Text color="$gray3" fontSize="$2" mt="$1">
                             {startEndDateDisplay}
                         </Text>
                     </YStack>
-                    {isCurrent && <Circle position="absolute" top="$3" right={0} bg="$red5" size={7} />}
+                    {isCurrent && <Circle position="absolute" top="$3" right="$-1" bg="$red5" size={7} />}
                 </XStack>
             </Button>
         </Stack>

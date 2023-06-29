@@ -1,7 +1,7 @@
 export function getErrorMessage(err: any): string {
     if (__DEV__) console.warn('MESSAGE CAUGHT', err)
 
-    const code = err.details.code || err.code
+    const code = err.details?.code || err.code
 
     if (code) return getMessage(code, err.message)
 

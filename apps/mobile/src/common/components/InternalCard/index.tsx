@@ -4,7 +4,7 @@ const InternalCard = styled(Stack, {
     gap: '$4',
     bg: '$gray8',
     br: '$4',
-    p: '$2',
+    p: '$2.5',
 })
 
 export default InternalCard

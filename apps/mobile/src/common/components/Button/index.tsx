@@ -4,7 +4,8 @@ const Button = styled(NButton, {
     bg: '$backgroundStrong',
     bw: 0,
     w: '100%',
-    fontWeight: '500',
+    fontWeight: '700',
+
     variants: {
         variant: {
             primary: {

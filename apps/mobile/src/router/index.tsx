@@ -52,7 +52,7 @@ function Router() {
             initialRouteName={ERouteName.HomeScreen}
         >
             <Stack.Screen name={ERouteName.HomeScreen} component={HomeScreen} options={{ title: 'Goal' }} />
-            <Stack.Screen name={ERouteName.LoginScreen} component={LoginScreen} options={{ title: 'Login' }} />
+            <Stack.Screen name={ERouteName.LoginScreen} component={LoginScreen} options={{ title: 'Acessar' }} />
             <Stack.Screen
                 name={ERouteName.EmailLoginScreen}
                 component={EmailLoginScreen}
