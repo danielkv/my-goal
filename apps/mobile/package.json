@@ -49,6 +49,7 @@
 		"formik": "^2.2.9",
 		"goal-models": "*",
 		"goal-utils": "*",
+		"libphonenumber-js": "^1.10.37",
 		"radash": "^10.8.1",
 		"react": "18.2.0",
 		"react-dom": "^18.2.0",

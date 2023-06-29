@@ -1,17 +1,18 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { RefreshControl } from 'react-native'
+
+import useSWR from 'swr'
+import { Stack, getTokens, useTheme } from 'tamagui'
 
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
 import { useLoggedUser } from '@contexts/user/userContext'
-import { RouteProp, StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
 import { getWorksheetByIdUseCase } from '@useCases/worksheet/getWorksheetById'
 import { getErrorMessage } from '@utils/getErrorMessage'
-
-import useSWR from 'swr'
-import { Stack, getTokens, useTheme } from 'tamagui'
+import { usePreventAccess } from '@utils/preventAccess'
 
 import WorksheetDayItem from './components/WorksheetDayItem'
 
@@ -23,7 +24,7 @@ const WorksheetDays: React.FC = () => {
     const {
         params: { id: worksheetId },
     } = useRoute<RouteProp<TReactNavigationStackParamList, 'WorksheetDays'>>()
-    const { navigate, dispatch } = useNavigation()
+    const { navigate } = useNavigation()
     const user = useLoggedUser()
 
     const { data, isLoading, error, mutate } = useSWR(
@@ -31,11 +32,7 @@ const WorksheetDays: React.FC = () => {
         (args: string[]) => getWorksheetByIdUseCase(args[0])
     )
 
-    useFocusEffect(
-        useCallback(() => {
-            if (!user) dispatch(StackActions.replace(ERouteName.LoginScreen))
-        }, [user])
-    )
+    usePreventAccess()
 
     const handleRefresh = async () => {
         setRefreshing(true)

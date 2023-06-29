@@ -15,9 +15,17 @@ const TextField = Input.styleable<TextFieldProps>(({ label, error, componentLeft
                     {label}
                 </Text>
             )}
-            <XStack ai="center" gap="$1" h="$4" bg="white" br="$4" px="$2" py="$1">
+            <XStack ai="center" gap="$1" h="$4" bg={props.disabled ? '$gray2' : 'white'} br="$4" px="$2" py="$1">
                 {componentLeft}
-                <Input ref={ref} color="$gray6" px="$3" f={1} {...(props as InputProps)} unstyled />
+                <Input
+                    ref={ref}
+                    color={props.disabled ? '$gray4' : '$gray6'}
+                    px="$3"
+                    f={1}
+                    {...(props as InputProps)}
+                    unstyled
+                    editable={!props.disabled}
+                />
                 {componentRight}
             </XStack>
             {error && (

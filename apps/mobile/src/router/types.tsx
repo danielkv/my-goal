@@ -5,7 +5,7 @@ export type TReactNavigationStackParamList = {
 
     EmailLoginScreen: undefined
 
-    SubscriptionScreen: undefined
+    SubscriptionScreen?: { redirect?: ERouteName; redirectParams?: object }
 
     HomeScreen: undefined
 

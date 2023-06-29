@@ -15,10 +15,10 @@ GoogleSignin.configure({
 })
 
 interface GoogleLoginProps {
-    onFinish?(credential: FirebaseAuthTypes.UserCredential): void
+    onSuccess?(credential: FirebaseAuthTypes.UserCredential): void
 }
 
-const GoogleLogin: React.FC<GoogleLoginProps> = ({ onFinish }) => {
+const GoogleLogin: React.FC<GoogleLoginProps> = ({ onSuccess }) => {
     const [loading, setLoading] = useState(false)
 
     const handleLogin = async () => {
@@ -33,7 +33,7 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({ onFinish }) => {
 
             const credential = await firebaseProvider.getAuth().signInWithCredential(googleCredential)
 
-            onFinish?.(credential)
+            onSuccess?.(credential)
         } catch (error: any) {
             const exception = new AuthException(error)
             if (exception.code === statusCodes.SIGN_IN_CANCELLED) return

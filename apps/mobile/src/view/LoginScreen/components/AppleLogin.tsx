@@ -11,10 +11,10 @@ import { AuthException } from '@utils/exceptions/AuthException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 interface AppleLoginProps {
-    onFinish?(credential: FirebaseAuthTypes.UserCredential): void
+    onSuccess?(credential: FirebaseAuthTypes.UserCredential): void
 }
 
-const AppleLogin: React.FC<AppleLoginProps> = ({ onFinish }) => {
+const AppleLogin: React.FC<AppleLoginProps> = ({ onSuccess }) => {
     const [available, setAvailable] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -42,7 +42,7 @@ const AppleLogin: React.FC<AppleLoginProps> = ({ onFinish }) => {
 
                 const credential = await firebaseProvider.getAuth().signInWithCredential(appleCredential)
 
-                onFinish?.(credential)
+                onSuccess?.(credential)
             })
             .catch((err: any) => {
                 const exception = new AuthException(err)

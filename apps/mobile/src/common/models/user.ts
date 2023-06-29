@@ -12,4 +12,5 @@ export interface IUser {
     readonly displayName: string
     readonly photoURL: string | null
     readonly phoneNumber: string
+    socialLogin: boolean
 }

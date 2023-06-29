@@ -6,6 +6,7 @@ import LoginBg from '@assets/images/login-bg.png'
 import LogoGoal from '@assets/images/logo-goal.png'
 import LoginButton from '@components/LoginButton'
 import SafeAreaView from '@components/SafeAreaView'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 
@@ -16,6 +17,11 @@ const LoginScreen: React.FC = () => {
     const navigation = useNavigation()
 
     const { size } = getTokens()
+
+    const handleSuccessSocialLogin = (credential: FirebaseAuthTypes.UserCredential) => {
+        if (credential.user.displayName && credential.user.phoneNumber) navigation.navigate(ERouteName.HomeScreen)
+        else navigation.navigate(ERouteName.SubscriptionScreen, { redirect: ERouteName.HomeScreen })
+    }
 
     return (
         <SafeAreaView>
@@ -42,8 +48,8 @@ const LoginScreen: React.FC = () => {
                                 mode="email"
                                 onPress={() => navigation.navigate(ERouteName.EmailLoginScreen)}
                             />
-                            <AppleLogin />
-                            <GoogleLogin />
+                            <AppleLogin onSuccess={handleSuccessSocialLogin} />
+                            <GoogleLogin onSuccess={handleSuccessSocialLogin} />
                         </YStack>
                     </YStack>
                 </ScrollView>

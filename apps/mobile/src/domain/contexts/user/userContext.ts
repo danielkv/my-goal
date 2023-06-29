@@ -1,13 +1,7 @@
 import { create } from 'zustand'
 
 import { IUser } from '@models/user'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
-
-export interface UserContextCredentials {
-    sessionCookie: string
-    userId: string
-    email: string
-}
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 export interface UserContext {
     user: IUser | null
@@ -30,6 +24,16 @@ export const useLoggedUser = (): IUser | null => {
 }
 
 export function extractUserCredential(user: FirebaseAuthTypes.User): IUser {
+    const socialAvailable = [
+        auth.GoogleAuthProvider.PROVIDER_ID,
+        auth.AppleAuthProvider.PROVIDER_ID,
+        auth.TwitterAuthProvider.PROVIDER_ID,
+        auth.FacebookAuthProvider.PROVIDER_ID,
+        auth.GithubAuthProvider.PROVIDER_ID,
+    ]
+
+    const socialLogin = user.providerData.some((info) => socialAvailable.includes(info.providerId))
+
     return {
         uid: user.uid,
         email: user.email || '',
@@ -37,5 +41,6 @@ export function extractUserCredential(user: FirebaseAuthTypes.User): IUser {
         photoURL: user.photoURL,
         displayName: user.displayName || '',
         phoneNumber: user.phoneNumber || '',
+        socialLogin,
     }
 }
