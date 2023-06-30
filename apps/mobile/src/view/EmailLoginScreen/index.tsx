@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Alert, Image, ImageBackground } from 'react-native'
+import { Alert, Image, ImageBackground, Platform } from 'react-native'
 
 import { FormikConfig, useFormik } from 'formik'
 import { H3, ScrollView, Stack, Text, YStack, getTokens } from 'tamagui'
@@ -98,7 +98,7 @@ const EmailLoginScreen: React.FC = () => {
                     <YStack gap="$3" ai="center">
                         <TextField
                             label="Email"
-                            autoFocus
+                            autoFocus={Platform.OS === 'android'}
                             componentLeft={<User size={22} color="$gray5" />}
                             keyboardType="email-address"
                             textContentType="username"

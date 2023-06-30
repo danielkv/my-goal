@@ -8,7 +8,7 @@ import Button from '@components/Button'
 import LoginButton from '@components/LoginButton'
 import SafeAreaView from '@components/SafeAreaView'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { useNavigation } from '@react-navigation/native'
+import { StackActions, useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 
 import AppleLogin from './components/AppleLogin'
@@ -20,8 +20,12 @@ const LoginScreen: React.FC = () => {
     const { size } = getTokens()
 
     const handleSuccessSocialLogin = (credential: FirebaseAuthTypes.UserCredential) => {
-        if (credential.user.displayName && credential.user.phoneNumber) navigation.navigate(ERouteName.HomeScreen)
-        else navigation.navigate(ERouteName.SubscriptionScreen, { redirect: ERouteName.HomeScreen })
+        if (credential.user.displayName && credential.user.phoneNumber)
+            navigation.dispatch(StackActions.replace(ERouteName.HomeScreen))
+        else
+            navigation.dispatch(
+                StackActions.replace(ERouteName.SubscriptionScreen, { redirect: ERouteName.HomeScreen })
+            )
     }
 
     return (

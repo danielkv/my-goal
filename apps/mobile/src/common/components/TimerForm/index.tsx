@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react'
+import { Platform } from 'react-native'
 import { SvgProps } from 'react-native-svg'
+
+import { H2, Input, Sheet, Stack, Text, XStack, YStack } from 'tamagui'
+import { useTheme } from 'tamagui'
 
 import { TTimerType } from '@common/interfaces/timers'
 import Button from '@components/Button'
 import TextField from '@components/TextField'
 import TimeField from '@components/TimeField'
 import { Edit2 } from '@tamagui/lucide-icons'
-
-import { H2, Input, Sheet, Stack, Text, XStack, YStack } from 'tamagui'
-import { useTheme } from 'tamagui'
 
 export interface TabataFormProps {
     type: 'tabata'
@@ -134,7 +135,7 @@ const TimerForm: React.FC<TimerFormProps> = (props) => {
 
                     <Stack gap="$2">
                         <TextField
-                            autoFocus
+                            autoFocus={Platform.OS === 'android'}
                             label="Countdown"
                             keyboardType="number-pad"
                             value={String(props.countdown)}

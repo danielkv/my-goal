@@ -11,7 +11,13 @@ import { Stack } from 'tamagui'
 const SafeAreaView: React.FC<KeyboardAvoidingViewProps> = ({ children, ...props }) => {
     return (
         <Stack flex={1}>
-            <KeyboardAvoidingView style={{ flex: 1 }} enabled={Platform.OS === 'ios'} behavior="padding" {...props}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                enabled={Platform.OS === 'ios'}
+                keyboardVerticalOffset={64}
+                behavior="padding"
+                {...props}
+            >
                 <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </Stack>
