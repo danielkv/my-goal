@@ -17,9 +17,9 @@ export interface WorksheetItemProps {
 
 const WorksheetItem: Component<WorksheetItemProps> = (props) => {
     return (
-        <div class="p-10 hover:bg-gray-700" classList={{ 'opacity-50': props.loading }}>
+        <div class="p-10 hover:bg-gray-700 rounded-xl" classList={{ 'opacity-50': props.loading }}>
             <div
-                class="w-32 h-40 shadow-md bg-gray-900 relative"
+                class="w-32 h-40 shadow-md bg-gray-900 relative rounded-xl"
                 onClick={props.onClick}
                 classList={{ 'cursor-pointer': !!props.onClick }}
             >
