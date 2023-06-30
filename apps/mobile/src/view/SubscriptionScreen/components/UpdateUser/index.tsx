@@ -8,7 +8,7 @@ import { H3, Stack } from 'tamagui'
 import LogoGoal from '@assets/images/logo-goal.png'
 import Button from '@components/Button'
 import { useLoggedUser } from '@contexts/user/userContext'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { RouteProp, StackActions, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { updateUserUseCase } from '@useCases/auth/updateUser'
 import { logMessageUseCase } from '@useCases/log/logMessage'
@@ -22,7 +22,7 @@ import SubscriptionForm from '../SubscriptionForm'
 const UpdateUser: React.FC = () => {
     const [loading, setLoading] = useState(false)
 
-    const navigation = useNavigation<any>()
+    const navigation = useNavigation()
     const user = useLoggedUser()
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SubscriptionScreen'>>()
 
@@ -79,8 +79,12 @@ const UpdateUser: React.FC = () => {
                 {
                     style: 'default',
                     onPress: () => {
-                        if (params?.redirect) navigation.replace(params.redirect, params.redirectParams)
-                        else navigation.replace(ERouteName.Profile)
+                        if (params?.redirect)
+                            navigation.dispatch(StackActions.replace(params.redirect, params.redirectParams))
+                        else
+                            navigation.reset({
+                                routes: [{ name: ERouteName.HomeScreen }, { name: ERouteName.Profile }],
+                            })
                     },
                 },
             ])

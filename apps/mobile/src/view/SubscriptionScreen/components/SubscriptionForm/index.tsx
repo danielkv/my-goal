@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Platform } from 'react-native'
 
 import { useFormikContext } from 'formik'
 import { YStack } from 'tamagui'
@@ -18,7 +19,7 @@ const SubscriptionForm: React.FC = () => {
     return (
         <YStack gap="$3" alignItems="center">
             <TextField
-                autoFocus
+                autoFocus={Platform.OS === 'android'}
                 label="Nome"
                 onChangeText={handleChange('name')}
                 value={values.name}
