@@ -1,3 +1,5 @@
+import { pick } from 'radash'
+
 import { firebaseProvider } from '@common/providers/firebase'
 import { extractUserCredential } from '@contexts/user/userContext'
 import { IUser, IUserInput } from '@models/user'
@@ -7,20 +9,20 @@ const updateUserFn = firebaseProvider.FUNCTION_CALL<{ uid: string; data: Partial
     'updateUser'
 )
 
-export async function createUserUseCase(userInput: IUserInput): Promise<IUser> {
-    const auth = firebaseProvider.getAuth()
-    const { user } = await auth.createUserWithEmailAndPassword(userInput.email, userInput.password)
-
-    await user.sendEmailVerification()
+export async function updateUserUseCase(userInput: Partial<Omit<IUserInput, 'password'>>): Promise<IUser> {
+    const user = firebaseProvider.getAuth().currentUser
+    if (!user) throw new Error('Usuário não está logado')
 
     await updateUserFn({
         uid: user.uid,
-        data: { displayName: userInput.displayName, phoneNumber: userInput.phoneNumber },
+        data: pick(userInput, ['displayName', 'email', 'phoneNumber']),
     })
 
     await user.reload()
 
-    await auth.signOut()
+    if (user.email !== userInput.email) {
+        await user.sendEmailVerification()
+    }
 
     return extractUserCredential(user)
 }

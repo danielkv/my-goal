@@ -13,9 +13,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`,
         slug: 'goal-mobile',
-        version: '1.2.2',
+        version: '1.3.0',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
+        scheme: 'mygoal',
         splash: {
             image: './src/assets/splash.png',
             resizeMode: 'cover',
@@ -23,14 +24,18 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
-            buildNumber: '7',
+            buildNumber: '8',
             bundleIdentifier: `${ID_PREFIX}.mygoal.goal`,
             supportsTablet: false,
             requireFullScreen: true,
-            googleServicesFile: process.env.GOOGLE_SERVICES_IOS,
+            googleServicesFile: IS_PROD
+                ? process.env.GOOGLE_SERVICES_IOS
+                : APP_VARIANT === 'preview'
+                ? process.env.GOOGLE_SERVICES_IOS_PREV
+                : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 4,
+            versionCode: 5,
             package: `${ID_PREFIX}.mygoal.goal`,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',
@@ -40,6 +45,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
 
         extra: {
+            GOOGLE_WEB_CLIENT_ID: process.env.GOOGLE_WEB_CLIENT_ID,
             WEB_APP_URL: process.env.WEB_APP_URL,
             WEB_APP_RESET_PASSWORD_URL: process.env.WEB_APP_RESET_PASSWORD_URL,
             eas: {
@@ -55,6 +61,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             policy: 'sdkVersion',
         },
         plugins: [
+            '@react-native-google-signin/google-signin',
+            'expo-apple-authentication',
             '@react-native-firebase/app',
             '@react-native-firebase/perf',
             '@react-native-firebase/crashlytics',

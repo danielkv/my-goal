@@ -3,16 +3,13 @@
 	"scripts": {
 		"build": "tsc",
 		"build:watch": "tsc --watch",
-		"serve:dev": "concurrently 'pnpm build:watch' 'pnpm emulate'",
-		"serve": "pnpm build && pnpm emulate",
+		"serve:dev": "concurrently 'yarn build:watch' 'yarn emulate'",
+		"serve": "yarn build && yarn emulate",
 		"emulate": "firebase emulators:start --only functions",
-		"shell": "pnpm run build && firebase functions:shell",
-		"start": "pnpm shell",
+		"shell": "yarn run build && firebase functions:shell",
+		"start": "yarn shell",
 		"deploy": "firebase deploy --only functions",
 		"logs": "firebase functions:log"
-	},
-	"engines": {
-		"node": "16"
 	},
 	"main": "lib/index.js",
 	"dependencies": {

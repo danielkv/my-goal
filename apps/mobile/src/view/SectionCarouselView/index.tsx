@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import PagerView from 'react-native-pager-view'
 import Animated, {
     useAnimatedStyle,
@@ -14,9 +14,7 @@ import { ScrollView, Stack, XStack, getTokens } from 'tamagui'
 import { IFlatSection } from '@common/interfaces/worksheet'
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
-import { useLoggedUser } from '@contexts/user/userContext'
-import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { ERouteName } from '@router/types'
+import { usePreventAccess } from '@utils/preventAccess'
 
 export interface SectionCarouselView {
     day: IDayModel
@@ -46,13 +44,13 @@ const DOT_MAX = 1.4
 const DOT_DIFF = DOT_MAX - DOT_MIN
 
 const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
-    const { dispatch } = useNavigation()
     const { size } = getTokens()
-    const user = useLoggedUser()
 
     const offset = useSharedValue(0)
     const previous = useSharedValue(0)
     const next = useSharedValue(1)
+
+    usePreventAccess()
 
     const scrollHandler = usePageScrollHandler({
         onPageScroll: (e: any) => {
@@ -62,12 +60,6 @@ const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
             next.value = e.position + 1
         },
     })
-
-    useFocusEffect(
-        useCallback(() => {
-            if (!user) dispatch(StackActions.replace(ERouteName.LoginScreen))
-        }, [user])
-    )
 
     const sections = useMemo(
         () =>

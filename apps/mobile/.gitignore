@@ -12,7 +12,7 @@ web-build/
 api-android.json
 
 google-services*.json
-GoogleService-Info.plist
+GoogleService-Info*.plist
 
 .env
 

@@ -1,9 +1,12 @@
+import { useTheme } from 'tamagui'
+
 import Button from '@components/Button'
 import { useLoggedUser } from '@contexts/user/userContext'
 import { useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { User } from '@tamagui/lucide-icons'
 import DayViewScreen from '@view/DayViewScreen'
+import EmailLoginScreen from '@view/EmailLoginScreen'
 import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
 import ProfileScreen from '@view/ProfileScreen'
@@ -16,8 +19,6 @@ import TimersScreen from '@view/Timers/TimersScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
 import WorksheetDays from '@view/WorksheetDays'
 import WorksheetListScreen from '@view/WorksheetListScreen'
-
-import { useTheme } from 'tamagui'
 
 import { ERouteName } from './types'
 
@@ -51,7 +52,12 @@ function Router() {
             initialRouteName={ERouteName.HomeScreen}
         >
             <Stack.Screen name={ERouteName.HomeScreen} component={HomeScreen} options={{ title: 'Goal' }} />
-            <Stack.Screen name={ERouteName.LoginScreen} component={LoginScreen} options={{ title: 'Login' }} />
+            <Stack.Screen name={ERouteName.LoginScreen} component={LoginScreen} options={{ title: 'Acessar' }} />
+            <Stack.Screen
+                name={ERouteName.EmailLoginScreen}
+                component={EmailLoginScreen}
+                options={{ title: 'Continuar com email' }}
+            />
             <Stack.Screen
                 name={ERouteName.SubscriptionScreen}
                 component={SubscriptionScreen}

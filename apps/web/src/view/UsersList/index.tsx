@@ -1,7 +1,18 @@
-import { Component, For, Show, createEffect, createResource, createSignal } from 'solid-js'
+import cloneDeep from 'clone-deep'
 
+import { Component, For, Show, createMemo, createResource, createSignal } from 'solid-js'
+
+import Pagination from '@components/Pagination'
 import { loggedUser } from '@contexts/user/user.context'
-import { AdminPanelSettings, Delete, Person, PersonAdd, PersonOff, PersonRemove } from '@suid/icons-material'
+import {
+    AdminPanelSettings,
+    Delete,
+    MarkEmailRead,
+    PersonAdd,
+    PersonRemove,
+    ToggleOff,
+    ToggleOn,
+} from '@suid/icons-material'
 import {
     Box,
     CircularProgress,
@@ -26,12 +37,14 @@ const UsersList: Component = () => {
     redirectToLogin()
 
     const [loadinAction, setLoadingAction] = createSignal<string | null>(null)
+    const [pageTokens, setPageTokens] = createSignal<string[]>([])
 
-    const [listResult, { refetch }] = createResource(() => ({ limit: 100 }), getUsersUseCase)
+    const currentPageToken = createMemo(() => pageTokens().at(-1) || undefined)
 
-    createEffect(() => {
-        listResult()
-    })
+    const [listResult, { refetch }] = createResource(
+        () => ({ limit: 25, pageToken: currentPageToken() }),
+        getUsersUseCase
+    )
 
     const handleToggleAdminAccess = async (uid: string, current: boolean) => {
         if (current) {
@@ -53,9 +66,9 @@ const UsersList: Component = () => {
 
     const handleToggleEnableUser = async (uid: string, current: boolean) => {
         if (current) {
-            if (!confirm('Tem certeza que deseja desativar esse usuário?')) return
-        } else {
             if (!confirm('Tem certeza que deseja ativar esse?')) return
+        } else {
+            if (!confirm('Tem certeza que deseja desativar esse usuário?')) return
         }
         try {
             setLoadingAction(uid)
@@ -83,6 +96,19 @@ const UsersList: Component = () => {
         }
     }
 
+    const handleNextPage = () => {
+        const restultToken = listResult()?.pageToken
+        if (!restultToken) return
+        setPageTokens((curr) => [...curr, restultToken])
+    }
+
+    const handlePrevPage = () => {
+        const curPageTokens = pageTokens()
+        if (curPageTokens.length < 1) return
+        curPageTokens.splice(curPageTokens.length - 1, 1)
+        setPageTokens(cloneDeep(curPageTokens))
+    }
+
     return (
         <Container maxWidth="lg">
             <Box mt={6}>
@@ -94,6 +120,7 @@ const UsersList: Component = () => {
                 </Typography>
 
                 <Show when={listResult()?.users.length}>
+                    <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -109,12 +136,19 @@ const UsersList: Component = () => {
                                     <TableRow>
                                         <TableCell>
                                             <Stack direction="row" spacing={1}>
-                                                <Box>{user.displayName}</Box>
+                                                <Box fontWeight="bold">{user.displayName}</Box>
                                                 <Show when={user.uid === loggedUser()?.uid}>
                                                     <Box>(você)</Box>
                                                 </Show>
                                                 <Show when={user.customClaims?.admin}>
-                                                    <AdminPanelSettings fontSize="small" />
+                                                    <div title="Admin">
+                                                        <AdminPanelSettings color="info" fontSize="small" />
+                                                    </div>
+                                                </Show>
+                                                <Show when={user.emailVerified}>
+                                                    <div title="Email verificado">
+                                                        <MarkEmailRead color="success" fontSize="small" />
+                                                    </div>
                                                 </Show>
                                             </Stack>
                                         </TableCell>
@@ -129,8 +163,9 @@ const UsersList: Component = () => {
                                                     title={user.disabled ? 'Ativar usuário' : 'Inativar usuário'}
                                                     onClick={() => handleToggleEnableUser(user.uid, user.disabled)}
                                                     disabled={user.uid === loggedUser()?.uid}
+                                                    color={user.disabled ? 'error' : 'success'}
                                                 >
-                                                    {user.disabled ? <Person /> : <PersonOff />}
+                                                    {user.disabled ? <ToggleOn /> : <ToggleOff />}
                                                 </IconButton>
                                                 <IconButton
                                                     title={user.disabled ? 'Remover função ADM' : 'Tornar ADM'}
@@ -155,6 +190,7 @@ const UsersList: Component = () => {
                             </For>
                         </TableBody>
                     </Table>
+                    <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
                 </Show>
             </Box>
         </Container>

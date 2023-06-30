@@ -1,5 +1,3 @@
-import { useCallback } from 'react'
-
 import dayjs from 'dayjs'
 import { IDayModel } from 'goal-models'
 import { Stack, Text, YStack, getTokens } from 'tamagui'
@@ -7,10 +5,8 @@ import { useTheme } from 'tamagui'
 
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
-import { useLoggedUser } from '@contexts/user/userContext'
-import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
-import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
+import { usePreventAccess } from '@utils/preventAccess'
 
 export interface PeriodsListView {
     day: IDayModel
@@ -20,14 +16,7 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
     const theme = useTheme()
     const { size } = getTokens()
 
-    const { dispatch } = useNavigation()
-    const user = useLoggedUser()
-
-    useFocusEffect(
-        useCallback(() => {
-            if (!user) dispatch(StackActions.replace(ERouteName.LoginScreen))
-        }, [user])
-    )
+    usePreventAccess()
 
     return (
         <FlashList

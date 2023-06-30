@@ -1,10 +1,12 @@
+import { H1, Image, Stack, Text } from 'tamagui'
+
 import BlockIdImage from '@assets/images/onboardings/worksheet/tour-blockid.png'
+import KeepAwakeImage from '@assets/images/onboardings/worksheet/tour-keepawake.png'
 import ModesImage from '@assets/images/onboardings/worksheet/tour-mode.png'
+import TimersGeneralImage from '@assets/images/onboardings/worksheet/tour-timer-general.png'
 import TimersImage from '@assets/images/onboardings/worksheet/tour-timers.png'
 import WelcomeImage from '@assets/images/onboardings/worksheet/tour-welcome.png'
 import Onboarding from '@components/Onboarding'
-
-import { H1, Image, Stack, Text } from 'tamagui'
 
 const WorksheetOnboarding: React.FC = () => {
     return (
@@ -28,10 +30,35 @@ const WorksheetOnboarding: React.FC = () => {
                     Você pode abrir os timers diretamente da planilha
                 </Text>
 
+                <Image source={TimersGeneralImage} maxWidth="100%" maxHeight={300} resizeMode="contain" />
+
+                <Text ta="center" fontSize="$5">
+                    Todos esses blocos, são clicáveis, eles vão te levar para a tela dos timers
+                </Text>
+            </Stack>
+            <Stack ai="center" jc="center" gap="$4" my="$3" mx="$3">
+                <H1 ta="center" fontSize="$9" fontWeight="700" lh="$9">
+                    Timers
+                </H1>
+                <Text ta="center" fontSize="$5">
+                    Timers pré-programados
+                </Text>
+
                 <Image source={TimersImage} maxWidth="100%" maxHeight={300} resizeMode="contain" />
 
                 <Text ta="center" fontSize="$5">
-                    Sempre que esse icone for exibido, você pode clicar no bloco para abrir o timer desse treino.
+                    Sempre que você ver esse icone, o bloco já vai ter o timer pré-definido, basta clicar iniciar!
+                </Text>
+            </Stack>
+            <Stack ai="center" jc="center" gap="$3" my="$3" mx="$3">
+                <H1 ta="center" fontSize="$9" fontWeight="700" lh="$9">
+                    Manter tela ligada
+                </H1>
+
+                <Image source={KeepAwakeImage} maxWidth="100%" maxHeight={275} resizeMode="contain" />
+                <Text ta="center" fontSize="$5">
+                    Para manter a tela ligada, utilize esse botão. Caso o botão não seja mostrado, significa que seu
+                    dispositivo não dá suporte
                 </Text>
             </Stack>
             <Stack ai="center" jc="center" gap="$3" my="$3" mx="$3">

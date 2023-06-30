@@ -1,30 +1,28 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { Alert } from 'react-native'
 
 import Constants from 'expo-constants'
 import { getContrastColor, stringToColor, userInitials } from 'goal-utils'
+import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import { Avatar, Stack, Text, YStack } from 'tamagui'
 
 import Button from '@components/Button'
 import { setLoggedUser, useLoggedUser } from '@contexts/user/userContext'
-import { StackActions, useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { LogOut } from '@tamagui/lucide-icons'
+import { Edit, LogOut } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { removeUserUseCase } from '@useCases/auth/removeUser'
 import { getErrorMessage } from '@utils/getErrorMessage'
+import { usePreventAccess } from '@utils/preventAccess'
 
 const ProfileScreen: React.FC = () => {
-    const { dispatch } = useNavigation()
+    const { navigate, reset } = useNavigation()
     const user = useLoggedUser()
 
     const [loading, setLoading] = useState(false)
 
-    useFocusEffect(
-        useCallback(() => {
-            if (!user) dispatch(StackActions.replace(ERouteName.LoginScreen))
-        }, [user])
-    )
+    usePreventAccess()
 
     const handlePressRemoveAccount = () => {
         Alert.alert('Confirmação', 'Tem certeza que deseja excluir sua conta?', [
@@ -56,7 +54,13 @@ const ProfileScreen: React.FC = () => {
 
     const handlePressLogout = () => {
         Alert.alert('Confirmação', 'Tem certeza que deseja sair?', [
-            { text: 'Sim', onPress: logUserOutUseCase },
+            {
+                text: 'Sim',
+                onPress: async () => {
+                    logUserOutUseCase()
+                    reset({ routes: [{ name: ERouteName.HomeScreen }, { name: ERouteName.LoginScreen }] })
+                },
+            },
             { text: 'Não', isPreferred: true },
         ])
     }
@@ -69,7 +73,7 @@ const ProfileScreen: React.FC = () => {
     return (
         <Stack f={1}>
             <YStack f={1} alignItems="stretch" p="$6" gap="$4">
-                <YStack alignItems="center" gap="$4">
+                <YStack alignItems="center" gap="$3">
                     <Avatar bg={avatarColor} circular size="$10">
                         {user.photoURL && <Avatar.Image source={{ uri: user.photoURL }} />}
                         <Avatar.Fallback bg={avatarColor} ai="center" jc="center">
@@ -82,8 +86,15 @@ const ProfileScreen: React.FC = () => {
                         {user.displayName}
                     </Text>
                     <Text fontSize={16}>{user.email}</Text>
-                    {user.phoneNumber && <Text fontSize={14}>{user.phoneNumber}</Text>}
+                    {user.phoneNumber && (
+                        <Text fontSize={14}>
+                            {parsePhoneNumberFromString(user.phoneNumber, 'BR')?.formatNational()}
+                        </Text>
+                    )}
                 </YStack>
+                <Button icon={<Edit size={20} color="white" />} onPress={() => navigate(ERouteName.SubscriptionScreen)}>
+                    Alterar informações
+                </Button>
                 <Button icon={<LogOut size={20} color="white" />} onPress={handlePressLogout}>
                     Logout
                 </Button>

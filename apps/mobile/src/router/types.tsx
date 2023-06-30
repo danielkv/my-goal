@@ -3,13 +3,15 @@ import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'go
 export type TReactNavigationStackParamList = {
     LoginScreen: undefined
 
-    SubscriptionScreen: undefined
+    EmailLoginScreen: undefined
+
+    SubscriptionScreen?: { redirect?: ERouteName; redirectParams?: object }
 
     HomeScreen: undefined
 
     WorksheetListScreen: undefined
 
-    TimersScreen: undefined
+    TimersScreen?: { round?: IRound; block?: IEventBlock }
 
     EmomTimerScreen?: Partial<IEMOMTimer> & { round?: IRound; block?: IEventBlock }
 
@@ -34,6 +36,8 @@ export type TReactNavigationStackParamList = {
 
 export enum ERouteName {
     LoginScreen = 'LoginScreen',
+
+    EmailLoginScreen = 'EmailLoginScreen',
 
     SubscriptionScreen = 'SubscriptionScreen',
 

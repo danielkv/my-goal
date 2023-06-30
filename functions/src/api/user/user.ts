@@ -1,9 +1,8 @@
+import { init } from '../../helpers'
+import { createHttpsError } from '../../utils/createHttpsError'
 import { getAuth } from 'firebase-admin/auth'
 import { https } from 'firebase-functions'
 import { pick } from 'radash'
-
-import { init } from '../../helpers'
-import { createHttpsError } from '../../utils/createHttpsError'
 
 init()
 
@@ -11,6 +10,7 @@ interface UserData {
     displayName: string
     email: string
     password: string
+    phoneNumber?: string
 }
 
 export const createNewUser = https.onCall(async (data: UserData) => {
@@ -58,6 +58,17 @@ export const removeUser = https.onCall(async (uuid: string) => {
         await auth.deleteUser(uuid)
     } catch (err) {
         throw createHttpsError(err)
+    }
+})
+
+export const updateUser = https.onCall(async ({ uid, data }: { uid: string; data: Partial<UserData> }, context) => {
+    try {
+        if (!context.auth?.token.admin && uid !== context.auth?.uid) throw new Error('User does not have permission')
+
+        const auth = getAuth()
+        await auth.updateUser(uid, pick(data, ['displayName', 'email', 'phoneNumber']))
+    } catch (err: any) {
+        throw new https.HttpsError('unknown', err.code, { message: err.message, code: err.code })
     }
 })
 

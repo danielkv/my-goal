@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
-import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
+import { activateKeepAwakeAsync, deactivateKeepAwake, isAvailableAsync } from 'expo-keep-awake'
 import { capitalize } from 'goal-utils'
 import useSWR from 'swr'
 import { Stack, XStack } from 'tamagui'
@@ -21,6 +21,8 @@ import SectionCarouselView from '@view/SectionCarouselView'
 import WorksheetOnboarding from './components/WorksheetOnboarding'
 
 const DayViewScreen: React.FC = () => {
+    const [keepAwakeAvailable, setKeepAwakeAvailable] = useState(false)
+
     const {
         currentValue: keepAwake,
         setItem: setKeepAwake,
@@ -54,10 +56,8 @@ const DayViewScreen: React.FC = () => {
     )
 
     useEffect(() => {
-        return () => {
-            deactivateKeepAwake()
-        }
-    })
+        isAvailableAsync().then(setKeepAwakeAvailable)
+    }, [])
 
     useEffect(() => {
         if (keepAwake === 'disabled') {
@@ -65,24 +65,31 @@ const DayViewScreen: React.FC = () => {
         } else {
             activateKeepAwakeAsync()
         }
+
+        return () => {
+            deactivateKeepAwake()
+        }
     }, [keepAwake])
 
     useEffect(() => {
         if (loadingKeepAwake) return
 
         navigation.setOptions({
-            headerRight: () => (
-                <XStack>
-                    <Button
-                        variant="icon"
-                        bg="transparent"
-                        onPress={() => setKeepAwake(keepAwake === 'enabled' ? 'disabled' : 'enabled')}
-                        icon={keepAwake === 'disabled' ? <Lightbulb size="$1" /> : <LightbulbOff size="$1" />}
-                    />
-                </XStack>
-            ),
+            headerRight: () => {
+                if (!keepAwakeAvailable) return null
+                return (
+                    <XStack>
+                        <Button
+                            variant="icon"
+                            bg="transparent"
+                            onPress={() => setKeepAwake(keepAwake === 'enabled' ? 'disabled' : 'enabled')}
+                            icon={keepAwake === 'disabled' ? <Lightbulb size="$1" /> : <LightbulbOff size="$1" />}
+                        />
+                    </XStack>
+                )
+            },
         })
-    }, [viewType, keepAwake, loadingKeepAwake])
+    }, [viewType, keepAwake, loadingKeepAwake, keepAwakeAvailable])
 
     if (error) return <AlertBox type="error" title="Ocorreu um erro" text={getErrorMessage(error)} />
 
