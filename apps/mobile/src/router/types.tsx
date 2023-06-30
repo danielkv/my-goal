@@ -11,7 +11,7 @@ export type TReactNavigationStackParamList = {
 
     WorksheetListScreen: undefined
 
-    TimersScreen: undefined
+    TimersScreen?: { round?: IRound; block?: IEventBlock }
 
     EmomTimerScreen?: Partial<IEMOMTimer> & { round?: IRound; block?: IEventBlock }
 

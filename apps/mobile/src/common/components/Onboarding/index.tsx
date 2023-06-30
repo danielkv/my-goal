@@ -8,11 +8,11 @@ import Animated, {
     useSharedValue,
 } from 'react-native-reanimated'
 
+import { Dialog, XStack, YStack } from 'tamagui'
+
 import { useStorage } from '@common/hooks/useStorage'
 import Button from '@components/Button'
 import { Check, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons'
-
-import { Dialog, XStack, YStack } from 'tamagui'
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
 

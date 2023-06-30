@@ -34,7 +34,7 @@ const OpenTimerButton: React.FC<OpenTimerButtonProps> = ({
         if (timedWorkoutMode === 'block' && block) return navigate(ERouteName.WodTimer, { block })
 
         if (timedWorkoutMode === 'none' && !type) {
-            return navigate(ERouteName.StopwatchTimerScreen, {
+            return navigate(ERouteName.TimersScreen, {
                 block,
                 round,
             })
