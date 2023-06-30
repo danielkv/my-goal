@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Alert, Image } from 'react-native'
 
 import { Formik, FormikConfig } from 'formik'
@@ -20,6 +20,8 @@ import { TSubscriptionForm, validationSchema } from '@view/SubscriptionScreen/co
 import SubscriptionForm from '../SubscriptionForm'
 
 const UpdateUser: React.FC = () => {
+    const [loading, setLoading] = useState(false)
+
     const navigation = useNavigation<any>()
     const user = useLoggedUser()
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SubscriptionScreen'>>()
@@ -41,13 +43,22 @@ const UpdateUser: React.FC = () => {
     }, [])
 
     const handleConfirmOnSubmit: FormikConfig<TSubscriptionForm>['onSubmit'] = async (result, helper) => {
+        setLoading(true)
+
         if (result.email !== user?.email) {
             Alert.alert(
                 'Confirme para continuar',
                 'Ao alterar seu email, você precisará confirma-lo para poder logar novamente. Deseja continuar?',
                 [
                     { text: 'Sim', onPress: () => handleSubmit(result) },
-                    { text: 'Não', isPreferred: true, onPress: () => helper.setFieldValue('email', user?.email) },
+                    {
+                        text: 'Não',
+                        isPreferred: true,
+                        onPress: () => {
+                            setLoading(false)
+                            helper.setFieldValue('email', user?.email)
+                        },
+                    },
                 ]
             )
             return
@@ -77,6 +88,8 @@ const UpdateUser: React.FC = () => {
             const logError = createAppException('ERROR_CAUGHT', err)
             logMessageUseCase(logError.toObject())
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -106,10 +119,15 @@ const UpdateUser: React.FC = () => {
                     mode: 'update',
                 }}
             >
-                {({ handleSubmit }) => (
+                {({ handleSubmit, isSubmitting }) => (
                     <>
                         <SubscriptionForm />
-                        <Button variant="primary" onPress={() => handleSubmit()}>
+                        <Button
+                            spinnerColor="white"
+                            loading={isSubmitting || loading}
+                            variant="primary"
+                            onPress={() => handleSubmit()}
+                        >
                             Atualizar
                         </Button>
                     </>

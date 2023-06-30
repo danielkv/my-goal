@@ -56,7 +56,12 @@ const CreateNewUser: React.FC = () => {
                 {({ handleSubmit, isSubmitting }) => (
                     <>
                         <SubscriptionForm />
-                        <Button loading={isSubmitting} variant="primary" onPress={() => handleSubmit()}>
+                        <Button
+                            loading={isSubmitting}
+                            variant="primary"
+                            spinnerColor="white"
+                            onPress={() => handleSubmit()}
+                        >
                             Cadastrar
                         </Button>
 

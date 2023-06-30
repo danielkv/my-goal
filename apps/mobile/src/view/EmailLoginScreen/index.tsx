@@ -142,7 +142,12 @@ const EmailLoginScreen: React.FC = () => {
                             onSubmitEditing={() => handleSubmit()}
                         />
 
-                        <Button variant="primary" loading={isSubmitting} onPress={() => handleSubmit()}>
+                        <Button
+                            variant="primary"
+                            spinnerColor="white"
+                            loading={isSubmitting}
+                            onPress={() => handleSubmit()}
+                        >
                             Login
                         </Button>
                         <Button
