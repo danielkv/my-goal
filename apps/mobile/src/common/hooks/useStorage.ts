@@ -34,8 +34,8 @@ export function useStorage<T = any>(key: string, defaultValue?: T) {
     async function setItem(value: T) {
         setLoadingSet(true)
         try {
-            await setItemNative(value as string)
             setCurrentValue(value)
+            await setItemNative(value as string)
         } catch (err) {
             const logError = createAppException('ERROR_CAUGHT', err)
             logMessageUseCase(logError.toObject())
