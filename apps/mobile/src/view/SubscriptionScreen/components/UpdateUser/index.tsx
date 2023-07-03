@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Alert, Image } from 'react-native'
 
 import { Formik, FormikConfig } from 'formik'
+import { isUserDataComplete } from 'goal-utils'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import { H3, Stack } from 'tamagui'
 
@@ -26,7 +27,7 @@ const UpdateUser: React.FC = () => {
     const user = useLoggedUser()
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SubscriptionScreen'>>()
 
-    const incompleteData = !user?.phoneNumber || !user.displayName
+    const incompleteData = isUserDataComplete(user)
 
     usePreventAccess()
 
@@ -117,7 +118,7 @@ const UpdateUser: React.FC = () => {
                 initialValues={{
                     email: user.email || '',
                     name: user.displayName || '',
-                    phoneNumber: parsePhoneNumberFromString(user.phoneNumber, 'BR')?.formatNational() || '',
+                    phoneNumber: parsePhoneNumberFromString(user.phoneNumber || '', 'BR')?.formatNational() || '',
                     password: '',
                     socialLogin: user.socialLogin,
                     mode: 'update',

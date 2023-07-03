@@ -11,10 +11,12 @@ export function usePreventAccess() {
 
     useFocusEffect(
         useCallback(() => {
-            if (!user) dispatch(StackActions.replace(ERouteName.LoginScreen))
+            if (!user) return dispatch(StackActions.replace(ERouteName.LoginScreen))
 
-            if (route.name !== ERouteName.SubscriptionScreen && (!user?.phoneNumber || !user.displayName))
-                dispatch(
+            const skipPages = ([ERouteName.SubscriptionScreen, ERouteName.Profile] as string[]).includes(route.name)
+
+            if (!skipPages && !user.displayName)
+                return dispatch(
                     StackActions.replace(ERouteName.SubscriptionScreen, {
                         redirect: route.name,
                         redirectParams: route.params,

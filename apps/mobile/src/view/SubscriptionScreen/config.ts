@@ -37,8 +37,12 @@ export const validationSchema = yup.object().shape({
     email: yup.string().required('Email é obrigatório'),
     phoneNumber: yup
         .string()
-        .required('Telefone é obrigatório')
-        .test('phoneNumber', 'Telefone inválido', (value) => isValidPhoneNumber(value, 'BR')),
+        .notRequired()
+        .test('phoneNumber', 'Telefone inválido', (value) => {
+            if (!value) return true
+
+            return isValidPhoneNumber(value, 'BR')
+        }),
     password: yup.string().when('mode', {
         is: 'new',
         then: (schema) => schema.required('Senha é obrigatória'),

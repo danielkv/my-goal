@@ -3,6 +3,7 @@ import { Alert } from 'react-native'
 
 import * as AppleAuthentication from 'expo-apple-authentication'
 import * as Crypto from 'expo-crypto'
+import { displayArray } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import LoginButton from '@components/LoginButton'
@@ -37,10 +38,17 @@ const AppleLogin: React.FC<AppleLoginProps> = ({ onSuccess }) => {
                     nonce: hashedNonce,
                 })
             )
-            .then(async ({ identityToken }) => {
+            .then(async ({ identityToken, fullName }) => {
                 const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
 
                 const credential = await firebaseProvider.getAuth().signInWithCredential(appleCredential)
+
+                if (!credential.user.displayName && fullName?.givenName) {
+                    await firebaseProvider.getAuth().currentUser?.updateProfile({
+                        displayName: displayArray([fullName?.givenName, fullName.familyName]),
+                    })
+                    await firebaseProvider.getAuth().currentUser?.reload()
+                }
 
                 onSuccess?.(credential)
             })
