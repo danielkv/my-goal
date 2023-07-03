@@ -11,7 +11,7 @@ npm-debug.*
 web-build/
 api-android.json
 
-google-services*.json
+google-service*.json
 GoogleService-Info*.plist
 
 .env
