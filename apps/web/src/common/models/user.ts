@@ -1,6 +1,7 @@
 import { IUserData } from 'goal-models'
 
 export interface IUser extends IUserData {
+    readonly disabled: boolean
     readonly customClaims?: {
         [key: string]: any
     }

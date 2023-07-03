@@ -5,5 +5,4 @@ export interface IUserData {
     readonly displayName?: string
     readonly photoURL?: string | null
     readonly phoneNumber?: string
-    readonly disabled: boolean
 }

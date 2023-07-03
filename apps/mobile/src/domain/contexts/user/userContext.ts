@@ -36,11 +36,11 @@ export function extractUserCredential(user: FirebaseAuthTypes.User): IUser {
 
     return {
         uid: user.uid,
-        email: user.email || '',
+        email: user.email || undefined,
         emailVerified: user.emailVerified,
         photoURL: user.photoURL,
         displayName: user.displayName || '',
-        phoneNumber: user.phoneNumber || '',
+        phoneNumber: user.phoneNumber || undefined,
         socialLogin,
     }
 }
