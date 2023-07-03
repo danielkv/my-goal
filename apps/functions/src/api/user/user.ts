@@ -13,6 +13,9 @@ interface UserData {
     phoneNumber?: string
 }
 
+/**
+ * @Deprecated
+ */
 export const createNewUser = https.onCall(async (data: UserData) => {
     const auth = getAuth()
 
@@ -72,6 +75,9 @@ export const updateUser = https.onCall(async ({ uid, data }: { uid: string; data
     }
 })
 
+/**
+ * @Deprecated
+ */
 export const verifyEmail = https.onRequest(async (request, response) => {
     const email = request.query.email
     if (!email || typeof email !== 'string') {

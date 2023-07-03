@@ -1,11 +1,13 @@
+import { init } from '../../helpers'
+import { getDays } from '../../utils/getDays'
 import * as admin from 'firebase-admin'
 import { https } from 'firebase-functions'
 
-import { init } from '../../helpers'
-import { getDays } from '../../utils/getDays'
-
 init()
 
+/**
+ * @Deprecated
+ */
 export const duplicateWorksheet = https.onCall(async (worksheetId: string) => {
     const db = admin.firestore()
     const collection = db.collection('worksheets')
@@ -32,16 +34,25 @@ export const duplicateWorksheet = https.onCall(async (worksheetId: string) => {
     return createWorksheetUseCase(worksheet)
 })
 
+/**
+ * @Deprecated
+ */
 export const removeWorksheet = https.onCall(async (worksheetId: string) => {
     const db = admin.firestore()
     const collection = db.collection('worksheets')
     await collection.doc(worksheetId).delete()
 })
 
+/**
+ * @Deprecated
+ */
 export const saveWorksheet = https.onCall((worksheet: Record<string, any>, context: https.CallableContext) => {
     return createWorksheetUseCase(worksheet)
 })
 
+/**
+ * @Deprecated
+ */
 function createWorksheetUseCase({ days, ...worksheet }: Record<string, any>) {
     const db = admin.firestore()
 
@@ -66,6 +77,9 @@ function createWorksheetUseCase({ days, ...worksheet }: Record<string, any>) {
     })
 }
 
+/**
+ * @Deprecated
+ */
 async function saveDaysUseCase(
     transaction: admin.firestore.Transaction,
     worksheetRef: admin.firestore.DocumentReference,
@@ -88,6 +102,9 @@ async function saveDaysUseCase(
     return days
 }
 
+/**
+ * @Deprecated
+ */
 export const toggleWorksheetPublished = https.onCall(async (worksheetId: string) => {
     const db = admin.firestore()
     const doc = db.collection('worksheets').doc(worksheetId)
@@ -103,6 +120,9 @@ export const toggleWorksheetPublished = https.onCall(async (worksheetId: string)
     })
 })
 
+/**
+ * @Deprecated
+ */
 export const createInitialLoad = https.onRequest(async (req, res) => {
     if (!process.env.FUNCTIONS_EMULATOR) {
         res.sendStatus(404)

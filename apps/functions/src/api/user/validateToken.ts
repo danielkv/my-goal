@@ -1,11 +1,13 @@
+import { init } from '../../helpers'
+import { createHttpsError } from '../../utils/createHttpsError'
 import { getAuth } from 'firebase-admin/auth'
 import { https } from 'firebase-functions'
 
-import { init } from '../../helpers'
-import { createHttpsError } from '../../utils/createHttpsError'
-
 init()
 
+/**
+ * @Deprecated
+ */
 export const createSessionCookie = https.onCall(async (data: string) => {
     try {
         await getAuth().verifyIdToken(data)
@@ -23,6 +25,9 @@ export const createSessionCookie = https.onCall(async (data: string) => {
     }
 })
 
+/**
+ * @Deprecated
+ */
 export const validateSessionCookie = https.onCall(async (data: string) => {
     try {
         const decoded = await getAuth().verifySessionCookie(data, true)
