@@ -20,12 +20,11 @@ const LoginScreen: React.FC = () => {
     const { size } = getTokens()
 
     const handleSuccessSocialLogin = (credential: FirebaseAuthTypes.UserCredential) => {
-        if (credential.user.displayName && credential.user.phoneNumber)
-            navigation.dispatch(StackActions.replace(ERouteName.HomeScreen))
-        else
+        if (!credential.user.displayName)
             navigation.dispatch(
                 StackActions.replace(ERouteName.SubscriptionScreen, { redirect: ERouteName.HomeScreen })
             )
+        else navigation.dispatch(StackActions.replace(ERouteName.HomeScreen))
     }
 
     return (

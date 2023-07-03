@@ -40,3 +40,11 @@ export function getContrastColor(color: string) {
     if (chroma.contrast(color, 'white') < 4) return '#000'
     return '#fff'
 }
+
+export function displayArray(array: any[], separator = ' ', prefix = '', suffix = ''): string {
+    const text = array.filter((part) => part).join(separator)
+
+    if (!text) return ''
+
+    return `${prefix}${text}${suffix}`
+}

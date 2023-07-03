@@ -1,10 +1,6 @@
-export interface IUser {
-    readonly uid: string
-    readonly email?: string
-    readonly emailVerified: boolean
-    readonly displayName?: string
-    readonly photoURL?: string
-    readonly phoneNumber?: string
+import { IUserData } from 'goal-models'
+
+export interface IUser extends IUserData {
     readonly disabled: boolean
     readonly customClaims?: {
         [key: string]: any

@@ -67,7 +67,7 @@ const ProfileScreen: React.FC = () => {
 
     if (!user) return null
 
-    const avatarColor = stringToColor(user.displayName)
+    const avatarColor = user.displayName ? stringToColor(user.displayName) : ''
     const textAvatarColor = getContrastColor(avatarColor)
 
     return (
