@@ -5,8 +5,7 @@
 	},
 	"functions": [
 		{
-			"runtime": "nodejs16",
-			"source": "functions",
+			"source": "apps/functions",
 			"codebase": "default",
 			"ignore": [
 				"node_modules",

@@ -1,4 +1,4 @@
-import { https } from 'firebase-functions/v1'
+import { https } from 'firebase-functions'
 
 export function createHttpsError(err: any): https.HttpsError {
     if (typeof err === 'object') {

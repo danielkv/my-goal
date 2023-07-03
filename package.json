@@ -17,6 +17,7 @@
 	"scripts": {
 		"fb:emulator": "firebase emulators:start",
 		"dbseed": "node ./scripts/dbseed.js",
+		"dev:functions": "yarn workspace goal-functions dev",
 		"dev:web": "yarn workspace goal-web dev",
 		"dev:mobile": "yarn workspace goal-mobile start --dev-client"
 	}
