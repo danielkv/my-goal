@@ -1,4 +1,4 @@
-import { IEMOMTimer, ITabataTimer, ITimecapTimer, TTimerTypes } from './time'
+import { TTimer } from './time'
 
 export type TWeightTypes = 'kg' | 'lb' | '%' | 'none'
 
@@ -14,62 +14,40 @@ export type IEventMovement = {
     videoUrl?: string
 }
 
-export type IRoundTimecap = {
-    type: Exclude<TTimerTypes, 'emom' | 'not_timed' | 'tabata'>
-} & ITimecapTimer
+export type TRoundTypes = 'rest' | 'complex'
 
-export type IRoundEMOM = {
-    type: 'emom'
-} & IEMOMTimer
-
-export type IRoundTabata = {
-    type: 'tabata'
-} & ITabataTimer
-
-export type IRoundRest = {
+export type IRestRound = {
     type: 'rest'
     time: number
 }
 
-export type IRoundNotTimed = {
-    type: 'not_timed' | 'complex'
+export type IComplexRound = {
+    type: 'complex'
+    movements: IEventMovement[]
+    config: TTimer
 }
 
-export type TRoundTypes = TTimerTypes | 'rest' | 'complex'
-
-export type IRound = {
-    type: TRoundTypes
-    numberOfRounds?: number
-    movements: IEventMovement[]
-} & (IRoundTimecap | IRoundEMOM | IRoundTabata | IRoundRest | IRoundNotTimed)
+export type IRound =
+    | {
+          type?: TRoundTypes
+          movements: IEventMovement[]
+          config: TTimer
+      }
+    | IRestBlock
+    | IComplexRound
 
 export type TBlockType = 'event' | 'rest' | 'text' | ''
 
-export type IEventBlockEMOM = {
-    event_type: 'emom'
-} & IEMOMTimer
-
-export type IEventBlockTabata = {
-    event_type: 'tabata'
-} & ITabataTimer
-
-export type TEventType = TTimerTypes | 'max_weight'
-export type IEventBlockTimecap = {
-    event_type: 'for_time' | 'amrap' | 'max_weight'
-} & ITimecapTimer
-
-export type IEventBlockNotTimed = {
-    event_type: 'not_timed'
-}
+//export type TEventType = 'default' | 'max_weight'
 
 export type IEventBlock = {
     type: 'event'
     name?: string
     rounds: IRound[]
-    event_type: TEventType
-    numberOfRounds?: number
+    //event_type: TEventType
     info?: string
-} & (IEventBlockEMOM | IEventBlockTimecap | IEventBlockNotTimed | IEventBlockTabata)
+    config: TTimer
+}
 
 export type IRestBlock = {
     type: 'rest'
