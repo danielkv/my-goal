@@ -1,9 +1,9 @@
+import { isComplexRound, isRestRound } from '../models'
 import { numberHelper } from '../numbers'
 import { getTimeFromSeconds } from '../time'
 import { BaseTransformer } from './base'
 import { MovementTransformer, movementTransformer } from './movement'
-import cloneDeep from 'clone-deep'
-import { IRound, TMergedTimer } from 'goal-models'
+import { IRestBlock, IRound } from 'goal-models'
 import { omit } from 'radash'
 
 export class RoundTransformer extends BaseTransformer {
@@ -25,45 +25,47 @@ export class RoundTransformer extends BaseTransformer {
             textMovements.splice(0, 1)
 
             const restRoundTime = this.findRest(text)
-            if (restRoundTime) return { type: 'rest', time: restRoundTime, movements: [] }
+            if (restRoundTime) return { type: 'rest', time: restRoundTime }
 
             const extractedRound = this.textMovementsToRound(textMovements, extractedHeader.reps)
             if (!extractedRound) return null
+
             return {
-                ...omit(extractedHeader, ['reps', 'numberOfRounds']),
-                numberOfRounds: finalNumberOfRounds,
                 ...extractedRound,
-                type: extractedRound.type === 'complex' ? 'complex' : extractedHeader.type,
+                config: {
+                    ...omit(extractedHeader, ['reps', 'numberOfRounds']),
+                    numberOfRounds:
+                        (extractedRound as Exclude<IRound, IRestBlock>).config.numberOfRounds || finalNumberOfRounds,
+                },
+                type: extractedRound.type,
             } as IRound
         }
 
         const restRoundTime = this.findRest(text)
-        if (restRoundTime) return { type: 'rest', time: restRoundTime, movements: [] }
+        if (restRoundTime) return { type: 'rest', time: restRoundTime }
 
         const round = this.textMovementsToRound(textMovements)
         if (!round) return null
 
         return {
             ...round,
-            numberOfRounds: finalNumberOfRounds,
+            config: { type: 'not_timed', numberOfRounds: finalNumberOfRounds },
         }
     }
 
     toString(obj: IRound): string {
-        if (obj.type === 'rest') return `${getTimeFromSeconds(obj.time)} Rest`
+        if (isRestRound(obj)) return `${getTimeFromSeconds(obj.time)} Rest`
 
         const matchingReps = numberHelper.findSequenceReps(obj.movements)
 
         const title = this.headerToString(obj, matchingReps)
 
-        if (obj.type === 'complex') {
+        if (isComplexRound(obj)) {
             if (title) return `${title}\n${this.complexToString(obj, !!matchingReps)}`
             return this.complexToString(obj)
         }
 
-        const round = cloneDeep(obj)
-
-        const movements = round.movements
+        const movements = obj.movements
             .map((o) => this.movementTransformer.toString(o, !!matchingReps))
             .join(this.breakline)
 
@@ -71,17 +73,17 @@ export class RoundTransformer extends BaseTransformer {
     }
 
     private headerToString(obj: IRound, sequence?: string | null): string | null {
-        if (obj.type === 'rest') return null
+        if (isRestRound(obj)) return null
 
-        if (obj.type === 'complex') {
+        if (isComplexRound(obj)) {
             if (sequence) return sequence
 
-            const rounds = super.roundsToString(obj.numberOfRounds)
+            const rounds = super.roundsToString(obj.config.numberOfRounds)
 
             return rounds
         }
 
-        return this.timerToString(obj.type, obj as TMergedTimer, sequence)
+        return this.timerToString(obj.config, sequence)
     }
 
     private breakTextInMovements(text: string): string[] | null {
@@ -102,6 +104,7 @@ export class RoundTransformer extends BaseTransformer {
             if (complexMovements.length > 1) {
                 return {
                     type: 'complex',
+                    config: { type: 'not_timed' },
                     movements: complexMovements.map((movement) => {
                         const movementText = `${movement.trim()}${weightText}`
 
@@ -114,14 +117,14 @@ export class RoundTransformer extends BaseTransformer {
         const movements = textMovements.map((movement) => this.movementTransformer.toObject(movement, roundReps))
 
         const round: IRound = {
-            type: 'not_timed',
+            config: { type: 'not_timed' },
             movements,
         }
 
         if (roundReps) return round
 
         const sequenceReps = numberHelper.findSequenceReps(movements)
-        if (sequenceReps) round.numberOfRounds = sequenceReps.length
+        if (sequenceReps) round.config.numberOfRounds = sequenceReps.length
 
         return round
     }

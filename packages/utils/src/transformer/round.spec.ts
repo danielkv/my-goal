@@ -19,7 +19,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'not_timed',
+                config: { type: 'not_timed' },
                 movements: [
                     {
                         name: 'Snatch - DB Clean Jerk',
@@ -56,7 +56,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'not_timed',
+                config: { type: 'not_timed' },
                 movements: [
                     {
                         name: 'Muscle Clean',
@@ -90,9 +90,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'for_time',
-                numberOfRounds: 1,
-                timecap: 0,
+                config: { type: 'for_time', numberOfRounds: 1, timecap: 0 },
                 movements: [
                     {
                         name: 'Muscle Clean',
@@ -124,9 +122,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'for_time',
-                numberOfRounds: 2,
-                timecap: 180,
+                config: { type: 'for_time', numberOfRounds: 2, timecap: 180 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -150,9 +146,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'for_time',
-                numberOfRounds: 2,
-                timecap: 180,
+                config: { type: 'for_time', numberOfRounds: 2, timecap: 180 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -177,9 +171,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'amrap',
-                numberOfRounds: 4,
-                timecap: 180,
+                config: { type: 'amrap', numberOfRounds: 4, timecap: 180 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -204,9 +196,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'amrap',
-                numberOfRounds: 4,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 4, timecap: 30 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -231,9 +221,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 30,
-                each: 90,
+                config: { type: 'emom', numberOfRounds: 30, each: 90 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -258,9 +246,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 5,
-                each: 180,
+                config: { type: 'emom', numberOfRounds: 5, each: 180 },
                 movements: [
                     {
                         name: 'Pull-Up',
@@ -284,9 +270,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 4,
-                each: 94,
+                config: { type: 'emom', numberOfRounds: 4, each: 94 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -310,9 +294,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 4,
-                each: 30,
+                config: { type: 'emom', numberOfRounds: 4, each: 30 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -337,9 +319,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 30,
-                each: 60,
+                config: { type: 'emom', numberOfRounds: 30, each: 60 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -361,9 +341,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'emom',
-                numberOfRounds: 40,
-                each: 60,
+                config: { type: 'emom', numberOfRounds: 40, each: 60 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -388,10 +366,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'tabata',
-                numberOfRounds: 4,
-                work: 20,
-                rest: 10,
+                config: { type: 'tabata', numberOfRounds: 4, work: 20, rest: 10 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -416,10 +391,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'tabata',
-                numberOfRounds: 4,
-                work: 20,
-                rest: 10,
+                config: { type: 'tabata', numberOfRounds: 4, work: 20, rest: 10 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -444,10 +416,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'tabata',
-                numberOfRounds: 4,
-                work: 20,
-                rest: 10,
+                config: { type: 'tabata', numberOfRounds: 4, work: 20, rest: 10 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -468,10 +437,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'tabata',
-                numberOfRounds: 8,
-                work: 20,
-                rest: 10,
+                config: { type: 'tabata', numberOfRounds: 8, work: 20, rest: 10 },
                 movements: [
                     {
                         name: 'Hang Clean',
@@ -498,9 +464,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'for_time',
-                numberOfRounds: 3,
-                timecap: 0,
+                config: { type: 'for_time', numberOfRounds: 3, timecap: 0 },
                 movements: [
                     {
                         name: 'Deadlift',
@@ -531,9 +495,7 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'for_time',
-                numberOfRounds: 3,
-                timecap: 300,
+                config: { type: 'for_time', numberOfRounds: 3, timecap: 300 },
                 movements: [
                     {
                         name: 'Deadlift',
@@ -564,8 +526,8 @@ describe('Round transformer toObject', () => {
             const object = roundTransformer.toObject(inputText) as IRound
 
             const expected: IRound = {
-                type: 'not_timed',
-                numberOfRounds: 3,
+                config: { type: 'not_timed', numberOfRounds: 3 },
+
                 movements: [
                     {
                         name: 'Deadlift',
@@ -586,7 +548,7 @@ describe('Round transformer toObject', () => {
     })
 
     describe('Complex and Rest rounds', () => {
-        it('2min rest"', () => {
+        it('2min rest', () => {
             const inputText = `2min rest`
             const outputText = `2min Rest`
 
@@ -595,7 +557,6 @@ describe('Round transformer toObject', () => {
             const expected: IRound = {
                 type: 'rest',
                 time: 120,
-                movements: [],
             }
             expect(object).toMatchObject(expected)
 
@@ -613,7 +574,6 @@ describe('Round transformer toObject', () => {
             const expected: IRound = {
                 type: 'rest',
                 time: 90,
-                movements: [],
             }
             expect(object).toMatchObject(expected)
 
@@ -628,6 +588,7 @@ describe('Round transformer toObject', () => {
 
             const expected: IRound = {
                 type: 'complex',
+                config: { type: 'not_timed' },
                 movements: [
                     {
                         name: 'Deadlift',
@@ -654,6 +615,7 @@ describe('Round transformer toObject', () => {
 
             const expected: IRound = {
                 type: 'complex',
+                config: { type: 'not_timed' },
                 movements: [
                     {
                         name: 'Deadlift',
@@ -686,6 +648,7 @@ describe('Round transformer toObject', () => {
 
             const expected: IRound = {
                 type: 'complex',
+                config: { type: 'not_timed' },
                 movements: [
                     {
                         name: 'Deadlift',
@@ -719,7 +682,8 @@ describe('Round transformer toObject', () => {
 
             const expected: IRound = {
                 type: 'complex',
-                numberOfRounds: 3,
+                config: { type: 'not_timed', numberOfRounds: 3 },
+
                 movements: [
                     {
                         name: 'Deadlift',
@@ -756,7 +720,8 @@ describe('Round transformer toObject', () => {
 
             const expected: IRound = {
                 type: 'complex',
-                numberOfRounds: 10,
+                config: { type: 'not_timed', numberOfRounds: 10 },
+
                 movements: [
                     {
                         name: 'Deadlift',

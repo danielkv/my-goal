@@ -1,7 +1,8 @@
+import { isRestRound } from '../models'
 import { BaseTransformer } from './base'
 import { RoundTransformer, roundTransformer } from './round'
 import deepEqual from 'deep-equal'
-import { IEventBlock, IRound, TMergedTimer } from 'goal-models'
+import { IEventBlock, IRestRound, IRound, TTimer } from 'goal-models'
 import { omit } from 'radash'
 
 export class EventBlockTransformer extends BaseTransformer {
@@ -44,7 +45,7 @@ export class EventBlockTransformer extends BaseTransformer {
                 return {
                     type: 'event',
                     info: extractedHeader.info,
-                    event_type: 'not_timed',
+                    config: { type: 'not_timed' },
                     rounds: textRounds.map((t) => this.roundTransformer.toObject(t)).filter((r) => r) as IRound[],
                 }
 
@@ -61,9 +62,10 @@ export class EventBlockTransformer extends BaseTransformer {
                 .filter((r) => r) as IRound[]
 
             return {
-                ...omit(extractedHeader.timer, ['reps', 'type', 'numberOfRounds']),
-                numberOfRounds: roundNumberOfRounds ? 1 : extractedHeader.timer.numberOfRounds,
-                event_type: extractedHeader.timer.type,
+                config: {
+                    ...omit(extractedHeader.timer, ['reps', 'numberOfRounds']),
+                    numberOfRounds: roundNumberOfRounds ? 1 : extractedHeader.timer.numberOfRounds,
+                },
                 info: extractedHeader.info,
                 type: 'event',
                 rounds,
@@ -77,40 +79,54 @@ export class EventBlockTransformer extends BaseTransformer {
 
         return {
             type: 'event',
-            event_type: 'not_timed',
+            config: { type: 'not_timed' },
             rounds,
         }
     }
 
-    toString(obj: IEventBlock): string {
-        const isSame =
-            obj.rounds.length > 1 &&
-            obj.rounds
-                .map((r) => omit(r, ['numberOfRounds']))
-                .every((round) => deepEqual(round, omit(obj.rounds[0], ['numberOfRounds'])))
+    private findBlockSequence(obj: IEventBlock): string | null {
+        const roundCompare = obj.rounds[0]
+        if (isRestRound(roundCompare)) return null
+        if (obj.rounds.some((round) => isRestRound(round))) return null
+        if (obj.rounds.length < 2) return null
 
-        const sequence = isSame
-            ? obj.rounds
-                  .reduce<string[]>((acc, round) => {
-                      acc.push(String(round.numberOfRounds))
-                      return acc
-                  }, [])
-                  .join('-')
-            : null
+        const rounds = obj.rounds as Exclude<IRound, IRestRound>[]
+
+        const compare = omit(roundCompare, ['config'])
+
+        const isSame = rounds
+            .map((r) => omit(r, ['config']))
+            .every((round) => !isRestRound(round) && deepEqual(round, compare))
+
+        if (!isSame) return null
+
+        return rounds
+            .reduce<string[]>((acc, round) => {
+                acc.push(String(round.config.numberOfRounds))
+                return acc
+            }, [])
+            .join('-')
+    }
+
+    toString(obj: IEventBlock): string {
+        const sequence = this.findBlockSequence(obj)
 
         const title = this.headerToString(obj, sequence)
 
-        const rounds = sequence
-            ? this.roundTransformer.toString(omit(obj.rounds[0], ['numberOfRounds']) as IRound)
-            : obj.rounds.map((o) => this.roundTransformer.toString(o)).join(this.breakline)
+        let roundString: string
 
-        return this.arrayToString([title, rounds], '\n')
+        if (sequence) {
+            const round = obj.rounds[0] as Exclude<IRound, IRestRound>
+            round.config = omit(round.config, ['numberOfRounds']) as TTimer
+
+            roundString = this.roundTransformer.toString(round)
+        } else roundString = obj.rounds.map((o) => this.roundTransformer.toString(o)).join(this.breakline)
+
+        return this.arrayToString([title, roundString], '\n')
     }
 
     private headerToString(obj: IEventBlock, sequence?: string | null): string | null {
-        if (obj.event_type === 'max_weight') return null
-
-        const timerHeader = this.timerToString(obj.event_type, obj as unknown as TMergedTimer, sequence)
+        const timerHeader = this.timerToString(obj.config, sequence)
 
         return this.arrayToString([timerHeader, obj.info], ' : ', 'bloco: ')
     }
