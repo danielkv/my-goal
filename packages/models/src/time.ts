@@ -26,4 +26,6 @@ export type TTimerTypes = 'for_time' | 'amrap' | 'emom' | 'tabata' | 'not_timed'
 
 export type TTimer = ITabataTimer | ITimecapTimer | IEMOMTimer | INotTimedTimer
 
-export type TMergedTimer = Partial<ITabataTimer & ITimecapTimer & IEMOMTimer>
+export type TTimerSettings = Partial<
+    Omit<ITabataTimer, 'type'> & Omit<ITimecapTimer, 'type'> & Omit<IEMOMTimer, 'type'>
+>

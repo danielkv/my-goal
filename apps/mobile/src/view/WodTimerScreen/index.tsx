@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import dayjs from 'dayjs'
 import { IEventBlock, IRound } from 'goal-models'
+import { isRestRound } from 'goal-utils'
 import { Stack, YStack } from 'tamagui'
 
 import { useOrientation } from '@common/hooks/useOrientation'
@@ -17,7 +18,7 @@ import { EmomTimer, RegressiveTimer, StopwatchTimer, TabataTimer } from '@utils/
 import RoundDisplay from './RoundDisplay'
 
 function flattenRounds(block: IEventBlock): IRound[] {
-    const flattened = Array.from({ length: block.numberOfRounds || 1 }).flatMap(() =>
+    const flattened = Array.from({ length: block.config.numberOfRounds || 1 }).flatMap(() =>
         block.rounds.map((round) => round)
     )
 
@@ -147,43 +148,48 @@ const WodTimerScreen: React.FC = () => {
 
     function setupNewTimer(currRound: number) {
         const round = rounds[currRound]
+        if (isRestRound(round)) return null
 
         setCurrentRoundDisplay(null)
 
         setActivityStatus('work')
 
-        switch (round.type) {
+        switch (round.config.type) {
             case 'amrap':
-                clockRef.current = new RegressiveTimer(round.timecap)
+                clockRef.current = new RegressiveTimer(round.config.timecap)
 
                 break
             case 'for_time':
-                clockRef.current = new StopwatchTimer(round.timecap)
+                clockRef.current = new StopwatchTimer(round.config.timecap)
                 break
-            case 'rest':
-                clockRef.current = new RegressiveTimer(round.time)
+            // case 'rest':
+            //     clockRef.current = new RegressiveTimer(round.config.time)
 
-                setActivityStatus('rest')
-                break
+            //     setActivityStatus('rest')
+            //     break
             case 'emom':
-                clockRef.current = new EmomTimer(round.each, round.numberOfRounds)
-                if (round.numberOfRounds > 1) {
+                clockRef.current = new EmomTimer(round.config.each, round.config.numberOfRounds || 1)
+                if ((round.config.numberOfRounds || 1) > 1) {
                     clockRef.current?.on('changeRound', (current: number) => {
                         setCurrentRoundDisplay(current)
                     })
                     setCurrentRoundDisplay(1)
-                    setTotalRounds(round.numberOfRounds)
+                    setTotalRounds(round.config.numberOfRounds || 1)
                 }
 
                 break
             case 'tabata':
-                clockRef.current = new TabataTimer(round.work, round.rest, round.numberOfRounds)
-                if (round.numberOfRounds > 1) {
+                clockRef.current = new TabataTimer(
+                    round.config.work,
+                    round.config.rest,
+                    round.config.numberOfRounds || 1
+                )
+                if ((round.config.numberOfRounds || 1) > 1) {
                     clockRef.current?.on('changeRound', (current: number) => {
                         setCurrentRoundDisplay(current)
                     })
                     setCurrentRoundDisplay(1)
-                    setTotalRounds(round.numberOfRounds)
+                    setTotalRounds(round.config.numberOfRounds || 1)
                 }
 
                 clockRef.current?.on('changeActivityStatus', (current: TActivityStatus, status: TTimerStatus) => {

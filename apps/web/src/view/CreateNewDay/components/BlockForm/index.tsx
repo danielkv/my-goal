@@ -55,14 +55,16 @@ const BlockForm: Component<BlockFormProps> = (props) => {
                     <EventBlockForm
                         block={props.block as IEventBlock}
                         onClickNext={(eventBlock) => {
-                            switch (eventBlock.event_type) {
+                            switch (eventBlock.config.type) {
                                 case 'emom':
                                     handleSubmit({
                                         type: 'event',
-                                        event_type: eventBlock.event_type,
+                                        config: {
+                                            type: 'emom',
+                                            each: eventBlock.each || 0,
+                                            numberOfRounds: eventBlock.numberOfRounds || 1,
+                                        },
                                         rounds: eventBlock.rounds,
-                                        each: eventBlock.each || 0,
-                                        numberOfRounds: eventBlock.numberOfRounds || 1,
                                         info: info(),
                                         name: eventBlock.name,
                                     })
@@ -71,11 +73,13 @@ const BlockForm: Component<BlockFormProps> = (props) => {
                                 case 'tabata':
                                     handleSubmit({
                                         type: 'event',
-                                        event_type: eventBlock.event_type,
+                                        config: {
+                                            type: 'tabata',
+                                            numberOfRounds: eventBlock.numberOfRounds || 1,
+                                            rest: eventBlock.rest || 0,
+                                            work: eventBlock.work || 0,
+                                        },
                                         rounds: eventBlock.rounds,
-                                        numberOfRounds: eventBlock.numberOfRounds || 1,
-                                        rest: eventBlock.rest || 0,
-                                        work: eventBlock.work || 0,
                                         info: info(),
                                         name: eventBlock.name,
                                     })
@@ -83,10 +87,12 @@ const BlockForm: Component<BlockFormProps> = (props) => {
                                 default:
                                     handleSubmit({
                                         type: 'event',
-                                        event_type: eventBlock.event_type,
-                                        numberOfRounds: eventBlock.numberOfRounds || 1,
+                                        config: {
+                                            type: eventBlock.config.type,
+                                            numberOfRounds: eventBlock.numberOfRounds || 1,
+                                            timecap: eventBlock.timecap || 0,
+                                        },
                                         rounds: eventBlock.rounds,
-                                        timecap: eventBlock.timecap || 0,
                                         info: info(),
                                         name: eventBlock.name,
                                     })

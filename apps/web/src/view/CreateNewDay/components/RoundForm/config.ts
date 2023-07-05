@@ -4,14 +4,7 @@ import { z } from 'zod'
 import { ZodShape } from '@interfaces/app'
 import { createEventRoundValues } from '@utils/worksheetInitials'
 
-export type TRoundForm = IRound & {
-    each?: number
-    timecap?: number
-    work?: number
-    rest?: number
-    time?: number
-    numberOfRounds?: number
-}
+export type TRoundForm = IRound
 
 export const roundInitialValues: TRoundForm = createEventRoundValues()
 

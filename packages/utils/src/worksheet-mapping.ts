@@ -23,7 +23,6 @@ export const eventTypes = {
 }
 
 export const roundTypes = {
-    ...timerTypes,
     complex: 'Complex',
     rest: 'Rest',
 }

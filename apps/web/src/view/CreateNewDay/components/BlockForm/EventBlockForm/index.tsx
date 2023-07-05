@@ -1,11 +1,11 @@
 import { IEventBlock, TTimerTypes } from 'goal-models'
 import { eventTypes } from 'goal-utils'
 
-import { Component, For, JSX, createEffect, createMemo, on } from 'solid-js'
+import { Component, For, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import TimersForm from '@components/TimersForm'
-import { Field, Form, SubmitHandler, createForm, getValue, reset, setValue, zodForm } from '@modular-forms/solid'
+import { Field, Form, SubmitHandler, createForm, getValue, reset, zodForm } from '@modular-forms/solid'
 
 import { TEventBlockForm, eventBlockFormSchema } from './config'
 
@@ -33,9 +33,7 @@ const EventBlockForm: Component<BlockFormProps> = (props) => {
     }
 
     const timerType = createMemo<TTimerTypes>(() => {
-        const value = getValue(form, 'event_type') || 'not_timed'
-
-        if (value === 'max_weight') return 'for_time'
+        const value = getValue(form, 'config.type') || 'not_timed'
 
         return value
     })
@@ -61,26 +59,12 @@ const EventBlockForm: Component<BlockFormProps> = (props) => {
                 }}
             </Field>
             <div class="flex gap-6">
-                <Field of={form} name="event_type">
+                <Field of={form} name="config.type">
                     {(field) => {
-                        const handleInput: JSX.EventHandler<HTMLSelectElement, InputEvent> = (e) => {
-                            if ((e.target as any).value === 'tabata') {
-                                setValue(form, 'work', 20)
-                                setValue(form, 'rest', 10)
-                                setValue(form, 'numberOfRounds', 8)
-                            } else if ((e.target as any).value === 'emom') {
-                                setValue(form, 'each', 60)
-                                setValue(form, 'numberOfRounds', 4)
-                            } else if ((e.target as any).value === 'max_weight') {
-                                setValue(form, 'numberOfRounds', 1)
-                            }
-
-                            field.props.onInput(e)
-                        }
                         return (
                             <div class="flex flex-col flex-1 min-w-[100px]">
                                 <label class="text-sm mb-2">Tipo de evento</label>
-                                <select class="input input-full" {...field.props} onInput={handleInput}>
+                                <select class="input input-full" {...field.props}>
                                     <For each={Object.entries(eventTypes)}>
                                         {([key, label]) => (
                                             <option value={key} selected={field.value === key}>

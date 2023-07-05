@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { IRound } from 'goal-models'
-import { numberHelper, roundTimerType } from 'goal-utils'
+import { isComplexRound, isRestRound, numberHelper, roundTimerType } from 'goal-utils'
 import { roundDisplay } from 'goal-utils'
 import { Stack, Text, XStack, YStack } from 'tamagui'
 
@@ -15,7 +15,7 @@ export interface EventBlockRoundProps {
 }
 
 const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButton = false }) => {
-    const sequenceReps = useMemo(() => numberHelper.findSequenceReps(round.movements), [])
+    const sequenceReps = useMemo(() => numberHelper.findSequenceReps(!isRestRound(round) ? round.movements : []), [])
 
     const roundHeader = roundDisplay.displayHeader(round, sequenceReps)
     const timerType = roundTimerType(round)
@@ -32,7 +32,7 @@ const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButto
                     </XStack>
                 )}
 
-                {!['complex', 'rest'].includes(round.type) ? (
+                {!isRestRound(round) && !isComplexRound(round) ? (
                     <YStack ai="flex-start">
                         {round.movements.map((movement, index) => (
                             <EventBlockMovement
@@ -43,7 +43,7 @@ const EventBlockRound: React.FC<EventBlockRoundProps> = ({ round, showTimerButto
                         ))}
                     </YStack>
                 ) : (
-                    round.type === 'complex' && (
+                    isComplexRound(round) && (
                         <Text textBreakStrategy="balanced" fontSize="$4" color="$gray3">
                             {roundDisplay.display(round)}
                         </Text>
