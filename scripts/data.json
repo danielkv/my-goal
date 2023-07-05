@@ -1,2994 +1,3955 @@
-[
-	{
-		"startDate": "2023-05-29",
-		"name": "Competitivo TCB",
-		"days": [
-			{
-				"date": "2023-05-01",
-				"periods": [
-					{
-						"name": "",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "Mobildade",
-														"reps": "",
-														"weight": null
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "4min",
-														"name": "bike",
-														"weight": null
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"name": "bike",
-														"reps": "5min",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"name": "rounds",
-														"weight": null,
-														"reps": "3"
-													},
-													{
-														"name": "HSPU",
-														"reps": "4",
-														"weight": null
-													},
-													{
-														"name": "Hang snatch",
-														"weight": null,
-														"reps": "4"
-													},
-													{
-														"reps": "4",
-														"name": "Pistols",
-														"weight": null
-													},
-													{
-														"reps": "4",
-														"name": "OHS leve",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											}
-										]
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "OHS",
-														"reps": "4",
-														"weight": {
-															"type": "%",
-															"value": "50-60-70-80-90"
+{
+	"lihxwpulwye428hlgwi": {
+		"name": "Deload Competitivo",
+		"startDate": "2023-06-12",
+		"startEndDate": {
+			"start": "2023-06-12",
+			"end": "2023-06-17"
+		},
+		"published": false,
+		"__collections__": {
+			"days": {
+				"liivyc88jrvcmj2k4d9": {
+					"date": "2023-06-12",
+					"name": "Segunda Feira",
+					"periods": [
+						{
+							"name": "",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "min bike"
 														}
-													}
-												],
-												"numberOfRounds": 5
-											}
-										]
-									},
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"numberOfRounds": 5,
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "HSPU",
-														"reps": "10",
-														"weight": null
-													},
-													{
-														"reps": "10",
-														"name": "Hang Snatch",
-														"weight": {
-															"value": "22,5/15",
-															"type": "kg"
+													],
+													"type": "not_timed"
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3min",
+															"name": "Row"
 														}
-													},
-													{
-														"weight": null,
-														"reps": "10",
-														"name": "Alterned Pistols"
-													}
-												]
-											}
-										],
-										"type": "event"
-									},
-									{
-										"time": 180,
-										"type": "rest",
-										"text": ""
-									},
-									{
-										"text": "maior carga para 4 OHS",
-										"type": "text"
-									}
-								],
-								"name": "WOD"
-							}
-						]
-					},
-					{
-						"name": "",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "",
-														"weight": null,
-														"name": "Mobildade"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "10",
-														"weight": null,
-														"name": "cossack squat"
-													},
-													{
-														"reps": "10",
-														"weight": null,
-														"name": "Elevacao de quadril unilateral"
-													},
-													{
-														"name": "Abducoes de quadril com miniband",
-														"weight": null,
-														"reps": "20"
-													}
-												]
-											}
-										],
-										"event_type": "not_timed",
-										"type": "event"
-									},
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "complex",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "2",
-														"name": "snatch balance"
-													},
-													{
-														"weight": null,
-														"reps": "2",
-														"name": "Hang power Snatch"
-													},
-													{
-														"reps": "2",
-														"weight": null,
-														"name": "Snatch High pull"
-													}
-												]
-											}
-										]
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"type": "not_timed",
-												"numberOfRounds": 3,
-												"movements": [
-													{
-														"weight": {
-															"value": "40-50-60",
-															"type": "%"
-														},
-														"name": "snatch com pausa no hang",
-														"reps": "2"
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"reps": "2",
-														"weight": {
-															"type": "%",
-															"value": "60-70-80-85-90"
-														},
-														"name": "snatch a cada 2 min"
-													}
-												],
-												"numberOfRounds": 5,
-												"type": "not_timed"
-											}
-										],
-										"type": "event",
-										"event_type": "not_timed"
-									}
-								],
-								"name": "Tecnica"
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "1-2-3-4-5-6-7-8-9-10",
-														"reps": ""
-													},
-													{
-														"name": "Burpee pull up",
-														"reps": "",
-														"weight": null
-													},
-													{
-														"name": "Snatch",
-														"weight": null,
-														"reps": ""
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"weight": null,
-														"name": "pay out 500m run",
-														"reps": ""
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event"
-									}
-								],
-								"name": "Wod"
-							}
-						]
-					}
-				],
-				"name": "Segunda Feira"
-			},
-			{
-				"date": "2023-05-02",
-				"name": "Terça-Feira",
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"timecap": 0,
-										"info": "",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "Mobilidade",
-														"videoUrl": "",
-														"reps": ""
-													}
-												],
-												"repeat": "",
-												"name": ""
-											},
-											{
-												"repeat": "3",
-												"movements": [
-													{
-														"videoUrl": "",
-														"reps": "10",
-														"name": "triceps testa com 1 DB"
-													},
-													{
-														"videoUrl": "https://www.youtube.com/watch?v=zdQOmPMGjOY",
-														"name": "Biceps Curl + shoulder press",
-														"reps": "10"
-													},
-													{
-														"reps": "10",
-														"videoUrl": "https://www.youtube.com/watch?v=ezrZnmjZTR4",
-														"name": "Pendley row bar"
-													}
-												],
-												"name": ""
-											}
-										],
-										"name": ""
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "5",
-														"name": "rounds",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"name": "Leg less",
-														"reps": "1"
-													},
-													{
-														"weight": {
-															"type": "kg",
-															"value": "120/80"
-														},
-														"reps": "2",
-														"name": "Deadlift"
-													},
-													{
-														"name": "GHD com bola",
-														"weight": null,
-														"reps": "3"
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "rounds",
-														"reps": "5",
-														"weight": null
-													},
-													{
-														"name": "RMU",
-														"reps": "1",
-														"weight": null
-													},
-													{
-														"weight": {
-															"type": "kg",
-															"value": "100/65"
-														},
-														"name": "Clean",
-														"reps": "2"
-													},
-													{
-														"weight": null,
-														"reps": "3",
-														"name": "Strict T2B"
-													}
-												]
-											}
-										],
-										"type": "event"
-									}
-								],
-								"name": "Força"
-							}
-						]
-					},
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"type": "event",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"videoUrl": "",
-														"name": "Mobilidade",
-														"reps": ""
-													}
-												],
-												"name": "",
-												"repeat": ""
-											},
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "3min row",
-														"reps": "",
-														"videoUrl": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"repeat": "3",
-												"name": "",
-												"movements": [
-													{
-														"reps": "20",
-														"videoUrl": "",
-														"name": "DU"
-													},
-													{
-														"videoUrl": "",
-														"reps": "5",
-														"name": "wall ball"
-													},
-													{
-														"reps": "4",
-														"videoUrl": "",
-														"name": "C2B"
-													}
-												]
-											}
-										],
-										"timecap": 0,
-										"name": "",
-										"event_type": "not_timed",
-										"info": ""
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Wod ",
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "",
-														"name": "E3M 15min",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"reps": "450/500m",
-														"name": "row"
-													},
-													{
-														"weight": null,
-														"reps": "50",
-														"name": "DU"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"type": "rest",
-												"time": 240,
-												"movements": []
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "uma serie a cada",
-														"reps": "",
-														"weight": null
-													},
-													{
-														"reps": "24",
-														"weight": null,
-														"name": "wall ball"
-													},
-													{
-														"reps": "12",
-														"name": "C2B",
-														"weight": null
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						],
-						"name": "Especifico"
-					}
-				]
-			},
-			{
-				"name": "Quarta-Feira",
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"info": "",
-										"timecap": 0,
-										"type": "event",
-										"name": "",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"repeat": "3",
-												"movements": [
-													{
-														"reps": "",
-														"name": "1min Prancha",
-														"videoUrl": ""
-													},
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "10s HSH"
-													},
-													{
-														"videoUrl": "",
-														"reps": "10",
-														"name": "V-Up"
-													},
-													{
-														"reps": "20",
-														"name": "Bird Dog alternado",
-														"videoUrl": ""
-													}
-												],
-												"name": ""
-											}
-										]
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "",
-														"weight": null,
-														"name": "E4M 28min"
-													},
-													{
-														"weight": null,
-														"reps": "200m",
-														"name": "run"
-													},
-													{
-														"name": "bike",
-														"reps": "500m",
-														"weight": null
-													}
-												]
-											}
-										],
-										"type": "event"
-									}
-								],
-								"name": "Capacidade aerobica"
-							}
-						]
-					}
-				],
-				"date": "2023-05-03"
-			},
-			{
-				"date": "2023-05-04",
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "Rotacoes de omro com barra nas costas",
-														"reps": "10",
-														"weight": null
-													},
-													{
-														"name": "fron squat com pausa",
-														"weight": null,
-														"reps": "5"
-													},
-													{
-														"weight": null,
-														"reps": "5",
-														"name": "POwer clean"
-													}
-												],
-												"repeat": "3",
-												"name": ""
-											}
-										],
-										"name": "",
-										"timecap": 0,
-										"event_type": "not_timed",
-										"type": "event",
-										"info": ""
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Força",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "rounds",
-														"weight": null,
-														"reps": "4"
-													},
-													{
-														"name": "hang clean +2 jerk",
-														"reps": "2",
-														"weight": {
-															"type": "%",
-															"value": "50-60-70-75"
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "buy in 500m row"
 														}
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"weight": {
-															"type": "%",
-															"value": "70-75-80-85-90"
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Pull up"
 														},
-														"name": "clean e jerk a cada 2min por 5 rounds",
-														"reps": "2"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "rounds",
-														"reps": "3",
-														"weight": null
-													},
-													{
-														"reps": "4",
-														"name": "back squat",
-														"weight": {
-															"type": "%",
-															"value": "75-80-85"
+														{
+															"reps": "20",
+															"name": "push up"
+														},
+														{
+															"reps": "30",
+															"name": "air squat"
 														}
-													}
-												]
-											}
-										],
-										"type": "event"
-									}
-								]
-							},
-							{
-								"name": "Wod",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "3",
-														"weight": null,
-														"name": "rounds"
-													},
-													{
-														"name": "EMOM 3min",
-														"reps": "",
-														"weight": null
-													},
-													{
-														"weight": {
-															"type": "kg",
-															"value": "47/33"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "pay out 500m row"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liiwku93u132yirxcas": {
+					"date": "2023-06-13",
+					"name": "Terça-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "Mobilidade"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Stiff Bom dia"
 														},
-														"name": "Thruster fat bar",
-														"reps": "7"
-													},
-													{
-														"weight": null,
-														"reps": "9",
-														"name": "burpees facing bar"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"time": 60,
-												"movements": [],
-												"type": "rest"
-											}
-										],
-										"type": "event",
-										"event_type": "not_timed"
-									}
-								]
-							}
-						]
-					}
-				],
-				"name": "Quinta-Feira"
-			},
-			{
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"name": "",
-										"timecap": 0,
-										"info": "",
-										"rounds": [
-											{
-												"repeat": "",
-												"name": "",
-												"movements": [
-													{
-														"reps": "",
-														"name": "Mobilidade",
-														"videoUrl": ""
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"name": "Stiff Bom dia",
-														"videoUrl": "",
-														"reps": "10"
-													},
-													{
-														"name": "remadas alta com KB",
-														"reps": "10",
-														"videoUrl": ""
-													},
-													{
-														"name": "Push up",
-														"videoUrl": "",
-														"reps": "10"
-													}
-												],
-												"name": "",
-												"repeat": "3"
-											}
-										],
-										"event_type": "not_timed",
-										"type": "event"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"timecap": 0,
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "RMU/ BMU/ HSW"
-													}
-												],
-												"name": "Praticar algum movimento que nao esteja muito bom",
-												"repeat": ""
-											}
-										],
-										"type": "event",
-										"info": "",
-										"name": "",
-										"event_type": "not_timed"
-									}
-								],
-								"name": "Tecnica Ginastica"
-							},
-							{
-								"name": "Wod",
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "8",
-														"name": "rounds"
-													},
-													{
-														"name": "Snatch",
-														"reps": "3",
-														"weight": null
-													},
-													{
-														"name": "BMU",
-														"reps": "3",
-														"weight": null
-													},
-													{
-														"name": "Box jump over",
-														"reps": "4",
-														"weight": null
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"name": "",
-														"reps": ""
-													},
-													{
-														"weight": null,
-														"reps": "",
-														"name": "rest 3min"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"reps": "8",
-														"weight": null,
-														"name": "rounds"
-													},
-													{
-														"weight": null,
-														"name": "cal rino bike",
-														"reps": "1"
-													},
-													{
-														"name": "wall ball",
-														"weight": null,
-														"reps": "6"
-													},
-													{
-														"name": "DB snatch",
-														"weight": {
-															"type": "kg",
-															"value": "22,5/15"
+														{
+															"reps": "10",
+															"name": "Back Squat"
 														},
-														"reps": "6"
-													}
-												],
-												"type": "not_timed"
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				],
-				"date": "2023-05-05",
-				"name": "Sexta-Feira"
-			},
-			{
-				"name": "Sabado",
-				"date": "2023-05-06",
-				"periods": [
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"name": "",
-										"info": "",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "",
-														"name": "Mobilidade",
-														"videoUrl": ""
-													}
-												],
-												"name": "",
-												"repeat": ""
-											},
-											{
-												"movements": [
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "400m run"
-													}
-												],
-												"name": "",
-												"repeat": ""
-											},
-											{
-												"movements": [
-													{
-														"name": "wall ball",
-														"reps": "10",
-														"videoUrl": ""
-													},
-													{
-														"name": "snatch",
-														"videoUrl": "",
-														"reps": "3"
-													},
-													{
-														"videoUrl": "",
-														"name": "DU",
-														"reps": "40"
-													},
-													{
-														"videoUrl": "",
-														"reps": "",
-														"name": "100m run"
-													}
-												],
-												"name": "",
-												"repeat": "2"
-											}
-										],
-										"timecap": 0,
-										"type": "event"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"timecap": 0,
-										"event_type": "not_timed",
-										"info": "",
-										"rounds": [
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "Goal Tour"
-													}
-												],
-												"name": ""
-											}
-										],
-										"type": "event",
-										"name": ""
-									}
-								],
-								"name": "Wod"
-							}
-						],
-						"name": "Especifico"
-					}
-				]
+														{
+															"reps": "10",
+															"name": "Canoas"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "back squat",
+															"weight": {
+																"type": "%",
+																"value": "50"
+															}
+														},
+														{
+															"reps": "3",
+															"name": "Deadlift",
+															"weight": {
+																"type": "%",
+																"value": "50"
+															}
+														},
+														{
+															"reps": "5",
+															"name": "Strict Pull Up"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										}
+									],
+									"name": "Wod 1"
+								}
+							]
+						},
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "Mobilidade"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "3min",
+															"name": "row"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "8/6",
+															"name": "cal assault bike ou 2 cal rino bike"
+														},
+														{
+															"reps": "6",
+															"name": "remadas na corda"
+														},
+														{
+															"reps": "5",
+															"name": "front squat"
+														},
+														{
+															"reps": "5",
+															"name": "push press"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "200m",
+															"name": "run"
+														},
+														{
+															"reps": "5",
+															"name": "Thruster",
+															"weight": {
+																"type": "kg",
+																"value": "50/35"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										}
+									],
+									"name": "Wod "
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liiwku95fm2mjoc01et": {
+					"date": "2023-06-14",
+					"name": "Quarta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1min",
+															"name": "Prancha",
+															"weight": null
+														},
+														{
+															"reps": "10s",
+															"name": "HSH",
+															"weight": null
+														},
+														{
+															"reps": "",
+															"name": "10 V",
+															"weight": null
+														},
+														{
+															"reps": "20",
+															"name": "Bird Dog alternado",
+															"weight": null
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20min",
+															"name": "Bike"
+														},
+														{
+															"reps": "",
+															"name": "a cada 1km 5 T2B"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Capacidade aerobica"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liiwku96fs4zf7i0qwr": {
+					"date": "2023-06-15",
+					"name": "Quinta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "rest Total",
+											"type": "text"
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": ""
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Wod"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liiwku98s1amon9rqjq": {
+					"date": "2023-06-16",
+					"name": "Sexta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "clean"
+														},
+														{
+															"reps": "3",
+															"name": "snatch balance"
+														},
+														{
+															"reps": "3",
+															"name": "OHS"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "snatch",
+															"weight": {
+																"type": "%",
+																"value": "50-60-60"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "squat clean",
+															"weight": {
+																"type": "%",
+																"value": "50-60-60"
+															}
+														},
+														{
+															"reps": "",
+															"name": "-"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "Em duplas"
+														},
+														{
+															"reps": "50",
+															"name": "wall ball"
+														},
+														{
+															"reps": "50",
+															"name": "Pull up"
+														},
+														{
+															"reps": "50",
+															"name": "cal row"
+														},
+														{
+															"reps": "35",
+															"name": "wall ball"
+														},
+														{
+															"reps": "35",
+															"name": "C2B"
+														},
+														{
+															"reps": "35",
+															"name": "cal row"
+														},
+														{
+															"reps": "20",
+															"name": "wall ball"
+														},
+														{
+															"reps": "20",
+															"name": "BMU"
+														},
+														{
+															"reps": "20",
+															"name": "cal row"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Wod"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liiwku9aicdmj9z80cf": {
+					"date": "2023-06-17",
+					"name": "Sabado",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "",
+															"name": "Mobilidade"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "400m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "remada na argola"
+														},
+														{
+															"reps": "5",
+															"name": "OHS barra"
+														},
+														{
+															"reps": "5",
+															"name": "burpees target"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "amrap",
+											"timecap": 120,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "RMU e BMU syncro"
+														},
+														{
+															"reps": "5",
+															"name": "OHS syncro",
+															"weight": {
+																"type": "kg",
+																"value": "60/40"
+															}
+														},
+														{
+															"reps": "",
+															"name": "burpees over the bar syncro"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [],
+													"time": 120,
+													"type": "rest"
+												}
+											],
+											"numberOfRounds": 6
+										}
+									],
+									"name": "Wod"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				}
 			}
-		]
+		}
 	},
-	{
+	"lij36djbbyakvl4ujme": {
+		"name": "Fortalecimento e preparatório",
+		"startDate": "2023-06-19",
+		"startEndDate": {
+			"start": "2023-06-19",
+			"end": "2023-06-24"
+		},
+		"published": false,
+		"__collections__": {
+			"days": {
+				"lixuvdz8a2vte9oha05": {
+					"date": "2023-06-19",
+					"name": "Segunda Feira",
+					"periods": [
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3min",
+															"name": "bike"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5/5",
+															"name": "Shoulder press KB virado"
+														},
+														{
+															"reps": "10",
+															"name": "remadas com elastico"
+														},
+														{
+															"reps": "8/8",
+															"name": "reverse Lunge com superband na estrutura"
+														},
+														{
+															"reps": "10",
+															"name": "reverse angel no GHD"
+														},
+														{
+															"reps": "10/10",
+															"name": "Adbucao de quadril com miniband deitado de lado (Ostra)"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Agachamento Bulgaro 1 DB",
+															"weight": {
+																"type": "kg",
+																"value": "10/6"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30s",
+															"name": "wall sit"
+														},
+														{
+															"reps": "10",
+															"name": "jump squat"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Z press alternados com 2 KB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "crucifixo invertido com elastico"
+														},
+														{
+															"reps": "8",
+															"name": "elevações laterais"
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						},
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"text": "treinar DU",
+											"type": "text"
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "emom",
+											"type": "event",
+											"each": 60,
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1º 30s",
+															"name": "Box step"
+														},
+														{
+															"reps": "2º 45s",
+															"name": "Row"
+														},
+														{
+															"reps": "3º 30s",
+															"name": "KB swing"
+														},
+														{
+															"reps": "4º 45s",
+															"name": "Air bike"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 40
+										}
+									],
+									"name": "Low Intensity"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liyoak31bi5ka2tjtt": {
+					"date": "2023-06-20",
+					"name": "Terça-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Mobilidade"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "wall ball"
+														},
+														{
+															"reps": "20",
+															"name": "DU"
+														},
+														{
+															"reps": "3",
+															"name": "burpees"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "for_time",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "wall ball"
+														},
+														{
+															"reps": "30",
+															"name": "DU"
+														},
+														{
+															"reps": "5",
+															"name": "burpees"
+														},
+														{
+															"reps": "30",
+															"name": "DU"
+														},
+														{
+															"reps": "10",
+															"name": "wall ball"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												},
+												{
+													"movements": [],
+													"time": 180,
+													"type": "rest"
+												}
+											],
+											"numberOfRounds": 4
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						},
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2min",
+															"name": "row"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8/8",
+															"name": "rotator cuff"
+														},
+														{
+															"reps": "8",
+															"name": "crucifixo invertido com superband (movimentação das escapulas)"
+														},
+														{
+															"reps": "40m",
+															"name": "Farm walk"
+														},
+														{
+															"reps": "20s",
+															"name": "pendurados na barra ficar alternando mãos"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "High hang snatch High pull"
+														},
+														{
+															"reps": "2",
+															"name": "High hang power Snatch"
+														},
+														{
+															"reps": "2",
+															"name": "push press snatch grip"
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "hang power clean"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Wod "
+								},
+								{
+									"blocks": [
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Deadbug"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										},
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Prancha"
+														},
+														{
+															"name": "GHD sit up"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										},
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "back extension"
+														},
+														{
+															"name": "Leg Pike"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										}
+									],
+									"name": "Core"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liyoak36tiwk75iena": {
+					"date": "2023-06-21",
+					"name": "Quarta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "6/6",
+															"name": "stiff unilateral bem devargar e leve"
+														},
+														{
+															"reps": "10",
+															"name": "flexao de joelho com elastico"
+														},
+														{
+															"reps": "8/8",
+															"name": "puxada unilateral com superband na estrutura"
+														},
+														{
+															"reps": "15/15",
+															"name": "passada lateral com miniband nos pés"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Stiff usar carga referente do deadlift",
+															"weight": {
+																"type": "%",
+																"value": "30 a 40"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20s",
+															"name": "deadlift Hold estrutura só barra+ 10 KB swing russo",
+															"weight": {
+																"type": "kg",
+																"value": "24/28"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10/10",
+															"name": "remada serrote"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "crucifixo invertido com pausa no encaixe da escapula de 3s"
+														},
+														{
+															"reps": "10",
+															"name": "remadas na argola"
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20min",
+															"name": "bike"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Capacidade aerobica"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liyp9vejnqqgkp64ol": {
+					"date": "2023-06-22",
+					"name": "Quinta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Deitado de bruços no banco com peso leve fazer 5 repetições para cada direção alternados"
+														},
+														{
+															"reps": "5",
+															"name": "escapula pull com 5s na escapula encaixada"
+														},
+														{
+															"reps": "5",
+															"name": "inch worm"
+														}
+													],
+													"type": "not_timed"
+												}
+											],
+											"numberOfRounds": 2
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "bench press alternado com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Desenvolvimento sentado com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "10 a 15",
+															"name": "Push up"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Tricpes coice unilateral com elastico"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "10/10",
+															"name": "Deadbug antirotation"
+														},
+														{
+															"reps": "15",
+															"name": "Abdominal rolinho"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1,5km",
+															"name": "bike"
+														},
+														{
+															"reps": "750/650m",
+															"name": "row"
+														}
+													],
+													"type": "not_timed"
+												}
+											],
+											"numberOfRounds": 4
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liyp9vemlo9mfwl9pis": {
+					"date": "2023-06-23",
+					"name": "Sexta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "15",
+															"videoUrl": "https://www.youtube.com/watch?v=KbXh9fNvcDw",
+															"name": "Bench frog com miniband"
+														},
+														{
+															"reps": "20",
+															"name": "Abduções de quadril com miniband em ponte"
+														},
+														{
+															"reps": "10",
+															"name": "remadas com elastico"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "Front Squat com miniband"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "16",
+															"name": "Globet cossack squat"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Pendley Row Alternado com KB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Crucifixo invertido com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												},
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Rosca alternada com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "emom",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "1º 15 Kb swing"
+														},
+														{
+															"name": "2º 50s shuttle run"
+														},
+														{
+															"name": "3º 50 DU"
+														},
+														{
+															"name": "4º 45s row"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"each": 60,
+											"numberOfRounds": 20
+										}
+									],
+									"name": "Cardio"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"liyp9veoa7nzq2e9xfu": {
+					"date": "2023-06-24",
+					"name": "Sabado",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Muita Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Em Duplas"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												},
+												{
+													"movements": [
+														{
+															"reps": "50",
+															"name": "DU syncro"
+														},
+														{
+															"reps": "20",
+															"name": "T2B syncro"
+														},
+														{
+															"reps": "50",
+															"name": "DB snatch"
+														},
+														{
+															"reps": "10",
+															"name": "Burpees target syncro"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				}
+			}
+		}
+	},
+	"lj8kkz2xxjzdtiymldh": {
+		"name": "Fortalecimento e preparatório sem. 2",
 		"published": true,
-		"startDate": "2023-05-22",
-		"name": "Especifico Deload",
-		"days": [
-			{
-				"date": "2023-05-22",
-				"name": "Segunda Feira",
-				"periods": [
-					{
-						"name": "",
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"timecap": 0,
-										"event_type": "not_timed",
-										"type": "event",
-										"name": "",
-										"rounds": [
-											{
-												"repeat": "",
-												"name": "",
-												"movements": [
-													{
-														"reps": "",
-														"name": "Mobildade",
-														"videoUrl": ""
-													}
-												]
-											},
-											{
-												"repeat": "2",
-												"name": "",
-												"movements": [
-													{
-														"reps": "50",
-														"videoUrl": "",
-														"name": "DU"
-													},
-													{
-														"videoUrl": "",
-														"name": "OHS",
-														"reps": "10"
-													},
-													{
-														"name": "Pistols",
-														"videoUrl": "",
-														"reps": "10"
-													},
-													{
-														"videoUrl": "",
-														"name": "HSPU",
-														"reps": "10"
-													}
-												]
-											}
-										],
-										"info": ""
-									}
-								]
-							},
-							{
-								"name": "WOD",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"numberOfRounds": 1,
-												"timecap": 300,
-												"movements": [
-													{
-														"weight": null,
-														"name": "DB snatch",
-														"reps": "10"
-													},
-													{
-														"weight": null,
-														"reps": "10",
-														"name": "Box jump over"
-													},
-													{
-														"name": "T2B",
-														"weight": null,
-														"reps": "10"
-													}
-												],
-												"type": "amrap"
-											},
-											{
-												"time": 240,
-												"movements": [],
-												"type": "rest"
-											},
-											{
-												"numberOfRounds": 1,
-												"movements": [
-													{
-														"name": "DB hang clean e jerk",
-														"reps": "10",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"reps": "10",
-														"name": "box step over"
-													},
-													{
-														"name": "Pull Up",
-														"reps": "10",
-														"weight": null
-													}
-												],
-												"timecap": 300,
-												"type": "amrap" 
-											}
-										],
-										"type": "event"
-									}
-								]
-							}
-						]
-					},
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"info": "",
-										"event_type": "not_timed",
-										"type": "event",
-										"timecap": 0,
-										"rounds": [
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "Mobildade",
-														"videoUrl": "",
-														"reps": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"name": "",
-												"repeat": "2",
-												"movements": [
-													{
-														"reps": "10",
-														"videoUrl": "",
-														"name": "cossack squat"
-													},
-													{
-														"videoUrl": "",
-														"reps": "10",
-														"name": "Elevacao de quadril unilateral"
-													},
-													{
-														"reps": "20",
-														"videoUrl": "",
-														"name": "Abducoes de quadril com miniband"
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"name": "snatch balance + 2 Hang power Snatch + 2 Snatch High pull",
-														"reps": "2",
-														"videoUrl": ""
-													}
-												],
-												"name": "Com a barra vazia",
-												"repeat": "2"
-											}
-										],
-										"name": ""
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Técnica",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"numberOfRounds": 4,
-												"movements": [
-													{
-														"name": "snatch com pausa em low hang",
-														"weight": {
-															"type": "%",
-															"value": "60-65-70-75"
-														},
-														"reps": "2"
-													}
-												]
-											},
-											{
-												"numberOfRounds": 5,
-												"movements": [
-													{
-														"weight": {
-															"value": "60-65-70-75-75",
-															"type": "%"
-														},
-														"name": "back squat",
-														"reps": "4"
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event"
-									}
-								]
-							}
-						],
-						"name": ""
-					}
-				]
-			},
-			{
-				"name": "Terça-Feira",
-				"periods": [
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"info": "",
-										"type": "event",
-										"name": "",
-										"timecap": 0,
-										"rounds": [
-											{
-												"repeat": "",
-												"name": "",
-												"movements": [
-													{
-														"name": "Mobilidade",
-														"reps": "",
-														"videoUrl": ""
-													}
-												]
-											},
-											{
-												"repeat": "3",
-												"movements": [
-													{
-														"videoUrl": "",
-														"name": "triceps testa com 1 DB",
-														"reps": "10"
-													},
-													{
-														"videoUrl": "https://www.youtube.com/watch?v=zdQOmPMGjOY",
-														"reps": "10",
-														"name": "Biceps Curl + shoulder press"
-													},
-													{
-														"reps": "10",
-														"name": "Pendley row bar",
-														"videoUrl": "https://www.youtube.com/watch?v=ezrZnmjZTR4"
-													}
-												],
-												"name": ""
-											}
-										],
-										"event_type": "not_timed"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "WOD",
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"weight": null,
-														"name": "leg less rope climb",
-														"reps": "1"
-													},
-													{
-														"name": "bench press",
-														"reps": "8",
-														"weight": {
-															"type": "kg",
-															"value": "80/40"
+		"startDate": "2023-06-26",
+		"startEndDate": {
+			"start": "2023-06-26",
+			"end": "2023-07-01"
+		},
+		"__collections__": {
+			"days": {
+				"lj8rzs3p415dd6pcqn7": {
+					"date": "2023-06-26",
+					"name": "Segunda Feira",
+					"periods": [
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3min",
+															"name": "bike"
 														}
-													},
-													{
-														"name": "leg less rope climb",
-														"reps": "1",
-														"weight": null
-													},
-													{
-														"weight": {
-															"value": "100/70",
-															"type": "kg"
+													],
+													"type": "not_timed"
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5/5",
+															"name": "Shoulder press KB virado"
 														},
-														"reps": "8",
-														"name": "deadlift"
-													},
-													{
-														"reps": "1",
-														"weight": null,
-														"name": "leg less rope climb"
-													},
-													{
-														"weight": null,
-														"reps": "8m",
-														"name": "HSW"
-													}
-												],
-												"type": "not_timed",
-												"numberOfRounds": 3
-											}
-										]
-									}
-								]
-							}
-						],
-						"name": "Especifico"
-					},
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "mobilidade",
-														"reps": "",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "3min",
-														"name": "row"
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"numberOfRounds": 3,
-												"movements": [
-													{
-														"name": "burpee pull up",
-														"weight": null,
-														"reps": "3"
-													},
-													{
-														"name": "snatch",
-														"weight": null,
-														"reps": "3"
-													}
-												]
-											}
-										],
-										"event_type": "not_timed",
-										"type": "event"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "WOD",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"numberOfRounds": 10,
-												"movements": [
-													{
-														"videoUrl": "",
-														"reps": "1-2-3-4-5-6-7-8-9-10",
-														"weight": {
-															"value": "50/40",
-															"type": "kg"
+														{
+															"reps": "10",
+															"name": "remadas com elastico"
 														},
-														"name": "Power clean"
-													},
-													{
-														"name": "DU",
-														"videoUrl": "",
-														"reps": "30 "
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event",
-										"event_type": "not_timed"
-									}
-								]
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"date": "2023-05-23"
-			},
-			{
-				"name": "Quarta-Feira",
-				"periods": [
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"type": "event",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "Prancha",
-														"weight": null,
-														"reps": "1min"
-													},
-													{
-														"weight": null,
-														"reps": "10s",
-														"name": "HSH"
-													},
-													{
-														"name": "10 V",
-														"reps": "",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"name": "Bird Dog alternado",
-														"reps": "20"
-													}
-												]
-											}
-										],
-										"event_type": "not_timed"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Capacidade aerobica",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "cal assault bike",
-														"weight": null,
-														"reps": "12/8"
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "15/12",
-														"name": "cal row"
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"weight": null,
-														"reps": "9",
-														"name": "burpee target"
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"numberOfRounds": 30,
-										"event_type": "emom",
-										"each": 60,
-										"type": "event"
-									}
-								]
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"date": "2023-05-24"
-			},
-			{
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "10",
-														"weight": null,
-														"name": "Rotações de ombro com barra nas costas"
-													},
-													{
-														"name": "Front Squat com pausa",
-														"reps": "5",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"name": "Power clean",
-														"reps": "5"
-													}
-												]
-											}
-										],
-										"type": "event"
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Força",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "power clean",
-														"weight": {
-															"type": "%",
-															"value": "60-70-75"
+														{
+															"reps": "8/8",
+															"name": "reverse Lunge com superband na estrutura"
 														},
-														"reps": "3"
-													}
-												],
-												"type": "not_timed",
-												"numberOfRounds": 3
-											},
-											{
-												"movements": [
-													{
-														"weight": {
-															"type": "%",
-															"value": "70-75-80"
+														{
+															"reps": "10",
+															"name": "reverse angel no GHD"
 														},
-														"reps": "2",
-														"name": "squat clean"
-													}
-												],
-												"numberOfRounds": 3,
-												"type": "not_timed"
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "2",
-														"name": "jerk"
-													}
-												],
-												"numberOfRounds": 5
-											}
-										]
-									}
-								]
-							},
-							{
-								"name": "Wod",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"weight": null,
-														"reps": "200m",
-														"name": "run"
-													},
-													{
-														"weight": null,
-														"name": "box jump",
-														"reps": "8"
-													},
-													{
-														"reps": "6",
-														"name": "STOH",
-														"weight": {
-															"type": "kg",
-															"value": "60/45"
+														{
+															"reps": "10/10",
+															"name": "Adbucao de quadril com miniband deitado de lado (Ostra)"
 														}
-													}
-												],
-												"numberOfRounds": 5,
-												"type": "not_timed"
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				],
-				"date": "2023-05-25",
-				"name": "Quinta-Feira"
-			},
-			{
-				"periods": [
-					{
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"timecap": 0,
-										"type": "event",
-										"name": "",
-										"info": "",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "Mobilidade",
-														"videoUrl": "",
-														"reps": ""
-													}
-												],
-												"name": "",
-												"repeat": ""
-											},
-											{
-												"movements": [
-													{
-														"name": "Stiff Bom dia",
-														"reps": "10",
-														"videoUrl": ""
-													},
-													{
-														"name": "remadas alta com KB",
-														"videoUrl": "",
-														"reps": "10"
-													},
-													{
-														"videoUrl": "",
-														"name": "Push up",
-														"reps": "10"
-													}
-												],
-												"repeat": "3",
-												"name": ""
-											}
-										]
-									}
-								]
-							},
-							{
-								"name": "Técnica Ginastica",
-								"blocks": [
-									{
-										"type": "text",
-										"text": "RMU / BMU / HSW"
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"each": 60,
-												"numberOfRounds": 3,
-												"type": "emom",
-												"movements": [
-													{
-														"name": "13/10cal row",
-														"reps": ""
-													},
-													{
-														"name": "wall ball",
-														"reps": "14",
-														"weight": null
-													},
-													{
-														"reps": "4",
-														"name": "RMU",
-														"weight": null
-													}
-												]
-											}
-										],
-										"numberOfRounds": 4
-									}
-								],
-								"name": "Wod"
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"name": "Sexta-Feira",
-				"date": "2023-05-26"
-			},
-			{
-				"name": "Sabado",
-				"periods": [
-					{
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"info": "",
-										"rounds": [
-											{
-												"name": "",
-												"repeat": "",
-												"movements": [
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "Mobilidade"
-													}
-												]
-											},
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"videoUrl": "",
-														"name": "400m run",
-														"reps": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"repeat": "2",
-												"movements": [
-													{
-														"reps": "10",
-														"videoUrl": "",
-														"name": "wall ball"
-													},
-													{
-														"videoUrl": "",
-														"name": "snatch",
-														"reps": "3"
-													},
-													{
-														"name": "DU",
-														"videoUrl": "",
-														"reps": "40"
-													},
-													{
-														"name": "100m run",
-														"reps": "",
-														"videoUrl": ""
-													}
-												],
-												"name": ""
-											}
-										],
-										"timecap": 0,
-										"name": ""
-									}
-								]
-							},
-							{
-								"name": "Wod",
-								"blocks": [
-									{
-										"text": "Goal Tour",
-										"type": "text"
-									}
-								]
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"date": "2023-05-27"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Agachamento Bulgaro 1 DB",
+															"weight": {
+																"type": "kg",
+																"value": "18/14"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30s",
+															"name": "wall sit"
+														},
+														{
+															"reps": "10",
+															"name": "jump squat"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Z press alternados com 2 KB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "crucifixo invertido com elastico"
+														},
+														{
+															"reps": "8",
+															"name": "elevações laterais"
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						},
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"text": "treinar DU",
+											"type": "text"
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "row"
+														},
+														{
+															"reps": "15",
+															"name": "KB swing",
+															"weight": {
+																"type": "kg",
+																"value": "24/18"
+															}
+														},
+														{
+															"reps": "1km",
+															"name": "bike"
+														},
+														{
+															"reps": "16",
+															"name": "Box step"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 7
+												}
+											]
+										}
+									],
+									"name": "Low Intensity"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"lj8rzs3str7qz5huxk8": {
+					"date": "2023-06-27",
+					"name": "Terça-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Mobilidade"
+														}
+													],
+													"type": "not_timed"
+												},
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "wall ball"
+														},
+														{
+															"reps": "20",
+															"name": "DU"
+														},
+														{
+															"reps": "3",
+															"name": "burpees"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30",
+															"name": "DU"
+														},
+														{
+															"reps": "15",
+															"name": "wall ball"
+														},
+														{
+															"reps": "30",
+															"name": "DU"
+														},
+														{
+															"reps": "15",
+															"name": "wall ball"
+														},
+														{
+															"reps": "30",
+															"name": "DU"
+														},
+														{
+															"name": "rest 2min"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "burpee target"
+														},
+														{
+															"reps": "10",
+															"name": "T2B"
+														},
+														{
+															"reps": "8",
+															"name": "burpee target"
+														},
+														{
+															"reps": "10",
+															"name": "T2B"
+														},
+														{
+															"reps": "8",
+															"name": "burpee target"
+														},
+														{
+															"name": "rest 2min"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						},
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2min",
+															"name": "row"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8/8",
+															"name": "rotator cuff"
+														},
+														{
+															"reps": "8",
+															"name": "crucifixo invertido com superband (movimentação das escapulas)"
+														},
+														{
+															"reps": "40m",
+															"name": "Farm walk"
+														},
+														{
+															"reps": "20s",
+															"name": "pendurados na barra ficar alternando mãos"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "High hang snatch High pull",
+															"weight": {
+																"type": "%",
+																"value": "50 a 60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "High hang power Snatch",
+															"weight": {
+																"type": "%",
+																"value": "50 a 60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "push press snatch grip (progredir apenas se o movimento estiver bom)",
+															"weight": {
+																"type": "%",
+																"value": "50 a 60"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 4
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "hang power clean",
+															"weight": {
+																"type": "%",
+																"value": "50 a 60"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												}
+											]
+										}
+									],
+									"name": "Wod "
+								},
+								{
+									"blocks": [
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"videoUrl": "https://www.youtube.com/shorts/y6cxSoBC_Pg",
+															"name": "Half kneeling Anti rotation com superband"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										},
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "GHD sit up"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										},
+										{
+											"rest": 10,
+											"event_type": "tabata",
+											"work": 20,
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Prancha"
+														},
+														{
+															"name": "Leg Pike"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										}
+									],
+									"name": "Core"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"lj8rzs3xskcss2glro": {
+					"date": "2023-06-28",
+					"name": "Quarta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "6/6",
+															"name": "stiff unilateral bem devargar e leve"
+														},
+														{
+															"reps": "10",
+															"name": "flexao de joelho com elastico"
+														},
+														{
+															"reps": "8/8",
+															"name": "puxada unilateral com superband na estrutura"
+														},
+														{
+															"reps": "15/15",
+															"name": "passada lateral com miniband nos pés"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Stiff usar carga referente do deadlift",
+															"weight": {
+																"type": "%",
+																"value": "30 a 40"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20s",
+															"name": "deadlift Hold estrutura só barra+ 10 KB swing russo",
+															"weight": {
+																"type": "kg",
+																"value": "32/20"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"videoUrl": "https://www.youtube.com/watch?v=fV78qqekQU4",
+															"name": "inclined Bench Row com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "crucifixo invertido com DB"
+														},
+														{
+															"reps": "10",
+															"name": "remadas na argola"
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4km",
+															"name": "Run"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Capacidade aerobica"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"lj8rzs3ypz66ox4d62e": {
+					"date": "2023-06-29",
+					"name": "Quinta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "Deitado de bruços no banco com peso leve fazer 5 repetições para cada direção alternados"
+														},
+														{
+															"reps": "5",
+															"name": "escapula pull com 5s na escapula encaixada"
+														},
+														{
+															"reps": "5",
+															"name": "inch worm"
+														}
+													],
+													"type": "not_timed"
+												}
+											],
+											"numberOfRounds": 2
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "bench press alternado com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "Desenvolvimento sentado com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8 a 10",
+															"name": "Ring Dips ou paralela"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Tricpes frances unilateral"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10/10",
+															"videoUrl": "https://www.youtube.com/watch?v=11vXiD5qTBc",
+															"name": "Deadbug antirotation"
+														},
+														{
+															"reps": "10",
+															"name": "Abdominal rolinho com a barra"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1º 12/10",
+															"name": "cal row"
+														},
+														{
+															"reps": "2º 3",
+															"name": "cal Rino bike/ 9/7 cal assault bike"
+														},
+														{
+															"reps": "3º 50",
+															"name": "DU"
+														}
+													],
+													"type": "emom",
+													"each": 60,
+													"numberOfRounds": 30
+												}
+											]
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"lj8rzs411lpngd58abz": {
+					"date": "2023-06-30",
+					"name": "Sexta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "15",
+															"videoUrl": "https://www.youtube.com/watch?v=KbXh9fNvcDw",
+															"name": "Bench frog com miniband"
+														},
+														{
+															"reps": "20",
+															"name": "Abduções de quadril com miniband em ponte"
+														},
+														{
+															"reps": "10",
+															"name": "remadas com elastico"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "Front Squat com miniband",
+															"weight": {
+																"type": "%",
+																"value": "55"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "16",
+															"name": "Globet Pistols sentando na caixa",
+															"weight": {
+																"type": "kg",
+																"value": "14/10"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Pendley Row Alternado com KB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "Strict Pull up supined"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20",
+															"name": "Rosca direta com barra"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "Cal Rino bike ou 5/7 cal assault bike"
+														},
+														{
+															"reps": "16",
+															"name": "DB Snatch"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												},
+												{
+													"movements": [],
+													"time": 60,
+													"type": "rest"
+												}
+											]
+										},
+										{
+											"time": 180,
+											"type": "rest"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10/8",
+															"name": "cal row"
+														},
+														{
+															"reps": "16",
+															"name": "wall ball"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												},
+												{
+													"movements": [],
+													"time": 60,
+													"type": "rest"
+												}
+											]
+										}
+									],
+									"name": "Cardio"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"lj8rzs432f8sgd3judy": {
+					"date": "2023-07-01",
+					"name": "Sabado",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Muita Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "200m",
+															"name": "run"
+														},
+														{
+															"reps": "3",
+															"name": "wall walk syncro"
+														},
+														{
+															"reps": "10",
+															"name": "T2B Syncro"
+														},
+														{
+															"reps": "10",
+															"name": "Hang Squat CLean syncro com 2 DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 5,
+											"info": "em duplas"
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				}
 			}
-		]
+		}
 	},
-	{
-		"startDate": "2023-05-29",
-		"name": "Competitivo",
-		"days": [
-			{
-				"periods": [
-					{
-						"name": "",
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "",
-														"weight": null,
-														"name": "Mobildade"
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "3",
-														"name": "min bike",
-														"weight": null
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"reps": "3",
-														"name": "rounds",
-														"weight": null
-													},
-													{
-														"reps": "6",
-														"name": "cal row",
-														"weight": null
-													},
-													{
-														"name": "burpees over the row",
-														"reps": "2",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"reps": "10",
-														"name": "Crossover"
-													},
-													{
-														"name": "rest de 1 min entre rounds",
-														"weight": null,
-														"reps": ""
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "min de rest pra comecar o wod",
-														"weight": null,
-														"reps": "3"
-													}
-												]
-											}
-										],
-										"event_type": "not_timed",
-										"type": "event"
-									}
-								]
-							},
-							{
-								"name": "WOD",
-								"blocks": [
-									{
-										"type": "event",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "5",
-														"weight": null,
-														"name": "rounds"
-													},
-													{
-														"weight": null,
-														"name": "cal row",
-														"reps": "15/11"
-													},
-													{
-														"reps": "8",
-														"weight": null,
-														"name": "burpees over the row"
-													},
-													{
-														"name": "DU",
-														"weight": null,
-														"reps": "50"
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"event_type": "not_timed"
-									}
-								]
-							}
-						]
-					},
-					{
-						"name": "",
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"name": "Mobildade",
-														"weight": null,
-														"reps": ""
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"weight": null,
-														"name": "rounds",
-														"reps": "2"
-													},
-													{
-														"reps": "10",
-														"weight": null,
-														"name": "cossack squat"
-													},
-													{
-														"name": "Elevacao de quadril unilateral",
-														"weight": null,
-														"reps": "10"
-													},
-													{
-														"weight": null,
-														"reps": "20",
-														"name": "Abducoes de quadril com miniband"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"weight": null,
-														"reps": "2",
-														"name": "snatch balance"
-													},
-													{
-														"name": "Hang power Snatch",
-														"reps": "2",
-														"weight": null
-													},
-													{
-														"reps": "2",
-														"name": "Snatch High pull",
-														"weight": null
-													}
-												],
-												"type": "complex"
-											}
-										],
-										"event_type": "not_timed",
-										"type": "event"
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"reps": "3",
-														"name": "rounds",
-														"weight": null
-													},
-													{
-														"weight": {
-															"value": "50-60-70",
-															"type": "%"
+	"ljh6389rceyi1u0si58": {
+		"name": "Semana 1 de Força",
+		"published": true,
+		"startDate": "2023-07-03",
+		"startEndDate": {
+			"start": "2023-07-03",
+			"end": "2023-07-08"
+		},
+		"__collections__": {
+			"days": {
+				"ljm27awklj43bjjd3q": {
+					"date": "2023-07-03",
+					"name": "Segunda Feira",
+					"periods": [
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "12",
+															"name": "Rotator cuff com shoulder press com miniband"
 														},
-														"reps": "2",
-														"name": "Snatch com pausa em low hang em hang e high hang (fazer pausa de 3s em casa fase e quando chegar no high hang fazer o squat snatch)"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"name": "rounds",
-														"weight": null,
-														"reps": "7"
-													},
-													{
-														"weight": null,
-														"reps": "1",
-														"name": "Snatch (concentrar muita tecnica)"
-													}
-												],
-												"type": "not_timed"
-											},
-											{
-												"movements": [
-													{
-														"weight": null,
-														"name": "Back squat",
-														"reps": ""
-													},
-													{
-														"weight": null,
-														"name": "maior carga para 2 reps (quantos rounds for preciso)",
-														"reps": ""
-													}
-												],
-												"type": "not_timed"
-											}
-										]
-									}
-								],
-								"name": "Tecnica"
-							},
-							{
-								"name": "Barbell Cycling",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"weight": null,
-														"name": "rounds (terminar abaixo de 4min)",
-														"reps": "3"
-													},
-													{
-														"name": "Snatch",
-														"reps": "5",
-														"weight": {
-															"value": "60/40",
-															"type": "kg"
+														{
+															"reps": "15",
+															"name": "passadas com air squat com miniband (vai 1 vota 1 e mais 1 air squat)"
+														},
+														{
+															"reps": "15",
+															"name": "canoas"
+														},
+														{
+															"reps": "10",
+															"name": "Back extension no GHD (focar em posterior e gluteo)"
 														}
-													},
-													{
-														"name": "BMU",
-														"reps": "5",
-														"weight": null
-													},
-													{
-														"name": "Burpees over the bar",
-														"weight": null,
-														"reps": "5"
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event",
-										"event_type": "not_timed"
-									}
-								]
-							}
-						]
-					}
-				],
-				"date": "2023-05-29",
-				"name": "Segunda Feira"
-			},
-			{
-				"date": "2023-05-30",
-				"periods": [
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"type": "event",
-										"name": "",
-										"event_type": "not_timed",
-										"timecap": 0,
-										"info": "",
-										"rounds": [
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "Mobilidade",
-														"videoUrl": "",
-														"reps": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"name": "",
-												"movements": [
-													{
-														"reps": "10",
-														"videoUrl": "",
-														"name": "triceps testa com 1 DB"
-													},
-													{
-														"name": "Biceps Curl + shoulder press",
-														"reps": "10",
-														"videoUrl": "https://www.youtube.com/watch?v=zdQOmPMGjOY"
-													},
-													{
-														"videoUrl": "https://www.youtube.com/watch?v=ezrZnmjZTR4",
-														"name": "Pendley row bar",
-														"reps": "10"
-													}
-												],
-												"repeat": "3"
-											}
-										]
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"name": "Força",
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"weight": null,
-														"reps": "5",
-														"name": "rounds"
-													},
-													{
-														"reps": "5",
-														"name": "Thruster",
-														"weight": {
-															"type": "kg",
-															"value": "60/40"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4-4-4-3-3-3",
+															"name": "Back squat 50 a",
+															"weight": {
+																"type": "%",
+																"value": "75"
+															}
 														}
-													},
-													{
-														"reps": "5",
-														"name": "Strict Pull Up",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											}
-										]
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "run",
-														"weight": null,
-														"reps": "200m"
-													},
-													{
-														"weight": {
-															"value": "70/50",
-															"type": "kg"
-														},
-														"reps": "9",
-														"name": "Front squat"
-													},
-													{
-														"name": "GHD sit up com bola",
-														"weight": null,
-														"reps": "9"
-													},
-													{
-														"reps": "400m",
-														"weight": null,
-														"name": "run"
-													},
-													{
-														"name": "Front squat",
-														"reps": "9",
-														"weight": null
-													},
-													{
-														"reps": "9",
-														"weight": null,
-														"name": "GHD sit up com bola"
-													},
-													{
-														"reps": "600m",
-														"weight": null,
-														"name": "run"
-													},
-													{
-														"reps": "9",
-														"weight": null,
-														"name": "Front squat"
-													},
-													{
-														"weight": null,
-														"reps": "9",
-														"name": "GHD sit up com bola"
-													},
-													{
-														"reps": "800m",
-														"name": "run",
-														"weight": null
-													},
-													{
-														"weight": null,
-														"reps": "9",
-														"name": "Front squat"
-													},
-													{
-														"reps": "9",
-														"weight": null,
-														"name": "GHD sit up com bola"
-													},
-													{
-														"reps": "1000m",
-														"weight": null,
-														"name": "run"
-													},
-													{
-														"reps": "9",
-														"name": "front squat",
-														"weight": null
-													},
-													{
-														"reps": "9",
-														"name": "GHD sit up com bola",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event",
-										"event_type": "not_timed"
-									}
-								],
-								"name": "Wod 1"
-							}
-						],
-						"name": "Especifico"
-					},
-					{
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"name": "Mobilidade",
-														"reps": ""
-													}
-												]
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "3min",
-														"weight": null,
-														"name": "row"
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"name": "DU",
-														"weight": null,
-														"reps": "20"
-													},
-													{
-														"weight": null,
-														"reps": "5",
-														"name": "wall ball"
-													},
-													{
-														"name": "T2B",
-														"reps": "4",
-														"weight": null
-													}
-												],
-												"type": "not_timed"
-											}
-										],
-										"type": "event"
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"reps": "",
-														"weight": null,
-														"name": "For time"
-													},
-													{
-														"name": "wall ball",
-														"weight": null,
-														"reps": "150"
-													},
-													{
-														"weight": null,
-														"reps": "",
-														"name": "a cada quebra 5 burpee pull up"
-													}
-												]
-											}
-										]
-									}
-								],
-								"name": "Wod "
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"name": "Terça-Feira"
-			},
-			{
-				"periods": [
-					{
-						"sections": [
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"videoUrl": "",
-														"reps": "",
-														"name": "1min Prancha"
-													},
-													{
-														"videoUrl": "",
-														"name": "10s HSH",
-														"reps": ""
-													},
-													{
-														"reps": "10",
-														"name": "V-Up",
-														"videoUrl": ""
-													},
-													{
-														"name": "Bird Dog alternado",
-														"videoUrl": "",
-														"reps": "20"
-													}
-												],
-												"name": "",
-												"repeat": "3"
-											}
-										],
-										"event_type": "not_timed",
-										"name": "",
-										"timecap": 0,
-										"type": "event",
-										"info": ""
-									}
-								],
-								"name": "Aquecimento"
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"rounds": [
-											{
-												"type": "not_timed",
-												"numberOfRounds": 1,
-												"movements": [
-													{
-														"name": "cal assault bike ou 35/30 cal rino bike",
-														"reps": "50/40",
-														"videoUrl": ""
-													},
-													{
-														"reps": "60/ 50",
-														"videoUrl": "",
-														"name": "cal row"
-													},
-													{
-														"name": "box jump over",
-														"reps": "50",
-														"videoUrl": ""
-													},
-													{
-														"name": "cal row",
-														"reps": "60/ 50",
-														"videoUrl": ""
-													},
-													{
-														"name": "cal assault bike ou 53/30 cal rino bike",
-														"videoUrl": "",
-														"reps": "50/40"
-													}
-												]
-											}
-										]
-									}
-								],
-								"name": "Low Intensity"
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"name": "Quarta-Feira",
-				"date": "2023-05-31"
-			},
-			{
-				"name": "Quinta-Feira",
-				"date": "2023-06-01",
-				"periods": [
-					{
-						"name": "Especifico",
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"name": "",
-												"repeat": "3",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "10",
-														"name": "Rotacoes de omro com barra nas costas"
-													},
-													{
-														"name": "fron squat com pausa",
-														"weight": null,
-														"reps": "5"
-													},
-													{
-														"weight": null,
-														"reps": "5",
-														"name": "POwer clean"
-													}
-												]
-											}
-										],
-										"info": "",
-										"type": "event",
-										"timecap": 0,
-										"name": "",
-										"event_type": "not_timed"
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"movements": [
-													{
-														"weight": {
-															"value": "65",
-															"type": "%"
-														},
-														"name": "power Clean + 2 hang power Clean",
-														"reps": "2"
-													},
-													{
-														"weight": {
-															"value": "70",
-															"type": "%"
-														},
-														"name": "power Clean + 1 hang power Clean",
-														"reps": "2"
-													},
-													{
-														"reps": "",
-														"name": "2x 1 power Clean + 1 hang power Clean - ?-?%"
-													},
-													{
-														"name": "power Clean + 2 hang power Clean",
-														"reps": "2",
-														"weight": {
-															"type": "%",
-															"value": "65"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5-5-5-5",
+															"name": "Clean Pull",
+															"weight": {
+																"type": "%",
+																"value": "70"
+															}
 														}
-													}
-												],
-												"repeat": "",
-												"name": ""
-											},
-											{
-												"movements": [
-													{
-														"reps": "3x",
-														"name": "2 Squat Clean + 3 Front Squat",
-														"weight": {
-															"value": "70-?-?",
-															"type": "%"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4-4-4-3-3-3",
+															"name": "Push Press (peso referente a jerk) 55 a",
+															"weight": {
+																"type": "%",
+																"value": "70"
+															}
 														}
-													},
-													{
-														"name": "squat Clean + 5 Front Squat",
-														"weight": {
-															"type": "%",
-															"value": "65"
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"name": "L-sit leg less rope climbe, descida em leg less, ou L-Pul Up"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "7",
+															"name": "Strict T2B"
+														}
+													],
+													"type": "emom",
+													"each": 60,
+													"numberOfRounds": 5
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "20m",
+															"name": "walking Lunge 2 DB",
+															"weight": {
+																"type": "kg",
+																"value": "10/15"
+															}
 														},
-														"reps": "2"
-													}
-												],
-												"name": "",
-												"repeat": ""
-											},
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "3-3-2-2-1-1-1- Jerk - 50-?-?-?-?-?-?%",
-														"reps": ""
-													}
-												],
-												"name": ""
-											}
-										],
-										"type": "event",
-										"name": "",
-										"timecap": 0,
-										"info": ""
-									}
-								],
-								"name": "Força"
-							},
-							{
-								"blocks": [
-									{
-										"type": "event",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"name": "",
-												"repeat": "",
-												"movements": [
-													{
-														"name": "00:00 a 05:00",
-														"reps": ""
-													},
-													{
-														"name": "21-15-9",
-														"reps": ""
-													},
-													{
-														"reps": "",
-														"name": "Thruster"
-													},
-													{
-														"name": "Burpee Over the bar",
-														"reps": ""
-													}
-												]
-											},
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "05:00 a 10:00",
-														"reps": ""
-													},
-													{
-														"name": "30 CLean e jerk 60/40kg",
-														"reps": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"name": "",
-												"movements": [
-													{
-														"reps": "",
-														"name": "10:00 a 20:00"
-													},
-													{
-														"reps": "",
-														"name": "amrap 10min"
-													},
-													{
-														"name": "pull up",
-														"reps": "5",
-														"weight": null
-													},
-													{
-														"reps": "10",
-														"name": "push up",
-														"weight": null
-													},
-													{
-														"reps": "15",
-														"name": "Air squat",
-														"weight": null
-													}
-												],
-												"repeat": ""
-											},
-											{
-												"movements": [
-													{
-														"reps": "",
-														"name": "1km run for time após o wod",
-														"videoUrl": ""
-													}
-												],
-												"repeat": "",
-												"name": ""
-											}
-										],
-										"info": "",
-										"timecap": 0,
-										"name": ""
-									},
-									{
-										"event_type": "not_timed",
-										"type": "event",
-										"timecap": 0,
-										"rounds": [],
-										"name": "",
-										"info": ""
-									}
-								],
-								"name": "Wod"
-							}
-						]
-					}
-				]
-			},
-			{
-				"periods": [
-					{
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"name": "",
-										"timecap": 0,
-										"rounds": [
-											{
-												"repeat": "",
-												"movements": [
-													{
-														"name": "Mobilidade",
-														"reps": "",
-														"videoUrl": ""
-													}
-												],
-												"name": ""
-											},
-											{
-												"movements": [
-													{
-														"reps": "10",
-														"videoUrl": "",
-														"name": "Stiff Bom dia"
-													},
-													{
-														"reps": "10",
-														"name": "remadas alta com KB",
-														"videoUrl": ""
-													},
-													{
-														"reps": "10",
-														"name": "Push up",
-														"videoUrl": ""
-													}
-												],
-												"name": "",
-												"repeat": "3"
-											}
-										],
-										"type": "event",
-										"info": "",
-										"event_type": "not_timed"
-									}
-								]
-							},
-							{
-								"name": "Tecnica Ginastica",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"movements": [
-													{
-														"name": "RMU/ BMU/ HSW",
-														"reps": "",
-														"videoUrl": ""
-													}
-												],
-												"repeat": "",
-												"name": "Praticar algum movimento que nao esteja muito bom"
-											}
-										],
-										"event_type": "not_timed",
-										"info": "",
-										"type": "event",
-										"timecap": 0,
-										"name": ""
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"info": "",
-										"event_type": "not_timed",
-										"rounds": [
-											{
-												"repeat": "11-10-9-8-7-6-5-4-3-2-1",
-												"name": "",
-												"movements": [
-													{
-														"name": "C2B",
-														"reps": ""
-													},
-													{
-														"reps": "",
-														"name": "Box jump Over"
-													}
-												]
-											}
-										],
-										"timecap": 0,
-										"type": "event",
-										"name": ""
-									}
-								],
-								"name": "WOD Tecnico"
-							},
-							{
-								"blocks": [
-									{
-										"numberOfRounds": 5,
-										"type": "event",
-										"event_type": "not_timed",
-										"name": "",
-										"info": "aumentar a cada inicio de rounds 1 repetiçāo",
-										"timecap": 0,
-										"rounds": [
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"reps": "1-2-3-4-5",
-														"name": "kb swing"
-													},
-													{
-														"reps": "1-2-3-4-5",
-														"weight": null,
-														"name": "shuttle run"
-													},
-													{
-														"name": "rest 2min",
-														"reps": "1-2-3-4-5",
-														"weight": null
-													}
-												],
-												"numberOfRounds": 5
-											},
-											{
-												"type": "not_timed",
-												"movements": [
-													{
-														"weight": null,
-														"name": "bike for time após o wod",
-														"reps": "2km"
-													}
-												]
-											}
-										]
-									}
-								],
-								"name": "Wod"
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"date": "2023-06-02",
-				"name": "Sexta-Feira"
-			},
-			{
-				"periods": [
-					{
-						"sections": [
-							{
-								"name": "Aquecimento",
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"repeat": "",
-												"name": "",
-												"movements": [
-													{
-														"reps": "",
-														"videoUrl": "",
-														"name": "Mobilidade"
-													}
-												]
-											},
-											{
-												"name": "",
-												"repeat": "",
-												"movements": [
-													{
-														"name": "400m run",
-														"reps": "",
-														"videoUrl": ""
-													}
-												]
-											},
-											{
-												"movements": [
-													{
-														"videoUrl": "",
-														"name": "wall ball",
-														"reps": "10"
-													},
-													{
-														"videoUrl": "",
-														"reps": "3",
-														"name": "snatch"
-													},
-													{
-														"reps": "40",
-														"name": "DU",
-														"videoUrl": ""
-													},
-													{
-														"reps": "",
-														"name": "100m run",
-														"videoUrl": ""
-													}
-												],
-												"repeat": "2",
-												"name": ""
-											}
-										],
-										"event_type": "not_timed",
-										"info": "",
-										"timecap": 0,
-										"type": "event",
-										"name": ""
-									}
-								]
-							},
-							{
-								"blocks": [
-									{
-										"rounds": [
-											{
-												"repeat": "",
-												"name": "",
-												"movements": [
-													{
-														"videoUrl": "",
-														"reps": "",
-														"name": "Goal Tour"
-													}
-												]
-											}
-										],
-										"info": "",
-										"timecap": 0,
-										"name": "",
-										"event_type": "not_timed",
-										"type": "event"
-									}
-								],
-								"name": "Wod"
-							}
-						],
-						"name": "Especifico"
-					}
-				],
-				"name": "Sabado",
-				"date": "2023-06-03"
+														{
+															"reps": "20",
+															"videoUrl": "https://www.youtube.com/watch?v=clVj2dQ_GoY",
+															"name": "Push Up Row"
+														},
+														{
+															"reps": "10",
+															"name": "Flexão de joelho no remo"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30",
+															"name": "Flexao plantar com Peso"
+														},
+														{
+															"reps": "10",
+															"name": "Rosca direta"
+														},
+														{
+															"reps": "12",
+															"name": "Triceps Testa"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Força"
+								}
+							]
+						},
+						{
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobildade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4min",
+															"name": "bike"
+														},
+														{
+															"reps": "1min",
+															"name": "leve"
+														},
+														{
+															"reps": "30s",
+															"name": "medio"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "10s",
+															"name": "bike"
+														},
+														{
+															"name": "rest 1min"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												},
+												{
+													"movements": [],
+													"time": 240,
+													"type": "rest"
+												},
+												{
+													"movements": [
+														{
+															"reps": "20s",
+															"name": "bike"
+														},
+														{
+															"name": "2min"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 4
+												},
+												{
+													"movements": [],
+													"time": 240,
+													"type": "rest"
+												},
+												{
+													"movements": [
+														{
+															"reps": "30s",
+															"name": "bike"
+														},
+														{
+															"reps": "3m",
+															"name": "rest"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										}
+									],
+									"name": "Potencia Anaeróbica"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"ljm27awm5qsnx75pjc9": {
+					"date": "2023-07-04",
+					"name": "Terça-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "rounds"
+														},
+														{
+															"reps": "15",
+															"name": "Crucifixo invertido com elastico (fazer trabalho das escapulas)"
+														},
+														{
+															"reps": "10/10",
+															"name": "Elevated Rotation com band"
+														},
+														{
+															"reps": "25",
+															"name": "Air squat com miniband"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "High hang squat snatch",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "Push Press behind the neck",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "Snatch Balance 50 a",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 4
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "hang power clean",
+															"weight": {
+																"type": "%",
+																"value": "50"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "hang squat clean",
+															"weight": {
+																"type": "%",
+																"value": "50"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 4
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "push jerk",
+															"weight": {
+																"type": "%",
+																"value": "40"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "split Jerk",
+															"weight": {
+																"type": "%",
+																"value": "40"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 4
+												}
+											]
+										},
+										{
+											"event_type": "emom",
+											"type": "event",
+											"each": 60,
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1º 3",
+															"name": "RMU/ BMU"
+														},
+														{
+															"reps": "2º 12",
+															"name": "Canoas"
+														},
+														{
+															"reps": "3º 5m",
+															"name": "HSW (andar devagar e ter controle)"
+														},
+														{
+															"reps": "4º 50s",
+															"name": "prancha"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 16
+										}
+									],
+									"name": "LPO"
+								}
+							]
+						},
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2min",
+															"name": "row"
+														},
+														{
+															"reps": "100",
+															"name": "DU"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "emom",
+											"type": "event",
+											"each": 300,
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "bike"
+														},
+														{
+															"reps": "300/400m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 6,
+											"info": "cada round aumentar 100m run"
+										}
+									],
+									"name": "Potência"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"ljm27awnwpwrgczq8xo": {
+					"date": "2023-07-05",
+					"name": "Quarta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "6/6",
+															"name": "stiff unilateral bem devargar e leve"
+														},
+														{
+															"reps": "10",
+															"name": "flexao de joelho com elastico"
+														},
+														{
+															"reps": "8/8",
+															"name": "puxada unilateral com superband na estrutura"
+														},
+														{
+															"reps": "15/15",
+															"name": "passada lateral com 1 miniband nos pés e outra no joelho"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "Deadlift",
+															"weight": {
+																"type": "%",
+																"value": "50-55-60-65-65"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "OHS 50 a",
+															"weight": {
+																"type": "%",
+																"value": "70"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "6-6-5-5-4-4",
+															"name": "Bench Press"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "6-6-6-5-5-5",
+															"name": "Strict Pull com sobrecarga (colocar o maximo 18kg de sobrecarga)"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8",
+															"name": "Strict HSPU"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "8/8",
+															"name": "Agachamento Bulgaro"
+														},
+														{
+															"reps": "8/8",
+															"name": "Remada Serrote"
+														},
+														{
+															"reps": "10",
+															"name": "Flexao Nordica"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30min",
+															"name": "de bike"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Low intensity"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"ljm27awoybomh40ns8": {
+					"date": "2023-07-06",
+					"name": "Quinta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "rounds"
+														},
+														{
+															"reps": "5/5",
+															"name": "Windmill KB"
+														},
+														{
+															"reps": "5/5",
+															"name": "angel unilateral com band"
+														},
+														{
+															"reps": "10/10",
+															"videoUrl": "https://www.youtube.com/watch?v=jT4fAKZkfr4",
+															"name": "half kneeling pallof press"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "2",
+															"name": "Tall Snatch Saindo do chao"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1",
+															"name": "Power snatch com pausa em Low hang",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "hang snatch descendo devagar até o hang 50 a",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1",
+															"name": "hang power squat clean",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														},
+														{
+															"reps": "2",
+															"name": "hang squat Clean descendo devagar até posicao de hang 50 a",
+															"weight": {
+																"type": "%",
+																"value": "60"
+															}
+														}
+													],
+													"type": "complex",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3",
+															"name": "split jerk Pause",
+															"weight": {
+																"type": "%",
+																"value": "40"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 3
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1º 10",
+															"name": "GHD sit up"
+														},
+														{
+															"reps": "2º 10",
+															"name": "C2B"
+														},
+														{
+															"reps": "3º 10",
+															"name": "V-up"
+														},
+														{
+															"reps": "4º 40m",
+															"name": "farm walk"
+														}
+													],
+													"type": "emom",
+													"each": 60,
+													"numberOfRounds": 16
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "row leve"
+														},
+														{
+															"reps": "400m",
+															"name": "row forte"
+														},
+														{
+															"reps": "400m",
+															"name": "row leve"
+														},
+														{
+															"reps": "300m",
+															"name": "row forte"
+														},
+														{
+															"reps": "300m",
+															"name": "row leve"
+														},
+														{
+															"reps": "200m",
+															"name": "row forte"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												},
+												{
+													"movements": [
+														{
+															"reps": "10",
+															"name": "burpees por cima do remo"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												},
+												{
+													"movements": [],
+													"time": 180,
+													"type": "rest"
+												}
+											],
+											"numberOfRounds": 5
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"ljm27awpt1v7c582fo": {
+					"date": "2023-07-07",
+					"name": "Sexta-Feira",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "15",
+															"videoUrl": "https://www.youtube.com/watch?v=KbXh9fNvcDw",
+															"name": "Bench frog com miniband"
+														},
+														{
+															"reps": "10",
+															"name": "Abducoes em pé com miniband"
+														},
+														{
+															"reps": "10/10",
+															"videoUrl": "https://www.youtube.com/watch?v=B0_ySPtnB4k",
+															"name": "Abertura diagonal com superband"
+														},
+														{
+															"reps": "10",
+															"name": "remadas com elastico"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "3-3-3-2-2-2",
+															"name": "Front Squat com pausa na primeira rep",
+															"weight": {
+																"type": "%",
+																"value": "50-55-60-65-70-75"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4",
+															"name": "Snatch pull com defict anilha de 10kg",
+															"weight": {
+																"type": "%",
+																"value": "70-75-80-85-90"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 5
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "4-4-4-3-3-3",
+															"name": "Shouder Press 45 a 60% do jerk"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5-5-5-4-4-4",
+															"name": "Inclined Bench row bar"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 6
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"rest": 10,
+													"work": 20,
+													"movements": [
+														{
+															"name": "Prancha com peso"
+														}
+													],
+													"type": "tabata",
+													"numberOfRounds": 8
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "5",
+															"name": "Ring HSPU com pés na caixa/ ou Ring push up"
+														},
+														{
+															"reps": "10",
+															"name": "Flexão de joelhos no Remo"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "30",
+															"name": "Flexao Plantar"
+														},
+														{
+															"reps": "16",
+															"name": "Rosca alternada com DB"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 2
+												}
+											]
+										}
+									],
+									"name": "Força"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "200/250m",
+															"name": "row"
+														},
+														{
+															"reps": "5",
+															"name": "Thruster",
+															"weight": {
+																"type": "%",
+																"value": "50-55-60-65-70"
+															}
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												},
+												{
+													"movements": [],
+													"time": 60,
+													"type": "rest"
+												}
+											],
+											"numberOfRounds": 5
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				},
+				"ljm27awqwd2m6x2nfmb": {
+					"date": "2023-07-08",
+					"name": "Sabado",
+					"periods": [
+						{
+							"name": "Especifico",
+							"sections": [
+								{
+									"blocks": [
+										{
+											"text": "Muita Mobilidade",
+											"type": "text"
+										},
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "500m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed"
+												}
+											]
+										}
+									],
+									"name": "Aquecimento"
+								},
+								{
+									"blocks": [
+										{
+											"event_type": "not_timed",
+											"type": "event",
+											"rounds": [
+												{
+													"movements": [
+														{
+															"reps": "1",
+															"name": "RMU/BMU"
+														},
+														{
+															"reps": "2",
+															"name": "Devil Press",
+															"weight": {
+																"type": "kg",
+																"value": "15/22,5"
+															}
+														},
+														{
+															"reps": "300m",
+															"name": "run"
+														}
+													],
+													"type": "not_timed",
+													"numberOfRounds": 1
+												}
+											],
+											"numberOfRounds": 8
+										}
+									],
+									"name": "WOD"
+								}
+							]
+						}
+					],
+					"__collections__": {}
+				}
 			}
-		]
+		}
 	}
-]
+}

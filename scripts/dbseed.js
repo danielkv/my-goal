@@ -11,45 +11,35 @@ admin.initializeApp({ projectId })
 
 const db = admin.firestore()
 
+function createCollection(collectionRef, data, transaction) {
+    Object.entries(data).forEach(([key, values]) => {
+        const docRef = collectionRef.doc(key)
+
+        transaction.create(docRef, omit(values, ['__collections__']))
+
+        if (values.__collections__) createSubCollections(docRef, values.__collections__, transaction)
+    })
+}
+
+function createSubCollections(parentDocRef, __collections__, transaction) {
+    Object.entries(__collections__).forEach(([subKey, subValues]) => {
+        const subCollectionRef = parentDocRef.collection(subKey)
+
+        createCollection(subCollectionRef, subValues, transaction)
+    })
+}
+
 // seed function
 async function createSeedData() {
     try {
         await db.runTransaction(async (transaction) => {
-            const worksheetRef = db.collection('worksheets')
-
-            data.map((worksheet) => {
-                const worksheetDocRef = worksheetRef.doc()
-
-                transaction.create(worksheetDocRef, omit(worksheet, ['days']))
-
-                const dayRef = worksheetDocRef.collection('days')
-
-                worksheet.days.forEach((day) => {
-                    const dayDocRef = dayRef.doc()
-                    transaction.create(dayDocRef, day)
-                })
-            })
+            if (data.__collections__) {
+                createSubCollections(db, data.__collections__, transaction)
+            } else {
+                const worksheetRef = db.collection('worksheets')
+                createCollection(worksheetRef, data, transaction)
+            }
         })
-
-        const user = await admin.auth().createUser({
-            displayName: 'Daniel Guolo',
-            email: 'danielkv@gmail.com',
-            password: '123456',
-            emailVerified: true,
-        })
-        admin.auth().setCustomUserClaims(user.uid, { admin: true })
-
-        const promises = Array.from({ length: 8 }).map(() => {
-            return admin.auth().createUser({
-                displayName: faker.person.fullName(),
-                email: faker.internet.email(),
-                password: faker.internet.password(),
-            })
-        })
-
-        await Promise.all(promises)
-
-        console.log('database seed was successful')
     } catch (error) {
         console.log(error, 'database seed failed')
     }
