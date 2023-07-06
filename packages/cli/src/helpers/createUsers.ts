@@ -1,12 +1,14 @@
-const admin = require('firebase-admin')
-const { pick } = require('radash')
-const fs = require('node:fs')
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
+import * as admin from 'firebase-admin'
+import fs from 'node:fs'
+import { pick } from 'radash'
 
-module.exports = async function createUsers(countFakeUsers, adminFilePath) {
+export default async function createUsers(countFakeUsers?: number, adminFilePath?: string) {
+    if (Number.isNaN(countFakeUsers)) throw new Error('count is nor a number')
+
     const auth = admin.auth()
 
-    if (fs.existsSync(adminFilePath)) {
+    if (adminFilePath && fs.existsSync(adminFilePath)) {
         const adminData = JSON.parse(fs.readFileSync(adminFilePath, { encoding: 'utf-8' }))
 
         if (!adminData.displayName || !adminData.email || !adminData.password)

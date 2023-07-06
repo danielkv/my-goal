@@ -1,9 +1,9 @@
-const { firestoreExport } = require('node-firestore-import-export')
-const path = require('node:path')
-const fs = require('node:fs')
-const admin = require('firebase-admin')
+import { CollectionData, CollectionValue } from '../types/exports'
+import * as admin from 'firebase-admin'
+import { firestoreExport } from 'node-firestore-import-export'
+import fs from 'node:fs'
 
-module.exports = async function exportData(filePath, optionCollectionName) {
+export default async function exportData(filePath: string, optionCollectionName?: string) {
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
 
     const db = admin.firestore()
@@ -18,7 +18,7 @@ module.exports = async function exportData(filePath, optionCollectionName) {
         const collectionsData = await Promise.all(promises)
 
         const dataToSave = {
-            __collections__: collectionsData.reduce((final, [name, value]) => {
+            __collections__: collectionsData.reduce<CollectionData>((final, [name, value]) => {
                 final[name] = value
                 return final
             }, {}),
@@ -31,7 +31,7 @@ module.exports = async function exportData(filePath, optionCollectionName) {
 
         const collectionRef = db.collection(optionCollectionName)
 
-        const dataToSave = await firestoreExport(collectionRef)
+        const dataToSave: CollectionValue = await firestoreExport(collectionRef)
 
         return fs.writeFileSync(filePath, JSON.stringify(dataToSave), { encoding: 'utf-8' })
     }

@@ -1,9 +1,10 @@
-const nodepath = require('node:path')
-const { program } = require('commander')
-const firebaseInit = require('./src/helpers/fbInit')
-const exportData = require('./src/helpers/export')
-const importData = require('./src/helpers/import')
-const createUsers = require('./src/helpers/createUsers')
+import createUsers from './src/helpers/createUsers'
+import exportData from './src/helpers/export'
+import firebaseInit from './src/helpers/fbInit'
+import importData from './src/helpers/import'
+import { createMigration, rollbackLastMigration, runMigrations } from './src/helpers/migration'
+import { program } from 'commander'
+import nodepath from 'node:path'
 
 program.option('-c, --cert <char>')
 
@@ -42,7 +43,7 @@ program
 program
     .command('createUsers')
     .option('-a, --admin <file>', 'Admin data file path', 'admin-user.json')
-    .option('-c, --count <number>', 'Fake users count', 10)
+    .option('-c, --count <number>', 'Fake users count', '10')
     .description('Create admin user and fake users')
     .action((_, command) => {
         const { admin, count } = command.optsWithGlobals()
@@ -50,7 +51,34 @@ program
         firebaseInit()
 
         const filePath = nodepath.resolve(__dirname, admin)
-        return createUsers(count, filePath)
+        return createUsers(Number(count), filePath)
+    })
+
+program
+    .command('migrate <mode>')
+    .description('Run migration')
+    .option('-d, --directory <folder>', 'Force running or rollback', 'migrations')
+    .action((mode, _, command) => {
+        const { directory } = command.optsWithGlobals()
+
+        if (!['run', 'rollback'].includes(mode)) throw new Error(`Migrate mode ${mode} is not valid`)
+
+        firebaseInit()
+
+        const dirPath = nodepath.resolve(__dirname, directory)
+        if (mode === 'run') return runMigrations(dirPath)
+        else return rollbackLastMigration(dirPath)
+    })
+
+program
+    .command('createMigration <description>')
+    .description('Create new migration')
+    .option('-d, --directory <folder>', 'Force running or rollback', 'migrations')
+    .action(async (description, _, command) => {
+        const { directory } = command.optsWithGlobals()
+
+        const dirPath = nodepath.resolve(__dirname, directory)
+        return createMigration(dirPath, description)
     })
 
 program.parse()

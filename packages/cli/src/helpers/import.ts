@@ -1,8 +1,8 @@
-const { firestoreImport } = require('node-firestore-import-export')
-const fs = require('node:fs')
-const admin = require('firebase-admin')
+import * as admin from 'firebase-admin'
+import { firestoreImport } from 'node-firestore-import-export'
+import fs from 'node:fs'
 
-module.exports = function importData(filePath, optionCollectionName) {
+export default function importData(filePath: string, optionCollectionName?: string) {
     if (!fs.existsSync(filePath)) throw new Error('Data File does not exist')
 
     const data = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf-8' }))

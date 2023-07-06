@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "target": "ESNext",
-        "module": "ESNext",
+        "module": "CommonJS",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
@@ -13,5 +13,5 @@
         "noUnusedLocals": true,
         "skipLibCheck": true
     },
-    "include": ["index.ts", "./src"]
+    "include": ["./src", "migrations"]
 }
