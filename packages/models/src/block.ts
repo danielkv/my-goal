@@ -33,7 +33,7 @@ export type IRound =
           movements: IEventMovement[]
           config: TTimer
       }
-    | IRestBlock
+    | IRestRound
     | IComplexRound
 
 export type TBlockType = 'event' | 'rest' | 'text' | ''
