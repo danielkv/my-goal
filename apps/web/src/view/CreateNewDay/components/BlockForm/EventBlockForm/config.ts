@@ -1,20 +1,13 @@
 import { IEventBlock } from 'goal-models'
-import { omit } from 'radash'
 import { z } from 'zod'
 
 import { createEventBlockValues } from '@utils/worksheetInitials'
 
 import { eventRoundFormSchema } from '../../RoundForm/config'
 
-export type TEventBlockForm = Omit<IEventBlock, 'type'> & {
-    each?: number
-    timecap?: number
-    work?: number
-    rest?: number
-    numberOfRounds?: number
-}
+export type TEventBlockForm = IEventBlock
 
-export const eventBlockInitialValues: TEventBlockForm = omit(createEventBlockValues(), ['type'])
+export const eventBlockInitialValues: TEventBlockForm = createEventBlockValues()
 
 export const eventBlockFormSchema = z
     .object({

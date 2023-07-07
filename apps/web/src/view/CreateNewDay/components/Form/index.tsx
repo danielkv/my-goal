@@ -262,14 +262,9 @@ const Form: Component<FormProps> = (props) => {
                                         produce((current) => {
                                             const block = getPeaceFromPath<IEventBlock>(current, listPath)
 
-                                            if (block.rounds.length <= 0)
-                                                return block.rounds.push({
-                                                    ...data,
-                                                })
+                                            if (block.rounds.length <= 0) return block.rounds.push(cloneDeep(data))
 
-                                            block.rounds[lastIndex] = {
-                                                ...data,
-                                            }
+                                            block.rounds[lastIndex] = cloneDeep(data)
                                         })
                                     )
                                 }}

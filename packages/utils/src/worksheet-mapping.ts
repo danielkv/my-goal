@@ -23,6 +23,7 @@ export const eventTypes = {
 }
 
 export const roundTypes = {
+    default: 'Padrão',
     complex: 'Complex',
     rest: 'Rest',
 }

@@ -1,4 +1,4 @@
-import { IRestBlock, IRound, TTimerTypes } from 'goal-models'
+import { IRestBlock, IRound } from 'goal-models'
 import { isRestRound, roundTypes } from 'goal-utils'
 import { omit } from 'radash'
 
@@ -46,7 +46,9 @@ const RoundForm: Component<BlockFormProps> = (props) => {
             ? round
             : ({
                   ...round,
+                  type: round.type || undefined,
                   config: {
+                      ...round.config,
                       numberOfRounds: Number.isNaN(round.config.numberOfRounds) ? 1 : round.config.numberOfRounds || 1,
                   },
                   movements:
@@ -65,14 +67,6 @@ const RoundForm: Component<BlockFormProps> = (props) => {
         // @ts-expect-error
         insert(form, 'movements', { value: [createRoundMovementValues()] })
     }
-
-    const timerType = createMemo<TTimerTypes>(() => {
-        const value = getValue(form, 'type') || 'not_timed'
-        if (value === 'rest') return 'not_timed'
-        if (value === 'complex') return 'not_timed'
-
-        return value
-    })
 
     return (
         <Form<TRoundForm> of={form} name="teste" class="flex flex-col gap-6" onSubmit={handleSubmit}>
@@ -114,25 +108,10 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                 </Field>
             </Show>
 
-            <div class="flex flex-row gap-4">
-                <TimersForm of={form} type={timerType()} />
-            </div>
-
             <Show when={getValue(form, 'type') !== 'rest'}>
-                <Field of={form} name="config.numberOfRounds">
-                    {(field) => {
-                        return (
-                            <TextInput
-                                {...field.props}
-                                class="flex-1"
-                                label="Rounds"
-                                type="number"
-                                value={field.value}
-                                error={field.error}
-                            />
-                        )
-                    }}
-                </Field>
+                {/* @ts-expect-error */}
+                <TimersForm of={form} />
+
                 <div class="section-title">Movimentos</div>
                 <FieldArray of={form} name="movements">
                     {(array) => (

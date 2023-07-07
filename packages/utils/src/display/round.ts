@@ -29,7 +29,6 @@ export class RoundDisplay extends BaseDisplay {
 
     displayHeader(round: IRound, sequence?: string | null): string {
         if (isRestRound(round)) return this.displayRest(round.time)
-        if (isComplexRound(round)) return super.displayNumberOfRounds(round.config.numberOfRounds)
 
         const _sequence = sequence || numberHelper.findSequenceReps(round.movements)
 

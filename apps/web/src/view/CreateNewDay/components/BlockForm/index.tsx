@@ -55,48 +55,13 @@ const BlockForm: Component<BlockFormProps> = (props) => {
                     <EventBlockForm
                         block={props.block as IEventBlock}
                         onClickNext={(eventBlock) => {
-                            switch (eventBlock.config.type) {
-                                case 'emom':
-                                    handleSubmit({
-                                        type: 'event',
-                                        config: {
-                                            type: 'emom',
-                                            each: eventBlock.each || 0,
-                                            numberOfRounds: eventBlock.numberOfRounds || 1,
-                                        },
-                                        rounds: eventBlock.rounds,
-                                        info: info(),
-                                        name: eventBlock.name,
-                                    })
-
-                                    break
-                                case 'tabata':
-                                    handleSubmit({
-                                        type: 'event',
-                                        config: {
-                                            type: 'tabata',
-                                            numberOfRounds: eventBlock.numberOfRounds || 1,
-                                            rest: eventBlock.rest || 0,
-                                            work: eventBlock.work || 0,
-                                        },
-                                        rounds: eventBlock.rounds,
-                                        info: info(),
-                                        name: eventBlock.name,
-                                    })
-                                    break
-                                default:
-                                    handleSubmit({
-                                        type: 'event',
-                                        config: {
-                                            type: eventBlock.config.type,
-                                            numberOfRounds: eventBlock.numberOfRounds || 1,
-                                            timecap: eventBlock.timecap || 0,
-                                        },
-                                        rounds: eventBlock.rounds,
-                                        info: info(),
-                                        name: eventBlock.name,
-                                    })
-                            }
+                            handleSubmit({
+                                type: 'event',
+                                config: eventBlock.config,
+                                rounds: eventBlock.rounds,
+                                info: info(),
+                                name: eventBlock.name,
+                            })
                         }}
                     />
                 </Match>
