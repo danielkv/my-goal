@@ -1,15 +1,15 @@
 # Goal web / My Goal
 A training worksheet , focused on CrossFit athletes. The project had as `goal` to enrich the user experience as an athlete keeping track of the workout plans and gains.
-## Project
-This project is a `monorepo` using `yarn workspaces`. It has 3 main **apps** and 3 helper **packages**.
-### Layout
+
 ![iphone 5 5 1](https://github.com/danielkv/my-goal/assets/5912401/ab8d56f4-74fe-45ef-8515-039739e8e8b2)
 ![iphone 5 5 2](https://github.com/danielkv/my-goal/assets/5912401/685421f7-1291-40aa-83f4-c65441b5c69d)
 ![iphone 5 5 3](https://github.com/danielkv/my-goal/assets/5912401/adb8837c-c342-4fa3-b722-e66a405b98c0)
 
-[Check the figma project](https://www.figma.com/file/K3LRczSadkeHIVBNq6zUnm/goal-app?type=design&node-id=48%3A20&mode=design&t=z0Dp7IMkQhbBltg2-1)
+[Check out in figma](https://www.figma.com/file/K3LRczSadkeHIVBNq6zUnm/goal-app?type=design&node-id=48%3A20&mode=design&t=z0Dp7IMkQhbBltg2-1)
+## Project
+This project is a `monorepo` using `yarn workspaces`. It has 3 main **apps** and 3 helper **packages**.
 ### Apps
-- **SolidJS web app**:  for admin only to add new workout plans (worksheets) and manage the users. [See more](https://github.com/danielkv/my-goal/tree/main/apps/web)
+- **SolidJS web app**:  For admin only to add new workout plans (worksheets) and manage the users. [See more](https://github.com/danielkv/my-goal/tree/main/apps/web)
 - **React Native Mobile app**: For active users to check and use during the traning. [See more](https://github.com/danielkv/my-goal/tree/main/apps/mobile)
 - **Firbase functions**: Some small functions to help managing some minor users data. [See more](https://github.com/danielkv/my-goal/tree/main/apps/functions) 
 ### Packages
