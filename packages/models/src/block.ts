@@ -1,11 +1,5 @@
+import { IMovementWeight } from './shared'
 import { TTimer } from './time'
-
-export type TWeightTypes = 'kg' | 'lb' | '%' | 'none'
-
-export type IMovementWeight = {
-    type: TWeightTypes
-    value: string
-}
 
 export type IEventMovement = {
     name: string
