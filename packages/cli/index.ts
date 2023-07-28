@@ -10,7 +10,7 @@ program.option('-c, --cert <char>')
 
 program
     .command('export')
-    .description('export data to JSON file')
+    .description('Export data to JSON file')
     .option('-f, --file <file>', 'File path', 'data.json')
     .option('-p, --path <char>', 'Collection name to export')
     .action((_, command) => {
@@ -26,9 +26,9 @@ program
 
 program
     .command('import')
-    .description('import data from JSON file')
+    .description('Import data from JSON file')
     .option('-f, --file <file>', 'File path', 'data.json')
-    .option('-p, --path <char>', 'Collection name to export')
+    .option('-p, --path <char>', 'Collection name to import')
     .action((_, command) => {
         const { cert, file, path } = command.optsWithGlobals()
         if (!file) throw new Error('File option not defined')
