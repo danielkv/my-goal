@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 5,
+            versionCode: 6,
             package: `${ID_PREFIX}.mygoal.goal`,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',
