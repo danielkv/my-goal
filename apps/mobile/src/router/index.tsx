@@ -110,7 +110,11 @@ function Router() {
             />
             <Stack.Screen name={ERouteName.WorksheetDays} options={{ title: 'Dias' }} component={WorksheetDays} />
             <Stack.Screen name={ERouteName.DayView} options={{ title: 'Dia' }} component={DayViewScreen} />
-            <Stack.Screen name={ERouteName.Profile} options={{ title: 'Meu Perfil' }} component={ProfileScreen} />
+            <Stack.Screen
+                name={ERouteName.Profile}
+                options={{ title: 'Meu Perfil', headerShown: false }}
+                component={ProfileScreen}
+            />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
         </Stack.Navigator>
     )
