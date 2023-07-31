@@ -103,7 +103,7 @@ const ProfileScreen: React.FC = () => {
     const avatarColor = user.displayName ? stringToColor(user.displayName) : ''
     const textAvatarColor = getContrastColor(avatarColor)
 
-    const imagePlaceholder = 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'
+    const profileImage = user.photoURL
 
     return (
         <Stack f={1}>
@@ -130,16 +130,18 @@ const ProfileScreen: React.FC = () => {
                 />
             </LinearGradient>
             <View style={{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: avatarColor, zIndex: -1 }}>
-                {imagePlaceholder ? (
+                {profileImage ? (
                     <Animated.Image
-                        source={{ uri: imagePlaceholder }}
+                        source={{ uri: profileImage }}
                         style={[{ width: '100%', height: HEADER_MAX_HEIGHT }, imageStyle]}
                         resizeMode="cover"
                     />
                 ) : (
-                    <Text marginVertical="$6" fontSize="$10" fontWeight="800" color={textAvatarColor}>
-                        {userInitials(user.displayName)}
-                    </Text>
+                    <Stack f={1} ai="center" jc="center" h={HEADER_MIN_HEIGHT}>
+                        <Text marginVertical="$6" fontSize="$10" fontWeight="800" color={textAvatarColor}>
+                            {userInitials(user.displayName)}
+                        </Text>
+                    </Stack>
                 )}
 
                 <LinearGradient
@@ -165,7 +167,7 @@ const ProfileScreen: React.FC = () => {
                 </LinearGradient>
             </View>
             <Animated.ScrollView style={{ flex: 1 }} onScroll={onScroll} scrollEventThrottle={16}>
-                <Stack h={HEADER_MAX_HEIGHT} />
+                <Stack h={profileImage ? HEADER_MAX_HEIGHT : HEADER_MIN_HEIGHT} />
                 <Stack gap="$6" p="$6" bg="$gray7">
                     <YStack f={1} alignItems="stretch" gap="$3.5">
                         <XStack gap="$3.5">
@@ -173,7 +175,15 @@ const ProfileScreen: React.FC = () => {
                                 <Dumbbell size={20} color="white" />
                                 <Text fontWeight="700">PRs</Text>
                             </Button>
-                            <Button flexDirection="column" f={1} alignItems="flex-end" h="auto" gap="$4.5" p="$3.5">
+                            <Button
+                                onPress={() => navigate(ERouteName.UserWorkoutList)}
+                                flexDirection="column"
+                                f={1}
+                                alignItems="flex-end"
+                                h="auto"
+                                gap="$4.5"
+                                p="$3.5"
+                            >
                                 <Medal size={20} color="white" />
                                 <Text fontWeight="700">Workouts</Text>
                             </Button>
@@ -196,9 +206,5 @@ const ProfileScreen: React.FC = () => {
         </Stack>
     )
 }
-/* {!!Constants.expoConfig?.version && (
-                <Text ta="center" mb="$3" fontSize="$3" color="$gray5">
-                    v{Constants.expoConfig?.version}
-                </Text>
-            )}*/
+
 export default ProfileScreen

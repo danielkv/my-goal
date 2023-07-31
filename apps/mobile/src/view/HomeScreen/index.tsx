@@ -1,7 +1,7 @@
 import { ImageBackground } from 'react-native'
 
-import { YStack } from 'tamagui'
-import { Image } from 'tamagui'
+import Constants from 'expo-constants'
+import { Image, Text, YStack } from 'tamagui'
 
 import HomeBG from '@assets/images/home-bg.png'
 import LogoGoal from '@assets/images/logo-goal.png'
@@ -17,8 +17,8 @@ const HomeScreen: React.FC = () => {
 
     return (
         <ImageBackground style={{ flex: 1 }} source={HomeBG}>
-            <YStack p="$5" f={1} ai="center" jc="flex-end">
-                <Image source={LogoGoal} w={140} h={60} resizeMode="contain" alt="Logo Goal" mb="$10" />
+            <YStack px="$6" py="$3.5" f={1} ai="center" jc="flex-end">
+                <Image source={LogoGoal} w={140} h={60} resizeMode="contain" alt="Logo Goal" mb="$6" />
                 {user ? (
                     <Button
                         variant="primary"
@@ -28,18 +28,21 @@ const HomeScreen: React.FC = () => {
                         Planilhas
                     </Button>
                 ) : (
-                    <>
-                        <Button
-                            bg="white"
-                            pressStyle={{ bg: '$gray2' }}
-                            color="$gray9"
-                            fontWeight="700"
-                            onPress={() => navigate(ERouteName.LoginScreen)}
-                            icon={<LogIn />}
-                        >
-                            Acessar
-                        </Button>
-                    </>
+                    <Button
+                        bg="white"
+                        pressStyle={{ bg: '$gray2' }}
+                        color="$gray9"
+                        fontWeight="700"
+                        onPress={() => navigate(ERouteName.LoginScreen)}
+                        icon={<LogIn />}
+                    >
+                        Acessar
+                    </Button>
+                )}
+                {!!Constants.expoConfig?.version && (
+                    <Text mt="$3.5" ta="center" mb="$3" fontSize="$3" color="$gray5">
+                        v{Constants.expoConfig?.version}
+                    </Text>
                 )}
             </YStack>
         </ImageBackground>
