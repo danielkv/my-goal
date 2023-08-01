@@ -29,6 +29,11 @@ export type TReactNavigationStackParamList = {
 
     Profile: undefined
 
+    UserWorkoutList: undefined
+    UserWorkout: { workoutId: string }
+    UserPRList: undefined
+    UserPR: { movementId: string }
+
     WodTimer: {
         block: IEventBlock
     }
@@ -64,6 +69,10 @@ export enum ERouteName {
     SectionCarousel = 'SectionCarousel',
 
     Profile = 'Profile',
+    UserWorkoutList = 'UserWorkoutList',
+    UserWorkout = 'UserWorkout',
+    UserPRList = 'UserPRList',
+    UserPR = 'UserPR',
 
     WodTimer = 'WodTimer',
 }

@@ -12,16 +12,17 @@ import TimerIcon from '@components/TimerIcon'
 
 export interface PeriodEventBlock {
     block: IEventBlock
+    disableButton?: boolean
 }
 
-const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
+const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton }) => {
     const blockHeader = eventBlockDisplay.displayHeader(block)
 
     const isTimedWorkout = useMemo(() => checkIsTimedWorkout(block), [])
     const timerType = blockTimerType(block)
 
     return (
-        <OpenTimerButton block={block} timedWorkoutMode={isTimedWorkout} type={timerType}>
+        <OpenTimerButton disabled={disableButton} block={block} timedWorkoutMode={isTimedWorkout} type={timerType}>
             {(!!block.name || !!blockHeader || isTimedWorkout === 'block' || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">

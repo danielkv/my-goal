@@ -12,4 +12,5 @@ export interface IWorkout {
 
 export interface IUserWorkoutResult extends IUserResult {
     workoutId: string
+    workout: IEventBlock
 }

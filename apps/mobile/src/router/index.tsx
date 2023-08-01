@@ -16,6 +16,7 @@ import RegressiveTimerScreen from '@view/Timers/RegressiveTimerScreen'
 import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
+import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
 import WorksheetDays from '@view/WorksheetDays'
 import WorksheetListScreen from '@view/WorksheetListScreen'
@@ -114,6 +115,11 @@ function Router() {
                 name={ERouteName.Profile}
                 options={{ title: 'Meu Perfil', headerShown: false }}
                 component={ProfileScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.UserWorkoutList}
+                options={{ title: 'Workouts' }}
+                component={UserWorkoutListScreen}
             />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
         </Stack.Navigator>
