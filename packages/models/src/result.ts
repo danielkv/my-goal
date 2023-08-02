@@ -9,6 +9,6 @@ export interface IUserResult {
     id: string
     uid: string
     createdAt: string
-    public: boolean
+    isPrivate: boolean
     result: IWorkoutResult
 }

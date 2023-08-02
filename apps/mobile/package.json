@@ -48,6 +48,7 @@
 		"expo-status-bar": "~1.6.0",
 		"expo-updates": "~0.18.11",
 		"formik": "^2.2.9",
+		"goal-generators": "*",
 		"goal-models": "*",
 		"goal-utils": "*",
 		"libphonenumber-js": "^1.10.37",

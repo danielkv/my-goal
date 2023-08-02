@@ -1,0 +1,21 @@
+{
+	"name": "goal-generators",
+	"version": "1.0.0",
+	"main": "index.ts",
+	"types": "index.ts",
+	"files": [
+		"src/*",
+		"index.ts"
+	],
+	"license": "MIT",
+	"dependencies": {
+		"@faker-js/faker": "^8.0.2",
+		"dayjs": "^1.11.8",
+		"goal-models": "*",
+		"radash": "^10.9.0"
+	},
+	"scripts": {
+		"test": "vitest --reporter verbose",
+		"barrels": "barrelsby --delete -e .spec -e vitest -H"
+	}
+}

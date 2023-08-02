@@ -17,6 +17,7 @@ import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
 import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
+import UserWorkoutScreen from '@view/UserWorkoutScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
 import WorksheetDays from '@view/WorksheetDays'
 import WorksheetListScreen from '@view/WorksheetListScreen'
@@ -118,9 +119,10 @@ function Router() {
             />
             <Stack.Screen
                 name={ERouteName.UserWorkoutList}
-                options={{ title: 'Workouts' }}
+                options={{ title: 'Workout' }}
                 component={UserWorkoutListScreen}
             />
+            <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
         </Stack.Navigator>
     )

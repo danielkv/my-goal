@@ -10,7 +10,7 @@ import EventBlock from '@components/EventBlock'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
-import { getUserWorkoutsByUserIdUseCase } from '@useCases/user/getUserWorkouts'
+import { getUserWorkoutsByUserIdUseCase } from '@useCases/user/getUserWorkoutsByUserId'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
@@ -52,8 +52,8 @@ const UserWorkoutListScreen: React.FC = () => {
                 renderItem={({ item }) => {
                     if (typeof item === 'string')
                         return (
-                            <Stack bg="$gray7">
-                                <Stack bg="$gray9" br="$4" px="$2.5" py="$3" mt="$2" mx="$6">
+                            <Stack bg="$gray7" pt="$2" px="$6">
+                                <Stack bg="$gray9" br="$4" px="$2.5" py="$3">
                                     <Text fontWeight="700" fontSize={16}>
                                         Postado dia {dayjs(item).format('DD/MM/YY')}
                                     </Text>
