@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native'
+import { Platform, TouchableOpacity } from 'react-native'
 
 import dayjs from 'dayjs'
 import useSWR from 'swr'
@@ -64,14 +64,16 @@ const UserWorkoutListScreen: React.FC = () => {
                         return (
                             <Stack mb="$2" mx="$6" mt="$3">
                                 <TouchableOpacity
-                                    onPress={() => navigate(ERouteName.UserWorkout, { workoutId: item.id })}
+                                    onPress={() =>
+                                        navigate(ERouteName.UserWorkout, { workoutSignature: item.workoutSignature })
+                                    }
                                 >
                                     <EventBlock disableButton block={item.workout} />
                                 </TouchableOpacity>
                             </Stack>
                         )
                 }}
-                stickyHeaderIndices={stickyHeaderIndices}
+                stickyHeaderIndices={Platform.OS === 'ios' ? stickyHeaderIndices : undefined}
                 getItemType={(item) => (typeof item === 'string' ? 'sectionHeader' : 'row')}
                 contentContainerStyle={{
                     paddingVertical: space[6].val,

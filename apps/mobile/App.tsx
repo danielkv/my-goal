@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-native'
+import { LogBox } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import dayjs from 'dayjs'
@@ -23,6 +24,8 @@ import { getErrorMessage } from '@utils/getErrorMessage'
 import AppLayout from '@view/AppLayout'
 
 import config from './tamagui.config'
+
+LogBox.ignoreLogs(['new NativeEventEmitter'])
 
 dayjs.locale('pt-br')
 dayjs.extend(isBetween)

@@ -10,12 +10,16 @@ import Button from '@components/Button'
 import EventBlock from '@components/EventBlock'
 import UserListItem from '@components/UserListItem'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { TReactNavigationStackParamList } from '@router/types'
+import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
 import { Filter, Plus } from '@tamagui/lucide-icons'
 import { getUserWorkoutUseCase } from '@useCases/user/getUserWorkout'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
+
+export interface UserWorkoutScreenProps {
+    workoutSignature: string
+}
 
 const UserWorkoutScreen: React.FC = () => {
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'UserWorkout'>>()
@@ -24,23 +28,39 @@ const UserWorkoutScreen: React.FC = () => {
         'all'
     )
 
-    const { setOptions } = useNavigation()
+    const { setOptions, navigate } = useNavigation()
     const theme = useTheme()
     const { space } = getTokens()
     const user = usePreventAccess()
-
-    useEffect(() => {
-        setOptions({ headerRight: () => <Button variant="icon" icon={<Plus size={18} />} /> })
-    }, [])
 
     const {
         data: workouts,
         isLoading,
         error,
     } = useSWR(
-        () => (user ? [user.uid, params.workoutId] : null),
+        () => (user ? [user.uid, params.workoutSignature] : null),
         (res) => getUserWorkoutUseCase(res[0], res[1])
     )
+    const mainResult = workouts?.[0]
+    const workout = mainResult?.workout
+
+    useEffect(() => {
+        if (!mainResult) return
+        setOptions({
+            headerRight: () => (
+                <Button
+                    variant="icon"
+                    icon={<Plus size={18} />}
+                    onPress={() =>
+                        navigate(ERouteName.AddResult, {
+                            workoutSignature: mainResult.workoutSignature,
+                            workout: mainResult.workout,
+                        })
+                    }
+                />
+            ),
+        })
+    }, [mainResult])
 
     if (error) return <AlertBox type="error" title="Ocorreu um erro" text={getErrorMessage(error)} />
 
@@ -51,9 +71,7 @@ const UserWorkoutScreen: React.FC = () => {
             </Stack>
         )
 
-    if (!workouts) return <AlertBox type="warning" text="Nenhum workout encontrado" />
-
-    const workout = workouts[0].workout
+    if (!workouts || !workout) return <AlertBox type="warning" text="Nenhum workout encontrado" />
 
     const filteredWorkouts = workoutResult === 'filtered' ? workouts.filter((w) => w.uid === user?.uid) : workouts
 

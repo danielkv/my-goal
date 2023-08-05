@@ -24,7 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
-            buildNumber: '10',
+            buildNumber: '11',
             bundleIdentifier: `${ID_PREFIX}.mygoal.goal`,
             supportsTablet: false,
             requireFullScreen: true,
@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 7,
+            versionCode: 8,
             package: `${ID_PREFIX}.mygoal.goal`,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',

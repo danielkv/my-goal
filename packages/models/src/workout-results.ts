@@ -14,3 +14,8 @@ export interface IUserWorkoutResult extends IUserResult {
     workoutSignature: string
     workout: IEventBlock
 }
+
+export interface IUserWorkoutResultInput extends Omit<IUserResult, 'id'> {
+    workoutSignature: string
+    workout: IEventBlock
+}
