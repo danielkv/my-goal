@@ -13,7 +13,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
 import { Filter, Plus } from '@tamagui/lucide-icons'
-import { getUserWorkoutUseCase } from '@useCases/user/getUserWorkout'
+import { getUserWorkoutUseCase } from '@useCases/result/getUserWorkout'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 

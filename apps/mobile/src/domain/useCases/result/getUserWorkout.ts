@@ -1,10 +1,8 @@
 import dayjs from 'dayjs'
 import { createUser } from 'goal-generators'
-import { IEventBlock, IUserData, IUserWorkoutResult } from 'goal-models'
+import { IEventBlock, IUserWorkoutResultResponse } from 'goal-models'
 
 import { faker } from '@faker-js/faker'
-
-type TGetUserWorkoutResponse = (IUserWorkoutResult & { user: IUserData })[]
 
 const workout: IEventBlock = {
     config: { type: 'not_timed', numberOfRounds: 5 },
@@ -36,8 +34,8 @@ const workout: IEventBlock = {
     info: 'em duplas',
 }
 
-export async function getUserWorkoutUseCase(userId: string, workoutId: string): Promise<TGetUserWorkoutResponse> {
-    const results: TGetUserWorkoutResponse = [
+export async function getUserWorkoutUseCase(userId: string, workoutId: string): Promise<IUserWorkoutResultResponse[]> {
+    const results: IUserWorkoutResultResponse[] = [
         {
             id: faker.string.uuid(),
             user: createUser({ uid: userId }),

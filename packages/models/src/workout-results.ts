@@ -1,5 +1,6 @@
 import { IEventBlock } from './block'
 import { IUserResult } from './result'
+import { IUserData } from './user'
 
 // export interface IWorkout {
 //     id: string
@@ -13,6 +14,10 @@ import { IUserResult } from './result'
 export interface IUserWorkoutResult extends IUserResult {
     workoutSignature: string
     workout: IEventBlock
+}
+
+export interface IUserWorkoutResultResponse extends IUserWorkoutResult {
+    user: IUserData
 }
 
 export interface IUserWorkoutResultInput extends Omit<IUserResult, 'id'> {

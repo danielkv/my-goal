@@ -12,13 +12,15 @@ const SafeAreaView: React.FC<KeyboardAvoidingViewProps> = ({ children, ...props 
     return (
         <Stack flex={1}>
             <KeyboardAvoidingView
-                style={{ flex: 1 }}
+                style={{ flex: 1, justifyContent: 'center' }}
                 enabled={Platform.OS === 'ios'}
                 keyboardVerticalOffset={64}
                 behavior="padding"
                 {...props}
             >
-                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => Platform.OS === 'android' && Keyboard.dismiss()}>
+                    {children}
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </Stack>
     )

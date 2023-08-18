@@ -15,9 +15,10 @@ export const addResultSchema = yup.object().shape({
     value: yup.number().required('Valor é obrigatório'),
 })
 
-export const intialData: IAddResultForm = {
+export const intialData = (data?: Partial<IAddResultForm>): IAddResultForm => ({
     isPrivate: false,
     type: 'time',
     date: new Date(),
     value: 0,
-}
+    ...data,
+})

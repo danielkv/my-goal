@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { TouchableOpacity } from 'react-native'
 
 import { IEventBlock } from 'goal-models'
 import { blockTimerType, checkIsTimedWorkout } from 'goal-utils'
@@ -7,22 +8,28 @@ import { Text, XStack } from 'tamagui'
 
 import EventBlockRound from '@components/EventBlockRound'
 import InternalCard from '@components/InternalCard'
-import OpenTimerButton from '@components/OpenTimerButton'
 import TimerIcon from '@components/TimerIcon'
 
 export interface PeriodEventBlock {
     block: IEventBlock
     disableButton?: boolean
+    onPress?(block: IEventBlock): void
 }
 
-const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton }) => {
+const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress }) => {
     const blockHeader = eventBlockDisplay.displayHeader(block)
 
     const isTimedWorkout = useMemo(() => checkIsTimedWorkout(block), [])
     const timerType = blockTimerType(block)
 
+    const handleOnPress = () => {
+        if (!onPress) return
+
+        onPress(block)
+    }
+
     return (
-        <OpenTimerButton disabled={disableButton} block={block} timedWorkoutMode={isTimedWorkout} type={timerType}>
+        <TouchableOpacity onPress={handleOnPress} disabled={disableButton}>
             {(!!block.name || !!blockHeader || isTimedWorkout === 'block' || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">
@@ -43,7 +50,7 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton }) => {
                     />
                 ))}
             </InternalCard>
-        </OpenTimerButton>
+        </TouchableOpacity>
     )
 }
 

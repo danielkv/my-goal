@@ -10,7 +10,7 @@ import EventBlock from '@components/EventBlock'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
-import { getUserWorkoutsByUserIdUseCase } from '@useCases/user/getUserWorkoutsByUserId'
+import { getUserWorkoutsByUserIdUseCase } from '@useCases/result/getUserWorkoutsByUserId'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
