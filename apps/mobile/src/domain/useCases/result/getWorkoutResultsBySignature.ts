@@ -1,14 +1,24 @@
 import dayjs from 'dayjs'
 import { createUser } from 'goal-generators'
-import { IUserWorkoutResultResponse } from 'goal-models'
+import { IUserWorkoutResult, IUserWorkoutResultResponse } from 'goal-models'
+import { collections } from 'goal-utils'
 
+import { firebaseProvider } from '@common/providers/firebase'
 import { faker } from '@faker-js/faker'
+import { FilterFunction } from '@react-native-firebase/firestore'
 
 export async function getLastWorkoutResultsBySignatureUseCase(
     userId: string,
     workougSignature: string
 ): Promise<IUserWorkoutResultResponse[]> {
-    console.log('load')
+    const fs = firebaseProvider.getFirestore()
+
+    const collectionRef = fs.collection<IUserWorkoutResult>(collections.WORKOUT_RESULTS)
+
+    const resultsSnapshot = await collectionRef.get()
+
+    const userIds = resultsSnapshot.docs.map((doc) => doc.data().uid)
+
     const results: IUserWorkoutResultResponse[] = [
         {
             id: faker.string.uuid(),
