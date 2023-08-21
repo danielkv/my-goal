@@ -16,14 +16,10 @@ function splitTime(time: number): [string, string] {
     return [duration.format('mm'), duration.format('ss')]
 }
 
-export function stringTimeToSeconds(string: string): number {
-    const splited = string.split(':')
-    const minutes = Number(splited[0])
-    const seconds = Number(splited[1])
-
+export function stringTimeToSeconds(minutes: string, seconds: string): number {
     if (Number.isNaN(minutes) || Number.isNaN(seconds)) return 0
 
-    const duration = dayjs.duration({ minutes, seconds })
+    const duration = dayjs.duration({ minutes: Number(minutes), seconds: Number(seconds) })
 
     return duration.asSeconds()
 }
@@ -49,7 +45,7 @@ const TimeField: React.FC<TimeFieldProps> = ({ value, onChange, variant }) => {
             setSeconds(s)
         }
 
-        const secondsFinal = stringTimeToSeconds(`${m}:${s}`)
+        const secondsFinal = stringTimeToSeconds(m, s)
         onChange(secondsFinal)
     }
 

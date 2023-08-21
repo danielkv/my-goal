@@ -31,13 +31,18 @@ const EventBlockDialog: React.FC<EventBlockDialogProps> = ({ block, open, onClos
         return false
     }
 
+    const handlePressResults = () => {
+        setDisplayResultFomOpen(true)
+        onClose()
+    }
+
     useBackHandler(handleBackPress)
 
     return (
         <>
             <Modal open={open} onClose={onClose} id="menu">
                 <Paper>
-                    <Button icon={<Medal />} onPress={() => setDisplayResultFomOpen(true)}>
+                    <Button icon={<Medal />} onPress={handlePressResults}>
                         Ver resultados
                     </Button>
                     <Button icon={<Clock />}>Timer</Button>

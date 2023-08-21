@@ -47,7 +47,12 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
     const { data, isLoading, mutate } = useSWR(
         () => (!open || !workoutSignature || !user ? null : [user.uid, workoutSignature]),
         (obj) => getLastWorkoutResultsBySignatureUseCase(obj[0], obj[1]),
-        { revalidateIfStale: false }
+        {
+            //revalidateIfStale: false,
+            onError(err) {
+                console.log(err)
+            },
+        }
     )
 
     const handleSave = async (result: IAddResultForm) => {
@@ -67,6 +72,8 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
             await saveWorkoutResult(resultNormalized)
 
             await mutate()
+
+            onClose()
         } catch (err) {
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
         }

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { FormikConfig, useFormik } from 'formik'
 import { TResultType } from 'goal-models'
 import { Switch, Text, ToggleGroup, XStack, YStack } from 'tamagui'
@@ -24,8 +22,6 @@ const AddResultForm: React.FC<AddResultFormProps> = ({
     workoutResultType: workoutType,
     disableResultTypeSwitch,
 }) => {
-    const [time, setTime] = useState(0)
-
     const handleCancel = () => {
         onCancel?.()
     }
@@ -84,7 +80,7 @@ const AddResultForm: React.FC<AddResultFormProps> = ({
                 <Text fontSize="$3" color="$gray1">
                     Tempo
                 </Text>
-                <TimeField value={time} onChange={setTime} />
+                <TimeField value={values.value} onChange={(seconds) => setFieldValue('value', seconds)} />
             </YStack>
 
             <Button loading={isSubmitting} onPress={() => handleSubmit()} variant="primary">
