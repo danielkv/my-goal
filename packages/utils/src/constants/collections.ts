@@ -6,4 +6,5 @@ export enum collections {
     TEMP_WORKSHEETS = 'temp_worksheets',
     WORKOUT_RESULTS = 'workout_results',
     MOVEMENT_RESULTS = 'movement_results',
+    USER_DATA = 'user_data',
 }
