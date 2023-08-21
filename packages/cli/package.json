@@ -9,6 +9,7 @@
 		"commander": "^11.0.0",
 		"dayjs": "^1.11.9",
 		"firebase-admin": "^11.9.0",
+		"goal-utils": "*",
 		"node-firestore-import-export": "^1.1.0",
 		"radash": "^10.9.0",
 		"ts-node": "^10.9.1"
