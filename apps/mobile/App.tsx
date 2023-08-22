@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 import { LogBox } from 'react-native'
+import 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import dayjs from 'dayjs'
@@ -14,8 +15,10 @@ import { StatusBar } from 'expo-status-bar'
 import { TamaguiProvider, Theme } from 'tamagui'
 
 import { firebaseProvider } from '@common/providers/firebase'
+import AppAlertProvider from '@components/AppAlert/provider'
 import ErrorBoundary from '@components/ErrorBoundary'
 import { extractUserCredential, setLoggedUser } from '@contexts/user/userContext'
+import { PortalProvider } from '@gorhom/portal'
 import { NavigationContainer } from '@react-navigation/native'
 import { initialLoadUseCase } from '@useCases/init/initialLoad'
 import { logMessageUseCase } from '@useCases/log/logMessage'
@@ -84,7 +87,11 @@ export default function App() {
                     <SafeAreaProvider>
                         <StatusBar style="light" />
                         <ErrorBoundary>
-                            <AppLayout />
+                            <PortalProvider>
+                                <AppAlertProvider>
+                                    <AppLayout />
+                                </AppAlertProvider>
+                            </PortalProvider>
                         </ErrorBoundary>
                     </SafeAreaProvider>
                 </Theme>

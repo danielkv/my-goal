@@ -6,9 +6,10 @@ import { isEventBlock } from 'goal-utils'
 import { Stack, Text, YStack, getTokens } from 'tamagui'
 import { useTheme } from 'tamagui'
 
+import { alert } from '@components/AppAlert/utils'
 import BlockItem from '@components/BlockItem'
-import EventBlockDialog from '@components/EventBlockDialog'
 import WodCard from '@components/WodCard'
+import WorkoutResultDialog from '@components/WorkoutResultDialog'
 import { FlashList } from '@shopify/flash-list'
 import { usePreventAccess } from '@utils/preventAccess'
 
@@ -26,13 +27,16 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
 
     const handlePressBlock = (block: IBlock) => {
         if (!isEventBlock(block)) return
-
-        setBlockMenu(block)
+        alert('Selecione uma opção', '', [
+            { text: 'Ver resultados', onPress: () => setBlockMenu(block) },
+            { text: 'Abrir timer' },
+        ])
     }
 
     return (
         <>
-            <EventBlockDialog open={!!blockMenu} block={blockMenu} onClose={() => setBlockMenu(null)} />
+            <WorkoutResultDialog open={!!blockMenu} onClose={() => setBlockMenu(null)} block={blockMenu} />
+
             <FlashList
                 data={day.periods}
                 horizontal={false}

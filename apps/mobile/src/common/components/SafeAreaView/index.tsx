@@ -8,11 +8,15 @@ import {
 
 import { Stack } from 'tamagui'
 
-const SafeAreaView: React.FC<KeyboardAvoidingViewProps> = ({ children, ...props }) => {
+interface SafeAreaViewProps extends KeyboardAvoidingViewProps {
+    flex?: number | undefined
+}
+
+const SafeAreaView: React.FC<SafeAreaViewProps> = ({ children, flex, ...props }) => {
     return (
-        <Stack flex={1}>
+        <Stack flex={flex}>
             <KeyboardAvoidingView
-                style={{ flex: 1, justifyContent: 'center' }}
+                style={{ flex: flex, justifyContent: 'center' }}
                 enabled={Platform.OS === 'ios'}
                 keyboardVerticalOffset={64}
                 behavior="padding"

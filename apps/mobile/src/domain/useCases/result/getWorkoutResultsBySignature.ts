@@ -21,6 +21,8 @@ export async function getLastWorkoutResultsBySignatureUseCase(
         .limit(limit)
         .get()
 
+    if (resultsSnapshot.empty) return []
+
     const userIds = resultsSnapshot.docs.map((doc) => doc.data().uid)
 
     const userSnapthot = await userRef.where('uid', 'in', userIds).get()
