@@ -4,9 +4,9 @@ import { Switch, Text, ToggleGroup, XStack, YStack } from 'tamagui'
 
 import Button from '@components/Button'
 import DateField from '@components/DateField'
-import TimeField from '@components/TimeField2'
 import { Globe, Lock } from '@tamagui/lucide-icons'
 
+import ResultValueField from './components/ResultValueField'
 import { IAddResultForm, addResultSchema, intialData } from './config'
 
 export interface AddResultFormProps {
@@ -39,7 +39,14 @@ const AddResultForm: React.FC<AddResultFormProps> = ({
     return (
         <YStack gap="$3.5">
             {!disableResultTypeSwitch && (
-                <ToggleGroup value={values.type} onValueChange={handleChange('type')} type="single" w="100%" h={40}>
+                <ToggleGroup
+                    value={values.type}
+                    defaultValue="time"
+                    onValueChange={handleChange('type')}
+                    type="single"
+                    w="100%"
+                    h={40}
+                >
                     <ToggleGroup.Item value="time" f={1}>
                         <Text>Tempo</Text>
                     </ToggleGroup.Item>
@@ -77,10 +84,11 @@ const AddResultForm: React.FC<AddResultFormProps> = ({
             </XStack>
 
             <YStack gap="$2">
-                <Text fontSize="$3" color="$gray1">
-                    Tempo
-                </Text>
-                <TimeField value={values.value} onChange={(seconds) => setFieldValue('value', seconds)} />
+                <ResultValueField
+                    type={values.type}
+                    value={values.value}
+                    onChange={(value) => setFieldValue('value', value)}
+                />
             </YStack>
 
             <Button loading={isSubmitting} onPress={() => handleSubmit()} variant="primary">
