@@ -30,6 +30,7 @@ module.exports = function (api) {
                         '@utils': './src/common/utils',
                         '@common': './src/common',
                         '@useCases': './src/domain/useCases',
+                        '@hooks': './src/domain/hooks',
                         '@contexts': './src/domain/contexts',
                         '@assets': './src/assets',
                         '@view': './src/view',

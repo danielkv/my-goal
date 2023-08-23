@@ -1,42 +1,23 @@
-import { useState } from 'react'
-
 import dayjs from 'dayjs'
-import { IBlock, IDayModel, IEventBlock } from 'goal-models'
-import { isEventBlock } from 'goal-utils'
+import { IBlock, IDayModel } from 'goal-models'
 import { Stack, Text, YStack, getTokens } from 'tamagui'
 import { useTheme } from 'tamagui'
 
-import { alert } from '@components/AppAlert/utils'
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
-import WorkoutResultDialog from '@components/WorkoutResultDialog'
 import { FlashList } from '@shopify/flash-list'
-import { usePreventAccess } from '@utils/preventAccess'
 
 export interface PeriodsListView {
     day: IDayModel
+    onBlockPress: (block: IBlock) => void
 }
 
-const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
+const PeriodsListView: React.FC<PeriodsListView> = ({ day, onBlockPress }) => {
     const theme = useTheme()
     const { size } = getTokens()
 
-    const [blockMenu, setBlockMenu] = useState<IEventBlock | null>(null)
-
-    usePreventAccess()
-
-    const handlePressBlock = (block: IBlock) => {
-        if (!isEventBlock(block)) return
-        alert('Selecione uma opção', '', [
-            { text: 'Ver resultados', onPress: () => setBlockMenu(block) },
-            { text: 'Abrir timer' },
-        ])
-    }
-
     return (
         <>
-            <WorkoutResultDialog open={!!blockMenu} onClose={() => setBlockMenu(null)} block={blockMenu} />
-
             <FlashList
                 data={day.periods}
                 horizontal={false}
@@ -63,7 +44,7 @@ const PeriodsListView: React.FC<PeriodsListView> = ({ day }) => {
                                                         key={`${block.type}.${blockNumber}`}
                                                         block={block}
                                                         blockNumber={`${sectionNumberId}.${blockNumber + 1}`}
-                                                        onPress={handlePressBlock}
+                                                        onPress={onBlockPress}
                                                     />
                                                 ))}
                                             </YStack>

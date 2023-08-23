@@ -8,16 +8,16 @@ import Animated, {
     useSharedValue,
 } from 'react-native-reanimated'
 
-import { IDayModel } from 'goal-models'
+import { IBlock, IDayModel } from 'goal-models'
 import { ScrollView, Stack, XStack, getTokens } from 'tamagui'
 
 import { IFlatSection } from '@common/interfaces/worksheet'
 import BlockItem from '@components/BlockItem'
 import WodCard from '@components/WodCard'
-import { usePreventAccess } from '@utils/preventAccess'
 
 export interface SectionCarouselView {
     day: IDayModel
+    onBlockPress: (block: IBlock) => void
 }
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
@@ -43,14 +43,12 @@ const DOT_MIN = 0.4
 const DOT_MAX = 1.4
 const DOT_DIFF = DOT_MAX - DOT_MIN
 
-const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
+const SectionCarouselView: React.FC<SectionCarouselView> = ({ day, onBlockPress }) => {
     const { size } = getTokens()
 
     const offset = useSharedValue(0)
     const previous = useSharedValue(0)
     const next = useSharedValue(1)
-
-    usePreventAccess()
 
     const scrollHandler = usePageScrollHandler({
         onPageScroll: (e: any) => {
@@ -119,6 +117,7 @@ const SectionCarouselView: React.FC<SectionCarouselView> = ({ day }) => {
                                                 key={`${block.type}.${index}`}
                                                 block={block}
                                                 blockNumber={`${sectionNumber}.${index + 1}`}
+                                                onPress={onBlockPress}
                                             />
                                         ))}
                                     </Stack>

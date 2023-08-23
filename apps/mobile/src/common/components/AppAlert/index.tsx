@@ -10,24 +10,29 @@ import { IAlertProps } from './types'
 
 const AppAlert: React.FC<IAlertProps> = ({ cancelable, buttons, title, description, ...modalProps }) => {
     useBackHandler(() => {
-        modalProps.onClose()
+        if (cancelable) modalProps.onClose()
         return true
     })
 
     return (
-        <Modal {...modalProps}>
+        <Modal {...modalProps} closeOnPressOverlay={cancelable}>
             <Paper>
-                {!!title && <Text>{title}</Text>}
+                {!!title && (
+                    <Text textAlign="center" fontWeight="700">
+                        {title}
+                    </Text>
+                )}
                 {!!description && <Text>{description}</Text>}
-                {buttons.map((button) => (
+                {buttons.map((button, index) => (
                     <Button
-                        key={button.text}
+                        key={`${button.text}_${index}`}
                         onPress={() => {
                             button.onPress?.()
                             modalProps.onClose()
                         }}
                         icon={button.icon}
-                        variant={button.primary ? 'primary' : undefined}
+                        bg={button.primary ? 'white' : '$gray9'}
+                        color={button.primary ? '$gray9' : 'white'}
                     >
                         {button.text}
                     </Button>

@@ -13,7 +13,7 @@ export interface ModalProps {
     onClose: () => void
     overlayOpacity?: number
     overlayColor?: string
-    id?: string
+    closeOnPressOverlay?: boolean
 }
 
 const AnimatedView = motify(Stack)()
@@ -21,10 +21,10 @@ const AnimatedView = motify(Stack)()
 const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
     overlayColor = '#000000',
     overlayOpacity = 0.6,
+    closeOnPressOverlay = true,
     open,
     onClose,
     children,
-    id,
 }) => {
     const { space } = getTokens()
     const bgColor = chroma(overlayColor).alpha(overlayOpacity).hex()
@@ -34,7 +34,7 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
             <AnimatePresence>
                 {open && (
                     <Stack position="absolute" top={0} left={0} right={0} bottom={0} zIndex={999} jc="center">
-                        <TouchableWithoutFeedback onPress={onClose}>
+                        <TouchableWithoutFeedback onPress={() => closeOnPressOverlay && onClose()}>
                             <AnimatedView
                                 key="overlay"
                                 bg={bgColor}

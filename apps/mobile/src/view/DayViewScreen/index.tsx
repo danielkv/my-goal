@@ -2,19 +2,24 @@ import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 import { activateKeepAwakeAsync, deactivateKeepAwake, isAvailableAsync } from 'expo-keep-awake'
-import { capitalize } from 'goal-utils'
+import { IBlock, IEventBlock } from 'goal-models'
+import { capitalize, isEventBlock } from 'goal-utils'
 import useSWR from 'swr'
 import { Stack, XStack } from 'tamagui'
 
 import { useStorage } from '@common/hooks/useStorage'
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
+import { alert } from '@components/AppAlert/utils'
 import Button from '@components/Button'
+import WorkoutResultDialog from '@components/WorkoutResultDialog'
+import { useBlockTimerNavigation } from '@hooks/timer/useBlockTimerNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { TReactNavigationStackParamList } from '@router/types'
-import { AlignJustify, Lightbulb, LightbulbOff, PanelRightClose } from '@tamagui/lucide-icons'
+import { AlignJustify, Clock, Lightbulb, LightbulbOff, Medal, PanelRightClose } from '@tamagui/lucide-icons'
 import { getWorksheetDayByIdFnUseCase } from '@useCases/worksheet/getWorksheetDayById'
 import { getErrorMessage } from '@utils/getErrorMessage'
+import { usePreventAccess } from '@utils/preventAccess'
 import PeriodsListView from '@view/PeriodsListView'
 import SectionCarouselView from '@view/SectionCarouselView'
 
@@ -22,6 +27,7 @@ import WorksheetOnboarding from './components/WorksheetOnboarding'
 
 const DayViewScreen: React.FC = () => {
     const [keepAwakeAvailable, setKeepAwakeAvailable] = useState(false)
+    const [blockMenu, setBlockMenu] = useState<IEventBlock | null>(null)
 
     const {
         currentValue: keepAwake,
@@ -54,6 +60,10 @@ const DayViewScreen: React.FC = () => {
             },
         }
     )
+
+    usePreventAccess()
+
+    const { handleOpenTimerPress } = useBlockTimerNavigation()
 
     useEffect(() => {
         isAvailableAsync().then(setKeepAwakeAvailable)
@@ -102,9 +112,31 @@ const DayViewScreen: React.FC = () => {
 
     if (!data) return <AlertBox type="info" text="Nenhum resultado encontrato" />
 
+    const openTimerFromAlert = (block: IEventBlock) => {
+        handleOpenTimerPress(block)
+    }
+
+    const handlePressBlock = (block: IBlock) => {
+        if (!isEventBlock(block)) return
+
+        alert(
+            [
+                { text: 'Abrir timer', icon: <Clock />, primary: true, onPress: () => openTimerFromAlert(block) },
+                { text: 'Ver resultados', icon: <Medal />, onPress: () => setBlockMenu(block) },
+            ],
+            true
+        )
+    }
+
     return (
         <Stack flex={1}>
-            {viewType === 'carousel' ? <SectionCarouselView day={data} /> : <PeriodsListView day={data} />}
+            {viewType === 'carousel' ? (
+                <SectionCarouselView onBlockPress={handlePressBlock} day={data} />
+            ) : (
+                <PeriodsListView onBlockPress={handlePressBlock} day={data} />
+            )}
+
+            <WorkoutResultDialog open={!!blockMenu} onClose={() => setBlockMenu(null)} block={blockMenu} />
 
             <Button
                 size="$5"

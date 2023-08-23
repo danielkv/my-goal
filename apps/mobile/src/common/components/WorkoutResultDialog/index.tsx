@@ -73,7 +73,7 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
 
             await mutate()
 
-            onClose()
+            setAddResultFomOpen(false)
         } catch (err) {
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
         }

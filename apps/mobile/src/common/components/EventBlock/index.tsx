@@ -19,7 +19,7 @@ export interface PeriodEventBlock {
 const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress }) => {
     const blockHeader = eventBlockDisplay.displayHeader(block)
 
-    const isTimedWorkout = useMemo(() => checkIsTimedWorkout(block), [])
+    const blockTimerMode = useMemo(() => checkIsTimedWorkout(block), [])
     const timerType = blockTimerType(block)
 
     const handleOnPress = () => {
@@ -30,12 +30,12 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress 
 
     return (
         <TouchableOpacity onPress={handleOnPress} disabled={disableButton}>
-            {(!!block.name || !!blockHeader || isTimedWorkout === 'block' || !!timerType) && (
+            {(!!block.name || !!blockHeader || blockTimerMode === 'block' || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">
                         {blockHeader || block.name || 'Clique para abrir o Timer'}
                     </Text>
-                    {(isTimedWorkout === 'block' || !!timerType) && (
+                    {(blockTimerMode === 'block' || !!timerType) && (
                         <TimerIcon name={timerType || 'for_time'} size={14} color="white" />
                     )}
                 </XStack>
@@ -46,7 +46,7 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress 
                     <EventBlockRound
                         key={`${round.type}${index}`}
                         round={round}
-                        showTimerButton={isTimedWorkout === 'round'}
+                        showTimerButton={blockTimerMode === 'round'}
                     />
                 ))}
             </InternalCard>

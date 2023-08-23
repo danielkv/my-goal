@@ -124,6 +124,13 @@ export const checkIsTimedWorkout = (block: IEventBlock): TTimedMode => {
             (round) => isRestRound(round) || ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
         )
 
+    if (
+        !block.rounds.some(
+            (round) => !isRestRound(round) && ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
+        )
+    )
+        return 'none'
+
     if (isBlockMode) return 'block'
 
     return 'round'
