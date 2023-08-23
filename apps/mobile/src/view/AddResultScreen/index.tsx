@@ -56,7 +56,7 @@ const AddResultScreen: React.FC = () => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView flex={1}>
             <ScrollView f={1} contentContainerStyle={{ padding: space[6].val }} keyboardShouldPersistTaps="always">
                 <AddResultForm onSubmit={handleSave} onCancel={handleCancel} />
             </ScrollView>

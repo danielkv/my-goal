@@ -14,7 +14,7 @@ const SubscriptionScreen: React.FC = () => {
     const user = useLoggedUser()
 
     return (
-        <SafeAreaView>
+        <SafeAreaView flex={1}>
             <ImageBackground style={{ flex: 1 }} resizeMode="cover" source={LoginBg}>
                 <ScrollView
                     flex={1}
