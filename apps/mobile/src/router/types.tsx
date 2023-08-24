@@ -1,6 +1,5 @@
 import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'goal-models'
 
-import { AddResultScreenProps } from '@view/AddResultScreen'
 import { UserWorkoutScreenProps } from '@view/UserWorkoutScreen'
 
 export type TReactNavigationStackParamList = {
@@ -36,8 +35,6 @@ export type TReactNavigationStackParamList = {
     UserWorkout: UserWorkoutScreenProps
     UserPRList: undefined
     UserPR: { movementId: string }
-
-    AddResult: AddResultScreenProps
 
     WodTimer: {
         block: IEventBlock
@@ -78,8 +75,6 @@ export enum ERouteName {
     UserWorkout = 'UserWorkout',
     UserPRList = 'UserPRList',
     UserPR = 'UserPR',
-
-    AddResult = 'AddResult',
 
     WodTimer = 'WodTimer',
 }

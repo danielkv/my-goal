@@ -22,7 +22,7 @@ service cloud.firestore {
 
 		match /workout_results/{doc=**} {
 			allow write: if request.auth.token.admin || request.auth.uid == request.resource.data.uid;
-			allow read:  if request.auth.token.admin || (request.auth.uid == resource.data.uid || resource.data.isPrivate == false)
+			allow read;
 		}
 		
 		match /user_data/{doc=**} {

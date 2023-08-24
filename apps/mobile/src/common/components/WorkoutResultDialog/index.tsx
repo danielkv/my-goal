@@ -12,11 +12,11 @@ import { IAddResultForm } from '@components/AddResultFom/config'
 import Button from '@components/Button'
 import Modal, { ModalProps } from '@components/Modal'
 import Paper from '@components/Paper'
-import UserListItem from '@components/UserListItem'
+import UserResultItem from '@components/UserListItem'
 import { useLoggedUser } from '@contexts/user/userContext'
 import { useBackHandler } from '@react-native-community/hooks'
 import { Plus } from '@tamagui/lucide-icons'
-import { getLastWorkoutResultsBySignatureUseCase } from '@useCases/result/getWorkoutResultsBySignature'
+import { getLastWorkoutResultsBySignatureUseCase } from '@useCases/result/getLastWorkoutResultsBySignatureUseCase'
 import { saveWorkoutResult } from '@useCases/result/saveWorkoutResult'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { getWorkoutSignature } from '@utils/getWorkoutSignature'
@@ -46,7 +46,7 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
 
     const { data, isLoading, mutate } = useSWR(
         () => (!open || !workoutSignature || !user ? null : [user.uid, workoutSignature]),
-        (obj) => getLastWorkoutResultsBySignatureUseCase(obj[0], obj[1]),
+        (obj) => getLastWorkoutResultsBySignatureUseCase(obj[0], obj[1], 4),
         {
             //revalidateIfStale: false,
             onError(err) {
@@ -98,7 +98,7 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
 
     return (
         <>
-            <Modal open={open} onClose={onClose} id="result">
+            <Modal open={open} onClose={onClose}>
                 <Paper>
                     <YStack br="$4" p="$3.5" bg="$gray8" gap="$3.5">
                         <Stack bg="$gray9" br="$4" px="$2.5" py="$3">
@@ -110,13 +110,13 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
                             <ActivityIndicator />
                         ) : displayResults ? (
                             <YStack>
-                                {data.map(({ id, user, result, isPrivate, createdAt }) => (
-                                    <UserListItem
+                                {data.map(({ id, user, result, isPrivate, date }) => (
+                                    <UserResultItem
                                         key={id}
                                         user={user}
                                         result={result}
                                         isPrivate={isPrivate}
-                                        createdAt={createdAt}
+                                        date={date}
                                         my="$2"
                                     />
                                 ))}

@@ -11,7 +11,7 @@ export function isUserDataComplete(user?: IUserData | null): boolean {
 export function displayResultValue(type: TResultType, value: number): string {
     switch (type) {
         case 'reps':
-            return value.toString()
+            return `${value} reps`
         case 'time':
             dayjs.duration(value, 'seconds').format('mm:ss')
         case 'weight':

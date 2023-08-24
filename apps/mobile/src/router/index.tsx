@@ -7,7 +7,6 @@ import { useLoggedUser } from '@contexts/user/userContext'
 import { useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { User } from '@tamagui/lucide-icons'
-import AddResultScreen from '@view/AddResultScreen'
 import DayViewScreen from '@view/DayViewScreen'
 import EmailLoginScreen from '@view/EmailLoginScreen'
 import HomeScreen from '@view/HomeScreen'
@@ -126,11 +125,7 @@ function Router() {
                 options={{ title: 'Workout' }}
                 component={UserWorkoutListScreen}
             />
-            <Stack.Screen
-                name={ERouteName.AddResult}
-                options={{ title: 'Novo resultado', presentation: 'modal', headerRight: () => null }}
-                component={AddResultScreen}
-            />
+
             <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
         </Stack.Navigator>

@@ -6,14 +6,14 @@ import { Text, XStack, YStack } from 'tamagui'
 import Avatar from '@components/Avatar'
 import { Lock } from '@tamagui/lucide-icons'
 
-interface UserListItemProps {
+interface UserResultItemProps {
     user: IUserData
     result: IWorkoutResult
     isPrivate: boolean
-    createdAt: string
+    date: string
 }
 
-const UserListItem = XStack.styleable<UserListItemProps>(({ user, result, isPrivate, createdAt, ...props }, ref) => {
+const UserResultItem = XStack.styleable<UserResultItemProps>(({ user, result, isPrivate, date, ...props }, ref) => {
     return (
         <XStack ref={ref} ai="center" jc="space-between" {...props}>
             <XStack ai="center" gap="$2">
@@ -31,10 +31,10 @@ const UserListItem = XStack.styleable<UserListItemProps>(({ user, result, isPriv
                 </YStack>
             </XStack>
             <Text fontSize={13} color="$gray3">
-                {dayjs(createdAt).format('DD/MM/YY HH:mm')}
+                {dayjs(date).format('DD/MM/YY')}
             </Text>
         </XStack>
     )
 })
 
-export default UserListItem
+export default UserResultItem
