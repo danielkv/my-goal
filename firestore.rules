@@ -26,7 +26,17 @@ service cloud.firestore {
 		}
 		
 		match /user_data/{doc=**} {
-			allow read: if request.auth != null
+			allow read: if request.auth != null;
+		}
+		
+		match /movements/{doc=**} {
+			allow read;
+			allow write: if request.auth.token.admin;
+		}
+
+		match /movement_results/{doc=**} {
+			allow write: if request.auth.token.admin || request.auth.uid == request.resource.data.uid;
+			allow read;
 		}
 	}
 }

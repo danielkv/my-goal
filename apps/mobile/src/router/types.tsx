@@ -33,7 +33,7 @@ export type TReactNavigationStackParamList = {
 
     UserWorkoutList: undefined
     UserWorkout: UserWorkoutScreenProps
-    UserPRList: undefined
+    MovementList: undefined
     UserPR: { movementId: string }
 
     WodTimer: {
@@ -73,7 +73,7 @@ export enum ERouteName {
     Profile = 'Profile',
     UserWorkoutList = 'UserWorkoutList',
     UserWorkout = 'UserWorkout',
-    UserPRList = 'UserPRList',
+    MovementList = 'MovementList',
     UserPR = 'UserPR',
 
     WodTimer = 'WodTimer',

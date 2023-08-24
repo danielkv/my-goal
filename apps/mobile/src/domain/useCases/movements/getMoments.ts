@@ -1,0 +1,61 @@
+import { IMovement, IUserMovementResult, IUserMovementResultListResponse } from 'goal-models'
+import { collections } from 'goal-utils'
+import { cluster, group, map } from 'radash'
+
+import { firebaseProvider } from '@common/providers/firebase'
+
+export async function getMovementsUseCase(
+    userId: string,
+    search: string,
+    startAfter?: string | null,
+    limit = 40
+): Promise<IUserMovementResultListResponse[]> {
+    const fs = firebaseProvider.getFirestore()
+
+    const movementCollection = fs.collection<Omit<IMovement, 'id'>>(collections.MOVEMENTS)
+    const userMovementResult = fs.collection<Omit<IUserMovementResult, 'id'>>(collections.MOVEMENT_RESULTS)
+
+    let query = search.length
+        ? movementCollection.where('movement', '>=', search).where('movement', '<=', search + '\uf8ff')
+        : movementCollection
+
+    query = query.orderBy('movement', 'asc')
+
+    if (startAfter) {
+        const startAfterSnapshot = await movementCollection.doc(startAfter).get()
+        query = query.startAfter(startAfterSnapshot)
+    }
+
+    const movementsSnapshot = await query.limit(limit).get()
+
+    if (movementsSnapshot.empty) return []
+
+    const movementIds = cluster(
+        movementsSnapshot.docs.map((doc) => doc.id),
+        10
+    )
+
+    const userResults = await map(movementIds, (ids) =>
+        userMovementResult
+            .where('uid', '==', userId)
+            .where('movementId', 'in', ids)
+            // @ts-expect-error
+            .orderBy('result.value', 'desc')
+            .get()
+    )
+
+    const userResultsSnapshot = userResults.map((s) => s.docs).flat()
+
+    const userResultGroups = group(userResultsSnapshot, (f) => f.data().movementId)
+
+    const results = movementsSnapshot.docs.map<IUserMovementResultListResponse>((doc) => {
+        const userResult = userResultGroups[doc.id]?.[0]
+
+        return {
+            result: userResult && { ...userResult.data(), id: userResult.id },
+            movement: { ...doc.data(), id: doc.id },
+        }
+    })
+
+    return results
+}

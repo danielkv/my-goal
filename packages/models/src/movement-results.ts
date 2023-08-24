@@ -1,4 +1,5 @@
 import { IUserResult } from './result'
+import { IUserData } from './user'
 
 export interface IMovement {
     id: string
@@ -8,4 +9,14 @@ export interface IMovement {
 
 export interface IUserMovementResult extends IUserResult {
     movementId: string
+}
+
+export interface IUserMovementResultResponse extends IUserMovementResult {
+    movement: string
+    user: IUserData
+}
+
+export interface IUserMovementResultListResponse {
+    movement: IMovement
+    result?: IUserMovementResult
 }

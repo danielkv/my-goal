@@ -11,6 +11,7 @@ import DayViewScreen from '@view/DayViewScreen'
 import EmailLoginScreen from '@view/EmailLoginScreen'
 import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
+import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
 import SubscriptionScreen from '@view/SubscriptionScreen'
 import EmomTimerScreen from '@view/Timers/EmomTimerScreen'
@@ -124,6 +125,11 @@ function Router() {
                 name={ERouteName.UserWorkoutList}
                 options={{ title: 'Workout' }}
                 component={UserWorkoutListScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.MovementList}
+                options={{ title: 'Workout' }}
+                component={MovementListScreen}
             />
 
             <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />

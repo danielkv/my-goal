@@ -171,7 +171,15 @@ const ProfileScreen: React.FC = () => {
                 <Stack gap="$6" p="$6" bg="$gray7">
                     <YStack f={1} alignItems="stretch" gap="$3.5">
                         <XStack gap="$3.5">
-                            <Button flexDirection="column" f={1} alignItems="flex-end" h="auto" gap="$4.5" p="$3.5">
+                            <Button
+                                onPress={() => navigate(ERouteName.MovementList)}
+                                flexDirection="column"
+                                f={1}
+                                alignItems="flex-end"
+                                h="auto"
+                                gap="$4.5"
+                                p="$3.5"
+                            >
                                 <Dumbbell size={20} color="white" />
                                 <Text fontWeight="700">PRs</Text>
                             </Button>
