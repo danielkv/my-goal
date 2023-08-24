@@ -32,7 +32,7 @@ const AddResultForm: React.FC<AddResultFormProps> = ({
 
     const { handleSubmit, handleChange, values, isSubmitting, setFieldValue } = useFormik({
         onSubmit: handleSave,
-        initialValues: intialData({ type: workoutType || undefined }),
+        initialValues: intialData({ type: workoutType || 'time' }),
         validationSchema: addResultSchema,
     })
 
