@@ -129,13 +129,13 @@ function Router() {
             />
             <Stack.Screen
                 name={ERouteName.MovementList}
-                options={{ title: 'Workout' }}
+                options={{ title: 'Movimentos' }}
                 component={MovementListScreen}
             />
 
             <Stack.Screen
                 name={ERouteName.UserMovementResult}
-                options={{ title: 'Workout' }}
+                options={{ title: 'Personal Record' }}
                 component={UserMovementResultScreen}
             />
 

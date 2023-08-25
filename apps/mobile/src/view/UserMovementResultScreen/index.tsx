@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native'
 
 import { IUserMovementResultInput, IUserMovementResultResponse, IUserResult, TResultType } from 'goal-models'
+import { displayResultValue } from 'goal-utils'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { Stack, Text, XStack, getTokens, useTheme } from 'tamagui'
@@ -156,7 +157,10 @@ const UserMovementResultScreen: React.FC = () => {
                                     >
                                         {!selectedScore && <Medal size={13} />}
                                         <Text fontSize="$5" color={selectedScore ? 'white' : '$gray4'}>
-                                            {scoreCalculations.result.value}kg
+                                            {displayResultValue(
+                                                scoreCalculations.result.type,
+                                                scoreCalculations.result.value
+                                            )}
                                         </Text>
                                     </XStack>
                                 )}

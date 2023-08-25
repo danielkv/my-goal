@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 
+import dayjs from 'dayjs'
 import { IUserMovementResultListResponse } from 'goal-models'
+import { displayResultValue } from 'goal-utils'
 import useSWRInfinite from 'swr/infinite'
-import { Stack, Text, YStack, debounce, getTokens, useTheme } from 'tamagui'
+import { Stack, Text, XStack, YStack, debounce, getTokens, useTheme } from 'tamagui'
 
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
@@ -82,11 +84,23 @@ const MovementListScreen: React.FC = () => {
                             onPress={() => navigate(ERouteName.UserMovementResult, { movementId: item.movement.id })}
                             key={item.movement.movement}
                         >
-                            <YStack>
-                                <Text fontWeight="700" fontSize="$4">
-                                    {item.movement.movement}
-                                </Text>
-                            </YStack>
+                            <XStack jc="space-between" ai="center" f={1}>
+                                <YStack>
+                                    <Text fontWeight="700" fontSize="$5">
+                                        {item.movement.movement}
+                                    </Text>
+                                    {!!item.result && (
+                                        <Text color="$gray3" fontSize="$3">
+                                            {dayjs(item.result.date).format('DD/MM/YY')}
+                                        </Text>
+                                    )}
+                                </YStack>
+                                {!!item.result && (
+                                    <Text color="$gray3" fontWeight="700" fontSize="$5">
+                                        {displayResultValue(item.result.result.type, item.result.result.value)}
+                                    </Text>
+                                )}
+                            </XStack>
                         </TouchableOpacity>
                     )
                 }}

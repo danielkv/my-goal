@@ -23,7 +23,7 @@ export async function getMovementsUseCase(
 
     if (startAfter) {
         const startAfterSnapshot = await movementCollection.doc(startAfter).get()
-        query = query.startAfter(startAfterSnapshot)
+        if (startAfterSnapshot.exists) query = query.startAfter(startAfterSnapshot)
     }
 
     const movementsSnapshot = await query.limit(limit).get()
@@ -62,7 +62,7 @@ export async function getMovementsUseCase(
 
         return {
             result: { ...mainUserResult.data(), id: mainUserResult.id },
-            movement: { ...doc.data(), id: doc.id },
+            movement: { ...data, id: doc.id },
         }
     })
 
