@@ -1,13 +1,13 @@
-import { IUserData, IUserWorkoutResult, IUserWorkoutResultResponse } from 'goal-models'
+import { IUserData, IUserResult, TResultType } from 'goal-models'
 import { collections } from 'goal-utils'
 
 import { WorkoutResultFilter } from '@common/interfaces/workoutResult'
 import { firebaseProvider } from '@common/providers/firebase'
 import { Filter, FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
-export async function mergeWorkoutResultAndUser(
-    docs: FirebaseFirestoreTypes.QueryDocumentSnapshot<IUserWorkoutResult>[]
-): Promise<IUserWorkoutResultResponse[]> {
+export async function mergeWorkoutResultAndUser<Type extends IUserResult>(
+    docs: FirebaseFirestoreTypes.QueryDocumentSnapshot<Omit<Type, 'id'>>[]
+): Promise<(Type & { id: string; user: IUserData })[]> {
     const fs = firebaseProvider.getFirestore()
 
     const userRef = fs.collection<IUserData>(collections.USER_DATA)
@@ -22,7 +22,7 @@ export async function mergeWorkoutResultAndUser(
         return acc
     }, {})
 
-    return docs.reduce<IUserWorkoutResultResponse[]>((acc, doc) => {
+    return docs.reduce<(Type & { id: string; user: IUserData })[]>((acc, doc) => {
         const resData = doc.data()
         const user = usersObj[resData.uid]
 
@@ -31,20 +31,38 @@ export async function mergeWorkoutResultAndUser(
                 ...resData,
                 id: doc.id,
                 user,
-            })
+            } as Type & { id: string; user: IUserData })
 
         return acc
     }, [])
 }
 
-export function getWorkoutResultFilters(
-    query: FirebaseFirestoreTypes.Query<IUserWorkoutResult>,
+export function getWorkoutResultFilters<Type extends Omit<IUserResult, 'id'>>(
+    query: FirebaseFirestoreTypes.Query<Type>,
     filter: WorkoutResultFilter
-): FirebaseFirestoreTypes.Query<IUserWorkoutResult> {
+): FirebaseFirestoreTypes.Query<Type> {
     if (filter.onlyMe) {
         query = query.where(Filter('uid', '==', filter.userId))
     } else {
         query = query.where(Filter.or(Filter('uid', '==', filter.userId), Filter('isPrivate', '==', false)))
+    }
+
+    return query
+}
+
+export function getWorkoutResultOrderBy<Type extends Omit<IUserResult, 'id'>>(
+    query: FirebaseFirestoreTypes.Query<Type>,
+    resultType: TResultType
+): FirebaseFirestoreTypes.Query<Type> {
+    switch (resultType) {
+        case 'time':
+            // @ts-expect-error
+            query = query.orderBy('result.value', 'asc')
+            break
+        default:
+            // @ts-expect-error
+            query = query.orderBy('result.value', 'desc')
+            break
     }
 
     return query

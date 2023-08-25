@@ -1,8 +1,9 @@
-import { IUserResult } from './result'
+import { IUserResult, TResultType } from './result'
 import { IUserData } from './user'
 
 export interface IMovement {
     id: string
+    resultType: TResultType
     movement: string
     countResults: number
 }
@@ -12,7 +13,6 @@ export interface IUserMovementResult extends IUserResult {
 }
 
 export interface IUserMovementResultResponse extends IUserMovementResult {
-    movement: string
     user: IUserData
 }
 
@@ -20,3 +20,5 @@ export interface IUserMovementResultListResponse {
     movement: IMovement
     result?: IUserMovementResult
 }
+
+export interface IUserMovementResultInput extends Omit<IUserMovementResult, 'id'> {}

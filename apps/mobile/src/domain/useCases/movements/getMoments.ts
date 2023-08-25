@@ -1,6 +1,6 @@
 import { IMovement, IUserMovementResult, IUserMovementResultListResponse } from 'goal-models'
 import { collections } from 'goal-utils'
-import { cluster, group, map } from 'radash'
+import { cluster, group, map, sort } from 'radash'
 
 import { firebaseProvider } from '@common/providers/firebase'
 
@@ -49,10 +49,19 @@ export async function getMovementsUseCase(
     const userResultGroups = group(userResultsSnapshot, (f) => f.data().movementId)
 
     const results = movementsSnapshot.docs.map<IUserMovementResultListResponse>((doc) => {
-        const userResult = userResultGroups[doc.id]?.[0]
+        const userResult = userResultGroups[doc.id]
+        if (!userResult)
+            return {
+                movement: { ...doc.data(), id: doc.id },
+            }
+
+        const data = doc.data()
+
+        const mainUserResult =
+            data.resultType === 'time' ? sort(userResult, (a) => a.data().result.value)[0] : userResult[0]
 
         return {
-            result: userResult && { ...userResult.data(), id: userResult.id },
+            result: { ...mainUserResult.data(), id: mainUserResult.id },
             movement: { ...doc.data(), id: doc.id },
         }
     })

@@ -8,6 +8,8 @@ import { Stack, Text, YStack, debounce, getTokens, useTheme } from 'tamagui'
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
 import TextField from '@components/TextField'
+import { useNavigation } from '@react-navigation/native'
+import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
 import { getMovementsUseCase } from '@useCases/movements/getMoments'
 import { getErrorMessage } from '@utils/getErrorMessage'
@@ -18,6 +20,7 @@ const LIST_ITEM_HEIGHT = 70
 const MovementListScreen: React.FC = () => {
     const { space } = getTokens()
     const theme = useTheme()
+    const { navigate } = useNavigation()
     const [search, setSearch] = useState('')
     const [searchInput, setSearchInput] = useState('')
     const [endReached, setEndReached] = useState(false)
@@ -76,7 +79,7 @@ const MovementListScreen: React.FC = () => {
                                 justifyContent: 'space-between',
                                 flexDirection: 'row',
                             }}
-                            onPress={() => {}}
+                            onPress={() => navigate(ERouteName.UserMovementResult, { movementId: item.movement.id })}
                             key={item.movement.movement}
                         >
                             <YStack>

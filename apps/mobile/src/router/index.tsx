@@ -19,6 +19,7 @@ import RegressiveTimerScreen from '@view/Timers/RegressiveTimerScreen'
 import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
+import UserMovementResultScreen from '@view/UserMovementResultScreen'
 import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
 import UserWorkoutScreen from '@view/UserWorkoutScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
@@ -130,6 +131,12 @@ function Router() {
                 name={ERouteName.MovementList}
                 options={{ title: 'Workout' }}
                 component={MovementListScreen}
+            />
+
+            <Stack.Screen
+                name={ERouteName.UserMovementResult}
+                options={{ title: 'Workout' }}
+                component={UserMovementResultScreen}
             />
 
             <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />

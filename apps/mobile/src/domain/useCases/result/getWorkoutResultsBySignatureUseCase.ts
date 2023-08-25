@@ -2,7 +2,7 @@ import { IUserWorkoutResult, IUserWorkoutResultResponse, TResultType } from 'goa
 import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
-import { getWorkoutResultFilters, mergeWorkoutResultAndUser } from '@utils/query/workoutReults'
+import { getWorkoutResultFilters, getWorkoutResultOrderBy, mergeWorkoutResultAndUser } from '@utils/query/workoutReults'
 
 export async function getWorkoutResultsBySignatureUseCase(
     userId: string,
@@ -14,7 +14,7 @@ export async function getWorkoutResultsBySignatureUseCase(
 ): Promise<IUserWorkoutResultResponse[]> {
     const fs = firebaseProvider.getFirestore()
 
-    const collectionRef = fs.collection<IUserWorkoutResult>(collections.WORKOUT_RESULTS)
+    const collectionRef = fs.collection<Omit<IUserWorkoutResult, 'id'>>(collections.WORKOUT_RESULTS)
 
     let query = getWorkoutResultFilters(collectionRef.where('workoutSignature', '==', workoutSignature), {
         onlyMe,
@@ -23,24 +23,13 @@ export async function getWorkoutResultsBySignatureUseCase(
 
     let type = resultType
 
-    if (!resultType) {
+    if (!type) {
         const docSnapshot = await collectionRef.where('workoutSignature', '==', workoutSignature).limit(1).get()
         if (docSnapshot.empty) return []
         type = docSnapshot.docs[0].data().result.type
     }
 
-    switch (type) {
-        case 'time':
-            // @ts-expect-error
-            query = query.orderBy('result.value', 'asc')
-            break
-        default:
-            // @ts-expect-error
-            query = query.orderBy('result.value', 'desc')
-            break
-    }
-
-    query = query.orderBy('date', 'desc')
+    query = getWorkoutResultOrderBy(query, type).orderBy('date', 'desc')
 
     if (startAfter) {
         const startAfterSnapshot = await collectionRef.doc(startAfter).get()
