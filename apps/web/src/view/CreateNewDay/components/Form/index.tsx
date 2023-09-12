@@ -1,18 +1,12 @@
 import cloneDeep from 'clone-deep'
 import { IBlock, IDay, IEventBlock, IPeriod, ISection, IWorksheet } from 'goal-models'
-import { omit } from 'radash'
 
-import { Component, Match, Setter, Switch, createMemo, createSignal } from 'solid-js'
+import { Component, Match, Setter, Switch, createMemo } from 'solid-js'
 import { SetStoreFunction, produce } from 'solid-js/store'
 
 import Breadcrumb from '@components/Breadcrumb'
 import { IBreadcrumbItem } from '@components/Breadcrumb/types'
 import { Path } from '@interfaces/app'
-import { useNavigate } from '@solidjs/router'
-import { Button } from '@suid/material'
-import { removeTempWorksheetUseCase } from '@useCases/temp-worksheet/removeTempWorksheet'
-import { saveWorksheetUseCase } from '@useCases/worksheet/saveWorksheet'
-import { getErrorMessage } from '@utils/errors'
 import {
     addToPath,
     buildPathSequence,
@@ -43,14 +37,10 @@ export interface FormProps {
     currentPath: Path
     handleSetPath: Setter<Path>
     handleSetWorksheet: SetStoreFunction<IWorksheet>
-    handleSetLastTempSaved: Setter<IWorksheet>
 }
 
 const Form: Component<FormProps> = (props) => {
-    const [saving, setSaving] = createSignal(false)
-    const [duplicating, setDuplicating] = createSignal(false)
     const currentForm = createMemo(() => getCurrentPeace(props.currentPath))
-    const navigate = useNavigate()
 
     const breadcrumbItems = createMemo<IBreadcrumbItem[]>(() => {
         const sequence = buildPathSequence(props.currentPath)
@@ -65,49 +55,6 @@ const Form: Component<FormProps> = (props) => {
             }
         })
     })
-
-    const handleClickSaveButton = async () => {
-        if (props.worksheet.published) {
-            if (
-                !confirm(
-                    'Essa planilha está publicada, caso salvar todas as modificações serão visíveis imediatamente para os usuários. Deseja continuar?'
-                )
-            )
-                return
-        }
-
-        try {
-            setSaving(true)
-            const result = await saveWorksheetUseCase(props.worksheet)
-            if (props.worksheet.id) await removeTempWorksheetUseCase(props.worksheet.id)
-
-            props.handleSetLastTempSaved(result)
-            props.handleSetWorksheet(result)
-        } catch (err) {
-            alert(getErrorMessage(err))
-        } finally {
-            setSaving(false)
-        }
-    }
-
-    const handleClickDuplicateButton = async () => {
-        if (!confirm('Deseja duplicar essa planilha?')) return
-
-        try {
-            setDuplicating(true)
-            const duplicated = omit(cloneDeep(props.worksheet), ['id', 'published'])
-            duplicated.days = duplicated.days.map((day) => omit(day, ['id']))
-            duplicated.name = `Cópia de ${duplicated.name}`
-
-            const result = await saveWorksheetUseCase(duplicated)
-
-            navigate(`/worksheet/${result.id}`)
-        } catch (err) {
-            alert(getErrorMessage(err))
-        } finally {
-            setDuplicating(false)
-        }
-    }
 
     return (
         <>
@@ -273,25 +220,6 @@ const Form: Component<FormProps> = (props) => {
                         </Match>
                     </Switch>
                 </div>
-            </div>
-            <div class="paper flex flex-row gap-6 rounded-none">
-                <Button
-                    class="flex-1"
-                    variant="contained"
-                    onClick={handleClickSaveButton}
-                    disabled={duplicating() || saving()}
-                >
-                    {saving() ? 'Salvando...' : 'Salvar'}
-                </Button>
-                <Button
-                    class="w-[200px]"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleClickDuplicateButton}
-                    disabled={duplicating() || saving()}
-                >
-                    {duplicating() ? 'Duplicando...' : 'Duplicar'}
-                </Button>
             </div>
         </>
     )

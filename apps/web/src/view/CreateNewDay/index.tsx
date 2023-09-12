@@ -29,11 +29,12 @@ import { redirectToLogin } from '@utils/redirectToLogin'
 import { createWorksheetValues } from '@utils/worksheetInitials'
 
 import Form from './components/Form'
+import SaveContainer from './components/SaveContainer'
 
 const CreateNewDay: Component = () => {
     redirectToLogin()
 
-    let displayTempSavedTimout: number
+    let displayTempSavedTimeout: number
     const [hasHistorySaved, setHasHistorySaved] = createSignal<IWorksheetModel | null>(null)
     const [lastTempSaved, setLastTempSaved] = createSignal<IWorksheetModel>()
     const [displayTempSaved, setDisplayTempSaved] = createSignal(false)
@@ -51,7 +52,7 @@ const CreateNewDay: Component = () => {
             if (deepEqual(worksheet, lastTempSaved())) return
 
             setDisplayTempSaved(false)
-            if (displayTempSavedTimout) clearTimeout(displayTempSavedTimout)
+            if (displayTempSavedTimeout) clearTimeout(displayTempSavedTimeout)
 
             setLoadingTemp(true)
             await saveTempWorksheetUseCase(worksheet)
@@ -62,7 +63,7 @@ const CreateNewDay: Component = () => {
 
             setHasHistorySaved(null)
 
-            displayTempSavedTimout = setTimeout(() => {
+            displayTempSavedTimeout = setTimeout(() => {
                 setDisplayTempSaved(false)
             }, 3000)
         } catch (err) {
@@ -282,6 +283,11 @@ const CreateNewDay: Component = () => {
                     </>
                 )}
             </div>
+            <SaveContainer
+                worksheet={worksheetStore}
+                handleSetWorksheet={setWorksheetStore}
+                handleSetLastTempSaved={setLastTempSaved}
+            />
             <Drawer variant="persistent" open={drawerOpen()} anchor="left">
                 <div style={{ width: '500px' }} class="bg-gray-700 h-full flex flex-col basis-auto">
                     <Stack alignItems="flex-end" p={2}>
@@ -294,7 +300,6 @@ const CreateNewDay: Component = () => {
                         handleSetWorksheet={setWorksheetStore}
                         currentPath={currentPath()}
                         handleSetPath={setCurrentPath}
-                        handleSetLastTempSaved={setLastTempSaved}
                     />
                 </div>
             </Drawer>
