@@ -1,15 +1,20 @@
 import dayjs from 'dayjs'
 import { IWorksheetModel } from 'goal-models'
+import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { worksheetConverter } from '@utils/converters'
 
 export async function getWorksheetsUseCase(): Promise<Omit<IWorksheetModel, 'days'>[]> {
-    const collectionRef = firebaseProvider.firestore().collection('worksheets').withConverter(worksheetConverter)
+    const collectionRef = firebaseProvider
+        .firestore()
+        .collection(collections.WORKSHEETS)
+        .withConverter(worksheetConverter)
 
     const query = firebaseProvider
         .firestore()
         .query(collectionRef, firebaseProvider.firestore().orderBy('startDate', 'desc'))
+
     const snapshot = await firebaseProvider.firestore().getDocs(query)
 
     const worksheets = snapshot.docs.map((doc) => {

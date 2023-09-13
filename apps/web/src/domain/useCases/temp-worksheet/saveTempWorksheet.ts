@@ -1,4 +1,5 @@
 import { IWorksheetModel } from 'goal-models'
+import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { getTempWorksheetDaysUseCase } from '@useCases/temp_days/getTempWorksheetDays'
@@ -9,7 +10,7 @@ export async function saveTempWorksheetUseCase(worksheet: IWorksheetModel): Prom
 
     const fs = firebaseProvider.firestore()
 
-    const docRef = fs.doc('temp_worksheets', worksheet.id).withConverter(worksheetConverter)
+    const docRef = fs.doc(collections.TEMP_WORKSHEETS, worksheet.id).withConverter(worksheetConverter)
 
     const existingDays = worksheet.id ? await getTempWorksheetDaysUseCase(worksheet.id) : []
 
@@ -21,7 +22,9 @@ export async function saveTempWorksheetUseCase(worksheet: IWorksheetModel): Prom
             const daysResult = worksheet.days.map((day) => {
                 if (!day.id) throw new Error('A planilha deve ser salva antes de ter um histórico temporário')
 
-                const dayDocRef = fs.doc('temp_worksheets', docRef.id, 'days', day.id).withConverter(dayConverter)
+                const dayDocRef = fs
+                    .doc(collections.TEMP_WORKSHEETS, docRef.id, 'days', day.id)
+                    .withConverter(dayConverter)
 
                 transaction.set(dayDocRef, day)
 
@@ -32,7 +35,7 @@ export async function saveTempWorksheetUseCase(worksheet: IWorksheetModel): Prom
             existingDays
                 .filter((day) => !validIds.includes(day.id))
                 .forEach((day) => {
-                    const dayToRemoveRef = fs.doc('temp_worksheets', docRef.id, 'days', day.id)
+                    const dayToRemoveRef = fs.doc(collections.TEMP_WORKSHEETS, docRef.id, 'days', day.id)
                     transaction.delete(dayToRemoveRef)
                 })
 

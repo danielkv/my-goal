@@ -1,19 +1,33 @@
 {
-  "indexes": [
-    {
-      "collectionGroup": "worksheets",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "published",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "startDate",
-          "order": "DESCENDING"
-        }
-      ]
-    }
-  ],
-  "fieldOverrides": []
+	"indexes": [
+		{
+			"collectionGroup": "worksheets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{
+					"fieldPath": "published",
+					"order": "ASCENDING"
+				},
+				{
+					"fieldPath": "startDate",
+					"order": "DESCENDING"
+				}
+			]
+		},
+		{
+			"collectionGroup": "worksheets_v2",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{
+					"fieldPath": "published",
+					"order": "ASCENDING"
+				},
+				{
+					"fieldPath": "startDate",
+					"order": "DESCENDING"
+				}
+			]
+		}
+	],
+	"fieldOverrides": []
 }

@@ -4,15 +4,18 @@
 //
 import { Transaction } from '@google-cloud/firestore'
 import * as admin from 'firebase-admin'
-import { map } from 'radash'
+import { collections } from 'goal-utils'
+import { map, pick } from 'radash'
 
 export async function migrate(db: admin.firestore.Firestore) {
     const collectionTempRef = db.collection('temp_worksheets')
+    const newCollectionTempRef = db.collection(collections.TEMP_WORKSHEETS)
     const collectionRef = db.collection('worksheets')
+    const newCollectionRef = db.collection(collections.WORKSHEETS)
 
     await db.runTransaction(async (transaction) => {
-        await addConvertionToTransaction(transaction, collectionTempRef)
-        await addConvertionToTransaction(transaction, collectionRef)
+        await addConvertionToTransaction(transaction, collectionTempRef, newCollectionTempRef)
+        await addConvertionToTransaction(transaction, collectionRef, newCollectionRef)
     })
 }
 
@@ -22,22 +25,28 @@ export async function rollback(db: admin.firestore.Firestore) {
 
 async function addConvertionToTransaction(
     transaction: Transaction,
-    collectionRef: admin.firestore.CollectionReference
+    oldCollectionRef: admin.firestore.CollectionReference,
+    newCollectionRef: admin.firestore.CollectionReference
 ) {
-    const docsSnapshot = await collectionRef.get()
+    const docsSnapshot = await oldCollectionRef.get()
 
     await map(docsSnapshot.docs, async (worksheetSnapshot) => {
-        const dayCollectionRef = collectionRef.doc(worksheetSnapshot.id).collection('days')
-        const daysDocsSnapshot = await dayCollectionRef.get()
+        const worksheetDoc = newCollectionRef.doc(worksheetSnapshot.id)
+        transaction.create(worksheetDoc, worksheetSnapshot.data())
 
-        daysDocsSnapshot.forEach((day) => {
-            const dayData = day.data()
+        const oldDayCollectionRef = oldCollectionRef.doc(worksheetSnapshot.id).collection(collections.DAYS)
+        const oldDaysDocsSnapshot = await oldDayCollectionRef.get()
 
-            const docRef = dayCollectionRef.doc(day.id)
+        const newDayCollectionRef = worksheetDoc.collection(collections.DAYS)
+
+        oldDaysDocsSnapshot.forEach((day) => {
+            const oldDayData = day.data()
+
+            const newDayDocRef = newDayCollectionRef.doc(day.id)
 
             const newData = {
-                ...dayData,
-                periods: dayData.periods.map((period: Record<string, any>) => ({
+                ...oldDayData,
+                periods: oldDayData.periods.map((period: Record<string, any>) => ({
                     ...period,
                     sections: period.sections.map((section: Record<string, any>) => ({
                         ...section,
@@ -45,12 +54,12 @@ async function addConvertionToTransaction(
                             if (block.type !== 'event') return block
 
                             return {
-                                ...block,
+                                ...pick(block, ['type', 'name', 'info']),
                                 rounds: block.rounds.map((round: Record<string, any>) => {
                                     if (round.type === 'rest') return round
 
                                     const roundData: Record<string, any> = {
-                                        ...round,
+                                        movements: round.movements,
                                         config: createConfig(round.type, round),
                                     }
 
@@ -65,7 +74,7 @@ async function addConvertionToTransaction(
                 })),
             }
 
-            transaction.update(docRef, newData)
+            transaction.create(newDayDocRef, newData)
         })
     })
 }
