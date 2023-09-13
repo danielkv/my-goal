@@ -33,7 +33,7 @@ program
         const { cert, file, path } = command.optsWithGlobals()
         if (!file) throw new Error('File option not defined')
 
-        const certFilePath = cert && nodepath.resolve(__dirname, '..', cert)
+        const certFilePath = cert && nodepath.resolve(__dirname, cert)
         firebaseInit(certFilePath)
 
         const filePath = nodepath.resolve(__dirname, file)
