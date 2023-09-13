@@ -5,6 +5,7 @@ export default function firebaseInit(certFilePath?: string) {
     if (certFilePath) {
         if (!fs.existsSync(certFilePath)) throw new Error('Firebase Service Account file does not exist')
         admin.initializeApp({ credential: admin.credential.cert(certFilePath) })
+        admin.firestore().settings({ ignoreUndefinedProperties: true })
         return
     }
 

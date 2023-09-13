@@ -46,9 +46,10 @@ program
     .option('-c, --count <number>', 'Fake users count', '10')
     .description('Create admin user and fake users')
     .action((_, command) => {
-        const { admin, count } = command.optsWithGlobals()
+        const { admin, count, cert } = command.optsWithGlobals()
 
-        firebaseInit()
+        const certFilePath = cert && nodepath.resolve(__dirname, cert)
+        firebaseInit(certFilePath)
 
         const filePath = nodepath.resolve(__dirname, admin)
         return createUsers(Number(count), filePath)
@@ -59,11 +60,12 @@ program
     .description('Run migration')
     .option('-d, --directory <folder>', 'Force running or rollback', 'migrations')
     .action((mode, _, command) => {
-        const { directory } = command.optsWithGlobals()
+        const { directory, cert } = command.optsWithGlobals()
 
         if (!['run', 'rollback'].includes(mode)) throw new Error(`Migrate mode ${mode} is not valid`)
 
-        firebaseInit()
+        const certFilePath = cert && nodepath.resolve(__dirname, cert)
+        firebaseInit(certFilePath)
 
         const dirPath = nodepath.resolve(__dirname, directory)
         if (mode === 'run') return runMigrations(dirPath)
