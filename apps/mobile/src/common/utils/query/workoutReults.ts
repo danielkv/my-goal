@@ -42,7 +42,7 @@ export function getWorkoutResultFilters<Type extends Omit<IUserResult, 'id'>>(
     filter: WorkoutResultFilter
 ): FirebaseFirestoreTypes.Query<Type> {
     if (filter.onlyMe) {
-        query = query.where(Filter('uid', '==', filter.userId))
+        query = query.where('uid', '==', filter.userId)
     } else {
         query = query.where(Filter.or(Filter('uid', '==', filter.userId), Filter('isPrivate', '==', false)))
     }

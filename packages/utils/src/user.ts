@@ -13,7 +13,7 @@ export function displayResultValue(type: TResultType, value: number): string {
         case 'reps':
             return `${value} reps`
         case 'time':
-            dayjs.duration(value, 'seconds').format('mm:ss')
+            return dayjs.duration(value, 'seconds').format('mm:ss')
         case 'weight':
             return `${value}kg`
     }
