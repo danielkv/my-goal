@@ -23,8 +23,6 @@ import { usePreventAccess } from '@utils/preventAccess'
 import PeriodsListView from '@view/PeriodsListView'
 import SectionCarouselView from '@view/SectionCarouselView'
 
-import WorksheetOnboarding from './components/WorksheetOnboarding'
-
 const DayViewScreen: React.FC = () => {
     const [keepAwakeAvailable, setKeepAwakeAvailable] = useState(false)
     const [blockMenu, setBlockMenu] = useState<IEventBlock | null>(null)
@@ -157,8 +155,6 @@ const DayViewScreen: React.FC = () => {
                 bottom="$4"
                 right="$3"
             />
-
-            <WorksheetOnboarding />
         </Stack>
     )
 }

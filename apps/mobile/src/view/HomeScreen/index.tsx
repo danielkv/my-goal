@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { FileSpreadsheet, LogIn } from '@tamagui/lucide-icons'
 
+import HomeOnboarding from './components/HomeOnboarding'
+
 const HomeScreen: React.FC = () => {
     const { navigate } = useNavigation()
     const user = useLoggedUser()
@@ -45,6 +47,7 @@ const HomeScreen: React.FC = () => {
                     </Text>
                 )}
             </YStack>
+            <HomeOnboarding />
         </ImageBackground>
     )
 }
