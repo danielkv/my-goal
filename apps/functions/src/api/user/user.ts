@@ -3,7 +3,6 @@ import { createHttpsError } from '../../utils/createHttpsError'
 import { getAuth } from 'firebase-admin/auth'
 import { getFirestore } from 'firebase-admin/firestore'
 import { auth, https } from 'firebase-functions'
-import { IUserData } from 'goal-models'
 import { pick } from 'radash'
 
 init()
@@ -33,7 +32,7 @@ export const createNewUser = https.onCall(async (data: UserData) => {
 export const copyUserDataToCollection = auth.user().onCreate((user) => {
     const fs = getFirestore()
 
-    const userData: IUserData = pick(user, ['uid', 'email', 'emailVerified', 'displayName', 'photoURL', 'phoneNumber'])
+    const userData = pick(user, ['uid', 'email', 'emailVerified', 'displayName', 'photoURL', 'phoneNumber'])
 
     return fs.collection('user_data').doc(user.uid).create(userData)
 })
