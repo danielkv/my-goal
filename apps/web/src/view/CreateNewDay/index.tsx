@@ -270,7 +270,7 @@ const CreateNewDay: Component = () => {
                 ) : loading() ? (
                     <div class="flex-1 text-center m-10">Carregando...</div>
                 ) : (
-                    <>
+                    <div class="pb-20">
                         <WorksheetPreview
                             currentPath={currentPath()}
                             item={worksheetStore}
@@ -280,7 +280,7 @@ const CreateNewDay: Component = () => {
                             onMove={handleMovePeace}
                             onUpdate={handleUpdatePeace}
                         />
-                    </>
+                    </div>
                 )}
             </div>
             <SaveContainer
