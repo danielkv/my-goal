@@ -26,7 +26,7 @@ export async function getMovementsUseCase(
         if (startAfterSnapshot.exists) query = query.startAfter(startAfterSnapshot)
     }
 
-    const movementsSnapshot = await query.limit(limit).get()
+    const movementsSnapshot = await query.limit(limit).get({ source: 'server' })
 
     if (movementsSnapshot.empty) return []
 

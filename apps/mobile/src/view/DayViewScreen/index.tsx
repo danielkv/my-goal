@@ -15,8 +15,8 @@ import Button from '@components/Button'
 import WorkoutResultDialog from '@components/WorkoutResultDialog'
 import { useBlockTimerNavigation } from '@hooks/timer/useBlockTimerNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { TReactNavigationStackParamList } from '@router/types'
-import { AlignJustify, Clock, Lightbulb, LightbulbOff, Medal, PanelRightClose } from '@tamagui/lucide-icons'
+import { ERouteName, TReactNavigationStackParamList } from '@router/types'
+import { AlignJustify, Clock, Dumbbell, Lightbulb, LightbulbOff, Medal, PanelRightClose } from '@tamagui/lucide-icons'
 import { getWorksheetDayByIdFnUseCase } from '@useCases/worksheet/getWorksheetDayById'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
@@ -28,6 +28,7 @@ import WorksheetOnboarding from './components/WorksheetOnboarding'
 const DayViewScreen: React.FC = () => {
     const [keepAwakeAvailable, setKeepAwakeAvailable] = useState(false)
     const [blockMenu, setBlockMenu] = useState<IEventBlock | null>(null)
+    const { navigate } = useNavigation()
 
     const {
         currentValue: keepAwake,
@@ -89,6 +90,12 @@ const DayViewScreen: React.FC = () => {
                 if (!keepAwakeAvailable) return null
                 return (
                     <XStack>
+                        <Button
+                            variant="icon"
+                            bg="transparent"
+                            onPress={() => navigate(ERouteName.MovementList)}
+                            icon={<Dumbbell size="$1" />}
+                        />
                         <Button
                             variant="icon"
                             bg="transparent"

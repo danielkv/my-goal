@@ -69,7 +69,7 @@ const MovementListScreen: React.FC = () => {
             <FlashList
                 data={data?.flat()}
                 horizontal={false}
-                ItemSeparatorComponent={() => <Stack bw={1} btc="$gray8" bbc="$gray6" my="0" />}
+                ItemSeparatorComponent={() => <Stack bw={1} btc="$gray8" bbc="$gray6" my={0} />}
                 onEndReached={() => !endReached && setSize(size + 1)}
                 renderItem={({ item }) => {
                     return (

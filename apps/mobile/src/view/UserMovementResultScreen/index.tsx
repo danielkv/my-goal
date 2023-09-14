@@ -12,6 +12,7 @@ import ActivityIndicator from '@components/ActivityIndicator'
 import AddResultForm from '@components/AddResultFom'
 import { IAddResultForm } from '@components/AddResultFom/config'
 import AlertBox from '@components/AlertBox'
+import { alert } from '@components/AppAlert/utils'
 import Button from '@components/Button'
 import Modal from '@components/Modal'
 import Paper from '@components/Paper'
@@ -24,7 +25,8 @@ import { Dumbbell, Filter, Medal, Plus } from '@tamagui/lucide-icons'
 import { getMovementByIdUseCase } from '@useCases/movements/getMovementById'
 import { getMovementHighestScoreUseCase } from '@useCases/movements/getMovementHighestScore'
 import { getMovementResultsByUserIdUseCase } from '@useCases/movements/getMovementResultsByUserId'
-import { saveMovementResult } from '@useCases/movements/saveMovementResult'
+import { removeMovementResultUseCase } from '@useCases/movements/removeMovementResult'
+import { saveMovementResultUseCase } from '@useCases/movements/saveMovementResult'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
@@ -115,7 +117,7 @@ const UserMovementResultScreen: React.FC = () => {
                 uid: user.uid,
             }
 
-            await saveMovementResult(resultNormalized)
+            await saveMovementResultUseCase(resultNormalized)
 
             await mutateScoreList()
             await mutateHighScore()
@@ -124,6 +126,28 @@ const UserMovementResultScreen: React.FC = () => {
         } catch (err) {
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
         }
+    }
+
+    const handleConfirmRemoveMovementResult = async (movementResultId: string) => {
+        try {
+            await removeMovementResultUseCase(movementResultId)
+
+            await mutateScoreList()
+            await mutateHighScore()
+        } catch (err) {
+            Alert.alert('Ocorreu um erro', getErrorMessage(err))
+        }
+    }
+
+    const handleRemoveMovementResult = (movementResponse: IUserMovementResultResponse) => () => {
+        if (user?.uid !== movementResponse.user.uid) return
+
+        alert(
+            'Remover PR',
+            'Tem certeza que deseja excluir esse PR?',
+            [{ text: 'Sim', onPress: () => handleConfirmRemoveMovementResult(movementResponse.id) }],
+            true
+        )
     }
 
     if (error) return <AlertBox type="error" title="Ocorreu um erro" text={getErrorMessage(error)} />
@@ -195,6 +219,7 @@ const UserMovementResultScreen: React.FC = () => {
                     return (
                         <TouchableOpacity
                             onPress={() => (selected ? setselectedScore(null) : setselectedScore(item))}
+                            onLongPress={handleRemoveMovementResult(item)}
                             style={{
                                 padding: space['2'].val,
                                 borderRadius: 9,
