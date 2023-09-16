@@ -2,3 +2,4 @@
 export * from './api/logging'
 export * from './api/user'
 export * from './api/worksheet'
+export * from './api/movements'
