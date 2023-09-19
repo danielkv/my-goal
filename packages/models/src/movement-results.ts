@@ -1,10 +1,13 @@
 import { IUserResult, TResultType } from './result'
 import { IUserData } from './user'
 
-export interface IMovement {
-    id: string
+export interface IMovementInput {
     resultType: TResultType
     movement: string
+}
+
+export interface IMovement extends IMovementInput {
+    id: string
     countResults: number
 }
 
