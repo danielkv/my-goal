@@ -58,16 +58,18 @@ async function addConvertionToTransaction(
                                 rounds: block.rounds.map((round: Record<string, any>) => {
                                     if (round.type === 'rest') return round
 
+                                    const config = createConfig('round', round.type, round)
+
                                     const roundData: Record<string, any> = {
                                         movements: round.movements,
-                                        config: createConfig(round.type, round),
+                                        config,
                                     }
 
                                     if (round.type === 'complex') roundData.type = 'complex'
 
                                     return roundData
                                 }),
-                                config: createConfig(block.event_type, block),
+                                config: createConfig('block', block.event_type, block),
                             }
                         }),
                     })),
@@ -79,12 +81,12 @@ async function addConvertionToTransaction(
     })
 }
 
-function createConfig(type: string, data: Record<string, any>): Record<string, any> {
+function createConfig(block: 'round' | 'block', type: string, data: Record<string, any>): Record<string, any> {
     switch (type) {
         case 'for_time':
         case 'amrap':
             return {
-                type: data.event_type,
+                type: block === 'block' ? data.event_type : data.type,
                 timecap: data.timecap,
                 numberOfRounds: data.numberOfRounds,
             }
