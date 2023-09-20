@@ -19,7 +19,7 @@ export async function getMovementsUseCase(
         ? movementCollection.where('movement', '>=', search).where('movement', '<=', search + '\uf8ff')
         : movementCollection
 
-    query = query.orderBy('movement', 'asc')
+    query = query.orderBy('movement_insensitive', 'asc')
 
     if (startAfter) {
         const startAfterSnapshot = await movementCollection.doc(startAfter).get()
