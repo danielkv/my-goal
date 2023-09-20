@@ -72,7 +72,7 @@ const movements = [
     { movement_insensitive: 'max pull-up 1min', movement: 'Max Pull-Up 1min', resultType: 'reps', countResults: 0 },
     {
         movement_insensitive: 'max chest to bar pull-up 1min',
-        movement: 'max Chest to Bar Pull-Up 1min',
+        movement: 'Max Chest to Bar Pull-Up 1min',
         resultType: 'reps',
         countResults: 0,
     },
