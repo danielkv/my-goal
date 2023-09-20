@@ -4,6 +4,7 @@ import { IUserData } from './user'
 export interface IMovementInput {
     resultType: TResultType
     movement: string
+    movement_insensitive: string
 }
 
 export interface IMovement extends IMovementInput {
