@@ -6,6 +6,7 @@ dotenv.config()
 const APP_VARIANT = process.env.APP_VARIANT
 const IS_PROD = APP_VARIANT === 'production'
 const ID_PREFIX = IS_PROD ? 'app' : APP_VARIANT === 'preview' ? 'prev' : 'dev'
+const BUNDLE_ID = `${ID_PREFIX}.mygoal.goal`
 
 export default ({ config }: ConfigContext): ExpoConfig => {
     return {
@@ -25,7 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
             buildNumber: '11',
-            bundleIdentifier: `${ID_PREFIX}.mygoal.goal`,
+            bundleIdentifier: BUNDLE_ID,
             supportsTablet: false,
             requireFullScreen: true,
             googleServicesFile: IS_PROD
@@ -36,7 +37,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         android: {
             versionCode: 8,
-            package: `${ID_PREFIX}.mygoal.goal`,
+            package: BUNDLE_ID,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',
                 backgroundColor: '#202020',

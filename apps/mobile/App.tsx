@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import { LogBox } from 'react-native'
+import Purchases, { LOG_LEVEL, PurchasesOffering } from 'react-native-purchases'
 import 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
@@ -8,6 +9,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 import duration from 'dayjs/plugin/duration'
 import isBetween from 'dayjs/plugin/isBetween'
+import * as Application from 'expo-application'
 import 'expo-dev-client'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import * as SplashScreen from 'expo-splash-screen'
@@ -36,6 +38,11 @@ dayjs.extend(duration)
 
 SplashScreen.preventAutoHideAsync()
 
+const APIKeys = {
+    apple: 'appl_ZMlLZgdpHCIslayeeznLXslcGLj',
+    google: 'goog_SdIlPNjGwLjPWYyhSEDQtwSJYIS',
+}
+
 export default function App() {
     const [loaded, setLoaded] = useState(false)
 
@@ -50,6 +57,23 @@ export default function App() {
             Alert.alert('Error', getErrorMessage(err), [{ style: 'default', onPress: () => initialLoad() }])
         }
     }
+
+    useEffect(() => {
+        const setup = async () => {
+            if (Platform.OS == 'android') {
+                Purchases.configure({ apiKey: APIKeys.google })
+            } else {
+                Purchases.configure({ apiKey: APIKeys.apple })
+            }
+
+            const offerings = await Purchases.getOfferings()
+            console.log(offerings.current)
+        }
+
+        Purchases.setLogLevel(LOG_LEVEL.VERBOSE)
+
+        setup().catch(console.log)
+    }, [])
 
     useEffect(() => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP).catch(() => {})
