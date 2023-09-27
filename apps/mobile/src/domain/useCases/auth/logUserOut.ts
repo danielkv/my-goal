@@ -4,5 +4,5 @@ import { setLoggedUser } from '@contexts/user/userContext'
 export async function logUserOutUseCase() {
     await firebaseProvider.getAuth().signOut()
 
-    setLoggedUser(null)
+    return setLoggedUser(null)
 }

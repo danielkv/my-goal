@@ -49,6 +49,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             GOOGLE_WEB_CLIENT_ID: process.env.GOOGLE_WEB_CLIENT_ID,
             WEB_APP_URL: process.env.WEB_APP_URL,
             WEB_APP_RESET_PASSWORD_URL: process.env.WEB_APP_RESET_PASSWORD_URL,
+            REVENUE_CAT_APPLE_KEY: process.env.REVENUE_CAT_APPLE_KEY,
+            REVENUE_CAT_GOOGLE_KEY: process.env.REVENUE_CAT_GOOGLE_KEY,
             eas: {
                 projectId: 'a5ca3be7-cbb0-4f41-aa54-d96bc45da066',
             },

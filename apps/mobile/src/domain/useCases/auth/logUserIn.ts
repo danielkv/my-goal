@@ -19,7 +19,7 @@ export async function logUserInUseCase(credentials: Credentials) {
         throw createAppException('EMAIL_NOT_VERIFIED', 'Email não verificado')
     }
 
-    setLoggedUser(extractUserCredential(credentialResult.user))
+    return setLoggedUser(extractUserCredential(credentialResult.user))
 }
 
 async function _loginRouter(credentials: Credentials): Promise<FirebaseAuthTypes.UserCredential | null> {

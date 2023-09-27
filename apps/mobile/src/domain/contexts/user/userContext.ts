@@ -1,22 +1,43 @@
+import Purchases, { PurchasesEntitlementInfo } from 'react-native-purchases'
+
 import { create } from 'zustand'
 
 import { IUser } from '@models/user'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
+type IEntitlementsInfo = Record<string, PurchasesEntitlementInfo>
+
 export interface UserContext {
     user: IUser | null
-    serUser(user: IUser | null): void
+    entitlements: IEntitlementsInfo
+    setEntitlements(entitlement: IEntitlementsInfo): void
+    serUser(user: IUser | null): Promise<void>
 }
 
 export const useUserContext = create<UserContext>((set) => ({
     user: null,
-    serUser(user: IUser | null) {
-        set({ user })
+    entitlements: {},
+    setEntitlements(entitlements) {
+        set({ entitlements })
+    },
+    async serUser(user: IUser | null) {
+        let entitlements = {}
+
+        if (user?.email) {
+            const info = await Purchases.getCustomerInfo()
+            entitlements = info.entitlements.active
+            console.log(entitlements)
+        }
+
+        set({ user, entitlements })
     },
 }))
 
-export const setLoggedUser = (user: IUser | null): void => {
-    useUserContext.getState().serUser(user)
+export const setLoggedUser = async (user: IUser | null): Promise<void> => {
+    if (user?.email) await Purchases.logIn(user?.email)
+    else await Purchases.logOut()
+
+    return useUserContext.getState().serUser(user)
 }
 
 export const useLoggedUser = (): IUser | null => {

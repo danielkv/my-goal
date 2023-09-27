@@ -55,7 +55,7 @@ const ProfileScreen: React.FC = () => {
                 'Seus dados de acesso foram excluídos. O processo de remoção de seus dados pode levar até 30 dias.'
             )
 
-            setLoggedUser(null)
+            await setLoggedUser(null)
         } catch (err) {
             Alert.alert('Ocorreu um erro', getErrorMessage(err), [
                 { text: 'Tentar novamente', onPress: handleConfirmRemoveAccount },
