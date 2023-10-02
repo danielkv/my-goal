@@ -5,7 +5,7 @@ import { IUserMovementResultInput, IUserMovementResultResponse, IUserResult, TRe
 import { displayResultValue } from 'goal-utils'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
-import { Stack, Text, XStack, getTokens, useTheme } from 'tamagui'
+import { Slider, Stack, Text, XStack, getTokens, useTheme } from 'tamagui'
 
 import { useStorage } from '@common/hooks/useStorage'
 import ActivityIndicator from '@components/ActivityIndicator'
@@ -21,7 +21,7 @@ import WeightPartials from '@components/WeightPartials'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { TReactNavigationStackParamList } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
-import { Dumbbell, Filter, Medal, Plus } from '@tamagui/lucide-icons'
+import { Calculator, Dumbbell, Filter, Medal, Plus } from '@tamagui/lucide-icons'
 import { getMovementByIdUseCase } from '@useCases/movements/getMovementById'
 import { getMovementHighestScoreUseCase } from '@useCases/movements/getMovementHighestScore'
 import { getMovementResultsByUserIdUseCase } from '@useCases/movements/getMovementResultsByUserId'
@@ -36,6 +36,7 @@ const UserMovementResultScreen: React.FC = () => {
     const [addResultFomOpen, setAddResultFomOpen] = useState(false)
     const { setOptions } = useNavigation()
     const [selectedScore, setselectedScore] = useState<IUserResult | null>(null)
+    const [sliderValue, setSliderValue] = useState([50])
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'UserMovementResult'>>()
     const { space } = getTokens()
     const theme = useTheme()
@@ -157,62 +158,75 @@ const UserMovementResultScreen: React.FC = () => {
     const defaultWorkoutResultType = movement ? movement.resultType : null
 
     const scoreCalculations = selectedScore || highestScore
+    const calculatorWeight = Math.round((sliderValue[0] / 100) * (scoreCalculations?.result.value || 0) * 100) / 100
 
     return (
-        <Stack f={1}>
+        <Stack f={1} px="$5" pt="$5">
+            <Stack>
+                <XStack ai="center" gap="$2.5" mb="$2">
+                    <Text fontSize="$7" fontWeight="700">
+                        {movement?.movement}
+                    </Text>
+                    {!!scoreCalculations && (
+                        <XStack br="$3" ai="center" bg={selectedScore ? '$green6' : undefined} px="$2" py="$1" gap="$1">
+                            {!selectedScore && <Medal size={13} />}
+                            <Text fontSize="$5" color={selectedScore ? 'white' : '$gray4'}>
+                                {displayResultValue(scoreCalculations.result.type, scoreCalculations.result.value)}
+                            </Text>
+                        </XStack>
+                    )}
+                </XStack>
+
+                {scoreCalculations?.result.type === 'weight' && (
+                    <>
+                        <Stack>
+                            <WeightPartials weight={scoreCalculations.result.value} count={5} />
+                            <WeightPartials weight={scoreCalculations.result.value} count={5} startPct={60} />
+                        </Stack>
+
+                        <XStack mt="$2" ai="center" gap="$3">
+                            <Calculator />
+                            <Text color="$gray2">{sliderValue}%</Text>
+                            <Slider
+                                size="$2"
+                                f={1}
+                                value={sliderValue}
+                                onValueChange={(newValue) => {
+                                    setSliderValue(newValue)
+                                }}
+                                max={120}
+                                min={5}
+                                step={5}
+                            >
+                                <Slider.Track>
+                                    <Slider.TrackActive bg="$red8" />
+                                </Slider.Track>
+                                <Slider.Thumb circular index={0} />
+                            </Slider>
+                            <Text fontSize="$6" fontWeight="bold">
+                                {displayResultValue(scoreCalculations.result.type, calculatorWeight)}
+                            </Text>
+                        </XStack>
+                    </>
+                )}
+
+                <XStack jc="space-between" ai="center" mt="$5" mb={0} bg="$gray9" br="$4" px="$2.5" py="$3">
+                    <Text fontWeight="700" fontSize={16}>
+                        Resultados
+                    </Text>
+
+                    <Button
+                        size="$3"
+                        circular
+                        icon={<Filter />}
+                        onPress={() => setWorkoutResult(workoutResult === 'filtered' ? 'all' : 'filtered')}
+                        bg={workoutResult === 'filtered' ? '$red5' : '$gray8'}
+                    />
+                </XStack>
+            </Stack>
             <FlashList
                 data={results}
                 horizontal={false}
-                ListHeaderComponent={() => {
-                    return (
-                        <Stack>
-                            <XStack ai="center" gap="$2.5" mb="$2">
-                                <Text fontSize="$7" fontWeight="700">
-                                    {movement?.movement}
-                                </Text>
-                                {!!scoreCalculations && (
-                                    <XStack
-                                        br="$3"
-                                        ai="center"
-                                        bg={selectedScore ? '$green6' : undefined}
-                                        px="$2"
-                                        py="$1"
-                                        gap="$1"
-                                    >
-                                        {!selectedScore && <Medal size={13} />}
-                                        <Text fontSize="$5" color={selectedScore ? 'white' : '$gray4'}>
-                                            {displayResultValue(
-                                                scoreCalculations.result.type,
-                                                scoreCalculations.result.value
-                                            )}
-                                        </Text>
-                                    </XStack>
-                                )}
-                            </XStack>
-
-                            {scoreCalculations?.result.type === 'weight' && (
-                                <>
-                                    <WeightPartials weight={scoreCalculations.result.value} count={5} />
-                                    <WeightPartials weight={scoreCalculations.result.value} count={5} startPct={60} />
-                                </>
-                            )}
-
-                            <XStack jc="space-between" ai="center" my="$3.5" bg="$gray9" br="$4" px="$2.5" py="$3">
-                                <Text fontWeight="700" fontSize={16}>
-                                    Resultados
-                                </Text>
-
-                                <Button
-                                    size="$3"
-                                    circular
-                                    icon={<Filter />}
-                                    onPress={() => setWorkoutResult(workoutResult === 'filtered' ? 'all' : 'filtered')}
-                                    bg={workoutResult === 'filtered' ? '$red5' : '$gray8'}
-                                />
-                            </XStack>
-                        </Stack>
-                    )
-                }}
                 onEndReached={() => !endReached && setSize(size + 1)}
                 renderItem={({ item }) => {
                     const selected = selectedScore?.id === item.id
@@ -257,7 +271,7 @@ const UserMovementResultScreen: React.FC = () => {
                 }}
                 contentContainerStyle={{
                     backgroundColor: theme.gray7.val,
-                    padding: space['5'].val,
+                    paddingVertical: space['2'].val,
                 }}
                 estimatedItemSize={LIST_ITEM_HEIGHT}
                 showsHorizontalScrollIndicator={false}
