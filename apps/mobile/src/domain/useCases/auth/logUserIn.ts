@@ -1,5 +1,6 @@
 import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential, setLoggedUser } from '@contexts/user/userContext'
+import { extractUserCredential } from '@contexts/user/userContext'
+import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { createAppException } from '@utils/exceptions/AppException'
 

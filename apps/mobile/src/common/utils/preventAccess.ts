@@ -1,13 +1,17 @@
 import { useCallback } from 'react'
 
-import { useLoggedUser } from '@contexts/user/userContext'
+import { useEntitlements, useLoggedUser } from '@contexts/user/userContext'
 import { StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
+import { userHasEntitlementUseCase } from '@useCases/subscriptions/userHasEntitlement'
 
-export function usePreventAccess() {
+export function usePreventAccess(entitlementId?: string) {
     const { dispatch } = useNavigation()
     const route = useRoute()
     const user = useLoggedUser()
+    const entitlements = useEntitlements()
+
+    console.log(JSON.stringify(entitlements, null, 2))
 
     useFocusEffect(
         useCallback(() => {
@@ -18,6 +22,17 @@ export function usePreventAccess() {
             if (!skipPages && !user.displayName)
                 return dispatch(
                     StackActions.replace(ERouteName.SubscriptionScreen, {
+                        redirect: route.name,
+                        redirectParams: route.params,
+                    })
+                )
+
+            if (
+                !skipPages &&
+                ((entitlementId && !userHasEntitlementUseCase(entitlementId)) || !Object.entries(entitlements).length)
+            )
+                return dispatch(
+                    StackActions.replace(ERouteName.SelectPlan, {
                         redirect: route.name,
                         redirectParams: route.params,
                     })

@@ -15,10 +15,11 @@ import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import { Stack, Text, XStack, YStack, getTokens } from 'tamagui'
 
 import Button from '@components/Button'
-import { setLoggedUser, useLoggedUser } from '@contexts/user/userContext'
+import { useLoggedUser } from '@contexts/user/userContext'
+import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { ChevronLeft, Dumbbell, Edit, LogOut, Medal } from '@tamagui/lucide-icons'
+import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { removeUserUseCase } from '@useCases/auth/removeUser'
 import { getErrorMessage } from '@utils/getErrorMessage'
@@ -201,6 +202,12 @@ const ProfileScreen: React.FC = () => {
                             onPress={() => navigate(ERouteName.SubscriptionScreen)}
                         >
                             Alterar informações
+                        </Button>
+                        <Button
+                            icon={<UserCircle2 size={20} color="white" />}
+                            onPress={() => navigate(ERouteName.SelectPlan)}
+                        >
+                            Assinatura
                         </Button>
                         <Button icon={<LogOut size={20} color="white" />} onPress={handlePressLogout}>
                             Logout

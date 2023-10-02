@@ -32,6 +32,7 @@ module.exports = function (api) {
                         '@useCases': './src/domain/useCases',
                         '@hooks': './src/domain/hooks',
                         '@contexts': './src/domain/contexts',
+                        '@helpers': './src/domain/helpers',
                         '@assets': './src/assets',
                         '@view': './src/view',
                     },

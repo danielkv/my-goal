@@ -1,43 +1,29 @@
-import Purchases, { PurchasesEntitlementInfo } from 'react-native-purchases'
-
+import { IUserSubscriptionInfo, TEntitlementsInfo } from 'goal-models'
 import { create } from 'zustand'
 
 import { IUser } from '@models/user'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
-type IEntitlementsInfo = Record<string, PurchasesEntitlementInfo>
-
 export interface UserContext {
     user: IUser | null
-    entitlements: IEntitlementsInfo
-    setEntitlements(entitlement: IEntitlementsInfo): void
-    serUser(user: IUser | null): Promise<void>
+    subscriptionInfo: IUserSubscriptionInfo | null
+    setSubscriptionInfo(subscriptionInfo: IUserSubscriptionInfo | null): void
+    setUser(user: IUser | null): void
 }
 
 export const useUserContext = create<UserContext>((set) => ({
     user: null,
-    entitlements: {},
-    setEntitlements(entitlements) {
-        set({ entitlements })
+    subscriptionInfo: null,
+    setSubscriptionInfo(subscriptionInfo) {
+        set({ subscriptionInfo })
     },
-    async serUser(user: IUser | null) {
-        let entitlements = {}
-
-        if (user?.email) {
-            const info = await Purchases.getCustomerInfo()
-            entitlements = info.entitlements.active
-            console.log(entitlements)
-        }
-
-        set({ user, entitlements })
+    setUser(user: IUser | null) {
+        set({ user })
     },
 }))
 
-export const setLoggedUser = async (user: IUser | null): Promise<void> => {
-    if (user?.email) await Purchases.logIn(user?.email)
-    else await Purchases.logOut()
-
-    return useUserContext.getState().serUser(user)
+export const useEntitlements = (): TEntitlementsInfo => {
+    return useUserContext((c) => c.subscriptionInfo?.entitlements || {})
 }
 
 export const useLoggedUser = (): IUser | null => {

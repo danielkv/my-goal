@@ -2,12 +2,14 @@ import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'go
 
 import { UserWorkoutScreenProps } from '@view/UserWorkoutScreen'
 
+type TRedirectParams = { redirect?: ERouteName; redirectParams?: object }
+
 export type TReactNavigationStackParamList = {
     LoginScreen: undefined
 
     EmailLoginScreen: undefined
 
-    SubscriptionScreen?: { redirect?: ERouteName; redirectParams?: object }
+    SubscriptionScreen?: TRedirectParams
 
     HomeScreen: undefined
 
@@ -39,6 +41,8 @@ export type TReactNavigationStackParamList = {
     WodTimer: {
         block: IEventBlock
     }
+
+    SelectPlan?: TRedirectParams
 }
 
 export enum ERouteName {
@@ -77,4 +81,6 @@ export enum ERouteName {
     UserMovementResult = 'UserMovementResult',
 
     WodTimer = 'WodTimer',
+
+    SelectPlan = 'SelectPlan',
 }
