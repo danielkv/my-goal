@@ -1,4 +1,3 @@
-// import { Container } from './styles';
 import { Separator, Text } from 'tamagui'
 
 import Button from '@components/Button'
@@ -10,6 +9,8 @@ import { IAlertProps } from './types'
 
 const AppAlert: React.FC<IAlertProps> = ({ cancelable, buttons, title, description, ...modalProps }) => {
     useBackHandler(() => {
+        if (!modalProps.open) return false
+
         if (cancelable) modalProps.onClose()
         return true
     })
