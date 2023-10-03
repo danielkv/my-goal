@@ -1,41 +1,16 @@
 import { Children, PropsWithChildren, useRef, useState } from 'react'
 import PagerView from 'react-native-pager-view'
-import Animated, {
-    useAnimatedStyle,
-    useDerivedValue,
-    useEvent,
-    useHandler,
-    useSharedValue,
-} from 'react-native-reanimated'
+import Animated, { useSharedValue } from 'react-native-reanimated'
 
 import { Dialog, XStack, YStack } from 'tamagui'
 
 import { useStorage } from '@common/hooks/useStorage'
 import Button from '@components/Button'
+import PaginationDots from '@components/PaginationDots'
+import { usePageScrollHandler } from '@hooks/helpers/usePageScrollHandler'
 import { Check, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons'
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
-
-function usePageScrollHandler(handlers: any, dependencies?: any) {
-    const { context, doDependenciesDiffer } = useHandler(handlers, dependencies)
-    const subscribeForEvents = ['onPageScroll']
-
-    return useEvent(
-        (event: any) => {
-            'worklet'
-            const { onPageScroll } = handlers
-            if (onPageScroll && event.eventName.endsWith('onPageScroll')) {
-                onPageScroll(event, context)
-            }
-        },
-        subscribeForEvents,
-        doDependenciesDiffer
-    )
-}
-
-const DOT_MIN = 0.4
-const DOT_MAX = 1.4
-const DOT_DIFF = DOT_MAX - DOT_MIN
 
 interface OnboardingProps {
     id: string
@@ -50,15 +25,13 @@ const Onboarding: React.FC<PropsWithChildren<OnboardingProps>> = ({ children, id
     const { currentValue, loading, setItem } = useStorage(id, 'show')
 
     const offset = useSharedValue(0)
-    const previous = useSharedValue(0)
-    const next = useSharedValue(1)
+    const position = useSharedValue(0)
 
     const scrollHandler = usePageScrollHandler({
         onPageScroll: (e: any) => {
             'worklet'
             offset.value = e.offset
-            previous.value = e.position
-            next.value = e.position + 1
+            position.value = e.position
         },
     })
 
@@ -109,43 +82,7 @@ const Onboarding: React.FC<PropsWithChildren<OnboardingProps>> = ({ children, id
                         />
 
                         <YStack>
-                            <XStack jc="center">
-                                {Array.from({ length: pagesLength }).map((_, index) => {
-                                    const animatedValue = useDerivedValue(() => {
-                                        const realOffset =
-                                            index === previous.value
-                                                ? 1 - offset.value
-                                                : index === next.value
-                                                ? offset.value
-                                                : 0
-
-                                        return DOT_MIN + DOT_DIFF * realOffset
-                                    }, [previous, next, offset])
-
-                                    const handlerStyle = useAnimatedStyle(() => {
-                                        return {
-                                            transform: [{ scale: animatedValue.value }],
-                                            opacity: animatedValue.value,
-                                        }
-                                    })
-
-                                    return (
-                                        <Animated.View
-                                            key={index.toString()}
-                                            style={[
-                                                {
-                                                    width: 8,
-                                                    height: 8,
-                                                    marginHorizontal: 4,
-                                                    borderRadius: 4,
-                                                    backgroundColor: 'white',
-                                                },
-                                                handlerStyle,
-                                            ]}
-                                        />
-                                    )
-                                })}
-                            </XStack>
+                            <PaginationDots length={pagesLength} position={position} offset={offset} />
                             <Button
                                 mt="$3"
                                 variant="transparent"
