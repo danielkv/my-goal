@@ -8,6 +8,7 @@ export * from "./src/timer-display";
 export * from "./src/user";
 export * from "./src/worksheet-mapping";
 export * from "./src/constants/collections";
+export * from "./src/constants/subscriptions";
 export * from "./src/display/base";
 export * from "./src/display/eventBlock";
 export * from "./src/display/movement";
