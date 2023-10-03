@@ -30,7 +30,7 @@ export function usePreventAccess(entitlementId?: string) {
                 ((entitlementId && !userHasEntitlementUseCase(entitlementId)) || !Object.entries(entitlements).length)
             )
                 return dispatch(
-                    StackActions.replace(ERouteName.SelectPlan, {
+                    StackActions.replace(ERouteName.SelectSubscription, {
                         redirect: route.name,
                         redirectParams: route.params,
                     })

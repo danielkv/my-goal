@@ -205,7 +205,7 @@ const ProfileScreen: React.FC = () => {
                         </Button>
                         <Button
                             icon={<UserCircle2 size={20} color="white" />}
-                            onPress={() => navigate(ERouteName.SelectPlan)}
+                            onPress={() => navigate(ERouteName.SelectSubscription)}
                         >
                             Assinatura
                         </Button>

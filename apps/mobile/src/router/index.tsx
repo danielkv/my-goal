@@ -13,7 +13,7 @@ import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
 import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
-import SelectPlanScreen from '@view/SelectPlanScreen'
+import SelectSubscriptionScreen from '@view/SelectSubscriptionScreen'
 import SubscriptionScreen from '@view/SubscriptionScreen'
 import EmomTimerScreen from '@view/Timers/EmomTimerScreen'
 import RegressiveTimerScreen from '@view/Timers/RegressiveTimerScreen'
@@ -144,9 +144,9 @@ function Router() {
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
 
             <Stack.Screen
-                name={ERouteName.SelectPlan}
+                name={ERouteName.SelectSubscription}
                 options={{ title: 'Selecione um plano' }}
-                component={SelectPlanScreen}
+                component={SelectSubscriptionScreen}
             />
         </Stack.Navigator>
     )

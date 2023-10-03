@@ -42,7 +42,9 @@ export type TReactNavigationStackParamList = {
         block: IEventBlock
     }
 
-    SelectPlan?: TRedirectParams
+    SelectSubscription?: TRedirectParams
+
+    UserSubscription: undefined
 }
 
 export enum ERouteName {
@@ -79,8 +81,9 @@ export enum ERouteName {
     UserWorkout = 'UserWorkout',
     MovementList = 'MovementList',
     UserMovementResult = 'UserMovementResult',
+    UserSubscription = 'UserSubscription',
 
     WodTimer = 'WodTimer',
 
-    SelectPlan = 'SelectPlan',
+    SelectSubscription = 'SelectSubscription',
 }

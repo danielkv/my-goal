@@ -49,10 +49,10 @@ type TPeriods = 'annual' | 'monthly'
 
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
 
-const SelectPlanScreen: React.FC = () => {
+const SelectSubscriptionScreen: React.FC = () => {
     const [period, setPeriod] = useState<TPeriods>('monthly')
 
-    const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SelectPlan'>>()
+    const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SelectSubscription'>>()
 
     const navigation = useNavigation()
     const activeSubscriptions = useUserContext((context) => context.subscriptionInfo?.activeSubscriptions || [])
@@ -204,4 +204,4 @@ const SelectPlanScreen: React.FC = () => {
     )
 }
 
-export default SelectPlanScreen
+export default SelectSubscriptionScreen
