@@ -10755,6 +10755,8 @@ __metadata:
 "goal-models@*, goal-models@workspace:packages/models":
   version: 0.0.0-use.local
   resolution: "goal-models@workspace:packages/models"
+  dependencies:
+    barrelsby: ^2.8.0
   languageName: unknown
   linkType: soft
 
@@ -10763,6 +10765,7 @@ __metadata:
   resolution: "goal-utils@workspace:packages/utils"
   dependencies:
     "@types/chroma-js": ^2.4.0
+    barrelsby: ^2.8.0
     chroma-js: ^2.4.2
     dayjs: ^1.11.8
     goal-models: "*"

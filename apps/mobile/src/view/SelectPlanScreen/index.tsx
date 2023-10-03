@@ -43,7 +43,7 @@ function displayPrice(price: number, period: PACKAGE_TYPE): string {
     }
 }
 
-type TPeriods = 'annual' | 'sixMonth' | 'monthly'
+type TPeriods = 'annual' | 'monthly'
 
 const SelectPlanScreen: React.FC = () => {
     const period: TPeriods = 'monthly'
@@ -103,7 +103,9 @@ const SelectPlanScreen: React.FC = () => {
             </Stack>
         )
 
-    const packages = !offering?.[period] ? [FREE_PACKAGE] : ([offering[period], FREE_PACKAGE] as PurchasesPackage[])
+    const periodPackages = offering?.[period]
+
+    const packages = !periodPackages?.length ? [FREE_PACKAGE] : [FREE_PACKAGE, ...periodPackages]
     const packagesSubscriptions = packages.map((pkg) => pkg.product.identifier)
     const hasAnySubscriptionFromOffering =
         activeSubscriptions.filter((sub) => packagesSubscriptions.includes(sub)).length > 0
@@ -120,8 +122,12 @@ const SelectPlanScreen: React.FC = () => {
                 )[0]
 
                 return (
-                    <TouchableOpacity key={pkg.identifier} style={{ flex: 1 }} onPress={handleSelectPackage(pkg)}>
-                        <Card f={1} p="$3.5" gap="$3" ai="center" br="$6" jc="center" bg="$gray1">
+                    <TouchableOpacity
+                        key={pkg.product.identifier}
+                        style={{ flex: 1 }}
+                        onPress={handleSelectPackage(pkg)}
+                    >
+                        <Card f={1} p="$3.5" gap="$3" ai="center" br="$6" jc="center">
                             <Text color="$gray9" fontSize="$8" fontWeight="700">
                                 {pkg.product.title}
                             </Text>

@@ -1,4 +1,4 @@
-import Purchases, { PACKAGE_TYPE, PurchasesOffering } from 'react-native-purchases'
+import Purchases, { PACKAGE_TYPE, PurchasesPackage } from 'react-native-purchases'
 
 export const FREE_PACKAGE = {
     identifier: '$rc_free',
@@ -21,8 +21,20 @@ export const FREE_PACKAGE = {
     },
 } as const
 
-export async function getCurrentOfferingUseCase(): Promise<PurchasesOffering | null> {
+export async function getCurrentOfferingUseCase(): Promise<Record<'annual' | 'monthly', PurchasesPackage[]>> {
     const offerings = await Purchases.getOfferings()
 
-    return offerings.current
+    const app_premium_subscription = offerings.all['app_premium_subscription']
+    const app_pro_subscription = offerings.all['app_pro_subscription']
+
+    const monthly = [app_pro_subscription.monthly, app_premium_subscription.monthly].filter(
+        (a) => a
+    ) as PurchasesPackage[]
+
+    const annual = [app_pro_subscription.annual, app_premium_subscription.annual].filter((a) => a) as PurchasesPackage[]
+
+    return {
+        monthly,
+        annual,
+    }
 }
