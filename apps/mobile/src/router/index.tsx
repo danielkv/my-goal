@@ -21,6 +21,7 @@ import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
 import UserMovementResultScreen from '@view/UserMovementResultScreen'
+import UserSubscriptionScreen from '@view/UserSubscriptionScreen'
 import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
 import UserWorkoutScreen from '@view/UserWorkoutScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
@@ -147,6 +148,11 @@ function Router() {
                 name={ERouteName.SelectSubscription}
                 options={{ title: 'Selecione um plano' }}
                 component={SelectSubscriptionScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.UserSubscription}
+                options={{ title: 'Sua assinatura' }}
+                component={UserSubscriptionScreen}
             />
         </Stack.Navigator>
     )

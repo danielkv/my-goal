@@ -4,7 +4,9 @@ import PagerView from 'react-native-pager-view'
 import { PACKAGE_TYPE, PurchasesPackage } from 'react-native-purchases'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 
+import * as Linking from 'expo-linking'
 import { APP_OFFERING } from 'goal-models'
+import { FREE_PACKAGE } from 'goal-utils'
 import useSWR from 'swr'
 import { Card, Separator, Stack, Text, ToggleGroup, XStack, YStack } from 'tamagui'
 
@@ -16,8 +18,8 @@ import { useUserContext } from '@contexts/user/userContext'
 import { usePageScrollHandler } from '@hooks/helpers/usePageScrollHandler'
 import { RouteProp, StackActions, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
-import { Check, CheckCircle2 } from '@tamagui/lucide-icons'
-import { FREE_PACKAGE, getOfferingsUseCase } from '@useCases/subscriptions/getOfferings'
+import { Check, CheckCircle2, ExternalLink } from '@tamagui/lucide-icons'
+import { getOfferingsUseCase } from '@useCases/subscriptions/getOfferings'
 import { purchasePackageUseCase } from '@useCases/subscriptions/purchasePackage'
 import { userHasActiveSubscriptionUseCase } from '@useCases/subscriptions/userHasActiveSubscription'
 import { getErrorMessage } from '@utils/getErrorMessage'
@@ -51,6 +53,8 @@ const AnimatedPagerView = Animated.createAnimatedComponent(PagerView)
 
 const SelectSubscriptionScreen: React.FC = () => {
     const [period, setPeriod] = useState<TPeriods>('monthly')
+
+    const managementURL = useUserContext((ctx) => ctx.subscriptionInfo?.managementURL)
 
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'SelectSubscription'>>()
 
@@ -140,7 +144,7 @@ const SelectSubscriptionScreen: React.FC = () => {
                     <Text>Anual (-15%)</Text>
                 </ToggleGroup.Item>
             </ToggleGroup>
-            <AnimatedPagerView style={{ flex: 1 }} onPageScroll={scrollHandler}>
+            <AnimatedPagerView initialPage={1} style={{ flex: 1 }} onPageScroll={scrollHandler}>
                 {!!offerings &&
                     offerings.map((offering) => {
                         const identifier = offering.identifier
@@ -155,7 +159,7 @@ const SelectSubscriptionScreen: React.FC = () => {
                         const metaDescription = (offering.metadata?.description || []) as string[]
 
                         return (
-                            <Card elevation={5} key={pkg.product.identifier} f={1} py="$5" gap="$3" m="$5" bg="$gray9">
+                            <Card elevation={5} key={identifier} f={1} py="$5" gap="$3" m="$5" bg="$gray9">
                                 <Text fontSize="$6" fontWeight="700" ta="center" mt="$2">
                                     {pkg.product.title}
                                 </Text>
@@ -183,8 +187,22 @@ const SelectSubscriptionScreen: React.FC = () => {
                                     {isCurrent ? (
                                         <XStack ai="center" jc="center" gap="$2">
                                             <CheckCircle2 size={20} />
-                                            <Text color="$gray1">Este já é o seu plano atual</Text>
+                                            <Text color="$gray1">Assinatura atual</Text>
                                         </XStack>
+                                    ) : hasAnySubscriptionFromOffering && isFree && managementURL ? (
+                                        <>
+                                            <Button
+                                                mb="$2"
+                                                onPress={() => Linking.openURL(managementURL)}
+                                                icon={<ExternalLink />}
+                                            >
+                                                Gerenciar assinaturas
+                                            </Button>
+                                            <Text fontSize="$2" ta="center" color="$gray3">
+                                                Para cancelar sua assinatura paga, clique no botão acima e cancele sua
+                                                assinatura
+                                            </Text>
+                                        </>
                                     ) : (
                                         <Button variant="primary" onPress={handleSelectPackage(pkg)}>
                                             Assinar

@@ -5,7 +5,9 @@ import { useUserContext } from '@contexts/user/userContext'
 export async function purchasePackageUseCase(pkg: PurchasesPackage) {
     const result = await Purchases.purchasePackage(pkg)
 
-    const { activeSubscriptions, entitlements } = result.customerInfo
+    const { activeSubscriptions, entitlements, managementURL } = result.customerInfo
 
-    useUserContext.getState().setSubscriptionInfo({ activeSubscriptions, entitlements: entitlements.active })
+    useUserContext
+        .getState()
+        .setSubscriptionInfo({ activeSubscriptions, entitlements: entitlements.active, managementURL })
 }
