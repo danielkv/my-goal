@@ -75,7 +75,6 @@ const SelectPlanScreen: React.FC = () => {
             'worklet'
             offset.value = e.offset
             position.value = e.position
-            // console.log(e.offset)
         },
     })
 

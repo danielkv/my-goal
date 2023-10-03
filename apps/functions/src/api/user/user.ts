@@ -58,7 +58,6 @@ export const getUsers = https.onCall(async (data: { limit?: number; pageToken?: 
             ),
         }
     } catch (err) {
-        console.log(err)
         throw createHttpsError(err)
     }
 })

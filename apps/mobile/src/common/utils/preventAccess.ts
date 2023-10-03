@@ -11,8 +11,6 @@ export function usePreventAccess(entitlementId?: string) {
     const user = useLoggedUser()
     const entitlements = useEntitlements()
 
-    console.log(JSON.stringify(entitlements, null, 2))
-
     useFocusEffect(
         useCallback(() => {
             if (!user) return dispatch(StackActions.replace(ERouteName.LoginScreen))
