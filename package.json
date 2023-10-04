@@ -16,8 +16,5 @@
 		"dev:web": "yarn workspace goal-web dev",
 		"dev:mobile": "yarn workspace goal-mobile start"
 	},
-	"packageManager": "yarn@3.6.2",
-	"resolutions": {
-		"@react-native-firebase/firestore@^18.3.0": "patch:@react-native-firebase/firestore@npm%3A18.3.0#./.yarn/patches/@react-native-firebase-firestore-npm-18.3.0-0a6be6db66.patch"
-	}
+	"packageManager": "yarn@3.6.2"
 }

@@ -9,7 +9,7 @@ interface WeightPartialsProps {
 
 const WeightPartials: React.FC<WeightPartialsProps> = ({ weight, count, startPct = 10, addPct = 10 }) => {
     return (
-        <XStack f={1} jc="space-between" my="$2">
+        <XStack jc="space-between" my="$2">
             {Array.from({ length: count }).map((_, index) => {
                 const pct = startPct + index * addPct
                 const partialWeight = (pct / 100) * weight

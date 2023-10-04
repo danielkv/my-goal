@@ -15,11 +15,14 @@ export async function getMovementsUseCase(
     const movementCollection = fs.collection<Omit<IMovement, 'id'>>(collections.MOVEMENTS)
     const userMovementResult = fs.collection<Omit<IUserMovementResult, 'id'>>(collections.MOVEMENT_RESULTS)
 
-    let query = search.length
-        ? movementCollection.where('movement', '>=', search).where('movement', '<=', search + '\uf8ff')
-        : movementCollection
+    const insensitive_search = search.toLocaleLowerCase()
 
-    query = query.orderBy('movement_insensitive', 'asc')
+    let query = movementCollection.orderBy('movement_insensitive', 'asc')
+
+    if (search.length)
+        query = query
+            .where('movement_insensitive', '>=', insensitive_search)
+            .where('movement_insensitive', '<', insensitive_search + '\uf8ff')
 
     if (startAfter) {
         const startAfterSnapshot = await movementCollection.doc(startAfter).get()

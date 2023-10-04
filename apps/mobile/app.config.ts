@@ -14,7 +14,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`,
         slug: 'goal-mobile',
-        version: '1.4.0',
+        version: '1.4.2',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
         scheme: 'mygoal',
@@ -25,7 +25,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
-            buildNumber: '11',
+            buildNumber: '13',
             bundleIdentifier: BUNDLE_ID,
             supportsTablet: false,
             requireFullScreen: true,
@@ -36,7 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 8,
+            versionCode: 10,
             package: BUNDLE_ID,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',

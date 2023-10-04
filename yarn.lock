@@ -3932,9 +3932,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/app@npm:^17.5.0":
-  version: 17.5.0
-  resolution: "@react-native-firebase/app@npm:17.5.0"
+"@react-native-firebase/app@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/app@npm:18.5.0"
   dependencies:
     opencollective-postinstall: ^2.0.1
     superstruct: ^0.6.2
@@ -3945,77 +3945,68 @@ __metadata:
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 7d86f43a063561971edf328f7a2a1928660beb9617cbc3c5ba73ab65f359e0cadbc5e276e5654cfa0ef2d25c29f3f98587ebfd58f193be51f472facff3c3024f
+  checksum: 784f0d8382145a2e2a92ad71bea2ba3570bb7f454e40d8e3cfbfb5dd206d55ec464dabe32311f21639df0d969f40ec26d1edef76ab6b9ab7d442b86f69f82def
   languageName: node
   linkType: hard
 
-"@react-native-firebase/auth@npm:^17.5.0":
-  version: 17.5.0
-  resolution: "@react-native-firebase/auth@npm:17.5.0"
+"@react-native-firebase/auth@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/auth@npm:18.5.0"
   dependencies:
-    plist: ^3.0.5
+    plist: ^3.1.0
   peerDependencies:
-    "@react-native-firebase/app": 17.5.0
+    "@react-native-firebase/app": 18.5.0
     expo: ">=47.0.0"
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: c519e8847adebaaedccaf70c6a27e78e982a6c0efa6cdefa2a82d0f2cbf8beb6b0e44ad4aebf96f73440f9581b7134a35993340e556fbd624713a0aa82f2fd62
+  checksum: 32df9f93b3b0d0b081a9767521b7019bb9edb896fda6934683a3319bf18cfd8c951b117613fb8ce25f7cf54e5b0ad81a2a75d83469986743e81268fbd51cb806
   languageName: node
   linkType: hard
 
-"@react-native-firebase/crashlytics@npm:^17.5.0":
-  version: 17.5.0
-  resolution: "@react-native-firebase/crashlytics@npm:17.5.0"
+"@react-native-firebase/crashlytics@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/crashlytics@npm:18.5.0"
   dependencies:
     stacktrace-js: ^2.0.0
   peerDependencies:
-    "@react-native-firebase/app": 17.5.0
+    "@react-native-firebase/app": 18.5.0
     expo: ">=47.0.0"
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 9439b21541b6004dea487d94b590dacd86d183e414c52fb039ba7c56c2a188e0f24c7c83093847dd17e77aced86ff2ad271bbc4b98b562b34c8fd938637b700b
+  checksum: c1ddc51e54b001d8b416ae6abdbd556ff8311ed22fbc6e29321cc29f6e755d12864fb46d7d50f9bf436f670c642a7cffa1711ddaed950b4cbd5ae6b706855b92
   languageName: node
   linkType: hard
 
-"@react-native-firebase/firestore@npm:18.3.0":
-  version: 18.3.0
-  resolution: "@react-native-firebase/firestore@npm:18.3.0"
+"@react-native-firebase/firestore@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/firestore@npm:18.5.0"
   peerDependencies:
-    "@react-native-firebase/app": 18.3.0
-  checksum: ee0e8b8e921d852b0536ce884af0ab716eda95a45f461dd6d4b2603fccfc11ffffc435eca124f660c590d4695886b4160f8c87f92328da1d06040913098cee94
+    "@react-native-firebase/app": 18.5.0
+  checksum: 5de39d5aecae58553e571f0779704d6258d823236acb2f49ebcf466c463f73f949b654f23ba0ac622f71b5f79ac015947f319e6d0b5e36be20000093e2176d6f
   languageName: node
   linkType: hard
 
-"@react-native-firebase/firestore@patch:@react-native-firebase/firestore@npm%3A18.3.0#./.yarn/patches/@react-native-firebase-firestore-npm-18.3.0-0a6be6db66.patch::locator=goal%40workspace%3A.":
-  version: 18.3.0
-  resolution: "@react-native-firebase/firestore@patch:@react-native-firebase/firestore@npm%3A18.3.0#./.yarn/patches/@react-native-firebase-firestore-npm-18.3.0-0a6be6db66.patch::version=18.3.0&hash=fd8079&locator=goal%40workspace%3A."
+"@react-native-firebase/functions@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/functions@npm:18.5.0"
   peerDependencies:
-    "@react-native-firebase/app": 18.3.0
-  checksum: 497a13465f3a9852c5a2be39ab226d2e0ccbc3a790e089bf572800dc1dcc2991a37057353a67d8f39ac82b4ba94db5aa72c106d04753b19ddf75c8109fc1e743
+    "@react-native-firebase/app": 18.5.0
+  checksum: 631bba86451f9ba9210931dfde39b9fe685d91e5cc3ce903e322e712289444eae64819758d7e3fa3bad2c0b1a9dcdf46be1f76e14a296fc3f4e0c1c26162d487
   languageName: node
   linkType: hard
 
-"@react-native-firebase/functions@npm:^17.5.0":
-  version: 17.5.0
-  resolution: "@react-native-firebase/functions@npm:17.5.0"
+"@react-native-firebase/perf@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/perf@npm:18.5.0"
   peerDependencies:
-    "@react-native-firebase/app": 17.5.0
-  checksum: 09b6e7a92cf4773b0ad9691919bf1e52e6b0632bc54f833f4fb5cbe1e476383cf816949e2b6ec2f0ac6524b9e6837eeab9f419fe090141309bbad6aa4f2d4375
-  languageName: node
-  linkType: hard
-
-"@react-native-firebase/perf@npm:^17.5.0":
-  version: 17.5.0
-  resolution: "@react-native-firebase/perf@npm:17.5.0"
-  peerDependencies:
-    "@react-native-firebase/app": 17.5.0
+    "@react-native-firebase/app": 18.5.0
     expo: ">=47.0.0"
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: e1f95e37174d5a101fc3a60b4c52f940dcae73bc1a78801abed64ddd1231bc350c2612fcea0595292f22576f0d49398c44d7eabea08815e6d86c547fce2c6dc2
+  checksum: eb0f152f43b2c7f545589b50ce1a9999eb687552bb62888282b859461c86ec973bf04611be88de24d46cabd4beb342028b1da10943b49cd7f5efbd54de3b0d36
   languageName: node
   linkType: hard
 
@@ -6457,6 +6448,13 @@ __metadata:
     loupe: ^2.3.6
     pretty-format: ^27.5.1
   checksum: d4bc065875edf235b0c6b1f8648c10e9655ac45f5c7e89dc892b02e7f96f9bd58a97a4c3fcb3bc7026d6b350e752fb02cb7dcf5690c40792ff361fb6ac433e66
+  languageName: node
+  linkType: hard
+
+"@xmldom/xmldom@npm:^0.8.8":
+  version: 0.8.10
+  resolution: "@xmldom/xmldom@npm:0.8.10"
+  checksum: 4c136aec31fb3b49aaa53b6fcbfe524d02a1dc0d8e17ee35bd3bf35e9ce1344560481cd1efd086ad1a4821541482528672306d5e37cdbd187f33d7fadd3e2cf0
   languageName: node
   linkType: hard
 
@@ -10685,12 +10683,12 @@ __metadata:
     "@react-native-async-storage/async-storage": 1.18.2
     "@react-native-community/datetimepicker": 7.2.0
     "@react-native-community/hooks": ^3.0.0
-    "@react-native-firebase/app": ^17.5.0
-    "@react-native-firebase/auth": ^17.5.0
-    "@react-native-firebase/crashlytics": ^17.5.0
-    "@react-native-firebase/firestore": ^18.3.0
-    "@react-native-firebase/functions": ^17.5.0
-    "@react-native-firebase/perf": ^17.5.0
+    "@react-native-firebase/app": ^18.5.0
+    "@react-native-firebase/auth": ^18.5.0
+    "@react-native-firebase/crashlytics": ^18.5.0
+    "@react-native-firebase/firestore": ^18.5.0
+    "@react-native-firebase/functions": ^18.5.0
+    "@react-native-firebase/perf": ^18.5.0
     "@react-native-google-signin/google-signin": ^10.0.1
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
@@ -14646,6 +14644,17 @@ __metadata:
     base64-js: ^1.5.1
     xmlbuilder: ^15.1.1
   checksum: e21390fab8a3c388f8f51b76c0aa187242a40537119ce865d8637630e7d7df79b21f841ec6a4668e7c68d409a6f584d696619099a6125d28011561639c0823b8
+  languageName: node
+  linkType: hard
+
+"plist@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "plist@npm:3.1.0"
+  dependencies:
+    "@xmldom/xmldom": ^0.8.8
+    base64-js: ^1.5.1
+    xmlbuilder: ^15.1.1
+  checksum: c8ea013da8646d4c50dff82f9be39488054621cc229957621bb00add42b5d4ce3657cf58d4b10c50f7dea1a81118f825838f838baeb4e6f17fab453ecf91d424
   languageName: node
   linkType: hard
 
