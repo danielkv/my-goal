@@ -3,7 +3,7 @@ import { collections } from 'goal-utils'
 
 import { WorkoutResultFilter } from '@common/interfaces/workoutResult'
 import { firebaseProvider } from '@common/providers/firebase'
-import { Filter, FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import { FirebaseFirestoreTypes, firebase } from '@react-native-firebase/firestore'
 
 export async function mergeWorkoutResultAndUser<Type extends IUserResult>(
     docs: FirebaseFirestoreTypes.QueryDocumentSnapshot<Omit<Type, 'id'>>[]
@@ -44,7 +44,12 @@ export function getWorkoutResultFilters<Type extends Omit<IUserResult, 'id'>>(
     if (filter.onlyMe) {
         query = query.where('uid', '==', filter.userId)
     } else {
-        query = query.where(Filter.or(Filter('uid', '==', filter.userId), Filter('isPrivate', '==', false)))
+        query = query.where(
+            firebase.firestore.Filter.or(
+                firebase.firestore.Filter('uid', '==', filter.userId),
+                firebase.firestore.Filter('isPrivate', '==', false)
+            )
+        )
     }
 
     return query
