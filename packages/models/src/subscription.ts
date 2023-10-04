@@ -2,6 +2,14 @@
 
 export type TEntitlementsInfo = Record<string, IEntitlementInfo>
 
+export enum APP_ENTITLEMENTS {
+    WEEKLY_WORKOUT_ACCESS = 'weekly_workout_access',
+    SAVE_WORKOUT_RESULT = 'save_workout_result',
+    COMMUNITY_GROUPS_ACCESS = 'community_groups_access',
+    FOLLOW_COMMUNITY_RESULTS = 'follow_community_results',
+    FREE_ACCESS = 'free_access',
+}
+
 export enum APP_OFFERING {
     APP_PREMIUM_SUBSCRIPTION = 'app_premium_subscription',
     APP_PRO_SUBSCRIPTION = 'app_pro_subscription',

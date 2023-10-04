@@ -1,8 +1,14 @@
+import { APP_ENTITLEMENTS } from 'goal-models'
+
 import { useUserContext } from '@contexts/user/userContext'
 
-export function userHasEntitlementUseCase(entitlementId: string) {
+export function userIsEntitledUseCase(entitlementId: APP_ENTITLEMENTS | APP_ENTITLEMENTS[], and = false): boolean {
     const userContextState = useUserContext.getState()
     if (!userContextState) throw new Error('Nenhum usuário logado')
 
-    return !!userContextState.subscriptionInfo?.entitlements[entitlementId]
+    const entitlements = Array.isArray(entitlementId) ? entitlementId : [entitlementId]
+
+    return and
+        ? entitlements.every((entId) => !!userContextState.subscriptionInfo?.entitlements[entId]?.isActive)
+        : entitlements.some((entId) => !!userContextState.subscriptionInfo?.entitlements[entId]?.isActive)
 }

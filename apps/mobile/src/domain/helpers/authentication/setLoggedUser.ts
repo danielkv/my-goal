@@ -8,7 +8,7 @@ export const setLoggedUser = async (user: IUser | null): Promise<void> => {
     let subscriptionInfo = null
 
     if (user?.email) {
-        await Purchases.logIn(user?.email)
+        await Purchases.logIn(user.email)
         await Purchases.setAttributes({
             $displayName: user.displayName || null,
             $email: user.email,

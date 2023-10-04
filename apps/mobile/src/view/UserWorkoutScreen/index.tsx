@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
-import { IUserWorkoutResult, IUserWorkoutResultInput, TResultType } from 'goal-models'
+import { APP_ENTITLEMENTS, IUserWorkoutResult, IUserWorkoutResultInput, TResultType } from 'goal-models'
 import { getWorkoutRestultType } from 'goal-utils'
 import useSWRInfinite from 'swr/infinite'
 import { Stack, Text, XStack, getTokens, useTheme } from 'tamagui'
@@ -42,7 +42,7 @@ const UserWorkoutScreen: React.FC = () => {
     const { setOptions } = useNavigation()
     const theme = useTheme()
     const { space } = getTokens()
-    const user = usePreventAccess()
+    const user = usePreventAccess(APP_ENTITLEMENTS.SAVE_WORKOUT_RESULT)
 
     const getKey = (
         pageIndex: number,

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 import { activateKeepAwakeAsync, deactivateKeepAwake, isAvailableAsync } from 'expo-keep-awake'
-import { IBlock, IEventBlock } from 'goal-models'
+import { APP_ENTITLEMENTS, IBlock, IEventBlock } from 'goal-models'
 import { capitalize, isEventBlock } from 'goal-utils'
 import useSWR from 'swr'
 import { Stack, XStack } from 'tamagui'
@@ -60,7 +60,7 @@ const DayViewScreen: React.FC = () => {
         }
     )
 
-    usePreventAccess()
+    usePreventAccess(APP_ENTITLEMENTS.WEEKLY_WORKOUT_ACCESS)
 
     const { handleOpenTimerPress } = useBlockTimerNavigation()
 

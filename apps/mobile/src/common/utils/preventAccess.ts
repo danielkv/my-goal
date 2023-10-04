@@ -1,15 +1,16 @@
 import { useCallback } from 'react'
 
-import { useEntitlements, useLoggedUser } from '@contexts/user/userContext'
+import { APP_ENTITLEMENTS } from 'goal-models'
+
+import { useLoggedUser } from '@contexts/user/userContext'
 import { StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { userHasEntitlementUseCase } from '@useCases/subscriptions/userHasEntitlement'
+import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
 
-export function usePreventAccess(entitlementId?: string) {
+export function usePreventAccess(entitlementId?: APP_ENTITLEMENTS | APP_ENTITLEMENTS[], and = false) {
     const { dispatch } = useNavigation()
     const route = useRoute()
     const user = useLoggedUser()
-    const entitlements = useEntitlements()
 
     useFocusEffect(
         useCallback(() => {
@@ -25,10 +26,7 @@ export function usePreventAccess(entitlementId?: string) {
                     })
                 )
 
-            if (
-                !skipPages &&
-                ((entitlementId && !userHasEntitlementUseCase(entitlementId)) || !Object.entries(entitlements).length)
-            )
+            if (!skipPages && entitlementId && !userIsEntitledUseCase(entitlementId, and))
                 return dispatch(
                     StackActions.replace(ERouteName.SelectSubscription, {
                         redirect: route.name,

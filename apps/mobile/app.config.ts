@@ -51,6 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             WEB_APP_RESET_PASSWORD_URL: process.env.WEB_APP_RESET_PASSWORD_URL,
             REVENUE_CAT_APPLE_KEY: process.env.REVENUE_CAT_APPLE_KEY,
             REVENUE_CAT_GOOGLE_KEY: process.env.REVENUE_CAT_GOOGLE_KEY,
+            COMMUNITY_WHATSAPP_LINK: process.env.COMMUNITY_WHATSAPP_LINK,
             eas: {
                 projectId: 'a5ca3be7-cbb0-4f41-aa54-d96bc45da066',
             },

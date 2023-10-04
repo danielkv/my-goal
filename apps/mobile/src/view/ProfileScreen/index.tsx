@@ -9,7 +9,10 @@ import Animated, {
 } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import Constants from 'expo-constants'
 import { LinearGradient } from 'expo-linear-gradient'
+import * as Linking from 'expo-linking'
+import { APP_ENTITLEMENTS } from 'goal-models'
 import { getContrastColor, stringToColor, userInitials } from 'goal-utils'
 import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import { Stack, Text, XStack, YStack, getTokens } from 'tamagui'
@@ -19,9 +22,10 @@ import { useLoggedUser } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, UserCircle2 } from '@tamagui/lucide-icons'
+import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { removeUserUseCase } from '@useCases/auth/removeUser'
+import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
@@ -38,6 +42,9 @@ const ProfileScreen: React.FC = () => {
     const [loading, setLoading] = useState(false)
 
     usePreventAccess()
+
+    const saveWorkoutEntitled = userIsEntitledUseCase(APP_ENTITLEMENTS.SAVE_WORKOUT_RESULT)
+    const communityGroupsEntitled = userIsEntitledUseCase(APP_ENTITLEMENTS.COMMUNITY_GROUPS_ACCESS)
 
     const handlePressRemoveAccount = () => {
         Alert.alert('Confirmação', 'Tem certeza que deseja excluir sua conta?', [
@@ -101,9 +108,9 @@ const ProfileScreen: React.FC = () => {
 
     if (!user) return null
 
+    const communityWhatsappLink = Constants.expoConfig?.extra?.COMMUNITY_WHATSAPP_LINK
     const avatarColor = user.displayName ? stringToColor(user.displayName) : ''
     const textAvatarColor = getContrastColor(avatarColor)
-
     const profileImage = user.photoURL
 
     return (
@@ -184,19 +191,32 @@ const ProfileScreen: React.FC = () => {
                                 <Dumbbell size={20} color="white" />
                                 <Text fontWeight="700">PRs</Text>
                             </Button>
-                            <Button
-                                onPress={() => navigate(ERouteName.UserWorkoutList)}
-                                flexDirection="column"
-                                f={1}
-                                alignItems="flex-end"
-                                h="auto"
-                                gap="$4.5"
-                                p="$3.5"
-                            >
-                                <Medal size={20} color="white" />
-                                <Text fontWeight="700">Workouts</Text>
-                            </Button>
+                            {
+                                <Button
+                                    opacity={saveWorkoutEntitled ? 1 : 0.5}
+                                    onPress={() => navigate(ERouteName.UserWorkoutList)}
+                                    flexDirection="column"
+                                    f={1}
+                                    alignItems="flex-end"
+                                    h="auto"
+                                    gap="$4.5"
+                                    p="$3.5"
+                                >
+                                    <Medal size={20} color="white" />
+                                    <Text fontWeight="700">Workouts</Text>
+                                </Button>
+                            }
                         </XStack>
+                        {communityGroupsEntitled && communityWhatsappLink && (
+                            <Button
+                                bg="$green9"
+                                pressStyle={{ bg: '$green8' }}
+                                icon={<MessageCircle size={20} />}
+                                onPress={() => Linking.openURL(communityWhatsappLink)}
+                            >
+                                Comunidade no whatsapp
+                            </Button>
+                        )}
                         <Button
                             icon={<Edit size={20} color="white" />}
                             onPress={() => navigate(ERouteName.SubscriptionScreen)}
