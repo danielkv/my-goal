@@ -1,6 +1,13 @@
 node_modules
-.yarn/cache
 
 *.log
 
 **/*.cert.*
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
