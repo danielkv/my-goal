@@ -1,34 +1,33 @@
 import Purchases from 'react-native-purchases'
 
-import { IEntitlementInfo, IStoreProduct } from 'goal-models'
-import { FREE_ENTITLEMENT, FREE_PRODUCT } from 'goal-utils'
+import { APP_ENTITLEMENTS, IEntitlementInfo, IStoreProduct } from 'goal-models'
+import { APP_ENTITLEMENT_DESCRIPTIONS, FREE_ENTITLEMENT, FREE_PRODUCT } from 'goal-utils'
+import { alphabetical } from 'radash'
 
 interface UserSubscription {
-    entitlement: IEntitlementInfo
-    product: IStoreProduct
+    subscriptions: IStoreProduct[]
+    entitlements: IEntitlementInfo[]
 }
 
-export async function getUserSubscriptions(): Promise<UserSubscription[]> {
-    const userInfo = await Purchases.getCustomerInfo()
-    const entitlements = Object.values(userInfo.entitlements.active)
+export async function getUserSubscriptions(): Promise<UserSubscription> {
+    const {
+        entitlements: { active },
+        activeSubscriptions,
+    } = await Purchases.getCustomerInfo()
+
+    const entitlements = alphabetical(
+        Object.values(active),
+        (ent) => APP_ENTITLEMENT_DESCRIPTIONS[ent.identifier as APP_ENTITLEMENTS]
+    )
 
     if (!entitlements.length) {
-        return [{ entitlement: FREE_ENTITLEMENT, product: FREE_PRODUCT }]
+        return { entitlements: [FREE_ENTITLEMENT], subscriptions: [FREE_PRODUCT] }
     }
 
-    const productIds = entitlements.map((ent) => ent.productIdentifier)
+    const subscriptions = await Purchases.getProducts(activeSubscriptions)
 
-    const products = await Purchases.getProducts(productIds)
-
-    return entitlements.reduce<UserSubscription[]>((all, entitlement) => {
-        const product = products.find((prod) => prod.identifier === entitlement.productIdentifier)
-
-        if (product)
-            all.push({
-                entitlement,
-                product,
-            })
-
-        return all
-    }, [])
+    return {
+        entitlements: entitlements,
+        subscriptions,
+    }
 }

@@ -1,4 +1,12 @@
-import { IEntitlementInfo, IOffering, IPackage, IStoreProduct, PACKAGE_TYPE } from 'goal-models'
+import { APP_ENTITLEMENTS, IEntitlementInfo, IOffering, IPackage, IStoreProduct, PACKAGE_TYPE } from 'goal-models'
+
+export const APP_ENTITLEMENT_DESCRIPTIONS: Record<APP_ENTITLEMENTS, string> = {
+    weekly_workout_access: 'Acesso às planilhas semanais',
+    community_groups_access: 'Acesso aos grupos da comunidade',
+    follow_community_results: 'Acompanhar resultados dos treinos da comunidade',
+    save_workout_result: 'Salvar resultado do Workout',
+    free_access: 'Acesso gratuito',
+}
 
 export const FREE_PRODUCT: IStoreProduct = {
     identifier: 'free_subscription',
