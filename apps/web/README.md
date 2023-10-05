@@ -1,34 +1,17 @@
-## Usage
+# Goal web
+Delivers an interface to manage worksheets and users. 
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+# Technologies
+To develop this application SolidJS was chosen for 2 main reason, first to test and learn its rendering and reacting speed, I had a concern with performance given that we could have many loops because of the worksheet model. Second was to learn something new, Today this project is running in production, but it was not the idea initially. So I took a shot with SolidJS instead of React, which was going to be my second option.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## List of technologies
+- SolidJS
+- Firebase (DB and Authentication)
+- Vercel (hosting)
+- Open source libs (not only):
+	- suid (MUI for SolidJS)
+	- radash
+	- dayjs
+## Process
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
-
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+The most interesting part of developing this application was to parse the text to worksheet model. It waas very challenging given the variations of types of workouts, timers, exercises, reps and weight. To parse the text was used a combination of Regex patterns and keywords. This was necessary to make easier for the admins to add new workout plans.
