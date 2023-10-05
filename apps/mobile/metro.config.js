@@ -31,7 +31,7 @@ module.exports = (() => {
 
     //config.resolver.blockList = exclusionList([/.*vitest.config.*/])
 
-    config.resolver.disableHierarchicalLookup = true
+    config.resolver.disableHierarchicalLookup = false
 
     return config
 })()

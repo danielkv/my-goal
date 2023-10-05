@@ -1,27 +1,28 @@
-import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer, TTimerTypes } from 'goal-models'
-
-export type TSettings = Partial<ITabataTimer & IEMOMTimer & ITimecapTimer>
+import { isRestRound } from './models'
+import { IEventBlock, IRound, TTimerSettings, TTimerTypes } from 'goal-models'
 
 export type TOpenTimerAllowedTypes = Exclude<TTimerTypes, 'not_timed'>
 
-export const roundTimerSettings = (round: IRound): TSettings => {
-    switch (round.type) {
+export const roundTimerSettings = (round: IRound): TTimerSettings => {
+    if (isRestRound(round)) return {}
+
+    switch (round.config.type) {
         case 'amrap':
         case 'for_time':
             return {
-                numberOfRounds: round.numberOfRounds,
-                timecap: round.timecap,
+                numberOfRounds: round.config.numberOfRounds,
+                timecap: round.config.timecap,
             }
         case 'emom':
             return {
-                numberOfRounds: round.numberOfRounds,
-                each: round.each,
+                numberOfRounds: round.config.numberOfRounds,
+                each: round.config.each,
             }
         case 'tabata':
             return {
-                numberOfRounds: round.numberOfRounds,
-                work: round.work,
-                rest: round.rest,
+                numberOfRounds: round.config.numberOfRounds,
+                work: round.config.work,
+                rest: round.config.rest,
             }
     }
 
@@ -29,74 +30,81 @@ export const roundTimerSettings = (round: IRound): TSettings => {
 }
 
 export const roundTimerType = (round: IRound): TOpenTimerAllowedTypes | null => {
-    switch (round.type) {
+    if (isRestRound(round)) return null
+
+    switch (round.config.type) {
         case 'emom':
-            if (round.each && round.each > 0 && round.numberOfRounds && round.numberOfRounds > 0) return 'emom'
+            if (
+                round.config.each &&
+                round.config.each > 0 &&
+                round.config.numberOfRounds &&
+                round.config.numberOfRounds > 0
+            )
+                return 'emom'
             break
         case 'tabata':
             if (
-                round.work &&
-                round.work > 0 &&
-                round.rest &&
-                round.rest > 0 &&
-                round.numberOfRounds &&
-                round.numberOfRounds > 0
+                round.config.work &&
+                round.config.work > 0 &&
+                round.config.rest &&
+                round.config.rest > 0 &&
+                round.config.numberOfRounds &&
+                round.config.numberOfRounds > 0
             )
                 return 'tabata'
             break
         case 'for_time':
         case 'amrap':
-            if (round.timecap && round.timecap > 0) return 'for_time'
+            if (round.config.timecap && round.config.timecap > 0) return 'for_time'
             break
     }
+
     return null
 }
 
-export const blockTimerSettings = (block: IEventBlock): TSettings => {
-    switch (block.event_type) {
+export const blockTimerSettings = ({ config }: IEventBlock): TTimerSettings => {
+    switch (config.type) {
         case 'amrap':
-        case 'max_weight':
         case 'for_time':
             return {
-                numberOfRounds: block.numberOfRounds,
-                timecap: block.timecap,
+                numberOfRounds: config.numberOfRounds,
+                timecap: config.timecap,
             }
         case 'emom':
             return {
-                numberOfRounds: block.numberOfRounds,
-                each: block.each,
+                numberOfRounds: config.numberOfRounds,
+                each: config.each,
             }
         case 'tabata':
             return {
-                numberOfRounds: block.numberOfRounds,
-                work: block.work,
-                rest: block.rest,
+                numberOfRounds: config.numberOfRounds,
+                work: config.work,
+                rest: config.rest,
             }
     }
 
     return {}
 }
 
-export const blockTimerType = (block: IEventBlock): TOpenTimerAllowedTypes | null => {
-    switch (block.event_type) {
+export const blockTimerType = ({ config }: IEventBlock): TOpenTimerAllowedTypes | null => {
+    switch (config.type) {
         case 'emom':
-            if (block.each && block.each > 0 && block.numberOfRounds && block.numberOfRounds > 0) return 'emom'
+            if (config.each && config.each > 0 && config.numberOfRounds && config.numberOfRounds > 0) return 'emom'
             break
         case 'tabata':
             if (
-                block.work &&
-                block.work > 0 &&
-                block.rest &&
-                block.rest > 0 &&
-                block.numberOfRounds &&
-                block.numberOfRounds > 0
+                config.work &&
+                config.work > 0 &&
+                config.rest &&
+                config.rest > 0 &&
+                config.numberOfRounds &&
+                config.numberOfRounds > 0
             )
                 return 'tabata'
             break
         case 'for_time':
-        case 'max_weight':
         case 'amrap':
-            if (block.timecap && block.timecap > 0) return 'for_time'
+            if (config.timecap && config.timecap > 0) return 'for_time'
             break
     }
     return null
@@ -106,13 +114,23 @@ export type TTimedMode = 'none' | 'round' | 'block'
 
 export const checkIsTimedWorkout = (block: IEventBlock): TTimedMode => {
     const isNoneMode = block.rounds.every(
-        (round) => !['for_time', 'emom', 'amrap', 'tabata', 'rest'].includes(round.type)
+        (round) => !isRestRound(round) && !['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
     )
     if (isNoneMode) return 'none'
 
     const isBlockMode =
         block.rounds.length > 1 &&
-        block.rounds.every((round) => ['for_time', 'emom', 'amrap', 'tabata', 'rest'].includes(round.type))
+        block.rounds.every(
+            (round) => isRestRound(round) || ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
+        )
+
+    if (
+        !block.rounds.some(
+            (round) => !isRestRound(round) && ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
+        )
+    )
+        return 'none'
+
     if (isBlockMode) return 'block'
 
     return 'round'

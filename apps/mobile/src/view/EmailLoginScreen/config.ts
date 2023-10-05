@@ -5,7 +5,7 @@ export type TLoginForm = { email: string; password: string }
 export const initialValues = (): TLoginForm => {
     if (__DEV__)
         return {
-            email: 'danielkv@gmail.com',
+            email: 'daniel_kv@hotmail.com',
             password: '123456',
         }
 

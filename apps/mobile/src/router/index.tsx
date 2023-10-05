@@ -1,3 +1,5 @@
+import { Platform } from 'react-native'
+
 import { useTheme } from 'tamagui'
 
 import Button from '@components/Button'
@@ -9,6 +11,7 @@ import DayViewScreen from '@view/DayViewScreen'
 import EmailLoginScreen from '@view/EmailLoginScreen'
 import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
+import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
 import SubscriptionScreen from '@view/SubscriptionScreen'
 import EmomTimerScreen from '@view/Timers/EmomTimerScreen'
@@ -16,6 +19,9 @@ import RegressiveTimerScreen from '@view/Timers/RegressiveTimerScreen'
 import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
+import UserMovementResultScreen from '@view/UserMovementResultScreen'
+import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
+import UserWorkoutScreen from '@view/UserWorkoutScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
 import WorksheetDays from '@view/WorksheetDays'
 import WorksheetListScreen from '@view/WorksheetListScreen'
@@ -38,6 +44,7 @@ function Router() {
                 headerBackTitleVisible: false,
                 headerTintColor: theme.gray3.val,
                 headerTitleAlign: 'left',
+                animation: Platform.OS === 'android' ? 'fade_from_bottom' : 'default',
                 headerRight: () => {
                     const user = useLoggedUser()
 
@@ -110,7 +117,29 @@ function Router() {
             />
             <Stack.Screen name={ERouteName.WorksheetDays} options={{ title: 'Dias' }} component={WorksheetDays} />
             <Stack.Screen name={ERouteName.DayView} options={{ title: 'Dia' }} component={DayViewScreen} />
-            <Stack.Screen name={ERouteName.Profile} options={{ title: 'Meu Perfil' }} component={ProfileScreen} />
+            <Stack.Screen
+                name={ERouteName.Profile}
+                options={{ title: 'Meu Perfil', headerShown: false }}
+                component={ProfileScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.UserWorkoutList}
+                options={{ title: 'Workout' }}
+                component={UserWorkoutListScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.MovementList}
+                options={{ title: 'Movimentos' }}
+                component={MovementListScreen}
+            />
+
+            <Stack.Screen
+                name={ERouteName.UserMovementResult}
+                options={{ title: 'Personal Record' }}
+                component={UserMovementResultScreen}
+            />
+
+            <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
         </Stack.Navigator>
     )

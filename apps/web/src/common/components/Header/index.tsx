@@ -1,3 +1,4 @@
+import { CgGym } from 'solid-icons/cg'
 import { FaSolidClipboardList } from 'solid-icons/fa'
 import { FiLogIn, FiLogOut, FiUsers } from 'solid-icons/fi'
 
@@ -23,6 +24,13 @@ const Header: Component = () => {
                 <div class="flex gap-3">
                     {loggedUser() ? (
                         <>
+                            <A
+                                href="/movements"
+                                title="Movimentos"
+                                class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                            >
+                                <CgGym size={20} />
+                            </A>
                             <A href="/users" title="Usuários" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
                                 <FiUsers size={20} />
                             </A>

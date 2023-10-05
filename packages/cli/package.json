@@ -1,0 +1,20 @@
+{
+	"name": "goal-cli",
+	"version": "1.0.0",
+	"main": "index.ts",
+	"license": "MIT",
+	"dependencies": {
+		"@faker-js/faker": "^8.0.2",
+		"barrelsby": "^2.8.0",
+		"commander": "^11.0.0",
+		"dayjs": "^1.11.9",
+		"firebase-admin": "^11.9.0",
+		"goal-utils": "*",
+		"node-firestore-import-export": "^1.1.0",
+		"radash": "^10.9.0",
+		"ts-node": "^10.9.1"
+	},
+	"scripts": {
+		"cli": "ts-node index.ts"
+	}
+}

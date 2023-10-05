@@ -40,7 +40,7 @@ export function getBreadcrumbLabel(worksheet: IWorksheet, path: Path): string {
     if (isPeriod(peace)) return `${String(formIndex + 1)}º Período `
     if (isSection(peace)) return peace.name || 'Seção'
     if (isBlock(peace)) {
-        if (isEventBlock(peace)) return eventTypes[peace.event_type] || 'Evento'
+        if (isEventBlock(peace)) return eventTypes[peace.config.type] || 'Evento'
         if (isTextBlock(peace)) return 'Texto'
         if (isRestBlock(peace)) return 'Rest'
     }

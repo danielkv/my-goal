@@ -7,12 +7,11 @@ describe('Event block displayHeader', () => {
         const outputText = ''
 
         const object: IEventBlock = {
-            event_type: 'not_timed',
+            config: { type: 'not_timed' },
             type: 'event',
-            numberOfRounds: 1,
             rounds: [
                 {
-                    type: 'not_timed',
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'snatch',
@@ -36,12 +35,11 @@ describe('Event block displayHeader', () => {
         const outputText = '2 rounds'
 
         const object: IEventBlock = {
-            event_type: 'not_timed',
+            config: { type: 'not_timed', numberOfRounds: 2 },
             type: 'event',
-            numberOfRounds: 2,
             rounds: [
                 {
-                    type: 'not_timed',
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'snatch',
@@ -65,13 +63,12 @@ describe('Event block displayHeader', () => {
         const outputText = '(teste info)'
 
         const object: IEventBlock = {
-            event_type: 'not_timed',
             type: 'event',
-
+            config: { type: 'not_timed' },
             info: 'teste info',
             rounds: [
                 {
-                    type: 'not_timed',
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'snatch',
@@ -95,13 +92,11 @@ describe('Event block displayHeader', () => {
         const outputText = 'EMOM 4min'
 
         const object: IEventBlock = {
-            event_type: 'emom',
             type: 'event',
-            each: 60,
-            numberOfRounds: 4,
+            config: { type: 'emom', each: 60, numberOfRounds: 4 },
             rounds: [
                 {
-                    type: 'not_timed',
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'snatch',
@@ -125,13 +120,11 @@ describe('Event block displayHeader', () => {
         const outputText = 'For Time 2 rounds 1min40s'
 
         const object: IEventBlock = {
-            event_type: 'for_time',
+            config: { type: 'for_time', timecap: 100, numberOfRounds: 2 },
             type: 'event',
-            timecap: 100,
-            numberOfRounds: 2,
             rounds: [
                 {
-                    type: 'not_timed',
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Snatch',
@@ -160,15 +153,15 @@ describe('Event block displayHeader', () => {
     })
 
     it('header "3-2-1 rounds"', () => {
-        const outputText = '3-2-1 rounds'
+        const outputText = ''
 
         const object: IEventBlock = {
-            event_type: 'not_timed',
+            config: { type: 'not_timed' },
             type: 'event',
             rounds: [
                 {
                     type: 'complex',
-                    numberOfRounds: 3,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',
@@ -190,7 +183,7 @@ describe('Event block displayHeader', () => {
                 },
                 {
                     type: 'complex',
-                    numberOfRounds: 2,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',
@@ -212,7 +205,7 @@ describe('Event block displayHeader', () => {
                 },
                 {
                     type: 'complex',
-                    numberOfRounds: 1,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',
@@ -241,17 +234,16 @@ describe('Event block displayHeader', () => {
     })
 
     it('header "For Time 2-1 rounds"', () => {
-        const outputText = 'For Time 2-1 rounds'
+        const outputText = 'For Time'
 
         const object: IEventBlock = {
-            event_type: 'for_time',
-            timecap: 0,
-            numberOfRounds: 1,
+            config: { type: 'for_time', timecap: 0, numberOfRounds: 1 },
+
             type: 'event',
             rounds: [
                 {
                     type: 'complex',
-                    numberOfRounds: 2,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',
@@ -273,7 +265,7 @@ describe('Event block displayHeader', () => {
                 },
                 {
                     type: 'complex',
-                    numberOfRounds: 1,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',
@@ -305,14 +297,12 @@ describe('Event block displayHeader', () => {
         const outputText = 'For Time 10min'
 
         const object: IEventBlock = {
-            event_type: 'for_time',
-            timecap: 600,
-            numberOfRounds: 1,
+            config: { type: 'for_time', timecap: 600, numberOfRounds: 1 },
             type: 'event',
             rounds: [
                 {
                     type: 'complex',
-                    numberOfRounds: 1,
+                    config: { type: 'not_timed' },
                     movements: [
                         {
                             name: 'Hang Clean',

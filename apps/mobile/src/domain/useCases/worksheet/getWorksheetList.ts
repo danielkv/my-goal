@@ -1,4 +1,5 @@
 import { IWorksheetModel } from 'goal-models'
+import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
 
@@ -6,7 +7,7 @@ export function getWorksheetListUseCase(): Promise<IWorksheetModel[]> {
     const fs = firebaseProvider.getFirestore()
 
     return fs
-        .collection<IWorksheetModel>('worksheets')
+        .collection<IWorksheetModel>(collections.WORKSHEETS)
         .orderBy('startDate', 'desc')
         .where('published', '==', true)
         .get()

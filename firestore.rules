@@ -12,12 +12,46 @@ service cloud.firestore {
 			}
 		}
     	
+		match /worksheets_v2/{doc} {
+			allow list;
+			allow get: if request.auth != null;
+      		allow write: if request.auth.token.admin;
+      
+			match /{document=**} {
+				allow read: if request.auth != null;
+				allow write: if request.auth.token.admin;
+			}
+		}
+    	
 		match /temp_worksheets/{doc=**} {
+			allow read, write: if request.auth.token.admin;
+		}
+		
+		match /temp_worksheets_v2/{doc=**} {
 			allow read, write: if request.auth.token.admin;
 		}
 
 		match /logs/{doc=**} {
 			allow read, write;
+		}
+
+		match /workout_results/{doc=**} {
+			allow write: if request.auth.token.admin || request.auth.uid == request.resource.data.uid;
+			allow read;
+		}
+		
+		match /user_data/{doc=**} {
+			allow read: if request.auth != null;
+		}
+		
+		match /movements/{doc=**} {
+			allow read;
+			allow write: if request.auth.token.admin;
+		}
+
+		match /movement_results/{doc=**} {
+			allow write: if request.auth.token.admin || request.auth.uid == request.resource.data.uid;
+			allow read;
 		}
 	}
 }

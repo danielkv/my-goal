@@ -28,7 +28,7 @@ const LoginScreen: React.FC = () => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView flex={1}>
             <ImageBackground style={{ flex: 1 }} source={LoginBg}>
                 <ScrollView
                     flex={1}

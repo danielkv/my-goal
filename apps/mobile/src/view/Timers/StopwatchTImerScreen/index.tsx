@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
+import { ScrollView, Stack, YStack } from 'tamagui'
+
 import StopwatchSvg from '@assets/svg/stopwatch.svg'
 import Button from '@components/Button'
 import SafeAreaView from '@components/SafeAreaView'
 import TimerForm from '@components/TimerForm'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { TReactNavigationStackParamList } from '@router/types'
-
-import { ScrollView, Stack, YStack } from 'tamagui'
 
 import StopwatchDisplay from './timer'
 
@@ -20,7 +20,7 @@ const StopwatchTimerScreen: React.FC = () => {
     const [countdown, setupCountdown] = useState(3)
 
     return (
-        <SafeAreaView keyboardVerticalOffset={70}>
+        <SafeAreaView flex={1} keyboardVerticalOffset={70}>
             {state === 'form' ? (
                 <ScrollView
                     flex={1}

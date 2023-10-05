@@ -24,4 +24,6 @@ export function usePreventAccess() {
                 )
         }, [user])
     )
+
+    return user
 }

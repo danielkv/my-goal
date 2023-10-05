@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { IWorksheetModel } from 'goal-models'
+import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { getTempWorksheetDaysUseCase } from '@useCases/temp_days/getTempWorksheetDays'
@@ -8,7 +9,7 @@ import { worksheetConverter } from '@utils/converters'
 export async function getTempWorksheetByIdUseCase(worksheetId: string): Promise<IWorksheetModel | null> {
     const collectionRef = firebaseProvider
         .firestore()
-        .doc('temp_worksheets', worksheetId)
+        .doc(collections.TEMP_WORKSHEETS, worksheetId)
         .withConverter(worksheetConverter)
 
     const snapshot = await firebaseProvider.firestore().getDoc(collectionRef)

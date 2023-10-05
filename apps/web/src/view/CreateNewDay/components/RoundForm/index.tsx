@@ -1,5 +1,5 @@
-import { IRound, TTimerTypes } from 'goal-models'
-import { roundTypes } from 'goal-utils'
+import { IRestBlock, IRound } from 'goal-models'
+import { isRestRound, roundTypes } from 'goal-utils'
 import { omit } from 'radash'
 
 import { Component, For, JSX, Show, createEffect, createMemo, on } from 'solid-js'
@@ -17,7 +17,6 @@ import {
     insert,
     remove,
     reset,
-    setValue,
     zodForm,
 } from '@modular-forms/solid'
 import { createRoundMovementValues } from '@utils/worksheetInitials'
@@ -42,16 +41,22 @@ const RoundForm: Component<BlockFormProps> = (props) => {
         })
     )
 
-    const handleSubmit: SubmitHandler<TRoundForm> = (values) => {
-        const newValues = {
-            ...values,
-            numberOfRounds: Number.isNaN(values.numberOfRounds) ? 1 : values.numberOfRounds || 1,
-            movements:
-                values.movements?.map((mov) => {
-                    if (!mov.weight || mov.weight?.type === 'none') return omit(mov, ['weight'])
-                    return mov
-                }) || [],
-        }
+    const handleSubmit: SubmitHandler<TRoundForm> = (round) => {
+        const newValues = isRestRound(round)
+            ? round
+            : ({
+                  ...round,
+                  type: round.type || undefined,
+                  config: {
+                      ...round.config,
+                      numberOfRounds: Number.isNaN(round.config.numberOfRounds) ? 1 : round.config.numberOfRounds || 1,
+                  },
+                  movements:
+                      round.movements?.map((mov) => {
+                          if (!mov.weight || mov.weight?.type === 'none') return omit(mov, ['weight'])
+                          return mov
+                      }) || [],
+              } as Exclude<IRound, IRestBlock>)
 
         props.onClickNext(newValues)
     }
@@ -59,32 +64,16 @@ const RoundForm: Component<BlockFormProps> = (props) => {
     const handleClickAddMovement: JSX.CustomEventHandlersCamelCase<HTMLButtonElement>['onClick'] = (e) => {
         e.preventDefault()
 
-        insert(form, 'movements', { value: createRoundMovementValues() })
+        // @ts-expect-error
+        insert(form, 'movements', { value: [createRoundMovementValues()] })
     }
-
-    const timerType = createMemo<TTimerTypes>(() => {
-        const value = getValue(form, 'type') || 'not_timed'
-        if (value === 'rest') return 'not_timed'
-        if (value === 'complex') return 'not_timed'
-
-        return value
-    })
 
     return (
         <Form<TRoundForm> of={form} name="teste" class="flex flex-col gap-6" onSubmit={handleSubmit}>
             <Field of={form} name="type">
                 {(field) => {
                     const handleInput: JSX.EventHandler<HTMLSelectElement, InputEvent> = (e) => {
-                        if ((e.target as any).value === 'tabata') {
-                            setValue(form, 'work', 20)
-                            setValue(form, 'rest', 10)
-                            setValue(form, 'numberOfRounds', 8)
-                        } else if ((e.target as any).value === 'emom') {
-                            setValue(form, 'each', 60)
-                            setValue(form, 'numberOfRounds', 4)
-                        } else if ((e.target as any).value === 'rest') {
-                            reset(form, { initialValues: { type: 'rest', time: 0, movements: [] } })
-                        }
+                        reset(form, { initialValues: { type: 'rest', time: 0 } })
 
                         field.props.onInput(e)
                     }
@@ -119,25 +108,10 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                 </Field>
             </Show>
 
-            <div class="flex flex-row gap-4">
-                <TimersForm of={form} type={timerType()} />
-            </div>
-
             <Show when={getValue(form, 'type') !== 'rest'}>
-                <Field of={form} name="numberOfRounds">
-                    {(field) => {
-                        return (
-                            <TextInput
-                                {...field.props}
-                                class="flex-1"
-                                label="Rounds"
-                                type="number"
-                                value={field.value}
-                                error={field.error}
-                            />
-                        )
-                    }}
-                </Field>
+                {/* @ts-expect-error */}
+                <TimersForm of={form} />
+
                 <div class="section-title">Movimentos</div>
                 <FieldArray of={form} name="movements">
                     {(array) => (
@@ -146,23 +120,9 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                                 <div class="paper flex flex-col gap-3">
                                     <Field of={form} name={`${array.name}.${index()}.name`}>
                                         {(field) => {
-                                            const handleBlur: JSX.EventHandler<HTMLInputElement, FocusEvent> = (e) => {
-                                                const value = getValue(form, `${array.name}.${index()}.name`)
-
-                                                const match = value?.match(/^([\d]+)\s+(.+)/)
-
-                                                if (!match) return
-
-                                                setValue(form, `${array.name}.${index()}.name`, match[2])
-                                                setValue(form, `${array.name}.${index()}.reps`, match[1])
-
-                                                field.props.onBlur(e)
-                                            }
-
                                             return (
                                                 <TextInput
                                                     {...field.props}
-                                                    onBlur={handleBlur}
                                                     class="flex-1"
                                                     label="Nome"
                                                     value={field.value}

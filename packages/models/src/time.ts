@@ -1,21 +1,31 @@
-export type TTimerTypes = 'for_time' | 'emom' | 'amrap' | 'tabata' | 'not_timed'
-
-export type ITabataTimer = {
-    work: number
-    rest: number
-    numberOfRounds: number
+export type ITimecapTimer = {
+    type: 'for_time' | 'amrap'
+    timecap: number
+    numberOfRounds?: number
 }
 
-export type ITimecapTimer = {
-    timecap: number // seconds
-    numberOfRounds: number
+export type ITabataTimer = {
+    type: 'tabata'
+    work: number
+    rest: number
+    numberOfRounds?: number
 }
 
 export type IEMOMTimer = {
+    type: 'emom'
     each: number
-    numberOfRounds: number
+    numberOfRounds?: number
 }
 
-export type TTimersForm = ITabataTimer | ITimecapTimer | IEMOMTimer
+export type INotTimedTimer = {
+    type: 'not_timed'
+    numberOfRounds?: number
+}
 
-export type TMergedTimer = Partial<ITabataTimer & ITimecapTimer & IEMOMTimer> & { type: TTimerTypes }
+export type TTimerTypes = 'for_time' | 'amrap' | 'emom' | 'tabata' | 'not_timed'
+
+export type TTimer = ITabataTimer | ITimecapTimer | IEMOMTimer | INotTimedTimer
+
+export type TTimerSettings = Partial<
+    Omit<ITabataTimer, 'type'> & Omit<ITimecapTimer, 'type'> & Omit<IEMOMTimer, 'type'>
+>

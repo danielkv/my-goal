@@ -7,7 +7,7 @@ describe('Round displayHeader', () => {
         const outputText = ''
 
         const object: IRound = {
-            type: 'not_timed',
+            config: { type: 'not_timed' },
             movements: [
                 {
                     name: 'Snatch - DB Clean Jerk',
@@ -41,9 +41,7 @@ describe('Round displayHeader', () => {
         const outputText = 'For Time'
 
         const object: IRound = {
-            type: 'for_time',
-            numberOfRounds: 1,
-            timecap: 0,
+            config: { type: 'for_time', numberOfRounds: 1, timecap: 0 },
             movements: [
                 {
                     name: 'Muscle Clean',
@@ -69,9 +67,7 @@ describe('Round displayHeader', () => {
         const outputText = 'For Time 2 rounds 3min'
 
         const object: IRound = {
-            type: 'for_time',
-            numberOfRounds: 2,
-            timecap: 180,
+            config: { type: 'for_time', numberOfRounds: 2, timecap: 180 },
             movements: [
                 {
                     name: 'Pull-Up',
@@ -89,9 +85,7 @@ describe('Round displayHeader', () => {
         const outputText = 'AMRAP 4 rounds 3min'
 
         const object: IRound = {
-            type: 'amrap',
-            numberOfRounds: 4,
-            timecap: 180,
+            config: { type: 'amrap', numberOfRounds: 4, timecap: 180 },
             movements: [
                 {
                     name: 'Pull-Up',
@@ -109,9 +103,7 @@ describe('Round displayHeader', () => {
         const outputText = 'EMOM 30 rounds 1min30s'
 
         const object: IRound = {
-            type: 'emom',
-            numberOfRounds: 30,
-            each: 90,
+            config: { type: 'emom', numberOfRounds: 30, each: 90 },
             movements: [
                 {
                     name: 'Pull-Up',
@@ -129,9 +121,7 @@ describe('Round displayHeader', () => {
         const outputText = 'E3M 15min'
 
         const object: IRound = {
-            type: 'emom',
-            numberOfRounds: 5,
-            each: 180,
+            config: { type: 'emom', numberOfRounds: 5, each: 180 },
             movements: [
                 {
                     name: 'Pull-Up',
@@ -149,9 +139,7 @@ describe('Round displayHeader', () => {
         const outputText = 'EMOM 30min'
 
         const object: IRound = {
-            type: 'emom',
-            numberOfRounds: 30,
-            each: 60,
+            config: { type: 'emom', numberOfRounds: 30, each: 60 },
             movements: [
                 {
                     name: 'Hang Clean',
@@ -169,10 +157,7 @@ describe('Round displayHeader', () => {
         const outputText = 'Tabata 4 rounds 20s/10s'
 
         const object: IRound = {
-            type: 'tabata',
-            numberOfRounds: 4,
-            work: 20,
-            rest: 10,
+            config: { type: 'tabata', numberOfRounds: 4, work: 20, rest: 10 },
             movements: [
                 {
                     name: 'Hang Clean',
@@ -190,10 +175,7 @@ describe('Round displayHeader', () => {
         const outputText = 'Tabata'
 
         const object: IRound = {
-            type: 'tabata',
-            numberOfRounds: 8,
-            work: 20,
-            rest: 10,
+            config: { type: 'tabata', numberOfRounds: 8, work: 20, rest: 10 },
             movements: [
                 {
                     name: 'Hang Clean',
@@ -211,8 +193,7 @@ describe('Round displayHeader', () => {
         const outputText = '21-15-9 rounds'
 
         const object: IRound = {
-            type: 'not_timed',
-            numberOfRounds: 3,
+            config: { type: 'not_timed', numberOfRounds: 3 },
             movements: [
                 {
                     name: 'Deadlift',
@@ -234,8 +215,7 @@ describe('Round displayHeader', () => {
         const outputText = '2 rounds'
 
         const object: IRound = {
-            type: 'not_timed',
-            numberOfRounds: 2,
+            config: { type: 'not_timed', numberOfRounds: 2 },
             movements: [
                 {
                     name: 'Pull-Up',
@@ -270,6 +250,7 @@ describe('Round display', () => {
 
         const object: IRound = {
             type: 'complex',
+            config: { type: 'not_timed' },
             movements: [
                 {
                     name: 'Deadlift',

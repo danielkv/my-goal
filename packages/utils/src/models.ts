@@ -1,4 +1,4 @@
-import { IBlock, IEventBlock, IRestBlock, IRound, ITextBlock } from 'goal-models'
+import { IBlock, IComplexRound, IEventBlock, IRestBlock, IRestRound, IRound, ITextBlock } from 'goal-models'
 import { IDay, IDayModel, IPeriod, ISection, IWorksheet, IWorksheetModel } from 'goal-models'
 
 export function isDay(obj: Record<string, any>): obj is IDay {
@@ -21,10 +21,25 @@ export function isBlock(obj: Record<string, any>): obj is IBlock {
     return false
 }
 
-export function isRound(obj: Record<string, any>): obj is IRound {
-    if (obj?.hasOwnProperty('movements')) return true
+export function isRestRound(obj: Record<string, any>): obj is IRestRound {
+    if (obj.type === 'rest' && obj.hasOwnProperty('time')) return true
+
     return false
 }
+
+export function isComplexRound(obj: Record<string, any>): obj is IComplexRound {
+    if (obj.type === 'complex' && obj.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
+
+    return false
+}
+
+export function isRound(obj: Record<string, any>): obj is IRound {
+    if (isRestRound(obj)) return true
+    if (isComplexRound(obj)) return true
+    if (obj.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
+    return false
+}
+
 export function isEventBlock(obj: Record<string, any>): obj is IEventBlock {
     if (obj?.hasOwnProperty('type') && obj.type === 'event') return true
     return false

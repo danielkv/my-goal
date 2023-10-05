@@ -14,6 +14,8 @@ api-android.json
 google-service*.json
 GoogleService-Info*.plist
 
+.yarn
+
 .env
 
 # macOS

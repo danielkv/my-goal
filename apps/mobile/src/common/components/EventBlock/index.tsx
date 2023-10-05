@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { TouchableOpacity } from 'react-native'
 
 import { IEventBlock } from 'goal-models'
 import { blockTimerType, checkIsTimedWorkout } from 'goal-utils'
@@ -7,27 +8,34 @@ import { Text, XStack } from 'tamagui'
 
 import EventBlockRound from '@components/EventBlockRound'
 import InternalCard from '@components/InternalCard'
-import OpenTimerButton from '@components/OpenTimerButton'
 import TimerIcon from '@components/TimerIcon'
 
 export interface PeriodEventBlock {
     block: IEventBlock
+    disableButton?: boolean
+    onPress?(block: IEventBlock): void
 }
 
-const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
+const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress }) => {
     const blockHeader = eventBlockDisplay.displayHeader(block)
 
-    const isTimedWorkout = useMemo(() => checkIsTimedWorkout(block), [])
+    const blockTimerMode = useMemo(() => checkIsTimedWorkout(block), [])
     const timerType = blockTimerType(block)
 
+    const handleOnPress = () => {
+        if (!onPress) return
+
+        onPress(block)
+    }
+
     return (
-        <OpenTimerButton block={block} timedWorkoutMode={isTimedWorkout} type={timerType}>
-            {(!!block.name || !!blockHeader || isTimedWorkout === 'block' || !!timerType) && (
+        <TouchableOpacity onPress={handleOnPress} disabled={disableButton}>
+            {(!!block.name || !!blockHeader || blockTimerMode === 'block' || !!timerType) && (
                 <XStack ai="center" mt="$1" mb="$1.5" gap="$1">
                     <Text fontWeight="bold" fontSize="$4">
                         {blockHeader || block.name || 'Clique para abrir o Timer'}
                     </Text>
-                    {(isTimedWorkout === 'block' || !!timerType) && (
+                    {(blockTimerMode === 'block' || !!timerType) && (
                         <TimerIcon name={timerType || 'for_time'} size={14} color="white" />
                     )}
                 </XStack>
@@ -38,11 +46,11 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block }) => {
                     <EventBlockRound
                         key={`${round.type}${index}`}
                         round={round}
-                        showTimerButton={isTimedWorkout === 'round'}
+                        showTimerButton={blockTimerMode === 'round'}
                     />
                 ))}
             </InternalCard>
-        </OpenTimerButton>
+        </TouchableOpacity>
     )
 }
 

@@ -1,4 +1,4 @@
-import { TTimerTypes } from 'goal-models'
+import { TResultType, TTimerTypes } from 'goal-models'
 
 export const LabelTranslations: Record<string, string> = {
     worksheet: 'Planilha',
@@ -23,7 +23,13 @@ export const eventTypes = {
 }
 
 export const roundTypes = {
-    ...timerTypes,
+    default: 'Padrão',
     complex: 'Complex',
     rest: 'Rest',
+}
+
+export const RESULT_TYPES: Record<TResultType, string> = {
+    reps: 'Repetições',
+    time: 'Tempo',
+    weight: 'Carga (kg)',
 }

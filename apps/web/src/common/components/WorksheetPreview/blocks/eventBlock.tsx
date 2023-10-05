@@ -1,8 +1,10 @@
+import cloneDeep from 'clone-deep'
 import { IEventBlock } from 'goal-models'
 import {
     blockTimerType,
     checkIsTimedWorkout,
     eventBlockDisplay,
+    isRestRound,
     movementDisplay,
     numberHelper,
     roundDisplay,
@@ -22,6 +24,7 @@ import { createEventRoundValues } from '@utils/worksheetInitials'
 export interface EventBlockPreviewProps extends WorksheetPeace<IEventBlock> {}
 
 const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
+    console.log(cloneDeep(props.item))
     const eventTitle = createMemo(() => eventBlockDisplay.displayHeader(props.item))
 
     const timedWorkoutMode = createMemo(() => checkIsTimedWorkout(props.item))
@@ -43,7 +46,9 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                             addToPath<IEventBlock>(props.thisPath, `rounds.${roundIndex()}`)
                         )
 
-                        const matchSequenceReps = createMemo(() => numberHelper.findSequenceReps(round.movements))
+                        const matchSequenceReps = createMemo(() =>
+                            !isRestRound(round) ? numberHelper.findSequenceReps(round.movements) : null
+                        )
 
                         const roundTitle = createMemo(() => roundDisplay.displayHeader(round, matchSequenceReps()))
 
@@ -54,7 +59,7 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                                 class="mx-1 p-2 round rounded-xl"
                                 classList={{
                                     selected: props.currentPath === roundPath(),
-                                    empty: !round.movements.length,
+                                    empty: !isRestRound(round) && !round.movements.length,
                                     hoverable: !!props.onClickPeace,
                                 }}
                                 onClick={(e) => {
@@ -79,14 +84,14 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                                     </Stack>
                                 </Show>
 
-                                {/* <Show when={round.type == 'rest'}>
-                                    <div class="font-bold text-sm">{roundDisplay.display(round)}</div>
-                                </Show> */}
                                 <Show when={round.type == 'complex'}>
                                     <div class="movement">{roundDisplay.display(round)}</div>
                                 </Show>
-                                <Show when={!['rest', 'complex'].includes(round.type)}>
-                                    <For each={round.movements}>
+
+                                <Show
+                                    when={!['rest', 'complex'].includes((!isRestRound(round) && round.type) as string)}
+                                >
+                                    <For each={!isRestRound(round) && round.movements}>
                                         {(movement) => {
                                             const displayMovement = movementDisplay.display(
                                                 movement,

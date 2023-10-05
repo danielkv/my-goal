@@ -1,12 +1,12 @@
 import { getTimeFromSeconds } from '../time'
-import { TMergedTimer, TTimerTypes } from 'goal-models'
+import { TTimer } from 'goal-models'
 
 export class BaseDisplay {
     protected displayRest(time: number): string {
         return `${getTimeFromSeconds(time)} Rest`
     }
 
-    protected displayTimer(type: TTimerTypes, obj: TMergedTimer, sequence?: string | null): string | null {
+    protected displayTimer(obj: TTimer, sequence?: string | null): string | null {
         const rounds = this.displayArray(
             [sequence || (obj.numberOfRounds && obj.numberOfRounds > 1 ? obj.numberOfRounds : null)],
             '',
@@ -14,7 +14,7 @@ export class BaseDisplay {
             ' rounds'
         )
 
-        switch (type) {
+        switch (obj.type) {
             case 'tabata': {
                 if (!obj.work || !obj.rest) return null
                 const work = getTimeFromSeconds(obj.work)
@@ -43,7 +43,7 @@ export class BaseDisplay {
                 if (obj.timecap === undefined) return null
 
                 const timeString = getTimeFromSeconds(obj.timecap)
-                const typeString = type === 'for_time' ? 'For Time' : 'AMRAP'
+                const typeString = obj.type === 'for_time' ? 'For Time' : 'AMRAP'
 
                 return this.displayArray([typeString, rounds, timeString], ' ')
             }

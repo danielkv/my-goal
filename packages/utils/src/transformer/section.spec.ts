@@ -13,11 +13,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
+                        config: { type: 'not_timed' },
                         movements: [
                             {
                                 name: 'snatch',
@@ -50,13 +50,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'emom',
+                config: { type: 'emom', numberOfRounds: 4, each: 60 },
                 type: 'event',
-                each: 60,
-                numberOfRounds: 4,
                 rounds: [
                     {
-                        type: 'not_timed',
+                        config: { type: 'not_timed' },
                         movements: [
                             {
                                 name: 'snatch',
@@ -93,12 +91,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 2,
+                        config: { type: 'not_timed', numberOfRounds: 2 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -145,12 +142,12 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 2,
+                        config: { type: 'not_timed', numberOfRounds: 2 },
+
                         movements: [
                             {
                                 name: 'snatch',
@@ -163,8 +160,8 @@ describe('Section transform toObject', () => {
                         ],
                     },
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
+
                         movements: [
                             {
                                 name: 'Clean',
@@ -204,12 +201,12 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
+
                         movements: [
                             {
                                 name: 'snatch',
@@ -224,11 +221,10 @@ describe('Section transform toObject', () => {
                     {
                         type: 'rest',
                         time: 120,
-                        movements: [],
                     },
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
+
                         movements: [
                             {
                                 name: 'Clean',
@@ -265,12 +261,12 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
+
                         movements: [
                             {
                                 name: 'snatch',
@@ -318,14 +314,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'amrap',
-                numberOfRounds: 1,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 1, timecap: 30 },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -340,14 +333,11 @@ describe('Section transform toObject', () => {
                 ],
             },
             {
-                event_type: 'amrap',
-                numberOfRounds: 1,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 1, timecap: 30 },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -397,14 +387,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'amrap',
-                numberOfRounds: 1,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 1, timecap: 30 },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 2,
+                        config: { type: 'not_timed', numberOfRounds: 2 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -417,8 +404,7 @@ describe('Section transform toObject', () => {
                         ],
                     },
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
                         movements: [
                             {
                                 name: 'Bike',
@@ -429,14 +415,11 @@ describe('Section transform toObject', () => {
                 ],
             },
             {
-                event_type: 'amrap',
-                numberOfRounds: 1,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 1, timecap: 30 },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -477,14 +460,11 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'amrap',
-                numberOfRounds: 1,
-                timecap: 30,
+                config: { type: 'amrap', numberOfRounds: 1, timecap: 30 },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 2,
+                        config: { type: 'not_timed', numberOfRounds: 2 },
                         movements: [
                             {
                                 name: 'snatch',
@@ -529,12 +509,12 @@ describe('Section transform toObject', () => {
 
         const expected: IBlock[] = [
             {
-                event_type: 'not_timed',
+                config: { type: 'not_timed' },
                 type: 'event',
                 rounds: [
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 10,
+                        config: { type: 'not_timed', numberOfRounds: 10 },
+
                         movements: [
                             {
                                 name: 'Burpee pull up',
@@ -547,8 +527,8 @@ describe('Section transform toObject', () => {
                         ],
                     },
                     {
-                        type: 'not_timed',
-                        numberOfRounds: 1,
+                        config: { type: 'not_timed', numberOfRounds: 1 },
+
                         movements: [
                             {
                                 name: 'pay out 500m run',

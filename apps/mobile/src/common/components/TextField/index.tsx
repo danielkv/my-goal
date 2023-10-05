@@ -11,7 +11,7 @@ const TextField = Input.styleable<TextFieldProps>(({ label, error, componentLeft
     return (
         <YStack space={2} w="100%">
             {label && (
-                <Text fontSize="$3" color="$gray1">
+                <Text fontSize="$3" color="$gray1" mb="$1.5">
                     {label}
                 </Text>
             )}

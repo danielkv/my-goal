@@ -1,5 +1,7 @@
 import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'goal-models'
 
+import { UserWorkoutScreenProps } from '@view/UserWorkoutScreen'
+
 export type TReactNavigationStackParamList = {
     LoginScreen: undefined
 
@@ -28,6 +30,11 @@ export type TReactNavigationStackParamList = {
     DayView: { worksheetId: string; dayId: string }
 
     Profile: undefined
+
+    UserWorkoutList: undefined
+    UserWorkout: UserWorkoutScreenProps
+    MovementList: undefined
+    UserMovementResult: { movementId: string }
 
     WodTimer: {
         block: IEventBlock
@@ -64,6 +71,10 @@ export enum ERouteName {
     SectionCarousel = 'SectionCarousel',
 
     Profile = 'Profile',
+    UserWorkoutList = 'UserWorkoutList',
+    UserWorkout = 'UserWorkout',
+    MovementList = 'MovementList',
+    UserMovementResult = 'UserMovementResult',
 
     WodTimer = 'WodTimer',
 }

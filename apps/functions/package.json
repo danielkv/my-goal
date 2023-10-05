@@ -2,7 +2,6 @@
 	"name": "goal-functions",
 	"version": "1.0.0",
 	"scripts": {
-		"goal-models": "*",
 		"build": "tsc",
 		"dev": "tsc --watch",
 		"serve:dev": "concurrently 'yarn build:watch' 'yarn emulate'",

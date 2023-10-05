@@ -7,6 +7,7 @@ import { initialLoadUseCase } from '@useCases/app/initialLoad'
 import CreateNewDay from '@view/CreateNewDay'
 import Home from '@view/Home'
 import LoginPage from '@view/Login'
+import MovementListScreen from '@view/MovementListScreen'
 import Preview from '@view/Preview'
 import PrivacyPolicy from '@view/PrivacyPolicy'
 import TimersHome from '@view/TimersHome'
@@ -44,6 +45,7 @@ const AppRouter: Component = () => {
 
                         <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
                         <Route path="/users" element={<UsersList />} />
+                        <Route path="/movements" element={<MovementListScreen />} />
                     </Routes>
                 </div>
             )}

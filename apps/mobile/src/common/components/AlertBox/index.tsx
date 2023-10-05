@@ -1,6 +1,6 @@
-import { AlertTriangle, CheckCircle, Info, XCircle } from '@tamagui/lucide-icons'
-
 import { ColorTokens, Dialog, Stack, XStack, YStack } from 'tamagui'
+
+import { AlertTriangle, CheckCircle, Info, XCircle } from '@tamagui/lucide-icons'
 
 type TAlertType = 'error' | 'success' | 'warning' | 'info'
 type TAlertColor = {
@@ -55,11 +55,11 @@ const AlertBox = Stack.styleable<IAlertBoxProps>(({ type, text, title, ...props 
                         <Stack mt={title ? 11 : 5}>{typeObj.icon}</Stack>
                         <YStack>
                             {!!title && (
-                                <Dialog.Title fontSize="$6" fontWeight="600" color={typeObj.color}>
+                                <Dialog.Title fontSize="$6" lineHeight="$3" fontWeight="600" color={typeObj.color}>
                                     {title}
                                 </Dialog.Title>
                             )}
-                            <Dialog.Description fontWeight="400" color={typeObj.color}>
+                            <Dialog.Description fontWeight="400" lineHeight="$1" mt="$4" color={typeObj.color}>
                                 {text}
                             </Dialog.Description>
                         </YStack>
