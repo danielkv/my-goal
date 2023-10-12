@@ -7,7 +7,8 @@ export enum APP_ENTITLEMENTS {
     SAVE_WORKOUT_RESULT = 'save_workout_result',
     COMMUNITY_GROUPS_ACCESS = 'community_groups_access',
     FOLLOW_COMMUNITY_RESULTS = 'follow_community_results',
-    FREE_ACCESS = 'free_access',
+    SAVE_PR = 'save_pr',
+    TiMER = 'timer',
 }
 
 export enum APP_OFFERING {
@@ -32,6 +33,16 @@ export enum PACKAGE_TYPE {
     TWO_MONTH = 'TWO_MONTH',
     MONTHLY = 'MONTHLY',
     WEEKLY = 'WEEKLY',
+}
+
+export enum STORES {
+    PLAY_STORE = 'PLAY_STORE',
+    APP_STORE = 'APP_STORE',
+    STRIPE = 'STRIPE',
+    MAC_APP_STORE = 'MAC_APP_STORE',
+    PROMOTIONAL = 'PROMOTIONAL',
+    AMAZON = 'AMAZON',
+    UNKNOWN_STORE = 'UNKNOWN_STORE',
 }
 
 export interface IPackage {

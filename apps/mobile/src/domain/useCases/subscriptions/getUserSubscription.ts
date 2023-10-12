@@ -1,7 +1,7 @@
 import Purchases from 'react-native-purchases'
 
 import { APP_ENTITLEMENTS, IEntitlementInfo, IStoreProduct } from 'goal-models'
-import { APP_ENTITLEMENT_DESCRIPTIONS, FREE_ENTITLEMENT, FREE_PRODUCT } from 'goal-utils'
+import { APP_ENTITLEMENT_DESCRIPTIONS, FREE_ENTITLEMENTS, FREE_PRODUCT } from 'goal-utils'
 import { alphabetical } from 'radash'
 
 interface UserSubscription {
@@ -21,10 +21,16 @@ export async function getUserSubscriptions(): Promise<UserSubscription> {
     )
 
     if (!entitlements.length) {
-        return { entitlements: [FREE_ENTITLEMENT], subscriptions: [FREE_PRODUCT] }
+        return { entitlements: FREE_ENTITLEMENTS, subscriptions: [FREE_PRODUCT] }
     }
 
-    const subscriptions = await Purchases.getProducts(activeSubscriptions)
+    const offerings = await Purchases.getOfferings()
+
+    const subscriptions = Object.values(offerings.all).flatMap((off) =>
+        off.availablePackages
+            .filter((pkg) => activeSubscriptions.includes(pkg.product.identifier))
+            .map((pkg) => pkg.product)
+    )
 
     return {
         entitlements: entitlements,

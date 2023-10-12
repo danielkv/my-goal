@@ -1,9 +1,17 @@
-import Purchases, { PurchasesPackage } from 'react-native-purchases'
+import Purchases, { PRORATION_MODE, PurchasesPackage } from 'react-native-purchases'
 
 import { useUserContext } from '@contexts/user/userContext'
 
 export async function purchasePackageUseCase(pkg: PurchasesPackage) {
-    const result = await Purchases.purchasePackage(pkg)
+    const { activeSubscriptions: oldActiveSubscriptions } = await Purchases.getCustomerInfo()
+
+    const googleProductChangeInfo = oldActiveSubscriptions.length
+        ? {
+              prorationMode: PRORATION_MODE.DEFERRED,
+              oldProductIdentifier: oldActiveSubscriptions[0],
+          }
+        : null
+    const result = await Purchases.purchasePackage(pkg, null, googleProductChangeInfo)
 
     const { activeSubscriptions, entitlements, managementURL } = result.customerInfo
 

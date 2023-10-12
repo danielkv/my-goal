@@ -168,7 +168,7 @@ const SelectSubscriptionScreen: React.FC = () => {
 
                                 <Stack gap="$1" mx="$6" f={1}>
                                     {metaDescription.map((item) => (
-                                        <XStack>
+                                        <XStack key={item}>
                                             <Stack mt={4} mr={3}>
                                                 <Check size={10} />
                                             </Stack>

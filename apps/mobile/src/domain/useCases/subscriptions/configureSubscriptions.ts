@@ -10,7 +10,7 @@ const apiKey = Platform.select<string>({
 
 export function configureSubscriptionsUseCase() {
     if (!apiKey) throw new Error('Purchases API_KEY not set')
-    if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.DEBUG)
+    if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.INFO)
 
     Purchases.configure({ apiKey })
 }

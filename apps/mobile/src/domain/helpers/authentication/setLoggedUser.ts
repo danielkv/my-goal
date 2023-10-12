@@ -15,7 +15,9 @@ export const setLoggedUser = async (user: IUser | null): Promise<void> => {
             $phoneNumber: user.phoneNumber || null,
         })
         subscriptionInfo = await getUserSubscriptionInfoUseCase()
-    } else await Purchases.logOut()
+    } else {
+        if (!(await Purchases.isAnonymous())) await Purchases.logOut()
+    }
 
     const userState = useUserContext.getState()
 

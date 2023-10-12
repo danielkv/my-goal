@@ -14,7 +14,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`,
         slug: 'goal-mobile',
-        version: '1.4.3',
+        version: '1.5.0',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
         scheme: 'mygoal',
@@ -36,7 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 11,
+            versionCode: 13,
             package: BUNDLE_ID,
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',
