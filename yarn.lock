@@ -6906,6 +6906,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "axios@npm:1.5.1"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 4444f06601f4ede154183767863d2b8e472b4a6bfc5253597ed6d21899887e1fd0ee2b3de792ac4f8459fe2e359d2aa07c216e45fd8b9e4e0688a6ebf48a5a8d
+  languageName: node
+  linkType: hard
+
 "babel-core@npm:^7.0.0-bridge.0":
   version: 7.0.0-bridge.0
   resolution: "babel-core@npm:7.0.0-bridge.0"
@@ -7103,6 +7114,19 @@ __metadata:
   bin:
     barrelsby: bin/cli.js
   checksum: 5425123a963460a1f68ecac2e77030482fedd664b9f7f9292603df01e8b5e3db868f0e4c476bb06bace3a534e7573090a74e3aa801f1aca59498a068eb1443d0
+  languageName: node
+  linkType: hard
+
+"barrelsby@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "barrelsby@npm:2.8.1"
+  dependencies:
+    "@types/yargs": ^17.0.10
+    signale: ^1.4.0
+    yargs: ^17.4.1
+  bin:
+    barrelsby: bin/cli.js
+  checksum: ca85a809abe99985e368105a732d8cdcd52606fa72c77813f8e76a6f0006b98f53dc7a1618653d43c2c84e1d14260e50cd71f094a3fa4380ffee55431f23cc99
   languageName: node
   linkType: hard
 
@@ -10087,6 +10111,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"follow-redirects@npm:^1.15.0":
+  version: 1.15.3
+  resolution: "follow-redirects@npm:1.15.3"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
+  languageName: node
+  linkType: hard
+
 "fontfaceobserver@npm:^2.1.0":
   version: 2.3.0
   resolution: "fontfaceobserver@npm:2.3.0"
@@ -10651,6 +10685,8 @@ __metadata:
     "@google-cloud/functions-framework": ^3.2.0
     "@typescript-eslint/eslint-plugin": ^5.12.0
     "@typescript-eslint/parser": ^5.12.0
+    axios: ^1.5.1
+    barrelsby: ^2.8.1
     concurrently: ^8.0.1
     dayjs: ^1.11.7
     eslint-config-google: ^0.14.0
@@ -15080,6 +15116,13 @@ __metadata:
     forwarded: 0.2.0
     ipaddr.js: 1.9.1
   checksum: 29c6990ce9364648255454842f06f8c46fcd124d3e6d7c5066df44662de63cdc0bad032e9bf5a3d653ff72141cc7b6019873d685708ac8210c30458ad99f2b74
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 
