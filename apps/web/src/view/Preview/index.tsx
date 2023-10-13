@@ -4,6 +4,7 @@ import html2pdf from 'html2pdf.js'
 import { Component, createResource } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
+import DashboardContainer from '@components/DashboardContainer'
 import WorksheetPreview from '@components/WorksheetPreview'
 import { useParams } from '@solidjs/router'
 import { getWorksheetByIdUseCase } from '@useCases/worksheet/getWorksheetById'
@@ -41,7 +42,7 @@ const Preview: Component = () => {
     }
 
     return (
-        <>
+        <DashboardContainer>
             {worksheet.loading ? (
                 <div class="w-full h-full flex items-center justify-center">
                     <ActivityIndicator color="#fff" size={40} />
@@ -66,7 +67,7 @@ const Preview: Component = () => {
                     )}
                 </div>
             )}
-        </>
+        </DashboardContainer>
     )
 }
 

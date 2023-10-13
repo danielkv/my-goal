@@ -2,6 +2,7 @@ import cloneDeep from 'clone-deep'
 
 import { Component, For, Show, createSignal } from 'solid-js'
 
+import DashboardContainer from '@components/DashboardContainer'
 import WorksheetItem from '@components/WorksheetItem'
 import { useNavigate } from '@solidjs/router'
 import { duplicateWorksheetUseCase } from '@useCases/worksheet/duplicateWorksheet'
@@ -83,28 +84,30 @@ const WorksheetList: Component = () => {
     }
 
     return (
-        <div class="p-10">
-            <Show when={loading() || list.loading}>
-                <div>Carregando...</div>
-            </Show>
-            <Show when={!list.loading && !!list.resource}>
-                <div class="flex">
-                    <For each={list.resource}>
-                        {(worksheet) => (
-                            <WorksheetItem
-                                worksheet={worksheet}
-                                onClick={handleClickWorksheetItem(worksheet.id)}
-                                onClickDuplicate={handleDuplicateWorksheet}
-                                onClickRemove={handleRemoveWorksheet}
-                                onClickTooglePublish={handleToggleWorksheetPublished(!!worksheet.published)}
-                                loading={loadingWorksheet() === worksheet.id}
-                            />
-                        )}
-                    </For>
-                    <WorksheetItem onClick={handleClickWorksheetNew} />
-                </div>
-            </Show>
-        </div>
+        <DashboardContainer>
+            <div class="p-10">
+                <Show when={loading() || list.loading}>
+                    <div>Carregando...</div>
+                </Show>
+                <Show when={!list.loading && !!list.resource}>
+                    <div class="flex">
+                        <For each={list.resource}>
+                            {(worksheet) => (
+                                <WorksheetItem
+                                    worksheet={worksheet}
+                                    onClick={handleClickWorksheetItem(worksheet.id)}
+                                    onClickDuplicate={handleDuplicateWorksheet}
+                                    onClickRemove={handleRemoveWorksheet}
+                                    onClickTooglePublish={handleToggleWorksheetPublished(!!worksheet.published)}
+                                    loading={loadingWorksheet() === worksheet.id}
+                                />
+                            )}
+                        </For>
+                        <WorksheetItem onClick={handleClickWorksheetNew} />
+                    </div>
+                </Show>
+            </div>
+        </DashboardContainer>
     )
 }
 
