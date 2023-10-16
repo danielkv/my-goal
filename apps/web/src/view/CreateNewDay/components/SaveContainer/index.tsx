@@ -57,7 +57,7 @@ const SaveContainer: Component<ISaveContainerProps> = (props) => {
 
             const result = await saveWorksheetUseCase(duplicated)
 
-            navigate(`/worksheet/${result.id}`)
+            navigate(`/dashboard/worksheet/${result.id}`)
         } catch (err) {
             alert(getErrorMessage(err))
         } finally {

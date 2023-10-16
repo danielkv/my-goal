@@ -30,13 +30,13 @@ const App: Component = () => {
             .then(({ claims }) => {
                 if (!claims.admin) {
                     alert('Você não tem permissão para acessar essa página')
-                    navigate('/')
+                    navigate('/dashboard/login')
                     return firebaseProvider.getAuth().signOut()
                 }
 
                 setLoggedUser(extractUserCredential(user))
 
-                if (location.pathname === '/login') navigate('worksheet')
+                if (location.pathname === '/dashboard/login') navigate('/dashboard')
             })
             .catch((err) => {
                 alert(getErrorMessage(err))

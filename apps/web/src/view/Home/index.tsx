@@ -15,7 +15,9 @@ import ActivityIndicator from '@components/ActivityIndicator'
 import HomeFeature, { HomeFeatureProps } from '@components/HomeFeature'
 import StripePriceTable from '@components/StripePriceTable'
 import TextInput from '@components/TextInput'
+import { loggedUser } from '@contexts/user/user.context'
 import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { useNavigate } from '@solidjs/router'
 import { ChevronLeft, ChevronRight } from '@suid/icons-material'
 import { Button, Container, IconButton, Stack } from '@suid/material'
 import { sendEmailUseCase } from '@useCases/mail/send'
@@ -75,6 +77,7 @@ const RECAPTCHA_MIN_SCORE = 0.5
 const Home: Component = () => {
     let slider: any
 
+    const navigate = useNavigate()
     const [currentSlide, setCurrentSlide] = createSignal(INITIAL_FEATURE)
     const [loadingMail, setLoadingMail] = createSignal(false)
 
@@ -118,12 +121,23 @@ const Home: Component = () => {
 
     return (
         <>
-            <section class="bg-intro-section bg-cover bg-[20%] md:h-[570px]">
+            {!!loggedUser() && (
+                <div class="flex flex-row gap-2 justify-center items-center fixed z-20 w-full bg-[#ffcc00] py-2 text-gray-600 font-bold text-center">
+                    Logado como {loggedUser()?.email}
+                    <Button variant="contained" color="secondary" size="small" onClick={() => navigate('/dashboard')}>
+                        Ir para dashboard
+                    </Button>
+                </div>
+            )}
+            <section
+                class="bg-intro-section bg-cover bg-[25%] h-[370px] md:h-[570px]"
+                classList={{ 'mt-[45px]': !!loggedUser() }}
+            >
                 <Container maxWidth="lg" class="h-full">
                     <Stack direction="row" class="h-full" justifyContent="flex-end">
                         <Stack justifyContent="center" alignItems="center" gap={3} p={5} class="lg:flex-[.5] flex-1">
                             <img src="images/logo-full.png" class="max-w-[70%]" />
-                            <div class="text-xl lg:text-3xl text-center font-bold">MANTENHA O FOCO</div>
+                            <h2 class="text-xl lg:text-3xl text-center font-bold">MANTENHA O FOCO</h2>
                             <Stack alignItems="center" class="md:!flex-row md:!gap-5">
                                 <a href={STORE_URL.appStore} target="_blank">
                                     <AppStoreBadge />
@@ -175,13 +189,17 @@ const Home: Component = () => {
                     </div>
                 </Container>
             </section>
-            <section class="bg-gray-800 py-10">
+            <section class="bg-gray-800 py-10 px-5">
+                <div class="mb-6">
+                    <h3 class="text-3xl font-bold text-center">Nossos planos</h3>
+                    <div class="text-center">Cancele a qualquer momento</div>
+                </div>
                 <StripePriceTable />
             </section>
             <section class="bg-contact-section bg-right bg-no-repeat py-14">
                 <Container maxWidth="lg">
                     <div class="flex flex-row">
-                        <div class="flex flex-col gap-3 flex-1 md:flex-[.4]">
+                        <div class="flex flex-col gap-3 flex-1 lg:flex-[.4] px-10 md:px-40 lg:p-0">
                             <div>
                                 <div class="text-3xl font-bold">Precisa de ajuda ou tem uma dúvida?</div>
                                 <div class="text-xl">Entre em contato</div>

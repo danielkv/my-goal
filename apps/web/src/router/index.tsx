@@ -18,15 +18,17 @@ const AppRouter: Component = () => {
                     <Route path="/" element={<Home />} />
 
                     <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
-                    <Route path="/login" element={<LoginPage />} />
 
                     {/* Dashboard */}
-                    <Route path="/worksheet" element={<WorksheetList />} />
-                    <Route path="/worksheet/new" element={<CreateNewDay />} />
-                    <Route path="/worksheet/view/:id" element={<Preview />} />
-                    <Route path="/worksheet/:id" element={<CreateNewDay />} />
-                    <Route path="/users" element={<UsersList />} />
-                    <Route path="/movements" element={<MovementListScreen />} />
+                    <Route path="/dashboard">
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/" element={<WorksheetList />} />
+                        <Route path="/worksheet/new" element={<CreateNewDay />} />
+                        <Route path="/worksheet/view/:id" element={<Preview />} />
+                        <Route path="/worksheet/:id" element={<CreateNewDay />} />
+                        <Route path="/users" element={<UsersList />} />
+                        <Route path="/dashboard/movements" element={<MovementListScreen />} />
+                    </Route>
                     {/* End Dashboard */}
                 </Routes>
             </div>

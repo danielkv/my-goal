@@ -22,11 +22,11 @@ const WorksheetList: Component = () => {
     const navigate = useNavigate()
 
     const handleClickWorksheetItem = (worksheetId: string) => () => {
-        navigate(`/worksheet/${worksheetId}`)
+        navigate(`/dashboard/worksheet/${worksheetId}`)
     }
 
     const handleClickWorksheetNew = () => {
-        navigate(`/worksheet/new`)
+        navigate(`/dashboard/worksheet/new`)
     }
 
     const handleDuplicateWorksheet = async (worksheetId: string) => {
