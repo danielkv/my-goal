@@ -37,6 +37,9 @@ module.exports = {
             height: {
                 a4: '297mm',
             },
+            backgroundImage: {
+                'intro-section': "url('/images/bg-init.png')",
+            },
         },
     },
     variants: {
