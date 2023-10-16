@@ -39,6 +39,7 @@ module.exports = {
             },
             backgroundImage: {
                 'intro-section': "url('/images/bg-init.png')",
+                'contact-section': "url('/images/contact.png')",
             },
         },
     },

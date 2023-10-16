@@ -11,10 +11,18 @@ import prs from '@assets/images/prs.png'
 import timers from '@assets/images/timers.png'
 import workoutsWeekly from '@assets/images/workouts-weekly.png'
 import workouts from '@assets/images/workouts.png'
+import ActivityIndicator from '@components/ActivityIndicator'
 import HomeFeature, { HomeFeatureProps } from '@components/HomeFeature'
 import StripePriceTable from '@components/StripePriceTable'
+import TextInput from '@components/TextInput'
+import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 import { ChevronLeft, ChevronRight } from '@suid/icons-material'
-import { Container, IconButton, Stack } from '@suid/material'
+import { Button, Container, IconButton, Stack } from '@suid/material'
+import { sendEmailUseCase } from '@useCases/mail/send'
+import { recaptchaVerifyUseCase } from '@useCases/recaptcha/verify'
+import { getErrorMessage } from '@utils/errors'
+
+import { IContactForm, formSchema, initialContactForm } from './config'
 
 const STORE_URL = {
     playStore: 'https://play.google.com/store/apps/details?id=app.mygoal.goal',
@@ -62,10 +70,13 @@ const FEATURES: HomeFeatureProps[] = [
 
 const INITIAL_FEATURE = 0
 
+const RECAPTCHA_MIN_SCORE = 0.5
+
 const Home: Component = () => {
     let slider: any
 
     const [currentSlide, setCurrentSlide] = createSignal(INITIAL_FEATURE)
+    const [loadingMail, setLoadingMail] = createSignal(false)
 
     createEffect(() => {
         slider = new KeenSlider('#my-goal-features', { initial: INITIAL_FEATURE, loop: true })
@@ -75,8 +86,38 @@ const Home: Component = () => {
         })
     })
 
+    const form = createForm<IContactForm>({
+        validate: zodForm(formSchema),
+        initialValues: initialContactForm,
+    })
+
+    const handleSubmit: SubmitHandler<IContactForm> = (values) => {
+        setLoadingMail(true)
+        // @ts-expect-error
+        grecaptcha.ready(function () {
+            // @ts-expect-error
+            grecaptcha
+                .execute(import.meta.env.VITE_APP_RECAPTCHA_SITE_KEY, { action: 'submit' })
+                .then(async function (token: string) {
+                    try {
+                        const result = await recaptchaVerifyUseCase(token)
+                        if (!result.success || result.score < RECAPTCHA_MIN_SCORE)
+                            throw new Error('Essa parece uma ação de um bot')
+
+                        await sendEmailUseCase(values)
+
+                        reset(form)
+                    } catch (err) {
+                        alert(getErrorMessage(err))
+                    } finally {
+                        setLoadingMail(false)
+                    }
+                })
+        })
+    }
+
     return (
-        <Stack>
+        <>
             <section class="bg-intro-section bg-cover bg-[20%] md:h-[570px]">
                 <Container maxWidth="lg" class="h-full">
                     <Stack direction="row" class="h-full" justifyContent="flex-end">
@@ -137,7 +178,96 @@ const Home: Component = () => {
             <section class="bg-gray-800 py-10">
                 <StripePriceTable />
             </section>
-        </Stack>
+            <section class="bg-contact-section bg-right bg-no-repeat py-14">
+                <Container maxWidth="lg">
+                    <div class="flex flex-row">
+                        <div class="flex flex-col gap-3 flex-1 md:flex-[.4]">
+                            <div>
+                                <div class="text-3xl font-bold">Precisa de ajuda ou tem uma dúvida?</div>
+                                <div class="text-xl">Entre em contato</div>
+                            </div>
+                            <Form of={form} onSubmit={handleSubmit} class="flex flex-col gap-2">
+                                <Field of={form} name="subject">
+                                    {(field) => (
+                                        <TextInput
+                                            disabled={loadingMail()}
+                                            label="Assunto"
+                                            error={field.error}
+                                            value={field.value}
+                                            required
+                                            {...field.props}
+                                        />
+                                    )}
+                                </Field>
+                                <Field of={form} name="name">
+                                    {(field) => (
+                                        <TextInput
+                                            disabled={loadingMail()}
+                                            required
+                                            label="Nome"
+                                            error={field.error}
+                                            value={field.value}
+                                            {...field.props}
+                                        />
+                                    )}
+                                </Field>
+                                <Field of={form} name="email">
+                                    {(field) => (
+                                        <TextInput
+                                            disabled={loadingMail()}
+                                            required
+                                            label="Email"
+                                            error={field.error}
+                                            value={field.value}
+                                            {...field.props}
+                                        />
+                                    )}
+                                </Field>
+                                <Field of={form} name="phone">
+                                    {(field) => (
+                                        <TextInput
+                                            disabled={loadingMail()}
+                                            label="Telefone"
+                                            error={field.error}
+                                            value={field.value}
+                                            {...field.props}
+                                        />
+                                    )}
+                                </Field>
+                                <Field of={form} name="message">
+                                    {(field) => (
+                                        <TextInput
+                                            disabled={loadingMail()}
+                                            rows={5}
+                                            multiline
+                                            required
+                                            label="Mensagem"
+                                            error={field.error}
+                                            value={field.value}
+                                            {...field.props}
+                                        />
+                                    )}
+                                </Field>
+
+                                <Button disabled={loadingMail()} variant="contained" class="self-start" type="submit">
+                                    {loadingMail() ? (
+                                        <>
+                                            <ActivityIndicator color="white" />
+                                            Enviando
+                                        </>
+                                    ) : (
+                                        'Enviar'
+                                    )}
+                                </Button>
+                            </Form>
+                        </div>
+                    </div>
+                </Container>
+            </section>
+            <footer class="bg-gray-900 py-8">
+                <div class="text-center text-sm">Todos os direitos reservados à My Goal</div>
+            </footer>
+        </>
     )
 }
 

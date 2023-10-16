@@ -6,9 +6,6 @@ const StripePriceTable: Component = (props) => {
         script.src = 'https://js.stripe.com/v3/pricing-table.js'
         script.async = true
         document.body.appendChild(script)
-        return () => {
-            document.body.removeChild(script)
-        }
     })
 
     return (
