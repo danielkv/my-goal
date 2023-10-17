@@ -9544,6 +9544,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-store-review@npm:~6.4.0":
+  version: 6.4.0
+  resolution: "expo-store-review@npm:6.4.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 0bce8a354a4103384dde3a30d22a45cb9038a14f7200670f8622eee6dd4412365162cd536f37d26f99888343243aed4c0d479ed441f3e5b4ef3f584d5b3e05f8
+  languageName: node
+  linkType: hard
+
 "expo-structured-headers@npm:~3.3.0":
   version: 3.3.0
   resolution: "expo-structured-headers@npm:3.3.0"
@@ -10769,6 +10778,7 @@ __metadata:
     expo-screen-orientation: ~6.0.5
     expo-splash-screen: ~0.20.5
     expo-status-bar: ~1.6.0
+    expo-store-review: ~6.4.0
     expo-updates: ~0.18.16
     formik: ^2.2.9
     goal-generators: "*"

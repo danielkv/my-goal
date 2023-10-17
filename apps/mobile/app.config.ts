@@ -27,6 +27,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         ios: {
             buildNumber: '14',
             bundleIdentifier: BUNDLE_ID,
+            appStoreUrl: 'https://apps.apple.com/us/app/my-goal/id6449090065',
             supportsTablet: false,
             requireFullScreen: true,
             googleServicesFile: IS_PROD
@@ -38,6 +39,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         android: {
             versionCode: 13,
             package: BUNDLE_ID,
+            playStoreUrl: 'https://play.google.com/store/apps/details?id=app.mygoal.goal',
             adaptiveIcon: {
                 foregroundImage: './src/assets/adaptive-icon.png',
                 backgroundColor: '#202020',
@@ -82,6 +84,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 {
                     ios: {
                         useFrameworks: 'static',
+                    },
+                    android: {
+                        enableProguardInReleaseBuilds: true,
+                        enableShrinkResourcesInReleaseBuilds: true,
                     },
                 },
             ],

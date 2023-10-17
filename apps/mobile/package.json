@@ -50,6 +50,7 @@
 		"expo-screen-orientation": "~6.0.5",
 		"expo-splash-screen": "~0.20.5",
 		"expo-status-bar": "~1.6.0",
+		"expo-store-review": "~6.4.0",
 		"expo-updates": "~0.18.16",
 		"formik": "^2.2.9",
 		"goal-generators": "*",
