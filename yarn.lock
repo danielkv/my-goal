@@ -3932,6 +3932,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-firebase/analytics@npm:^18.5.0":
+  version: 18.5.0
+  resolution: "@react-native-firebase/analytics@npm:18.5.0"
+  peerDependencies:
+    "@react-native-firebase/app": 18.5.0
+  checksum: 9c825ad52a37ba769027f31f2877c199f90315e2dd253e093e5332200f87f599c304e24a660f328d7d5794a425d073a2d24cdaa294f0ec9f2d2186783e957861
+  languageName: node
+  linkType: hard
+
 "@react-native-firebase/app@npm:^18.5.0":
   version: 18.5.0
   resolution: "@react-native-firebase/app@npm:18.5.0"
@@ -10739,6 +10748,7 @@ __metadata:
     "@react-native-async-storage/async-storage": 1.18.2
     "@react-native-community/datetimepicker": 7.2.0
     "@react-native-community/hooks": ^3.0.0
+    "@react-native-firebase/analytics": ^18.5.0
     "@react-native-firebase/app": ^18.5.0
     "@react-native-firebase/auth": ^18.5.0
     "@react-native-firebase/crashlytics": ^18.5.0

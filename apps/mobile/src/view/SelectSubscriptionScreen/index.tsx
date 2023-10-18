@@ -5,11 +5,12 @@ import { PACKAGE_TYPE, PurchasesPackage } from 'react-native-purchases'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 
 import * as Linking from 'expo-linking'
-import { APP_OFFERING } from 'goal-models'
+import { ANALYTICS_EVENTS, APP_OFFERING } from 'goal-models'
 import { FREE_PACKAGE } from 'goal-utils'
 import useSWR from 'swr'
 import { Card, Separator, Stack, Text, ToggleGroup, XStack, YStack } from 'tamagui'
 
+import { firebaseProvider } from '@common/providers/firebase'
 import ActivityIndicator from '@components/ActivityIndicator'
 import { alert } from '@components/AppAlert/utils'
 import Button from '@components/Button'
@@ -98,7 +99,25 @@ const SelectSubscriptionScreen: React.FC = () => {
 
         try {
             setLoading(true)
+            await firebaseProvider.getAnalytics().logEvent(ANALYTICS_EVENTS.SELECT_SUBSCRIPTION, {
+                value: pkg.product.price,
+                currency: pkg.product.currencyCode,
+                package: pkg.identifier,
+                item_id: pkg.product.identifier,
+                item_name: pkg.product.title,
+            })
             await purchasePackageUseCase(pkg)
+            await firebaseProvider.getAnalytics().logAddPaymentInfo({
+                value: pkg.product.price,
+                currency: pkg.product.currencyCode,
+                items: [
+                    {
+                        item_id: pkg.product.identifier,
+                        item_name: pkg.product.title,
+                        price: pkg.product.price,
+                    },
+                ],
+            })
 
             handleRedirect()
         } catch (err) {

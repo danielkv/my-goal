@@ -1,4 +1,4 @@
-import { IUserWorkoutResultInput } from 'goal-models'
+import { ANALYTICS_EVENTS, IUserWorkoutResultInput } from 'goal-models'
 import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
@@ -12,5 +12,6 @@ export async function saveWorkoutResult(result: Omit<IUserWorkoutResultInput, 'c
         createdAt: new Date().toISOString(),
     }
 
+    await firebaseProvider.getAnalytics().logEvent(ANALYTICS_EVENTS.SAVE_WORKOUT_RESULT)
     await collectionRef.add(dataAdd)
 }

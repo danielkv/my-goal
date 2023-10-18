@@ -7,3 +7,4 @@ export * from "./src/subscription";
 export * from "./src/time";
 export * from "./src/user";
 export * from "./src/workout-results";
+export * from "./src/enums/analytics";
