@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
+import { StopwatchTimer } from 'goal-utils'
 import { FiPlay, FiSkipBack, FiSquare } from 'solid-icons/fi'
 
 import { Component, createSignal } from 'solid-js'
-
-import { StopwatchTimer } from '@utils/timer'
 
 const Stopwatch: Component = () => {
     const [currentTime, setCurrentTime] = createSignal(0)
@@ -14,8 +13,8 @@ const Stopwatch: Component = () => {
         setCurrentStatus(status)
     })
 
-    clock.on('tick', (duration: number, start, current) => {
-        setCurrentTime(duration)
+    clock.on('timeElapsed', (currentTime) => {
+        setCurrentTime(currentTime)
     })
 
     clock.on('reset', () => {
@@ -27,7 +26,7 @@ const Stopwatch: Component = () => {
             <h2 class="text-gray-200 font-bold text-lg">Cronômetro</h2>
             <h3 class="text-gray-300 text-sm">Tempo</h3>
             <div class="text-center text-gray-900 text-[40pt] font-bold">
-                {dayjs.duration(currentTime(), 'millisecond').format('mm:ss:SSS')}
+                {dayjs.duration(currentTime(), 'seconds').format('mm:ss')}
             </div>
             <div>
                 <button
