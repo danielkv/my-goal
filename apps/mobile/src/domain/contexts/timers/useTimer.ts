@@ -1,21 +1,27 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 
-import { TTimerStatus } from '@common/interfaces/timers'
-import { UseTimerSounds, useTimerSounds } from '@contexts/timers/useTimerSounds'
-import { RegressiveTimer, StopwatchTimer } from '@utils/timer'
+import { TTimerStatus } from 'goal-models'
+import { RegressiveTimer, Timer } from 'goal-utils'
 
-interface Args {
+import { UseTimerSounds, useTimerSounds } from '@contexts/timers/useTimerSounds'
+
+interface Args<Clock extends Timer> {
     initialCurrentTime?: number
     initialCountdown?: number
-    clockRef: RefObject<StopwatchTimer | undefined>
+    clockRef: RefObject<Clock | undefined>
     onSetupTimer?: (
-        clockRef: RefObject<StopwatchTimer | undefined>,
+        clockRef: RefObject<Clock | undefined>,
         sounds: UseTimerSounds,
         setCurrentTime: React.Dispatch<React.SetStateAction<number>>
     ) => void
 }
 
-export function useTimer({ initialCountdown: _initialCountdown, clockRef, onSetupTimer, initialCurrentTime }: Args) {
+export function useTimer<Clock extends Timer>({
+    initialCountdown: _initialCountdown,
+    clockRef,
+    onSetupTimer,
+    initialCurrentTime,
+}: Args<Clock>) {
     const [currentTime, setCurrentTime] = useState(initialCurrentTime || 0)
     const [currentStatus, setCurrentStatus] = useState<TTimerStatus>('initial')
     const [currentCountdown, setCurrentCountdown] = useState<number | null>(_initialCountdown || null)
@@ -40,7 +46,7 @@ export function useTimer({ initialCountdown: _initialCountdown, clockRef, onSetu
             const countdownTimer = setupCountdown(countdownRef.current)
             countdownTimer.start()
 
-            countdownTimer.once('zero', () => {
+            countdownTimer.once('finish', () => {
                 setCurrentCountdown(null)
                 clockRef.current?.start()
             })
@@ -50,7 +56,7 @@ export function useTimer({ initialCountdown: _initialCountdown, clockRef, onSetu
         clockRef.current?.start()
     }
 
-    const handlePressResetButton = (opts?: Pick<Args, 'initialCountdown' | 'initialCurrentTime'>) => {
+    const handlePressResetButton = (opts?: Pick<Args<Clock>, 'initialCountdown' | 'initialCurrentTime'>) => {
         countdownRef.current = opts?.initialCountdown ?? _initialCountdown ?? null
 
         setCurrentTime(opts?.initialCurrentTime || 0)
@@ -63,24 +69,30 @@ export function useTimer({ initialCountdown: _initialCountdown, clockRef, onSetu
             setCurrentStatus(status)
         })
 
-        clockRef.current?.on('tick', (duration: number, _, __, remaining: number) => {
-            if (remaining > 0 && remaining <= 3) sounds.playBeep()
+        clockRef.current?.on('finalCountdownTick', () => {
+            sounds.playBeep()
+        })
 
-            setCurrentTime(duration)
+        clockRef.current?.on('timeElapsed', (currentTime) => {
+            setCurrentTime(currentTime)
         })
 
         clockRef.current?.once('start', () => {
             sounds.playStart()
         })
 
-        clockRef.current?.on('start', (elapsed: number, start: number) => {
-            setCurrentTime(start)
+        clockRef.current?.on('start', () => {
+            setCurrentTime(initialCurrentTime || 0)
         })
 
         clockRef.current?.on('reset', () => {
             setCurrentTime(0)
             setCurrentStatus('initial')
             setCurrentCountdown(_initialCountdown || null)
+        })
+
+        clockRef.current?.on('finish', () => {
+            sounds.playFinish()
         })
 
         onSetupTimer?.(clockRef, sounds, setCurrentTime)
@@ -91,18 +103,14 @@ export function useTimer({ initialCountdown: _initialCountdown, clockRef, onSetu
     const setupCountdown = (countdown: number) => {
         setCurrentCountdown(() => countdown)
 
-        initialCountdownRef.current = new RegressiveTimer(countdown)
+        initialCountdownRef.current = new RegressiveTimer({ startTime: countdown, endingCountdown: 3 })
 
-        initialCountdownRef.current.once('start', () => {
+        initialCountdownRef.current.on('finalCountdownTick', () => {
             sounds.playBeep()
         })
 
-        initialCountdownRef.current.on('tick', (displayTime: number) => {
-            setCurrentCountdown((prev) => {
-                if (displayTime > 0 && displayTime != prev) sounds.playBeep()
-
-                return displayTime
-            })
+        initialCountdownRef.current.on('timeElapsed', (currentTime) => {
+            setCurrentCountdown(currentTime)
         })
 
         return initialCountdownRef.current

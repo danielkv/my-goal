@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react'
 
 import dayjs from 'dayjs'
 import { IEventBlock, IRound } from 'goal-models'
+import { StopwatchTimer } from 'goal-utils'
 
 import StopwatchSvg from '@assets/svg/stopwatch.svg'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { StopwatchTimer } from '@utils/timer'
 
 export interface StopwatchDisplayProps {
     finalTime: number
@@ -26,7 +26,8 @@ const StopwatchDisplay: React.FC<StopwatchDisplayProps> = ({
     const clockRef = useRef<StopwatchTimer>()
 
     useEffect(() => {
-        clockRef.current = new StopwatchTimer(finalTime)
+        clockRef.current = new StopwatchTimer({ endTime: finalTime, endingCountdown: _initialCountdown })
+
         return () => {
             clockRef.current?.stop()
         }
@@ -35,12 +36,6 @@ const StopwatchDisplay: React.FC<StopwatchDisplayProps> = ({
     const { currentStatus, currentTime, handlePressPlayButton, handlePressResetButton, initialCountdown } = useTimer({
         clockRef,
         initialCountdown: _initialCountdown,
-        onSetupTimer: (clockRef, sounds, setCurrentTime) => {
-            clockRef.current?.on('zero', () => {
-                setCurrentTime(finalTime)
-                sounds.playFinish()
-            })
-        },
     })
 
     return (

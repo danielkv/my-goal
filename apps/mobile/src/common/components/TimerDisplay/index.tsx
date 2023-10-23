@@ -4,11 +4,10 @@ import { SvgProps } from 'react-native-svg'
 
 import { useKeepAwake } from 'expo-keep-awake'
 import * as ScreenOrientation from 'expo-screen-orientation'
-import { IEventBlock, IRound } from 'goal-models'
+import { IEventBlock, IRound, TActivityStatus, TTimerStatus } from 'goal-models'
 import { AnimatePresence, ColorTokens, Stack, Text, XStack, YStack, useTheme } from 'tamagui'
 
 import { useOrientation } from '@common/hooks/useOrientation'
-import { TActivityStatus, TTimerStatus } from '@common/interfaces/timers'
 import WodDialog from '@components/WodDialog'
 import { useNavigation } from '@react-navigation/native'
 import { Edit3, PauseCircle, PlayCircle, RotateCcw } from '@tamagui/lucide-icons'

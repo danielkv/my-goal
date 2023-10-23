@@ -7099,6 +7099,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"barrelsby@npm:^2.8.1":
+  version: 2.8.1
+  resolution: "barrelsby@npm:2.8.1"
+  dependencies:
+    "@types/yargs": ^17.0.10
+    signale: ^1.4.0
+    yargs: ^17.4.1
+  bin:
+    barrelsby: bin/cli.js
+  checksum: ca85a809abe99985e368105a732d8cdcd52606fa72c77813f8e76a6f0006b98f53dc7a1618653d43c2c84e1d14260e50cd71f094a3fa4380ffee55431f23cc99
+  languageName: node
+  linkType: hard
+
 "base64-arraybuffer@npm:^1.0.2":
   version: 1.0.2
   resolution: "base64-arraybuffer@npm:1.0.2"
@@ -10737,6 +10750,7 @@ __metadata:
     react-native-web: ~0.19.6
     swr: ^2.1.3
     tamagui: ^1.30.21
+    typed-emitter: ^2.1.0
     typescript: ^5.1.3
     yup: ^1.1.1
     zustand: ^4.3.7
@@ -10746,6 +10760,8 @@ __metadata:
 "goal-models@*, goal-models@workspace:packages/models":
   version: 0.0.0-use.local
   resolution: "goal-models@workspace:packages/models"
+  dependencies:
+    barrelsby: ^2.8.1
   languageName: unknown
   linkType: soft
 
@@ -10754,6 +10770,7 @@ __metadata:
   resolution: "goal-utils@workspace:packages/utils"
   dependencies:
     "@types/chroma-js": ^2.4.0
+    barrelsby: ^2.8.1
     chroma-js: ^2.4.2
     dayjs: ^1.11.8
     goal-models: "*"
@@ -16009,7 +16026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.8.1":
+"rxjs@npm:*, rxjs@npm:^7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -17635,6 +17652,18 @@ __metadata:
     media-typer: 0.3.0
     mime-types: ~2.1.24
   checksum: 2c8e47675d55f8b4e404bcf529abdf5036c537a04c2b20177bcf78c9e3c1da69da3942b1346e6edb09e823228c0ee656ef0e033765ec39a70d496ef601a0c657
+  languageName: node
+  linkType: hard
+
+"typed-emitter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "typed-emitter@npm:2.1.0"
+  dependencies:
+    rxjs: "*"
+  dependenciesMeta:
+    rxjs:
+      optional: true
+  checksum: 95821a9e05784b972cc9d152891fd12a56cb4b1a7c57e768c02bea6a8984da7aff8f19404a7b69eea11fae2a3b6c0c510a4c510f575f50162c759ae9059f2520
   languageName: node
   linkType: hard
 
