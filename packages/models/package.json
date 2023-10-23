@@ -6,5 +6,8 @@
 	"license": "MIT",
 	"scripts": {
 		"barrels": "barrelsby --delete -e .spec -e vitest -H"
+	},
+	"dependencies": {
+		"barrelsby": "^2.8.1"
 	}
 }

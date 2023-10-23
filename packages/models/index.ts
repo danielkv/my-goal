@@ -4,5 +4,6 @@ export * from "./src/movement-results";
 export * from "./src/result";
 export * from "./src/shared";
 export * from "./src/time";
+export * from "./src/timers";
 export * from "./src/user";
 export * from "./src/workout-results";
