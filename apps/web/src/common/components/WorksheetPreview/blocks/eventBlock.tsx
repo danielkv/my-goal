@@ -1,4 +1,3 @@
-import cloneDeep from 'clone-deep'
 import { IEventBlock } from 'goal-models'
 import {
     blockTimerType,
@@ -24,7 +23,6 @@ import { createEventRoundValues } from '@utils/worksheetInitials'
 export interface EventBlockPreviewProps extends WorksheetPeace<IEventBlock> {}
 
 const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
-    console.log(cloneDeep(props.item))
     const eventTitle = createMemo(() => eventBlockDisplay.displayHeader(props.item))
 
     const timedWorkoutMode = createMemo(() => checkIsTimedWorkout(props.item))

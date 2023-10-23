@@ -26,10 +26,6 @@ const RegressiveClock: Component<RegressiveProps> = (props) => {
         setCurrentTime(props.initialTime)
     })
 
-    clock.on('finalCountdownTick', (n) => {
-        console.log(n)
-    })
-
     return (
         <div class="flex flex-col items-center p-6">
             <h2 class="text-gray-200 font-bold text-lg">Cronômetro Regressivo</h2>
