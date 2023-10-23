@@ -27,6 +27,8 @@ export interface ITimerConfig extends ICountdownTimerConfig {
     interval?: number
 }
 
+export const DEFAULT_INTERVAL = 1000 // 1 second
+
 export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
     new <T extends EventMap>(): TypedEmitter<T>
 })<T> {
@@ -39,7 +41,7 @@ export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
     constructor(protected config?: ITimerConfig) {
         super()
 
-        this.endTime = config?.endTime
+        if (config?.endTime) this.endTime = config?.endTime
     }
 
     setEndTime(endTime: number) {
@@ -50,15 +52,12 @@ export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
         if (this.endTime !== undefined && this.timeElapsed >= this.endTime) return
         this.setTimeElapsed(this.timeElapsed + 1, emit)
 
-        // @ts-expect-error
-        if (emit) this.emit('timeElapsed', this.getCurrentTime())
-
         this.checkEndingCountdown(emit)
 
         this.checkFinished(emit)
     }
 
-    checkEndingCountdown(emit: boolean) {
+    checkEndingCountdown(emit = true) {
         if (!this.endTime || !this.config?.endingCountdown) {
             this.changeRunningType('normal', emit)
             return
@@ -94,6 +93,7 @@ export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
         }
         this.changeStatus('running', emit)
         this.setupInterval()
+        this.checkEndingCountdown(emit)
 
         if (emit) {
             // @ts-expect-error
@@ -137,7 +137,6 @@ export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
     }
 
     setTimeElapsed(value: number, emit = true) {
-        console.log(value)
         this.timeElapsed = value
         // @ts-expect-error
         if (emit) this.emit('timeElapsed', this.getCurrentTime())
@@ -154,7 +153,7 @@ export class Timer<T extends EventMap = ITimerEvents> extends (EventEmitter as {
     private setupInterval() {
         this.interval = setInterval(() => {
             this.tick()
-        }, this.config?.interval || 1000)
+        }, this.config?.interval || DEFAULT_INTERVAL)
     }
 
     private clearInterval() {

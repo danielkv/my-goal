@@ -1,9 +1,11 @@
-import { ITimerConfig, ITimerEvents, Timer } from './timer'
+import { DEFAULT_INTERVAL, ITimerConfig, ITimerEvents, Timer } from './timer'
 import { TActivityStatus, TTimerStatus } from 'goal-models'
 
 type ITabataTimerEvents = ITimerEvents & {
     changeRound(currentRound: number): void
     changeActivityStatus(activityStatus: TActivityStatus): void
+    finishRound(currentRound: number): void
+    finishActivity(urrentActivity: TActivityStatus, currentRound: number): void
 }
 
 export interface ITabataTimerConfig extends Omit<ITimerConfig, 'endTime'> {
@@ -36,19 +38,21 @@ export class TabataTimer extends Timer<ITabataTimerEvents> {
 
     nextRound(emit = true) {
         this.stop('stopped', false)
+        this.emit('finishRound', this.currentRound)
 
         this.nextRoundInterval = setTimeout(() => {
             this.setRound(this.currentRound + 1, emit)
             this.setNextActivity(emit)
-        }, this.config?.interval || 1000)
+        }, this.config?.interval || DEFAULT_INTERVAL)
     }
 
     nextActivity(emit = true) {
         this.stop('stopped', false)
+        this.emit('finishActivity', this.activityStatus, this.currentRound)
 
         this.nextRoundInterval = setTimeout(() => {
             this.setNextActivity(emit)
-        }, this.config?.interval || 1000)
+        }, this.config?.interval || DEFAULT_INTERVAL)
     }
 
     setNextActivity(emit = true) {

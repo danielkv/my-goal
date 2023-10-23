@@ -1,7 +1,10 @@
-import { ITimerConfig, ITimerEvents, Timer } from './timer'
+import { DEFAULT_INTERVAL, ITimerConfig, ITimerEvents, Timer } from './timer'
 import { TTimerStatus } from 'goal-models'
 
-type IEmomTimerEvents = ITimerEvents & { changeRound(currentRound: number): void }
+type IEmomTimerEvents = ITimerEvents & {
+    changeRound(currentRound: number): void
+    finishRound(currentRound: number): void
+}
 
 export interface IEmomTimerConfig extends Omit<ITimerConfig, 'endTime'> {
     each: number
@@ -26,11 +29,12 @@ export class EmomTimer extends Timer<IEmomTimerEvents> {
 
     nextRound(emit = true) {
         this.stop('stopped', false)
+        this.emit('finishRound', this.currentRound)
 
         this.nextRoundInterval = setTimeout(() => {
             this.setRound(this.currentRound + 1, emit)
             this.start(0, emit)
-        }, this.config?.interval || 1000)
+        }, this.config?.interval || DEFAULT_INTERVAL)
     }
 
     start(curentTime?: number | null, emit = true): void {
