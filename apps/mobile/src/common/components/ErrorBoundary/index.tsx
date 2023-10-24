@@ -1,14 +1,13 @@
-import React from 'react'
-import { SafeAreaView } from 'react-native'
+import { Component } from 'react'
+
+import { Stack } from 'tamagui'
 
 import AlertBox from '@components/AlertBox'
 import { logMessageUseCase } from '@useCases/log/logMessage'
 import { createAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
-import { Stack } from 'tamagui'
-
-export class ErrorBoundary extends React.Component<any, any> {
+export class ErrorBoundary extends Component<any, any> {
     state = {
         error: false,
         errorInfo: false,
@@ -29,15 +28,13 @@ export class ErrorBoundary extends React.Component<any, any> {
         if (!this.state.error) return this.props.children
 
         return (
-            <SafeAreaView>
-                <Stack flex={1} bg="$gray1">
-                    <AlertBox
-                        type="error"
-                        text={getErrorMessage(this.state.errorInfo)}
-                        title="Ocorreu um erro na aplicação"
-                    />
-                </Stack>
-            </SafeAreaView>
+            <Stack flex={1} bg="$gray9" ai="center" jc="center">
+                <AlertBox
+                    type="error"
+                    text={getErrorMessage(this.state.errorInfo)}
+                    title="Ocorreu um erro na aplicação"
+                />
+            </Stack>
         )
     }
 }
