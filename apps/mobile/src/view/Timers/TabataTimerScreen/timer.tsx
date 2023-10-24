@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
 import dayjs from 'dayjs'
-import { IEventBlock, IRound } from 'goal-models'
+import { IEventBlock, IRound, TActivityStatus } from 'goal-models'
+import { TabataTimer } from 'goal-utils'
 
 import TabataSvg from '@assets/svg/tabata.svg'
-import { TActivityStatus, TTimerStatus } from '@common/interfaces/timers'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { TabataTimer } from '@utils/timer'
 
 export interface TabataDisplayProps {
     work: number
@@ -34,7 +33,7 @@ const TabataDisplay: React.FC<TabataDisplayProps> = ({
     const clockRef = useRef<TabataTimer>()
 
     useEffect(() => {
-        clockRef.current = new TabataTimer(work, rest, rounds)
+        clockRef.current = new TabataTimer({ work, rest, rounds, endingCountdown: _initialCountdown })
 
         return () => {
             clockRef.current?.stop()
@@ -46,15 +45,17 @@ const TabataDisplay: React.FC<TabataDisplayProps> = ({
         initialCountdown: _initialCountdown,
         initialCurrentTime: work,
         onSetupTimer: (clockRef, sounds) => {
-            clockRef.current?.on('changeActivityStatus', (current: TActivityStatus, status: TTimerStatus) => {
+            clockRef.current?.on('changeActivityStatus', (current) => {
                 setCurrentActivityStatus(current)
+            })
+            clockRef.current?.on('finishActivity', () => {
+                sounds.playStart()
             })
             clockRef.current?.on('changeRound', (current: number) => {
                 setCurrentRound(current)
             })
-            clockRef.current?.on('zero', (current: number, rounds: number, activityStatus: TActivityStatus) => {
-                if (current < rounds || activityStatus === 'work') sounds.playStart()
-                else sounds.playFinish()
+            clockRef.current?.on('finishRound', () => {
+                sounds.playStart()
             })
         },
     })

@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
+import { TActivityStatus } from 'goal-models'
+import { TabataTimer } from 'goal-utils'
 import { FiPlay, FiSkipBack, FiSquare } from 'solid-icons/fi'
 
 import { Component, createSignal } from 'solid-js'
-
-import { TabataTimer } from '@utils/timer'
 
 export interface RegressiveProps {
     work: number // seconds
@@ -14,9 +14,10 @@ export interface RegressiveProps {
 const TabataClock: Component<RegressiveProps> = (props) => {
     const [currentTime, setCurrentTime] = createSignal(props.work)
     const [currentStatus, setCurrentStatus] = createSignal('initial')
+    const [currentActivity, setCurrentActivity] = createSignal<TActivityStatus>('work')
     const [currentRound, setCurrentRound] = createSignal(1)
 
-    const clock = new TabataTimer(props.work, props.rest, props.rounds)
+    const clock = new TabataTimer({ work: props.work, rest: props.rest, rounds: props.rounds })
 
     clock.on('changeStatus', (status) => {
         setCurrentStatus(status)
@@ -26,7 +27,11 @@ const TabataClock: Component<RegressiveProps> = (props) => {
         setCurrentRound(status)
     })
 
-    clock.on('tick', (duration: number, start, current) => {
+    clock.on('changeActivityStatus', (status) => {
+        setCurrentActivity(status)
+    })
+
+    clock.on('timeElapsed', (duration) => {
         setCurrentTime(duration)
     })
 
@@ -37,7 +42,7 @@ const TabataClock: Component<RegressiveProps> = (props) => {
     return (
         <div class="flex flex-col items-center p-6">
             <h2 class="text-gray-200 font-bold text-lg">Cronometro Tabata</h2>
-            <h3 class="text-gray-300 text-sm">Tempo</h3>
+            <h3 class="text-gray-300 text-sm">Tempo ({currentActivity()})</h3>
             <div class="text-center text-gray-900 text-[40pt] font-bold">
                 {dayjs.duration(currentTime(), 'second').format('mm:ss')}
             </div>

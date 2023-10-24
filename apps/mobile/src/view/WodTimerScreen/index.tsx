@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import dayjs from 'dayjs'
-import { IEventBlock, IRound } from 'goal-models'
-import { isRestRound } from 'goal-utils'
+import { IEventBlock, IRound, TActivityStatus, TTimerStatus } from 'goal-models'
+import { DEFAULT_INTERVAL, Timer, isRestRound } from 'goal-utils'
+import { EmomTimer, RegressiveTimer, StopwatchTimer, TabataTimer } from 'goal-utils'
 import { Stack, YStack } from 'tamagui'
 
 import { useOrientation } from '@common/hooks/useOrientation'
-import { TActivityStatus, TTimerStatus } from '@common/interfaces/timers'
 import Button from '@components/Button'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimerSounds } from '@contexts/timers/useTimerSounds'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { TReactNavigationStackParamList } from '@router/types'
 import { ChevronLeft } from '@tamagui/lucide-icons'
-import { EmomTimer, RegressiveTimer, StopwatchTimer, TabataTimer } from '@utils/timer'
 
 import RoundDisplay from './RoundDisplay'
 
@@ -42,7 +41,7 @@ const WodTimerScreen: React.FC = () => {
 
     const [currentRoundDisplay, setCurrentRoundDisplay] = useState<number | null>(null)
     const [totalRounds, setTotalRounds] = useState<number | null>(null)
-    const [activityStatus, setActivityStatus] = useState<'work' | 'rest' | 'countdown' | null>(null)
+    const [activityStatus, setActivityStatus] = useState<TActivityStatus | 'countdown' | null>(null)
     const [currentStatus, setCurrentStatus] = useState<TTimerStatus>('initial')
     const [currentCountdown, setCurrentCountdown] = useState<number | null>(null)
     const [currentTime, setCurrentTime] = useState<number>(0)
@@ -51,8 +50,8 @@ const WodTimerScreen: React.FC = () => {
 
     const [selectedRound, setSelectedRound] = useState(0)
 
-    const clockRef = useRef<StopwatchTimer>()
-    const countdownTimerRef = useRef<StopwatchTimer>()
+    const clockRef = useRef<Timer>()
+    const countdownTimerRef = useRef<RegressiveTimer>()
 
     function startClock(round?: number) {
         if (currentStatus === 'initial') setupTimer()
@@ -64,14 +63,11 @@ const WodTimerScreen: React.FC = () => {
             const countdownTimer = setupCountdown(COUNTDOWN)
             countdownTimer.start()
 
-            countdownTimer.on('tick', (time: number) => {
-                if (time === 0) {
-                    countdownTimer.stop()
-                    setCurrentCountdown(null)
-                    clockRef.current?.start()
-                    sounds.playStart()
-                    setActivityStatus('work')
-                }
+            countdownTimer.on('finish', () => {
+                countdownTimer.stop()
+                setCurrentCountdown(null)
+                clockRef.current?.start()
+                setActivityStatus('work')
             })
             return
         }
@@ -84,17 +80,12 @@ const WodTimerScreen: React.FC = () => {
             setCurrentStatus(status)
         })
 
-        clockRef.current?.on('tick', (duration: number, _, __, remaining: number) => {
-            if (remaining <= 3) {
-                if (remaining > 0) sounds.playBeep()
-                else if (remaining === 0) sounds.playStart()
-            }
-
-            setCurrentTime(duration)
+        clockRef.current?.on('finalCountdownTick', (currentTime) => {
+            sounds.playBeep()
         })
 
-        clockRef.current?.on('start', (duration: number) => {
-            setCurrentTime(duration)
+        clockRef.current?.on('timeElapsed', (currentTime) => {
+            setCurrentTime(currentTime)
         })
 
         clockRef.current?.on('reset', () => {
@@ -107,18 +98,14 @@ const WodTimerScreen: React.FC = () => {
     function setupCountdown(countdown: number) {
         setCurrentCountdown(() => countdown)
 
-        countdownTimerRef.current = new RegressiveTimer(countdown)
+        countdownTimerRef.current = new RegressiveTimer({ startTime: countdown, endingCountdown: 3 })
 
-        countdownTimerRef.current.once('start', () => {
+        countdownTimerRef.current.on('finalCountdownTick', () => {
             sounds.playBeep()
         })
 
-        countdownTimerRef.current.on('tick', (displayTime: number) => {
-            setCurrentCountdown((prev) => {
-                if (displayTime > 0 && displayTime != prev) sounds.playBeep()
-
-                return displayTime
-            })
+        countdownTimerRef.current.on('timeElapsed', (currentTime) => {
+            setCurrentCountdown(currentTime)
         })
 
         return countdownTimerRef.current
@@ -131,76 +118,105 @@ const WodTimerScreen: React.FC = () => {
 
     function nextTimer(currRound: number) {
         clockRef.current?.stop()
+        clockRef.current?.removeAllListeners()
 
         const nextRound = currRound + 1
-
-        if (nextRound >= rounds.length) {
-            endAllRounds()
-            return
-        }
-
-        setSelectedRound(nextRound)
 
         setupNewTimer(nextRound)
 
         startClock(nextRound)
+
+        setSelectedRound(nextRound)
     }
 
     function setupNewTimer(currRound: number) {
         const round = rounds[currRound]
-        if (isRestRound(round)) return null
 
         setCurrentRoundDisplay(null)
 
-        setActivityStatus('work')
+        if (isRestRound(round)) {
+            clockRef.current = new RegressiveTimer({ startTime: round.time, endingCountdown: COUNTDOWN })
 
-        switch (round.config.type) {
-            case 'amrap':
-                clockRef.current = new RegressiveTimer(round.config.timecap)
-
-                break
-            case 'for_time':
-                clockRef.current = new StopwatchTimer(round.config.timecap)
-                break
-            // case 'rest':
-            //     clockRef.current = new RegressiveTimer(round.config.time)
-
-            //     setActivityStatus('rest')
-            //     break
-            case 'emom':
-                clockRef.current = new EmomTimer(round.config.each, round.config.numberOfRounds || 1)
-                if ((round.config.numberOfRounds || 1) > 1) {
-                    clockRef.current?.on('changeRound', (current: number) => {
-                        setCurrentRoundDisplay(current)
+            setActivityStatus('rest')
+        } else {
+            switch (round.config.type) {
+                case 'amrap':
+                    clockRef.current = new RegressiveTimer({
+                        startTime: round.config.timecap,
+                        endingCountdown: COUNTDOWN,
                     })
-                    setCurrentRoundDisplay(1)
-                    setTotalRounds(round.config.numberOfRounds || 1)
-                }
 
-                break
-            case 'tabata':
-                clockRef.current = new TabataTimer(
-                    round.config.work,
-                    round.config.rest,
-                    round.config.numberOfRounds || 1
-                )
-                if ((round.config.numberOfRounds || 1) > 1) {
-                    clockRef.current?.on('changeRound', (current: number) => {
-                        setCurrentRoundDisplay(current)
+                    break
+                case 'for_time':
+                    clockRef.current = new StopwatchTimer({ endTime: round.config.timecap, endingCountdown: COUNTDOWN })
+                    break
+
+                case 'emom':
+                    clockRef.current = new EmomTimer({
+                        each: round.config.each,
+                        rounds: round.config.numberOfRounds || 1,
+                        endingCountdown: COUNTDOWN,
                     })
-                    setCurrentRoundDisplay(1)
-                    setTotalRounds(round.config.numberOfRounds || 1)
-                }
+                    if ((round.config.numberOfRounds || 1) > 1) {
+                        ;(clockRef.current as EmomTimer).on('changeRound', (current: number) => {
+                            setCurrentRoundDisplay(current)
+                        })
+                        ;(clockRef.current as EmomTimer).on('finishRound', () => {
+                            sounds.playStart()
+                        })
+                        setCurrentRoundDisplay(1)
+                        setTotalRounds(round.config.numberOfRounds || 1)
+                    }
 
-                clockRef.current?.on('changeActivityStatus', (current: TActivityStatus, status: TTimerStatus) => {
-                    setActivityStatus(current)
-                })
+                    break
+                case 'tabata':
+                    clockRef.current = new TabataTimer({
+                        work: round.config.work,
+                        rest: round.config.rest,
+                        rounds: round.config.numberOfRounds || 1,
+                    })
+                    if ((round.config.numberOfRounds || 1) > 1) {
+                        ;(clockRef.current as TabataTimer).on('changeRound', (current: number) => {
+                            setCurrentRoundDisplay(current)
+                        })
+                        ;(clockRef.current as TabataTimer).on('finishRound', () => {
+                            sounds.playStart()
+                        })
+                        setCurrentRoundDisplay(1)
+                        setTotalRounds(round.config.numberOfRounds || 1)
+                    }
 
-                break
+                    ;(clockRef.current as TabataTimer).on('changeActivityStatus', (current) => {
+                        setActivityStatus(current)
+                    })
+                    ;(clockRef.current as TabataTimer).on('finishActivity', () => {
+                        sounds.playStart()
+                    })
+
+                    break
+            }
+            setActivityStatus('work')
         }
 
-        clockRef.current?.on('end', () => {
-            nextTimer(currRound)
+        clockRef.current?.on('start', (duration: number) => {
+            setCurrentTime(duration)
+        })
+
+        clockRef.current?.once('start', () => {
+            if (currRound === 0) sounds.playStart()
+        })
+
+        clockRef.current?.on('finish', () => {
+            if (currRound + 1 >= rounds.length) {
+                endAllRounds()
+                return
+            } else {
+                sounds.playStart()
+
+                setTimeout(() => {
+                    nextTimer(currRound)
+                }, DEFAULT_INTERVAL)
+            }
         })
     }
 
@@ -218,6 +234,7 @@ const WodTimerScreen: React.FC = () => {
 
         return () => {
             clockRef.current?.stop()
+            countdownTimerRef.current?.stop()
         }
     }, [])
 

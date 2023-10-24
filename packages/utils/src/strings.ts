@@ -29,16 +29,18 @@ export function stringToColor(string: string) {
 }
 
 export function userInitials(name?: string): string {
-    if (!name) return ''
+    if (!name) return '*_*'
 
     const splittedName = name.split(' ')
 
-    return `${splittedName[0]?.[0] || ''}${splittedName[1]?.[0] || ''}`
+    if (splittedName.length === 1) return `${name[0]}${name[1]}`.toUpperCase()
+
+    return `${splittedName[0]?.[0] || ''}${splittedName[1]?.[0] || ''}`.toUpperCase()
 }
 
 export function getContrastColor(color: string) {
-    if (chroma.contrast(color, 'white') < 4) return '#000'
-    return '#fff'
+    if (chroma.contrast(color, 'white') < 4) return '#000000'
+    return '#ffffff'
 }
 
 export function displayArray(array: any[], separator = ' ', prefix = '', suffix = ''): string {

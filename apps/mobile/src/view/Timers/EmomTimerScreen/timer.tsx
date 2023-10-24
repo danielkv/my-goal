@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 
 import dayjs from 'dayjs'
 import { IEventBlock, IRound } from 'goal-models'
+import { EmomTimer } from 'goal-utils'
 
 import EmomSvg from '@assets/svg/emom.svg'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { EmomTimer } from '@utils/timer'
 
 export interface EmomDisplayProps {
     each: number
@@ -30,7 +30,7 @@ const EmomDisplay: React.FC<EmomDisplayProps> = ({
     const clockRef = useRef<EmomTimer>()
 
     useEffect(() => {
-        clockRef.current = new EmomTimer(each, rounds)
+        clockRef.current = new EmomTimer({ each, rounds, endingCountdown: _initialCountdown })
 
         return () => {
             clockRef.current?.stop()
@@ -42,12 +42,11 @@ const EmomDisplay: React.FC<EmomDisplayProps> = ({
         initialCountdown: _initialCountdown,
         initialCurrentTime: each,
         onSetupTimer: (clockRef, sounds) => {
-            clockRef.current?.on('changeRound', (current: number) => {
+            clockRef.current?.on('changeRound', (current) => {
                 setCurrentRound(current)
             })
-            clockRef.current?.on('zero', (current: number, rounds: number) => {
-                if (current < rounds) sounds.playStart()
-                else sounds.playFinish()
+            clockRef.current?.on('finishRound', () => {
+                sounds.playStart()
             })
         },
     })

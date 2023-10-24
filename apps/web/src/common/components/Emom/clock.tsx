@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
+import { EmomTimer } from 'goal-utils'
 import { FiPlay, FiSkipBack, FiSquare } from 'solid-icons/fi'
 
 import { Component, createSignal } from 'solid-js'
-
-import { EmomTimer } from '@utils/timer'
 
 export interface RegressiveProps {
     each: number // seconds
@@ -15,7 +14,7 @@ const EmomClock: Component<RegressiveProps> = (props) => {
     const [currentStatus, setCurrentStatus] = createSignal('initial')
     const [currentRound, setCurrentRound] = createSignal(1)
 
-    const clock = new EmomTimer(props.each, props.rounds)
+    const clock = new EmomTimer({ each: props.each, rounds: props.rounds })
 
     clock.on('changeStatus', (status) => {
         setCurrentStatus(status)
@@ -25,7 +24,7 @@ const EmomClock: Component<RegressiveProps> = (props) => {
         setCurrentRound(status)
     })
 
-    clock.on('tick', (duration: number, start, current) => {
+    clock.on('timeElapsed', (duration) => {
         setCurrentTime(duration)
     })
 

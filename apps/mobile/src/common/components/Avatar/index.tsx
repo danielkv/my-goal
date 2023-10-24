@@ -10,7 +10,7 @@ export interface AvatarProps {
 const Avatar = styled(AvatarTamagui)
 
 export default Avatar.styleable<AvatarProps>(({ image, displayName, ...rest }, ref) => {
-    const avatarColor = displayName ? stringToColor(displayName) : ''
+    const avatarColor = displayName ? stringToColor(displayName) : '#EE2042'
     const textAvatarColor = getContrastColor(avatarColor)
 
     return (

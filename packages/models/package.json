@@ -5,7 +5,7 @@
 	"types": "index.ts",
 	"license": "MIT",
 	"dependencies": {
-		"barrelsby": "^2.8.0"
+		"barrelsby": "^2.8.1"
 	},
 	"scripts": {
 		"barrels": "barrelsby --delete -e .spec -e vitest -H"

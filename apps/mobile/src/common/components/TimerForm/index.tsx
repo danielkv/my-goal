@@ -2,10 +2,10 @@ import { useCallback, useState } from 'react'
 import { Platform } from 'react-native'
 import { SvgProps } from 'react-native-svg'
 
+import { TTimerType } from 'goal-models'
 import { H2, Input, Sheet, Stack, Text, XStack, YStack } from 'tamagui'
 import { useTheme } from 'tamagui'
 
-import { TTimerType } from '@common/interfaces/timers'
 import Button from '@components/Button'
 import TextField from '@components/TextField'
 import TimeField from '@components/TimeField'

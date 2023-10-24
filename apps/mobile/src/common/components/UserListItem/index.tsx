@@ -17,7 +17,7 @@ const UserResultItem = XStack.styleable<UserResultItemProps>(({ user, result, is
     return (
         <XStack ref={ref} ai="center" jc="space-between" {...props}>
             <XStack ai="center" gap="$2">
-                <Avatar image={user.photoURL} displayName={user.displayName} size={36} />
+                <Avatar image={user.photoURL} displayName={user.displayName || user.email} size={36} />
                 <YStack>
                     <XStack ai="center" gap="$1">
                         <Text fontWeight="700" fontSize={16}>
@@ -25,9 +25,11 @@ const UserResultItem = XStack.styleable<UserResultItemProps>(({ user, result, is
                         </Text>
                         {isPrivate && <Lock size={12} color="$gray5" />}
                     </XStack>
-                    <Text fontSize={12} color="$gray4">
-                        {user.displayName}
-                    </Text>
+                    {user.displayName && (
+                        <Text fontSize={12} color="$gray4">
+                            {user.displayName}
+                        </Text>
+                    )}
                 </YStack>
             </XStack>
             <Text fontSize={13} color="$gray3">

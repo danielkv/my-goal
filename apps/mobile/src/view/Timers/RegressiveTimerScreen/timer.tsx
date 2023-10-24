@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react'
 
 import dayjs from 'dayjs'
 import { IEventBlock, IRound } from 'goal-models'
+import { RegressiveTimer } from 'goal-utils'
 
 import RegressiveSvg from '@assets/svg/regressive.svg'
 import TimerDisplay from '@components/TimerDisplay'
 import { useTimer } from '@contexts/timers/useTimer'
-import { RegressiveTimer } from '@utils/timer'
 
 export interface RegressiveDisplayProps {
     initialTime: number
@@ -26,7 +26,7 @@ const RegressiveDisplay: React.FC<RegressiveDisplayProps> = ({
     const clockRef = useRef<RegressiveTimer>()
 
     useEffect(() => {
-        clockRef.current = new RegressiveTimer(initialTime)
+        clockRef.current = new RegressiveTimer({ startTime: initialTime, endingCountdown: _initialCountdown })
         return () => {
             clockRef.current?.stop()
         }
@@ -35,11 +35,6 @@ const RegressiveDisplay: React.FC<RegressiveDisplayProps> = ({
     const { currentStatus, currentTime, handlePressPlayButton, handlePressResetButton, initialCountdown } = useTimer({
         clockRef,
         initialCountdown: _initialCountdown,
-        onSetupTimer: (clockRef, sounds) => {
-            clockRef.current?.on('zero', () => {
-                sounds.playFinish()
-            })
-        },
     })
 
     return (

@@ -1,5 +1,5 @@
 import { isRestRound } from './models'
-import { IEventBlock, IRound, TTimerSettings, TTimerTypes } from 'goal-models'
+import { IEventBlock, IRestRound, IRound, TTimerSettings, TTimerTypes } from 'goal-models'
 
 export type TOpenTimerAllowedTypes = Exclude<TTimerTypes, 'not_timed'>
 
@@ -112,24 +112,22 @@ export const blockTimerType = ({ config }: IEventBlock): TOpenTimerAllowedTypes 
 
 export type TTimedMode = 'none' | 'round' | 'block'
 
+export function isValidTimedRound(round: Exclude<IRound, IRestRound>): boolean {
+    if (!['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)) return false
+
+    if (round.config.type === 'for_time' && !round.config.timecap) return false
+
+    return true
+}
+
 export const checkIsTimedWorkout = (block: IEventBlock): TTimedMode => {
-    const isNoneMode = block.rounds.every(
-        (round) => !isRestRound(round) && !['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
-    )
+    const isNoneMode = block.rounds.every((round) => !isRestRound(round) && !isValidTimedRound(round))
     if (isNoneMode) return 'none'
 
     const isBlockMode =
-        block.rounds.length > 1 &&
-        block.rounds.every(
-            (round) => isRestRound(round) || ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
-        )
+        block.rounds.length > 1 && block.rounds.every((round) => isRestRound(round) || isValidTimedRound(round))
 
-    if (
-        !block.rounds.some(
-            (round) => !isRestRound(round) && ['for_time', 'emom', 'amrap', 'tabata'].includes(round.config.type)
-        )
-    )
-        return 'none'
+    if (!block.rounds.some((round) => !isRestRound(round) && isValidTimedRound(round))) return 'none'
 
     if (isBlockMode) return 'block'
 

@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
+import { RegressiveTimer } from 'goal-utils'
 import { FiPlay, FiSkipBack, FiSquare } from 'solid-icons/fi'
 
 import { Component, createSignal } from 'solid-js'
-
-import { RegressiveTimer } from '@utils/timer'
 
 export interface RegressiveProps {
     initialTime: number // seconds
@@ -13,14 +12,14 @@ const RegressiveClock: Component<RegressiveProps> = (props) => {
     const [currentTime, setCurrentTime] = createSignal(props.initialTime)
     const [currentStatus, setCurrentStatus] = createSignal('initial')
 
-    const clock = new RegressiveTimer(props.initialTime)
+    const clock = new RegressiveTimer({ startTime: props.initialTime, endingCountdown: 3 })
 
     clock.on('changeStatus', (status) => {
         setCurrentStatus(status)
     })
 
-    clock.on('tick', (duration: number, start, current) => {
-        setCurrentTime(duration)
+    clock.on('timeElapsed', (currentTime) => {
+        setCurrentTime(currentTime)
     })
 
     clock.on('reset', () => {
@@ -30,7 +29,7 @@ const RegressiveClock: Component<RegressiveProps> = (props) => {
     return (
         <div class="flex flex-col items-center p-6">
             <h2 class="text-gray-200 font-bold text-lg">Cronômetro Regressivo</h2>
-            <h3 class="text-gray-300 text-sm">Tempo</h3>
+            <h3 class="text-gray-300 text-sm">Tempo({currentStatus()})</h3>
             <div class="text-center text-gray-900 text-[40pt] font-bold">
                 {dayjs.duration(currentTime(), 'second').format('mm:ss')}
             </div>
