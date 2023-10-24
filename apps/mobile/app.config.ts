@@ -13,7 +13,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`,
         slug: 'goal-mobile',
-        version: '1.4.3',
+        version: '1.4.4',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
         scheme: 'mygoal',
