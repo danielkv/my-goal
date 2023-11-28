@@ -15,7 +15,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: APP_NAME,
         slug: 'goal-mobile',
-        version: '1.5.3',
+        version: '1.5.4',
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
         scheme: 'mygoal',
@@ -26,7 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
-            buildNumber: '17',
+            buildNumber: '18',
             bundleIdentifier: BUNDLE_ID,
             appStoreUrl: 'https://apps.apple.com/us/app/my-goal/id6449090065',
             supportsTablet: false,
@@ -38,7 +38,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 16,
+            versionCode: 17,
             package: BUNDLE_ID,
             playStoreUrl: 'https://play.google.com/store/apps/details?id=app.mygoal.goal',
             adaptiveIcon: {
