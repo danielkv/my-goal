@@ -144,14 +144,16 @@ const SelectSubscriptionScreen: React.FC = () => {
             </Stack>
         )
 
-    const PRICE_COLOR = period === 'monthly' ? '#00B633' : '#E0B20C'
+    const periodToUse = period || 'monthly'
+    const PRICE_COLOR = periodToUse === 'monthly' ? '#00B633' : '#E0B20C'
 
     return (
         <YStack f={1} py="$5">
             <ToggleGroup
                 mx="$5"
                 value={period}
-                defaultValue="time"
+                disableDeactivation
+                defaultValue="monthly"
                 onValueChange={(value) => setPeriod(value as TPeriods)}
                 type="single"
                 h={40}
@@ -168,7 +170,7 @@ const SelectSubscriptionScreen: React.FC = () => {
                     offerings.map((offering) => {
                         const identifier = offering.identifier
                         const isFree = identifier === APP_OFFERING.APP_FREE_SUBSCRIPTION
-                        const pkg = (isFree ? offering.lifetime : offering[period]) as PurchasesPackage
+                        const pkg = (isFree ? offering.lifetime : offering[periodToUse]) as PurchasesPackage
 
                         const isActiveSubscription = userHasActiveSubscriptionUseCase(pkg.product.identifier)
                         const currentIsFree = !hasAnySubscriptionFromOffering && isFree
