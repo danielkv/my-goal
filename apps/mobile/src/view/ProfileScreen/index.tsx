@@ -35,7 +35,7 @@ const HEADER_MIN_HEIGHT = Dimensions.get('screen').height / 4
 const ProfileScreen: React.FC = () => {
     const { navigate, reset, goBack } = useNavigation()
     const user = useLoggedUser()
-    const { space } = getTokens()
+    const { space, color } = getTokens()
 
     const insets = useSafeAreaInsets()
 
@@ -109,7 +109,7 @@ const ProfileScreen: React.FC = () => {
     if (!user) return null
 
     const communityWhatsappLink = Constants.expoConfig?.extra?.COMMUNITY_WHATSAPP_LINK
-    const avatarColor = user.displayName ? stringToColor(user.displayName) : ''
+    const avatarColor = user.displayName ? stringToColor(user.displayName) : color.red5Light.val
     const textAvatarColor = getContrastColor(avatarColor)
     const profileImage = user.photoURL
 
@@ -191,21 +191,21 @@ const ProfileScreen: React.FC = () => {
                                 <Dumbbell size={20} color="white" />
                                 <Text fontWeight="700">PRs</Text>
                             </Button>
-                            {
-                                <Button
-                                    opacity={saveWorkoutEntitled ? 1 : 0.5}
-                                    onPress={() => navigate(ERouteName.UserWorkoutList)}
-                                    flexDirection="column"
-                                    f={1}
-                                    alignItems="flex-end"
-                                    h="auto"
-                                    gap="$4.5"
-                                    p="$3.5"
-                                >
-                                    <Medal size={20} color="white" />
-                                    <Text fontWeight="700">Workouts</Text>
-                                </Button>
-                            }
+
+                            <Button
+                                opacity={saveWorkoutEntitled ? 1 : 0.5}
+                                disabled={!saveWorkoutEntitled}
+                                onPress={() => navigate(ERouteName.UserWorkoutList)}
+                                flexDirection="column"
+                                f={1}
+                                alignItems="flex-end"
+                                h="auto"
+                                gap="$4.5"
+                                p="$3.5"
+                            >
+                                <Medal size={20} color="white" />
+                                <Text fontWeight="700">Workouts</Text>
+                            </Button>
                         </XStack>
                         {communityGroupsEntitled && communityWhatsappLink && (
                             <Button
