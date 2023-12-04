@@ -7,6 +7,7 @@ import LoginPage from '@view/Login'
 import MovementListScreen from '@view/MovementListScreen'
 import Preview from '@view/Preview'
 import PrivacyPolicy from '@view/PrivacyPolicy'
+import TermsOfUse from '@view/TermsOfUse'
 import UsersList from '@view/UsersList'
 import WorksheetList from '@view/WorksheetList'
 
@@ -18,6 +19,7 @@ const AppRouter: Component = () => {
                     <Route path="/" element={<Home />} />
 
                     <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+                    <Route path="/termos-de-uso" element={<TermsOfUse />} />
 
                     {/* Dashboard */}
                     <Route path="/dashboard">
