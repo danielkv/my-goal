@@ -13,8 +13,8 @@ const StripePriceTable: Component = (props) => {
             <div class="w-full h-full">
                 {/*@ts-expect-error */}
                 <stripe-pricing-table
-                    pricing-table-id="prctbl_1O0PdnADar8wSwCNJf86Xgvs"
-                    publishable-key="pk_test_51O07qgADar8wSwCNScm1R7RyOzkdCaT4JStq4o9orBXq4sn2ELeYiVXf9nHHjs8KHa8GyCAx7D3sEQ6eFbD4YMdP00uWLcS6Js"
+                    pricing-table-id="prctbl_1OJfrcADar8wSwCNR2QaNuh3"
+                    publishable-key="pk_live_51O07qgADar8wSwCNRLg5BgVViiFflQ3yYeMRkaQ6zsxmTfRLZDdZDv7Z8QaYh1QfKOEdTnkNoLoGglS7IkYdLScb00OelcAcdN"
                 />
             </div>
         </>
