@@ -46,6 +46,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 backgroundColor: '#202020',
             },
             googleServicesFile: process.env.GOOGLE_SERVICES_ANDROID,
+            permissions: ['com.google.android.gms.permission.AD_ID'],
         },
 
         extra: {
