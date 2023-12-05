@@ -1,3 +1,4 @@
+import { IUserSubscriptionInfo, TEntitlementsInfo } from 'goal-models'
 import { create } from 'zustand'
 
 import { IUser } from '@models/user'
@@ -5,18 +6,24 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
 export interface UserContext {
     user: IUser | null
-    serUser(user: IUser | null): void
+    subscriptionInfo: IUserSubscriptionInfo | null
+    setSubscriptionInfo(subscriptionInfo: IUserSubscriptionInfo | null): void
+    setUser(user: IUser | null): void
 }
 
 export const useUserContext = create<UserContext>((set) => ({
     user: null,
-    serUser(user: IUser | null) {
+    subscriptionInfo: null,
+    setSubscriptionInfo(subscriptionInfo) {
+        set({ subscriptionInfo })
+    },
+    setUser(user: IUser | null) {
         set({ user })
     },
 }))
 
-export const setLoggedUser = (user: IUser | null): void => {
-    useUserContext.getState().serUser(user)
+export const useEntitlements = (): TEntitlementsInfo => {
+    return useUserContext((c) => c.subscriptionInfo?.entitlements || {})
 }
 
 export const useLoggedUser = (): IUser | null => {

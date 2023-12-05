@@ -1,4 +1,4 @@
-import { IUserMovementResultInput } from 'goal-models'
+import { ANALYTICS_EVENTS, IUserMovementResultInput } from 'goal-models'
 import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
@@ -12,5 +12,6 @@ export async function saveMovementResultUseCase(result: Omit<IUserMovementResult
         createdAt: new Date().toISOString(),
     }
 
+    await firebaseProvider.getAnalytics().logEvent(ANALYTICS_EVENTS.SAVE_PR)
     await collectionRef.add(dataAdd)
 }

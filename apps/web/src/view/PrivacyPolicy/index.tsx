@@ -3,11 +3,11 @@ import { Component } from 'solid-js'
 const PrivacyPolicy: Component<{}> = (props) => {
     return (
         <div class="max-w-5xl m-auto mt-8">
-            <h1 class="font-bold my-4 text-xl">Política de Privacidade</h1>
+            <h1 class="font-bold my-4 text-xl">Política de Privacidade - Aplicativo móvel My Goal</h1>
             <p>
-                Esta Política de Privacidade descreve como o Goal, doravante denominado "nós" ou "nosso", coleta, usa e
-                compartilha informações pessoais de usuários, doravante denominados "você" ou "seu", que acessam ou usam
-                o aplicativo Goal.
+                Esta Política de Privacidade descreve como o My Goal, doravante denominado "nós" ou "nosso", coleta, usa
+                e compartilha informações pessoais de usuários, doravante denominados "você" ou "seu", que acessam ou
+                usam o aplicativo My Goal.
             </p>
             <h2 class="font-bold my-4">1. Informações que coletamos</h2>
             <p>

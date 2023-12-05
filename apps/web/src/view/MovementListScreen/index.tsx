@@ -5,6 +5,7 @@ import { FiPlus } from 'solid-icons/fi'
 import { Component, For, Show, createEffect, createMemo, createResource, createSignal } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
+import DashboardContainer from '@components/DashboardContainer'
 import TextInput from '@components/TextInput'
 import { Delete, Edit } from '@suid/icons-material'
 import {
@@ -132,114 +133,121 @@ const MovementListScreen: Component = () => {
     })
 
     return (
-        <Container maxWidth="lg">
-            <Box mt={6}>
-                <Stack mb={8} direction="row" justifyContent="space-between" alignItems="center">
-                    <Typography variant="h1" fontSize={28} fontWeight="bold">
-                        Movimentos{' '}
-                        <Show when={listResult.loading}>
-                            <CircularProgress size={20} color="warning" />
-                        </Show>
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<FiPlus />}
-                        onClick={handleOpenAddMovement}
-                    >
-                        Adicionar movimento
-                    </Button>
-                </Stack>
-
-                <Show when={listResult()?.length}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Nome</TableCell>
-                                <TableCell>Tipo de resultado</TableCell>
-                                <TableCell>Resultados</TableCell>
-                                <TableCell class="w-[160px]">Ações</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <For each={listResult()}>
-                                {(movement) => (
-                                    <TableRow>
-                                        <TableCell>
-                                            <Stack direction="row" spacing={1}>
-                                                <Box fontWeight="bold">{movement.movement}</Box>
-                                            </Stack>
-                                        </TableCell>
-                                        <TableCell>{RESULT_TYPES[movement.resultType]}</TableCell>
-                                        <TableCell>{movement.countResults}</TableCell>
-
-                                        <TableCell>
-                                            <Show when={loadinRemoveAction() === movement.id}>
-                                                <CircularProgress size={20} color="warning" />
-                                            </Show>
-
-                                            <IconButton
-                                                title="Editar movimento"
-                                                onClick={() => handleOpenUpdateMovement(movement)}
-                                                disabled={buttonsDisabled()}
-                                            >
-                                                <Edit />
-                                            </IconButton>
-                                            <IconButton
-                                                title="Excluir movimento"
-                                                onClick={() => handleRemoveMovement(movement.id)}
-                                                disabled={buttonsDisabled()}
-                                            >
-                                                <Delete />
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </For>
-                        </TableBody>
-                    </Table>
-                </Show>
-            </Box>
-            <Dialog
-                open={dialogOpen()}
-                onClose={handleCloseDialog}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">Editar movimento</DialogTitle>
-                <DialogContent class="w-96 max-w-[100%]">
-                    <Stack gap={2}>
-                        <TextInput
-                            label="Movimento"
-                            name="movementName"
-                            value={movementNameValue()}
-                            onChange={(e) => setMovementNameValue((e.target as HTMLInputElement).value)}
-                        />
-                        <select
-                            class="input input-full"
-                            onChange={(e) => setMovementResultTypeValue(e.target.value as TResultType)}
+        <DashboardContainer>
+            <Container maxWidth="lg">
+                <Box mt={6}>
+                    <Stack mb={8} direction="row" justifyContent="space-between" alignItems="center">
+                        <Typography variant="h1" fontSize={28} fontWeight="bold">
+                            Movimentos{' '}
+                            <Show when={listResult.loading}>
+                                <CircularProgress size={20} color="warning" />
+                            </Show>
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            startIcon={<FiPlus />}
+                            onClick={handleOpenAddMovement}
                         >
-                            <option>Selecione</option>
-                            <For each={Object.entries(RESULT_TYPES)}>
-                                {([key, label]) => (
-                                    <option value={key} selected={movementResultTypeValue() === key}>
-                                        {label}
-                                    </option>
-                                )}
-                            </For>
-                        </select>
+                            Adicionar movimento
+                        </Button>
                     </Stack>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="secondary" onClick={handleCloseDialog} disabled={loadinAction()}>
-                        Cancelar
-                    </Button>
-                    <Button variant="contained" onClick={handleFinishModal} disabled={loadinAction()}>
-                        {loadinAction() ? <ActivityIndicator color="#fff" size={24} /> : 'Salvar'}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </Container>
+
+                    <Show when={listResult()?.length}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Nome</TableCell>
+                                    <TableCell>Tipo de resultado</TableCell>
+                                    <TableCell>Resultados</TableCell>
+                                    <TableCell class="w-[160px]">Ações</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <For each={listResult()}>
+                                    {(movement) => (
+                                        <TableRow>
+                                            <TableCell>
+                                                <Stack direction="row" spacing={1}>
+                                                    <Box fontWeight="bold">{movement.movement}</Box>
+                                                </Stack>
+                                            </TableCell>
+                                            <TableCell>{RESULT_TYPES[movement.resultType]}</TableCell>
+                                            <TableCell>{movement.countResults}</TableCell>
+
+                                            <TableCell>
+                                                <Show when={loadinRemoveAction() === movement.id}>
+                                                    <CircularProgress size={20} color="warning" />
+                                                </Show>
+
+                                                <IconButton
+                                                    title="Editar movimento"
+                                                    onClick={() => handleOpenUpdateMovement(movement)}
+                                                    disabled={buttonsDisabled()}
+                                                >
+                                                    <Edit />
+                                                </IconButton>
+                                                <IconButton
+                                                    title="Excluir movimento"
+                                                    onClick={() => handleRemoveMovement(movement.id)}
+                                                    disabled={buttonsDisabled()}
+                                                >
+                                                    <Delete />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </For>
+                            </TableBody>
+                        </Table>
+                    </Show>
+                </Box>
+                <Dialog
+                    open={dialogOpen()}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Editar movimento</DialogTitle>
+                    <DialogContent class="w-96 max-w-[100%]">
+                        <Stack gap={2}>
+                            <TextInput
+                                label="Movimento"
+                                name="movementName"
+                                value={movementNameValue()}
+                                onChange={(e) => setMovementNameValue((e.target as HTMLInputElement).value)}
+                            />
+                            <select
+                                class="input input-full"
+                                onChange={(e) => setMovementResultTypeValue(e.target.value as TResultType)}
+                            >
+                                <option>Selecione</option>
+                                <For each={Object.entries(RESULT_TYPES)}>
+                                    {([key, label]) => (
+                                        <option value={key} selected={movementResultTypeValue() === key}>
+                                            {label}
+                                        </option>
+                                    )}
+                                </For>
+                            </select>
+                        </Stack>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleCloseDialog}
+                            disabled={loadinAction()}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button variant="contained" onClick={handleFinishModal} disabled={loadinAction()}>
+                            {loadinAction() ? <ActivityIndicator color="#fff" size={24} /> : 'Salvar'}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </Container>
+        </DashboardContainer>
     )
 }
 

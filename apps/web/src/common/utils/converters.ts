@@ -43,6 +43,6 @@ export const movementConverter: FirestoreDataConverter<IMovement> = {
 
         const movement_insensitive = result.movement?.toString().toLowerCase()
 
-        return { ...result, movement_insensitive }
+        return { ...result, movement_insensitive, countResults: result.countResults || 0 }
     },
 }

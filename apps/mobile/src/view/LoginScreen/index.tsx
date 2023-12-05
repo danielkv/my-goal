@@ -1,6 +1,7 @@
 import { Image, ImageBackground } from 'react-native'
 
-import { H3, ScrollView, Separator, Stack, Text, YStack, getTokens } from 'tamagui'
+import * as Linking from 'expo-linking'
+import { H3, ScrollView, Separator, Stack, Text, XStack, YStack, getTokens } from 'tamagui'
 
 import LoginBg from '@assets/images/login-bg.png'
 import LogoGoal from '@assets/images/logo-goal.png'
@@ -13,6 +14,9 @@ import { ERouteName } from '@router/types'
 
 import AppleLogin from './components/AppleLogin'
 import GoogleLogin from './components/GoogleLogin'
+
+const termsOfUseUrl = 'https://mygoal.app/termos-de-uso'
+const privacyPolicyUrl = 'https://mygoal.app/politica-de-privacidade'
 
 const LoginScreen: React.FC = () => {
     const navigation = useNavigation()
@@ -66,6 +70,25 @@ const LoginScreen: React.FC = () => {
                                 Criar uma nova conta
                             </Button>
                         </YStack>
+                        <XStack>
+                            <Button
+                                f={0.45}
+                                fontWeight="400"
+                                variant="link"
+                                onPress={() => Linking.openURL(termsOfUseUrl)}
+                            >
+                                Termos de uso
+                            </Button>
+
+                            <Button
+                                f={0.55}
+                                fontWeight="400"
+                                variant="link"
+                                onPress={() => Linking.openURL(privacyPolicyUrl)}
+                            >
+                                Política de Privacidade
+                            </Button>
+                        </XStack>
                     </YStack>
                 </ScrollView>
             </ImageBackground>

@@ -28,7 +28,7 @@ const PeriodPreview: Component<PeriodProps> = (props) => {
             class="period bg-gray-900 rounded-xl w-96"
             classList={{
                 selected: props.currentPath === props.thisPath,
-                empty: !props.item.sections.length,
+                empty: !props.item.sections?.length,
                 hoverable: !!props.onClickPeace,
             }}
             onClick={(e) => {

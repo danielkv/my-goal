@@ -1,4 +1,4 @@
-import { IMovement, IMovementInput } from 'goal-models'
+import { IMovementInput } from 'goal-models'
 import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
@@ -10,10 +10,5 @@ export async function addMovementUseCase(movementInput: IMovementInput) {
         .collection(collections.MOVEMENTS)
         .withConverter(movementConverter)
 
-    const movement: Omit<IMovement, 'id'> = {
-        ...movementInput,
-        countResults: 0,
-    }
-
-    await firebaseProvider.firestore().addDoc(collectionRef, movement)
+    await firebaseProvider.firestore().addDoc(collectionRef, movementInput)
 }

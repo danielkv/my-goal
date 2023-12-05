@@ -40,7 +40,7 @@ const EventBlockDialog: React.FC<EventBlockDialogProps> = ({ block, open, onClos
 
     return (
         <>
-            <Modal open={open} onClose={onClose} id="menu">
+            <Modal open={open} onClose={onClose}>
                 <Paper>
                     <Button icon={<Medal />} onPress={handlePressResults}>
                         Ver resultados

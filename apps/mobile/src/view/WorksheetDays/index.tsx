@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { RefreshControl } from 'react-native'
 
+import { APP_ENTITLEMENTS } from 'goal-models'
 import useSWR from 'swr'
 import { Stack, getTokens, useTheme } from 'tamagui'
 
@@ -32,7 +33,7 @@ const WorksheetDays: React.FC = () => {
         (args: string[]) => getWorksheetByIdUseCase(args[0])
     )
 
-    usePreventAccess()
+    usePreventAccess(APP_ENTITLEMENTS.WEEKLY_WORKOUT_ACCESS)
 
     const handleRefresh = async () => {
         setRefreshing(true)

@@ -8,7 +8,7 @@ export function redirectToLogin() {
 
     createEffect(() => {
         if (loggedUser() === null) {
-            navigate('/login')
+            navigate('/dashboard/login')
         }
     })
 }

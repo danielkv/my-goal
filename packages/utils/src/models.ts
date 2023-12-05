@@ -22,13 +22,13 @@ export function isBlock(obj: Record<string, any>): obj is IBlock {
 }
 
 export function isRestRound(obj: Record<string, any>): obj is IRestRound {
-    if (obj.type === 'rest' && obj.hasOwnProperty('time')) return true
+    if (obj?.type === 'rest' && obj.hasOwnProperty('time')) return true
 
     return false
 }
 
 export function isComplexRound(obj: Record<string, any>): obj is IComplexRound {
-    if (obj.type === 'complex' && obj.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
+    if (obj?.type === 'complex' && obj.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
 
     return false
 }
@@ -36,7 +36,7 @@ export function isComplexRound(obj: Record<string, any>): obj is IComplexRound {
 export function isRound(obj: Record<string, any>): obj is IRound {
     if (isRestRound(obj)) return true
     if (isComplexRound(obj)) return true
-    if (obj.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
+    if (obj?.hasOwnProperty('movements') && obj.hasOwnProperty('config')) return true
     return false
 }
 
@@ -54,13 +54,13 @@ export function isRestBlock(obj: Record<string, any>): obj is IRestBlock {
 }
 
 export function isWorksheetModel(obj: IWorksheet): obj is IWorksheetModel {
-    if (!obj.id) return false
-    if (!obj.days.every(isDayModel)) return false
+    if (!obj?.id) return false
+    if (!obj?.days.every(isDayModel)) return false
 
     return true
 }
 
 export function isDayModel(obj: IDay): obj is IDayModel {
-    if (obj.id) return true
+    if (obj?.id) return true
     return false
 }

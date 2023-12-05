@@ -3,7 +3,6 @@ import { ButtonProps, Button as NButton, Spinner, SpinnerProps, styled } from 't
 const Button = styled(NButton, {
     bg: '$backgroundStrong',
     bw: 0,
-    w: '100%',
     fontWeight: '700',
 
     variants: {

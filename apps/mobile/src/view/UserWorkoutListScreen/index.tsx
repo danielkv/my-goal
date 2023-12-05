@@ -1,7 +1,7 @@
 import { Platform, TouchableOpacity } from 'react-native'
 
 import dayjs from 'dayjs'
-import { IUserWorkoutResult, TResultType } from 'goal-models'
+import { APP_ENTITLEMENTS, IUserWorkoutResult, TResultType } from 'goal-models'
 import { group, unique } from 'radash'
 import useSWRInfinite from 'swr/infinite'
 import { Stack, Text, getTokens, useTheme } from 'tamagui'
@@ -39,7 +39,7 @@ const UserWorkoutListScreen: React.FC = () => {
     const theme = useTheme()
     const { space } = getTokens()
 
-    const user = usePreventAccess()
+    const user = usePreventAccess(APP_ENTITLEMENTS.SAVE_WORKOUT_RESULT)
 
     const getKey = (
         pageIndex: number,

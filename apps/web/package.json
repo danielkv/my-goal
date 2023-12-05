@@ -41,6 +41,7 @@
 		"html2canvas": "^1.4.1",
 		"html2pdf.js": "^0.10.1",
 		"jspdf": "^2.5.1",
+		"keen-slider": "^6.8.6",
 		"prettier": "^2.8.7",
 		"radash": "^10.8.1",
 		"solid-icons": "^1.0.4",

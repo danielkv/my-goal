@@ -1,6 +1,6 @@
 import { User } from 'firebase/auth'
 
-import { Component, onCleanup } from 'solid-js'
+import { Component, createEffect, onCleanup } from 'solid-js'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { theme } from '@common/theme'
@@ -16,6 +16,13 @@ const App: Component = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    createEffect(async () => {
+        const script = document.createElement('script')
+        script.src = `https://www.google.com/recaptcha/api.js?render=${import.meta.env.VITE_APP_RECAPTCHA_SITE_KEY}`
+        script.async = true
+        document.head.appendChild(script)
+    })
+
     function handleAuthStateChanged(user: User | null) {
         if (!user || !user?.email) return setLoggedUser(null)
 
@@ -23,13 +30,13 @@ const App: Component = () => {
             .then(({ claims }) => {
                 if (!claims.admin) {
                     alert('Você não tem permissão para acessar essa página')
-                    navigate('/')
+                    navigate('/dashboard/login')
                     return firebaseProvider.getAuth().signOut()
                 }
 
                 setLoggedUser(extractUserCredential(user))
 
-                if (location.pathname === '/login') navigate('worksheet')
+                if (location.pathname === '/dashboard/login') navigate('/dashboard')
             })
             .catch((err) => {
                 alert(getErrorMessage(err))

@@ -13,6 +13,7 @@ import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
 import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
+import SelectSubscriptionScreen from '@view/SelectSubscriptionScreen'
 import SubscriptionScreen from '@view/SubscriptionScreen'
 import EmomTimerScreen from '@view/Timers/EmomTimerScreen'
 import RegressiveTimerScreen from '@view/Timers/RegressiveTimerScreen'
@@ -20,6 +21,7 @@ import StopwatchTimerScreen from '@view/Timers/StopwatchTImerScreen'
 import TabataTimerScreen from '@view/Timers/TabataTimerScreen'
 import TimersScreen from '@view/Timers/TimersScreen'
 import UserMovementResultScreen from '@view/UserMovementResultScreen'
+import UserSubscriptionScreen from '@view/UserSubscriptionScreen'
 import UserWorkoutListScreen from '@view/UserWorkoutListScreen'
 import UserWorkoutScreen from '@view/UserWorkoutScreen'
 import WodTimerScreen from '@view/WodTimerScreen'
@@ -141,6 +143,17 @@ function Router() {
 
             <Stack.Screen name={ERouteName.UserWorkout} options={{ title: 'Workouts' }} component={UserWorkoutScreen} />
             <Stack.Screen name={ERouteName.WodTimer} options={{ title: 'Wod Timer' }} component={WodTimerScreen} />
+
+            <Stack.Screen
+                name={ERouteName.SelectSubscription}
+                options={{ title: 'Selecione um plano' }}
+                component={SelectSubscriptionScreen}
+            />
+            <Stack.Screen
+                name={ERouteName.UserSubscription}
+                options={{ title: 'Sua assinatura' }}
+                component={UserSubscriptionScreen}
+            />
         </Stack.Navigator>
     )
 }
