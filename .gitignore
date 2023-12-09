@@ -13,3 +13,5 @@ node_modules
 !.yarn/versions
 
 remoteconfig.template.json
+
+supabase

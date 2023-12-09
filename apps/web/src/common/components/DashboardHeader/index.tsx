@@ -23,13 +23,25 @@ const DashboardHeader: Component = () => {
             <div class="flex gap-3">
                 {loggedUser() ? (
                     <>
-                        <A href="/movements" title="Movimentos" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
+                        <A
+                            href="/dashboard/movements"
+                            title="Movimentos"
+                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                        >
                             <CgGym size={20} />
                         </A>
-                        <A href="/users" title="Usuários" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
+                        <A
+                            href="/dashboard/users"
+                            title="Usuários"
+                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                        >
                             <FiUsers size={20} />
                         </A>
-                        <A href="/worksheet" title="Planilhas" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
+                        <A
+                            href="/dashboard/worksheet"
+                            title="Planilhas"
+                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                        >
                             <FaSolidClipboardList size={20} fill="white" />
                         </A>
                         <button
