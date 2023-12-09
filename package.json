@@ -16,5 +16,8 @@
 		"dev:web": "yarn workspace goal-web dev",
 		"dev:mobile": "yarn workspace goal-mobile start"
 	},
-	"packageManager": "yarn@3.6.2"
+	"packageManager": "yarn@3.6.2",
+	"devDependencies": {
+		"supabase": "^1.115.4"
+	}
 }
