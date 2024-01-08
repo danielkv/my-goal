@@ -21,7 +21,7 @@ const HomeScreen: React.FC = () => {
         <ImageBackground style={{ flex: 1 }} source={HomeBG}>
             <YStack px="$6" py="$3.5" f={1} jc="flex-end">
                 <YStack>
-                    <Image source={LogoGoal} h={60} resizeMode="contain" alt="Logo Goal" mb="$6" />
+                    <Image source={LogoGoal} w="100%" h={60} resizeMode="contain" alt="Logo Goal" mb="$6" />
                     {user ? (
                         <Button
                             variant="primary"
