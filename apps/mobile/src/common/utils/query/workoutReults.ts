@@ -1,9 +1,10 @@
-import { IUserData, IUserResult, TResultType } from 'goal-models'
+import { APP_ENTITLEMENTS, IUserData, IUserResult, TResultType } from 'goal-models'
 import { collections } from 'goal-utils'
 
 import { WorkoutResultFilter } from '@common/interfaces/workoutResult'
 import { firebaseProvider } from '@common/providers/firebase'
 import { FirebaseFirestoreTypes, firebase } from '@react-native-firebase/firestore'
+import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
 
 export async function mergeWorkoutResultAndUser<Type extends IUserResult>(
     docs: FirebaseFirestoreTypes.QueryDocumentSnapshot<Omit<Type, 'id'>>[]
@@ -41,7 +42,9 @@ export function getWorkoutResultFilters<Type extends Omit<IUserResult, 'id'>>(
     query: FirebaseFirestoreTypes.Query<Type>,
     filter: WorkoutResultFilter
 ): FirebaseFirestoreTypes.Query<Type> {
-    if (filter.onlyMe) {
+    const isEntitled = userIsEntitledUseCase(APP_ENTITLEMENTS.FOLLOW_COMMUNITY_RESULTS)
+
+    if (filter.onlyMe && isEntitled) {
         query = query.where('uid', '==', filter.userId)
     } else {
         query = query.where(

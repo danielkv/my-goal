@@ -25,5 +25,5 @@ export async function getLastWorkoutResultsBySignatureUseCase(
 
     const results = await mergeWorkoutResultAndUser(resultsSnapshot.docs)
 
-    return results
+    return results as IUserWorkoutResultResponse[]
 }

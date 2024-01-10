@@ -36,7 +36,8 @@
                 "serviceAccountKeyPath": "./google-service-account.json"
             },
             "ios": {
-                "appleId": "daniel_kv@hotmail.com"
+                "appleId": "daniel_kv@hotmail.com",
+                "ascAppId": "6449090065"
             }
         }
     }

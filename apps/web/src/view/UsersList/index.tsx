@@ -2,6 +2,7 @@ import cloneDeep from 'clone-deep'
 
 import { Component, For, Show, createMemo, createResource, createSignal } from 'solid-js'
 
+import DashboardContainer from '@components/DashboardContainer'
 import Pagination from '@components/Pagination'
 import { loggedUser } from '@contexts/user/user.context'
 import {
@@ -110,90 +111,95 @@ const UsersList: Component = () => {
     }
 
     return (
-        <Container maxWidth="lg">
-            <Box mt={6}>
-                <Typography variant="h1" fontSize={28} mb={8} fontWeight="bold">
-                    Lista de usuários{' '}
-                    <Show when={listResult.loading}>
-                        <CircularProgress size={20} color="warning" />
-                    </Show>
-                </Typography>
+        <DashboardContainer>
+            <Container maxWidth="lg">
+                <Box mt={6}>
+                    <Typography variant="h1" fontSize={28} mb={8} fontWeight="bold">
+                        Lista de usuários{' '}
+                        <Show when={listResult.loading}>
+                            <CircularProgress size={20} color="warning" />
+                        </Show>
+                    </Typography>
 
-                <Show when={listResult()?.users.length}>
-                    <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Nome</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Telefone</TableCell>
-                                <TableCell>Ações</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <For each={listResult()?.users}>
-                                {(user) => (
-                                    <TableRow>
-                                        <TableCell>
-                                            <Stack direction="row" spacing={1}>
-                                                <Box fontWeight="bold">{user.displayName}</Box>
-                                                <Show when={user.uid === loggedUser()?.uid}>
-                                                    <Box>(você)</Box>
+                    <Show when={listResult()?.users.length}>
+                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Nome</TableCell>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>Telefone</TableCell>
+                                    <TableCell>Ações</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <For each={listResult()?.users}>
+                                    {(user) => (
+                                        <TableRow>
+                                            <TableCell>
+                                                <Stack direction="row" spacing={1}>
+                                                    <Box fontWeight="bold">{user.displayName}</Box>
+                                                    <Show when={user.uid === loggedUser()?.uid}>
+                                                        <Box>(você)</Box>
+                                                    </Show>
+                                                    <Show when={user.customClaims?.admin}>
+                                                        <div title="Admin">
+                                                            <AdminPanelSettings color="info" fontSize="small" />
+                                                        </div>
+                                                    </Show>
+                                                    <Show when={user.emailVerified}>
+                                                        <div title="Email verificado">
+                                                            <MarkEmailRead color="success" fontSize="small" />
+                                                        </div>
+                                                    </Show>
+                                                </Stack>
+                                            </TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                            <TableCell>{user.phoneNumber}</TableCell>
+                                            <TableCell>
+                                                <Show when={loadinAction() === user.uid}>
+                                                    <CircularProgress size={20} color="warning" />
                                                 </Show>
-                                                <Show when={user.customClaims?.admin}>
-                                                    <div title="Admin">
-                                                        <AdminPanelSettings color="info" fontSize="small" />
-                                                    </div>
+                                                <Show when={!loadinAction() || loadinAction() !== user.uid}>
+                                                    <IconButton
+                                                        title={user.disabled ? 'Ativar usuário' : 'Inativar usuário'}
+                                                        onClick={() => handleToggleEnableUser(user.uid, user.disabled)}
+                                                        disabled={user.uid === loggedUser()?.uid}
+                                                        color={user.disabled ? 'error' : 'success'}
+                                                    >
+                                                        {user.disabled ? <ToggleOn /> : <ToggleOff />}
+                                                    </IconButton>
+                                                    <IconButton
+                                                        title={user.disabled ? 'Remover função ADM' : 'Tornar ADM'}
+                                                        onClick={() =>
+                                                            handleToggleAdminAccess(
+                                                                user.uid,
+                                                                !!user.customClaims?.admin
+                                                            )
+                                                        }
+                                                        disabled={user.uid === loggedUser()?.uid}
+                                                    >
+                                                        {user.customClaims?.admin ? <PersonRemove /> : <PersonAdd />}
+                                                    </IconButton>
+                                                    <IconButton
+                                                        title="Excluir usuário"
+                                                        onClick={() => handleRemoveUser(user.uid)}
+                                                        disabled={user.uid === loggedUser()?.uid}
+                                                    >
+                                                        <Delete />
+                                                    </IconButton>
                                                 </Show>
-                                                <Show when={user.emailVerified}>
-                                                    <div title="Email verificado">
-                                                        <MarkEmailRead color="success" fontSize="small" />
-                                                    </div>
-                                                </Show>
-                                            </Stack>
-                                        </TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.phoneNumber}</TableCell>
-                                        <TableCell>
-                                            <Show when={loadinAction() === user.uid}>
-                                                <CircularProgress size={20} color="warning" />
-                                            </Show>
-                                            <Show when={!loadinAction() || loadinAction() !== user.uid}>
-                                                <IconButton
-                                                    title={user.disabled ? 'Ativar usuário' : 'Inativar usuário'}
-                                                    onClick={() => handleToggleEnableUser(user.uid, user.disabled)}
-                                                    disabled={user.uid === loggedUser()?.uid}
-                                                    color={user.disabled ? 'error' : 'success'}
-                                                >
-                                                    {user.disabled ? <ToggleOn /> : <ToggleOff />}
-                                                </IconButton>
-                                                <IconButton
-                                                    title={user.disabled ? 'Remover função ADM' : 'Tornar ADM'}
-                                                    onClick={() =>
-                                                        handleToggleAdminAccess(user.uid, !!user.customClaims?.admin)
-                                                    }
-                                                    disabled={user.uid === loggedUser()?.uid}
-                                                >
-                                                    {user.customClaims?.admin ? <PersonRemove /> : <PersonAdd />}
-                                                </IconButton>
-                                                <IconButton
-                                                    title="Excluir usuário"
-                                                    onClick={() => handleRemoveUser(user.uid)}
-                                                    disabled={user.uid === loggedUser()?.uid}
-                                                >
-                                                    <Delete />
-                                                </IconButton>
-                                            </Show>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </For>
-                        </TableBody>
-                    </Table>
-                    <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
-                </Show>
-            </Box>
-        </Container>
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </For>
+                            </TableBody>
+                        </Table>
+                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
+                    </Show>
+                </Box>
+            </Container>
+        </DashboardContainer>
     )
 }
 

@@ -1,5 +1,4 @@
 node_modules
-.yarn/cache
 
 *.log
 
@@ -14,3 +13,5 @@ node_modules
 !.yarn/versions
 
 remoteconfig.template.json
+
+supabase

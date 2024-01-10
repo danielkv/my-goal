@@ -9,6 +9,7 @@ import { VsHistory } from 'solid-icons/vs'
 import { Component, Show, createEffect, createSignal } from 'solid-js'
 import { SetStoreFunction, StoreSetter, createStore, produce } from 'solid-js/store'
 
+import DashboardContainer from '@components/DashboardContainer'
 import WorksheetPreview from '@components/WorksheetPreview'
 import { Path } from '@interfaces/app'
 import { useParams } from '@solidjs/router'
@@ -213,97 +214,99 @@ const CreateNewDay: Component = () => {
     }
 
     return (
-        <div
-            style={{
-                height: 'calc(100% - 80px)',
-            }}
-        >
-            <div class="flex flex-1 flex-col basis-auto overflow-auto relative">
-                <Box class="fixed bottom-3 left-3">
-                    <Show when={loadingTemp()}>
-                        <Chip class="animate-pulse" color="info" label="Salvando rascunho..." />
-                    </Show>
-                    <Show when={displayTempSaved()}>
-                        <Chip color="success" label="Rascunho salvo!" />
-                    </Show>
-                </Box>
-                <Box class=" bg-gray-700">
-                    <Toolbar>
-                        <Stack flex={1} direction="row" alignItems="center" justifyContent="space-between" gap={2}>
-                            <button
-                                class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
-                                onClick={() => setDrawerOpen(true)}
-                                title="Abrir menu"
-                            >
-                                <FiArrowRight size={22} />
-                            </button>
-                            <Stack direction="row" alignItems="center" gap={2}>
-                                {hasHistorySaved() && (
+        <DashboardContainer>
+            <div
+                style={{
+                    height: 'calc(100% - 80px)',
+                }}
+            >
+                <div class="flex flex-1 flex-col basis-auto overflow-auto relative">
+                    <Box class="fixed bottom-3 left-3">
+                        <Show when={loadingTemp()}>
+                            <Chip class="animate-pulse" color="info" label="Salvando rascunho..." />
+                        </Show>
+                        <Show when={displayTempSaved()}>
+                            <Chip color="success" label="Rascunho salvo!" />
+                        </Show>
+                    </Box>
+                    <Box class=" bg-gray-700">
+                        <Toolbar>
+                            <Stack flex={1} direction="row" alignItems="center" justifyContent="space-between" gap={2}>
+                                <button
+                                    class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                                    onClick={() => setDrawerOpen(true)}
+                                    title="Abrir menu"
+                                >
+                                    <FiArrowRight size={22} />
+                                </button>
+                                <Stack direction="row" alignItems="center" gap={2}>
+                                    {hasHistorySaved() && (
+                                        <Box>
+                                            <button
+                                                disabled={!worksheetStore.id}
+                                                class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                                                onClick={handleRecoverWorksheet}
+                                                title="Abrir visualização"
+                                            >
+                                                <VsHistory size={22} />
+                                            </button>
+                                        </Box>
+                                    )}
                                     <Box>
                                         <button
                                             disabled={!worksheetStore.id}
                                             class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
-                                            onClick={handleRecoverWorksheet}
+                                            onClick={handleViewWorksheet}
                                             title="Abrir visualização"
                                         >
-                                            <VsHistory size={22} />
+                                            <FiEye size={22} />
                                         </button>
                                     </Box>
-                                )}
-                                <Box>
-                                    <button
-                                        disabled={!worksheetStore.id}
-                                        class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
-                                        onClick={handleViewWorksheet}
-                                        title="Abrir visualização"
-                                    >
-                                        <FiEye size={22} />
-                                    </button>
-                                </Box>
+                                </Stack>
                             </Stack>
-                        </Stack>
-                    </Toolbar>
-                </Box>
+                        </Toolbar>
+                    </Box>
 
-                {error() ? (
-                    <div class="flex-1 text-center m-10">{error()}</div>
-                ) : loading() ? (
-                    <div class="flex-1 text-center m-10">Carregando...</div>
-                ) : (
-                    <div class="pb-20">
-                        <WorksheetPreview
+                    {error() ? (
+                        <div class="flex-1 text-center m-10">{error()}</div>
+                    ) : loading() ? (
+                        <div class="flex-1 text-center m-10">Carregando...</div>
+                    ) : (
+                        <div class="pb-20">
+                            <WorksheetPreview
+                                currentPath={currentPath()}
+                                item={worksheetStore}
+                                onClickPeace={(key) => setCurrentPath(key)}
+                                onAdd={handleAddPeace}
+                                onRemove={handleRemovePeace}
+                                onMove={handleMovePeace}
+                                onUpdate={handleUpdatePeace}
+                            />
+                        </div>
+                    )}
+                </div>
+                <SaveContainer
+                    worksheet={worksheetStore}
+                    handleSetWorksheet={setWorksheetStore}
+                    handleSetLastTempSaved={setLastTempSaved}
+                />
+                <Drawer variant="persistent" open={drawerOpen()} anchor="left">
+                    <div style={{ width: '500px' }} class="bg-gray-700 h-full flex flex-col basis-auto">
+                        <Stack alignItems="flex-end" p={2}>
+                            <IconButton onClick={() => setDrawerOpen(false)}>
+                                <FiArrowLeft />
+                            </IconButton>
+                        </Stack>
+                        <Form
+                            worksheet={worksheetStore}
+                            handleSetWorksheet={setWorksheetStore}
                             currentPath={currentPath()}
-                            item={worksheetStore}
-                            onClickPeace={(key) => setCurrentPath(key)}
-                            onAdd={handleAddPeace}
-                            onRemove={handleRemovePeace}
-                            onMove={handleMovePeace}
-                            onUpdate={handleUpdatePeace}
+                            handleSetPath={setCurrentPath}
                         />
                     </div>
-                )}
+                </Drawer>
             </div>
-            <SaveContainer
-                worksheet={worksheetStore}
-                handleSetWorksheet={setWorksheetStore}
-                handleSetLastTempSaved={setLastTempSaved}
-            />
-            <Drawer variant="persistent" open={drawerOpen()} anchor="left">
-                <div style={{ width: '500px' }} class="bg-gray-700 h-full flex flex-col basis-auto">
-                    <Stack alignItems="flex-end" p={2}>
-                        <IconButton onClick={() => setDrawerOpen(false)}>
-                            <FiArrowLeft />
-                        </IconButton>
-                    </Stack>
-                    <Form
-                        worksheet={worksheetStore}
-                        handleSetWorksheet={setWorksheetStore}
-                        currentPath={currentPath()}
-                        handleSetPath={setCurrentPath}
-                    />
-                </div>
-            </Drawer>
-        </div>
+        </DashboardContainer>
     )
 }
 

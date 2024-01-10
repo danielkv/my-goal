@@ -1,5 +1,6 @@
 import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential, setLoggedUser } from '@contexts/user/userContext'
+import { extractUserCredential } from '@contexts/user/userContext'
+import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { createAppException } from '@utils/exceptions/AppException'
 
@@ -19,7 +20,7 @@ export async function logUserInUseCase(credentials: Credentials) {
         throw createAppException('EMAIL_NOT_VERIFIED', 'Email não verificado')
     }
 
-    setLoggedUser(extractUserCredential(credentialResult.user))
+    return setLoggedUser(extractUserCredential(credentialResult.user))
 }
 
 async function _loginRouter(credentials: Credentials): Promise<FirebaseAuthTypes.UserCredential | null> {
