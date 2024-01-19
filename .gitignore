@@ -15,3 +15,5 @@ node_modules
 remoteconfig.template.json
 
 supabase
+
+.env*
