@@ -1,13 +1,14 @@
 import { firebaseProvider } from '@common/providers/firebase'
 import { extractUserCredential } from '@contexts/user/userContext'
-import { IUser, IUserInput } from '@models/user'
+import { IUserFB, IUserInput } from '@models/user'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
-const updateUserFn = firebaseProvider.FUNCTION_CALL<{ uid: string; data: Partial<FirebaseAuthTypes.UserInfo> }, IUser>(
-    'updateUser'
-)
+const updateUserFn = firebaseProvider.FUNCTION_CALL<
+    { uid: string; data: Partial<FirebaseAuthTypes.UserInfo> },
+    IUserFB
+>('updateUser')
 
-export async function createUserUseCase(userInput: IUserInput): Promise<IUser> {
+export async function createUserUseCase(userInput: IUserInput): Promise<IUserFB> {
     const auth = firebaseProvider.getAuth()
     const { user } = await auth.createUserWithEmailAndPassword(userInput.email, userInput.password)
 

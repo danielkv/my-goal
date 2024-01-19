@@ -1,8 +1,8 @@
-import { IUserSubscriptionInfo, TEntitlementsInfo } from 'goal-models'
+import { IUser, IUserSubscriptionInfo, TEntitlementsInfo } from 'goal-models'
 import { create } from 'zustand'
 
-import { IUser } from '@models/user'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { User } from '@supabase/supabase-js'
 
 export interface UserContext {
     user: IUser | null
@@ -31,23 +31,21 @@ export const useLoggedUser = (): IUser | null => {
 }
 
 export function extractUserCredential(user: FirebaseAuthTypes.User): IUser {
-    const socialAvailable = [
-        auth.GoogleAuthProvider.PROVIDER_ID,
-        auth.AppleAuthProvider.PROVIDER_ID,
-        auth.TwitterAuthProvider.PROVIDER_ID,
-        auth.FacebookAuthProvider.PROVIDER_ID,
-        auth.GithubAuthProvider.PROVIDER_ID,
-    ]
-
-    const socialLogin = user.providerData.some((info) => socialAvailable.includes(info.providerId))
-
     return {
-        uid: user.uid,
-        email: user.email || undefined,
-        emailVerified: user.emailVerified,
-        photoURL: user.photoURL,
+        id: user.uid,
+        email: user.email || '',
+        photoURL: user.photoURL || '',
         displayName: user.displayName || '',
-        phoneNumber: user.phoneNumber || undefined,
-        socialLogin,
+        phone: user.phoneNumber || undefined,
+    }
+}
+
+export function extractSupabaseUserCredential(user: User): IUser {
+    return {
+        id: user.id,
+        email: user.email || '',
+
+        displayName: user.user_metadata.displayName || '',
+        phone: user.phone || '',
     }
 }

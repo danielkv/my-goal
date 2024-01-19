@@ -62,21 +62,21 @@ class FirebaseProvider {
     }
 }
 
-const useEmulator = __DEV__
+const useEmulator = false //__DEV__
 
 export const firebaseProvider = new FirebaseProvider({
     emulators: useEmulator
         ? {
               functions: {
-                  host: '10.1.1.173',
+                  host: '10.1.1.174',
                   port: 5001,
               },
               firestore: {
-                  host: '10.1.1.173',
+                  host: '10.1.1.174',
                   port: 8080,
               },
               auth: {
-                  host: '10.1.1.173',
+                  host: '10.1.1.174',
                   port: 9099,
               },
           }

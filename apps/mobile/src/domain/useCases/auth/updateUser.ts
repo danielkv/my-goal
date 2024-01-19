@@ -2,14 +2,15 @@ import { pick } from 'radash'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { extractUserCredential } from '@contexts/user/userContext'
-import { IUser, IUserInput } from '@models/user'
+import { IUserFB, IUserInput } from '@models/user'
 import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 
-const updateUserFn = firebaseProvider.FUNCTION_CALL<{ uid: string; data: Partial<FirebaseAuthTypes.UserInfo> }, IUser>(
-    'updateUser'
-)
+const updateUserFn = firebaseProvider.FUNCTION_CALL<
+    { uid: string; data: Partial<FirebaseAuthTypes.UserInfo> },
+    IUserFB
+>('updateUser')
 
-export async function updateUserUseCase(userInput: Partial<Omit<IUserInput, 'password'>>): Promise<IUser> {
+export async function updateUserUseCase(userInput: Partial<Omit<IUserInput, 'password'>>): Promise<IUserFB> {
     const user = firebaseProvider.getAuth().currentUser
     if (!user) throw new Error('Usuário não está logado')
 

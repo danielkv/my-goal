@@ -1,3 +1,4 @@
+export * from "./database.types";
 export * from "./src/block";
 export * from "./src/day";
 export * from "./src/movement-results";

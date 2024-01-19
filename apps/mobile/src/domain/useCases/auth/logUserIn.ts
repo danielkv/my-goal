@@ -1,36 +1,46 @@
+import { IUser } from 'goal-models'
+
 import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential } from '@contexts/user/userContext'
+import { supabase } from '@common/providers/supabase'
+import { extractSupabaseUserCredential, extractUserCredential } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { createAppException } from '@utils/exceptions/AppException'
 
 type EmailCredentials = { provider: 'email'; email: string; password: string }
 
 type Credentials = EmailCredentials
 
 export async function logUserInUseCase(credentials: Credentials) {
-    const credentialResult = await _loginRouter(credentials)
-    if (!credentialResult) throw new Error('Nenhum usuário foi logado')
+    // try supabase login first
+    const { error, data } = await supabase.auth.signInWithPassword(credentials)
+    if (!error) return _authenticate(extractSupabaseUserCredential(data.user))
 
-    if (!credentialResult.user.email)
-        throw createAppException('USER_WITH_NO_EMAIL', 'Email não cadastrado', credentialResult.user)
+    if (error.name === 'AuthApiError' && error.message === 'Invalid login credentials') {
+        const { user } = await firebaseProvider
+            .getAuth()
+            .signInWithEmailAndPassword(credentials.email, credentials.password)
 
-    if (!credentialResult.user.emailVerified) {
-        await credentialResult.user.sendEmailVerification()
-        throw createAppException('EMAIL_NOT_VERIFIED', 'Email não verificado')
+        const { data, error } = await supabase.auth.signUp({
+            email: credentials.email,
+            password: credentials.password,
+            phone: user.phoneNumber || undefined,
+
+            options: {
+                data: {
+                    fbuid: user.uid,
+                    ...extractUserCredential(user),
+                },
+            },
+        })
+
+        if (error) throw error
+        if (!data.user) throw new Error('User not found')
+
+        return _authenticate(extractSupabaseUserCredential(data.user))
     }
 
-    return setLoggedUser(extractUserCredential(credentialResult.user))
+    throw error
 }
 
-async function _loginRouter(credentials: Credentials): Promise<FirebaseAuthTypes.UserCredential | null> {
-    if (credentials.provider === 'email') return _emailLogin(credentials)
-
-    return null
-}
-
-async function _emailLogin(credentials: EmailCredentials) {
-    const user = await firebaseProvider.getAuth().signInWithEmailAndPassword(credentials.email, credentials.password)
-
-    return user
+function _authenticate(user: IUser) {
+    setLoggedUser(user)
 }

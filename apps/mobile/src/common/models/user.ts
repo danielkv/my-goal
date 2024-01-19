@@ -7,6 +7,6 @@ export interface IUserInput {
     password: string
 }
 
-export interface IUser extends IUserData {
+export interface IUserFB extends IUserData {
     socialLogin: boolean
 }
