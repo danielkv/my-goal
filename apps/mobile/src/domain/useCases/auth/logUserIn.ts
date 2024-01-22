@@ -1,4 +1,5 @@
 import { IUser } from 'goal-models'
+import { pick } from 'radash'
 
 import { firebaseProvider } from '@common/providers/firebase'
 import { supabase } from '@common/providers/supabase'
@@ -27,7 +28,7 @@ export async function logUserInUseCase(credentials: Credentials) {
             options: {
                 data: {
                     fbuid: user.uid,
-                    ...extractUserCredential(user),
+                    ...pick(extractUserCredential(user), ['displayName', 'phone', 'photoURL']),
                 },
             },
         })
