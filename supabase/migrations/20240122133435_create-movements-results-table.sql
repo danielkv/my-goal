@@ -21,13 +21,12 @@ create policy "Movements are viewable by everyone."
 
 create policy "Only admins and user can add its own Movements results"
   on movement_results for insert
-  with check ( auth.uid() = userId OR is_claims_admin() );
+  with check ( auth.uid() = "userId" OR is_claims_admin() );
 
 create policy "Only admins and user can update its own Movements results"
   on movement_results for update
-  using (  auth.uid() = userId OR is_claims_admin() );
+  using (  auth.uid() = "userId" OR is_claims_admin() );
 
-# trigger 
 
 create function public.COUNT_MOVEMENTS()
 returns trigger

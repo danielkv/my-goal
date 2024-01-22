@@ -1,18 +1,15 @@
-require('dotenv/config')
 const path = require('path')
-const { createClient } = require('@supabase/supabase-js')
+const fs = require('fs')
+const { promisify } = require('node:util')
 const admin = require('firebase-admin')
 const { getFirestore } = require('firebase-admin/firestore')
 const { map } = require('radash')
 
+const writeFileAsync = promisify(fs.writeFile)
+
 const fbApp = admin.initializeApp({
-    credential: admin.credential.cert(path.resolve(__dirname, 'packages/cli/service-account.cert.json')),
+    credential: admin.credential.cert(path.resolve(__dirname, '..', 'packages/cli/service-account.cert.json')),
 })
-
-const supabaseUrl = process.env.SUPABASE_URL ?? ''
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-
-const client = createClient(supabaseUrl, serviceKey)
 
 async function migrateWorksheets() {
     const db = getFirestore(fbApp)
@@ -33,15 +30,14 @@ async function migrateWorksheets() {
             published: data.published,
             startDate: data.startEndDate.start,
             endDate: data.startEndDate.end,
-            days: days.docs.map((day) => day.data()),
+            days: JSON.stringify(days.docs.map((day) => day.data())),
         }
     })
 
-    const { error } = await client.from('worksheets').insert(newDocs)
+    const sql = generateSql('worksheets', ['name', 'published', '"startDate"', '"endDate"', 'days'], newDocs)
 
-    if (error) return console.log('ERRO:', error.message)
-
-    console.log(newDocs.length, 'planilhas inseridas')
+    console.log(newDocs.length, 'planilhas exportadas')
+    return sql
 }
 
 async function migrateMovements() {
@@ -64,16 +60,31 @@ async function migrateMovements() {
         }
     })
 
-    const { error } = await client.from('movements').insert(newDocs)
+    console.log(newDocs.length, 'movimentos exportados')
 
-    if (error) return console.log('ERRO:', error.message)
-
-    console.log(newDocs.length, 'movimentos inseridos')
+    return generateSql('movements', ['movement', '"resultType"', '"countResults"', 'fb_old_id'], newDocs)
 }
 
 async function migrate() {
-    await migrateWorksheets()
-    await migrateMovements()
+    const sqlFile = path.resolve(__dirname, 'seed.sql')
+    const worksheetsSql = await migrateWorksheets()
+    const movementSql = await migrateMovements()
+
+    const fileContent = `${worksheetsSql}\n\n${movementSql}`
+
+    await writeFileAsync(sqlFile, fileContent)
+
+    // await migrateMovements()
+}
+
+const stringifyRow = (row) => Object.values(row).map((value) => (typeof value === 'string' ? `'${value}'` : value))
+
+function generateSql(table, fields, data) {
+    const header = `INSERT INTO ${table} (${fields.join(`,`)}) VALUES`
+
+    const values = data.map((row) => `(${stringifyRow(row)})`).join(',\n')
+
+    return `${header}\n${values};`
 }
 
 migrate()
