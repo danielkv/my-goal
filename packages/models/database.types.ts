@@ -34,6 +34,81 @@ export interface Database {
   }
   public: {
     Tables: {
+      movement_results: {
+        Row: {
+          created_at: string
+          date: string
+          id: number
+          isPrivate: boolean
+          movementId: number
+          resultType: string
+          resultValue: number
+          userId: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: number
+          isPrivate: boolean
+          movementId: number
+          resultType: string
+          resultValue: number
+          userId: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: number
+          isPrivate?: boolean
+          movementId?: number
+          resultType?: string
+          resultValue?: number
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movement_results_movementid_fkey"
+            columns: ["movementId"]
+            isOneToOne: false
+            referencedRelation: "movements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movement_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      movements: {
+        Row: {
+          countResults: number
+          created_at: string
+          fb_old_id: string | null
+          id: number
+          movement: string
+          resultType: string
+        }
+        Insert: {
+          countResults?: number
+          created_at?: string
+          fb_old_id?: string | null
+          id?: number
+          movement: string
+          resultType: string
+        }
+        Update: {
+          countResults?: number
+          created_at?: string
+          fb_old_id?: string | null
+          id?: number
+          movement?: string
+          resultType?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           displayname: string | null
@@ -65,6 +140,80 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      workout_results: {
+        Row: {
+          created_at: string
+          date: string
+          id: number
+          isPrivate: boolean
+          resultType: string
+          resultValue: number
+          userId: string
+          wokroutSignature: string
+          workout: Json
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: number
+          isPrivate: boolean
+          resultType: string
+          resultValue: number
+          userId: string
+          wokroutSignature: string
+          workout: Json
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: number
+          isPrivate?: boolean
+          resultType?: string
+          resultValue?: number
+          userId?: string
+          wokroutSignature?: string
+          workout?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      worksheets: {
+        Row: {
+          created_at: string
+          days: Json | null
+          endDate: string
+          id: number
+          name: string
+          published: boolean
+          startDate: string
+        }
+        Insert: {
+          created_at?: string
+          days?: Json | null
+          endDate: string
+          id?: number
+          name: string
+          published?: boolean
+          startDate: string
+        }
+        Update: {
+          created_at?: string
+          days?: Json | null
+          endDate?: string
+          id?: number
+          name?: string
+          published?: boolean
+          startDate?: string
+        }
+        Relationships: []
       }
     }
     Views: {

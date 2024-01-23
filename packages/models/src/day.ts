@@ -1,3 +1,4 @@
+import { Tables, TablesInsert } from '../database.types'
 import { IBlock, IRound } from './block'
 
 export type ISection = {
@@ -22,15 +23,8 @@ type IStartEndDate = {
     end: string
 }
 
-export type IWorksheet = {
-    id?: string
-    name: string
-    info?: string
-    startDate: string // YYYY-MM-DD
-    days: IDay[]
-    published?: boolean
+export type IWorksheet = TablesInsert<'worksheets'> & {
     isCurrent?: boolean
-    startEndDate?: IStartEndDate
 }
 
 export type IDayModel = IDay & { id: string }

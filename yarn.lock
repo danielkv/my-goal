@@ -10966,6 +10966,7 @@ __metadata:
   resolution: "goal-models@workspace:packages/models"
   dependencies:
     barrelsby: ^2.8.1
+    type-fest: ^4.10.0
   languageName: unknown
   linkType: soft
 
@@ -18002,6 +18003,13 @@ __metadata:
   version: 2.19.0
   resolution: "type-fest@npm:2.19.0"
   checksum: a4ef07ece297c9fba78fc1bd6d85dff4472fe043ede98bd4710d2615d15776902b595abf62bd78339ed6278f021235fb28a96361f8be86ed754f778973a0d278
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "type-fest@npm:4.10.0"
+  checksum: 2bd5db47b8f4b81dd0a9cedfafaf23ed4c4fb0d7e160cc27948b0b028713190074f2d7ce61ce87dc5b59ba983c8fedd8335b3662d7d134b3258b06b1f0ee54f5
   languageName: node
   linkType: hard
 

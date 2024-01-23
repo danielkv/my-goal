@@ -1,4 +1,3 @@
-import { IUser } from 'goal-models'
 import { pick } from 'radash'
 
 import { firebaseProvider } from '@common/providers/firebase'
@@ -13,7 +12,7 @@ type Credentials = EmailCredentials
 export async function logUserInUseCase(credentials: Credentials) {
     // try supabase login first
     const { error, data } = await supabase.auth.signInWithPassword(credentials)
-    if (!error) return _authenticate(extractSupabaseUserCredential(data.user))
+    if (!error) return setLoggedUser(extractSupabaseUserCredential(data.user))
 
     if (error.name === 'AuthApiError' && error.message === 'Invalid login credentials') {
         const { user } = await firebaseProvider
@@ -29,6 +28,7 @@ export async function logUserInUseCase(credentials: Credentials) {
                 data: {
                     fbuid: user.uid,
                     ...pick(extractUserCredential(user), ['displayName', 'phone', 'photoURL']),
+                    confirmation_sent_at: new Date().toISOString(),
                 },
             },
         })
@@ -36,12 +36,8 @@ export async function logUserInUseCase(credentials: Credentials) {
         if (error) throw error
         if (!data.user) throw new Error('User not found')
 
-        return _authenticate(extractSupabaseUserCredential(data.user))
+        return setLoggedUser(extractSupabaseUserCredential(data.user))
     }
 
     throw error
-}
-
-function _authenticate(user: IUser) {
-    setLoggedUser(user)
 }
