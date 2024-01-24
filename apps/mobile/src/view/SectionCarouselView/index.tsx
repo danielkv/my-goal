@@ -61,7 +61,7 @@ const SectionCarouselView: React.FC<SectionCarouselView> = ({ day, onBlockPress 
 
     const sections = useMemo(
         () =>
-            day?.periods.flatMap<IFlatSection>((periods, periodIndex) =>
+            day?.periods?.flatMap<IFlatSection>((periods, periodIndex) =>
                 periods.sections.map((section, sectionIndex) => ({
                     period: periodIndex + 1,
                     sectionNumber: sectionIndex + 1,

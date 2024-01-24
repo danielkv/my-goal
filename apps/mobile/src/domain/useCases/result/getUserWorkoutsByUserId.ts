@@ -1,27 +1,19 @@
 import { IUserWorkoutResult } from 'goal-models'
-import { collections } from 'goal-utils'
+import { getPagination } from 'goal-utils'
 
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
 export async function getUserWorkoutsByUserIdUseCase(
     userId: string,
-    startAfter?: string | null,
-    limit = 10
+    page: number,
+    pageSize = 10
 ): Promise<IUserWorkoutResult[]> {
-    const fs = firebaseProvider.getFirestore()
+    const { from, to } = getPagination({ page, pageSize })
+    const query = supabase.from('workout_results').select('*, profiles(*)').eq('userId', userId)
 
-    const collectionRef = fs.collection<Omit<IUserWorkoutResult, 'id'>>(collections.WORKOUT_RESULTS)
+    const { data, error } = await query.range(from, to).order('date', { ascending: false })
 
-    let query = collectionRef.where('uid', '==', userId).orderBy('createdAt', 'desc')
+    if (error) throw error
 
-    if (startAfter) {
-        const startAfterSnapshot = await collectionRef.doc(startAfter).get()
-        query = query.startAfter(startAfterSnapshot)
-    }
-
-    const resultsSnapshot = await query.limit(limit).get()
-
-    const results = resultsSnapshot.docs.map<IUserWorkoutResult>((doc) => ({ ...doc.data(), id: doc.id }))
-
-    return results
+    return data
 }

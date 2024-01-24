@@ -1,3 +1,5 @@
+import { Models } from './database.models'
+
 export interface IUserData {
     readonly uid: string
     readonly email?: string
@@ -23,11 +25,7 @@ export interface IUserInput extends Omit<IUserMetadata, 'disabled'> {
     phone?: string | null
 }
 
-export interface IUser extends IUserMetadata {
-    id: string
-    email: string
-    phone?: string | null
-}
+export interface IUser extends Models<'profiles'> {}
 
 export interface IUserContext extends IUser {
     claims: IUserClaims

@@ -50,12 +50,12 @@ const UserMovementResultScreen: React.FC = () => {
 
     const [endReached, setEndReached] = useState(false)
 
-    const { data: movement } = useSWR(params.movementId, getMovementByIdUseCase, {
+    const { data: movement } = useSWR(String(params.movementId), getMovementByIdUseCase, {
         revalidateIfStale: false,
     })
 
     const { data: highestScore, mutate: mutateHighScore } = useSWR(
-        () => (movement?.resultType && user ? [params.movementId, user.uid, movement.resultType] : null),
+        () => (movement?.resultType && user ? [params.movementId, user.id] : null),
         (args) => getMovementHighestScoreUseCase(...args),
         { revalidateIfStale: false }
     )
@@ -63,21 +63,12 @@ const UserMovementResultScreen: React.FC = () => {
     const getKey = (
         pageIndex: number,
         previousPageData: IUserMovementResultResponse[]
-    ): [string, string, TResultType, string | null | undefined, number, boolean] | null => {
-        if (!user?.uid || !params.movementId || !movement) return null
+    ): [string, number, TResultType, number, number, boolean] | null => {
+        if (!user?.id || !params.movementId || !movement) return null
 
         if (previousPageData && !previousPageData.length) return null
 
-        const previousLastItem = previousPageData?.[previousPageData.length - 1].id
-
-        return [
-            user.uid,
-            params.movementId,
-            movement.resultType,
-            pageIndex === 0 ? null : previousLastItem,
-            30,
-            workoutResult === 'filtered',
-        ]
+        return [user.id, params.movementId, movement.resultType, pageIndex, 30, workoutResult === 'filtered']
     }
 
     const {
@@ -110,12 +101,13 @@ const UserMovementResultScreen: React.FC = () => {
             if (!movement) throw new Error('Workout não é válido')
             if (!user) throw new Error('Usuário não autenticado')
 
-            const resultNormalized: Omit<IUserMovementResultInput, 'createdAt'> = {
-                result: { type: result.type, value: result.value },
+            const resultNormalized: IUserMovementResultInput = {
+                resultValue: result.value,
+                resultType: result.type,
                 isPrivate: result.isPrivate,
                 date: result.date.toISOString(),
                 movementId: params.movementId,
-                uid: user.uid,
+                userId: user.id,
             }
 
             await saveMovementResultUseCase(resultNormalized)
@@ -129,7 +121,7 @@ const UserMovementResultScreen: React.FC = () => {
         }
     }
 
-    const handleConfirmRemoveMovementResult = async (movementResultId: string) => {
+    const handleConfirmRemoveMovementResult = async (movementResultId: number) => {
         try {
             await removeMovementResultUseCase(movementResultId)
 
@@ -141,7 +133,7 @@ const UserMovementResultScreen: React.FC = () => {
     }
 
     const handleRemoveMovementResult = (movementResponse: IUserMovementResultResponse) => () => {
-        if (user?.uid !== movementResponse.user.uid) return
+        if (user?.id !== movementResponse.user.id) return
 
         alert(
             'Remover PR',
@@ -158,7 +150,7 @@ const UserMovementResultScreen: React.FC = () => {
     const defaultWorkoutResultType = movement ? movement.resultType : null
 
     const scoreCalculations = selectedScore || highestScore
-    const calculatorWeight = Math.round((sliderValue[0] / 100) * (scoreCalculations?.result.value || 0) * 100) / 100
+    const calculatorWeight = Math.round((sliderValue[0] / 100) * (scoreCalculations?.resultValue || 0) * 100) / 100
 
     return (
         <Stack f={1} px="$5" pt="$5">
@@ -171,17 +163,17 @@ const UserMovementResultScreen: React.FC = () => {
                         <XStack br="$3" ai="center" bg={selectedScore ? '$green6' : undefined} px="$2" py="$1" gap="$1">
                             {!selectedScore && <Medal size={13} />}
                             <Text fontSize="$5" color={selectedScore ? 'white' : '$gray4'}>
-                                {displayResultValue(scoreCalculations.result.type, scoreCalculations.result.value)}
+                                {displayResultValue(scoreCalculations.resultType, calculatorWeight)}
                             </Text>
                         </XStack>
                     )}
                 </XStack>
 
-                {scoreCalculations?.result.type === 'weight' && (
+                {scoreCalculations?.resultType === 'weight' && (
                     <>
                         <Stack>
-                            <WeightPartials weight={scoreCalculations.result.value} count={5} />
-                            <WeightPartials weight={scoreCalculations.result.value} count={5} startPct={60} />
+                            <WeightPartials weight={scoreCalculations.resultValue || 0} count={5} />
+                            <WeightPartials weight={scoreCalculations.resultValue || 0} count={5} startPct={60} />
                         </Stack>
 
                         <XStack mt="$2" ai="center" gap="$3">
@@ -204,7 +196,7 @@ const UserMovementResultScreen: React.FC = () => {
                                 <Slider.Thumb circular index={0} />
                             </Slider>
                             <Text fontSize="$6" fontWeight="bold">
-                                {displayResultValue(scoreCalculations.result.type, calculatorWeight)}
+                                {displayResultValue(scoreCalculations.resultType, calculatorWeight)}
                             </Text>
                         </XStack>
                     </>
@@ -245,7 +237,7 @@ const UserMovementResultScreen: React.FC = () => {
                                 date={item.date}
                                 user={item.user}
                                 isPrivate={item.isPrivate}
-                                result={item.result}
+                                result={{ type: item.resultType, value: item.resultValue }}
                             />
                         </TouchableOpacity>
                     )

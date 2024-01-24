@@ -12,8 +12,6 @@ import { useLoggedUser } from '@contexts/user/userContext'
 import { RouteProp, StackActions, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { updateUserUseCase } from '@useCases/auth/updateUser'
-import { logMessageUseCase } from '@useCases/log/logMessage'
-import { createAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 import { TSubscriptionForm, validationSchema } from '@view/SubscriptionScreen/config'
@@ -72,7 +70,7 @@ const UpdateUser: React.FC = () => {
         try {
             await updateUserUseCase({
                 displayName: result.name,
-                phoneNumber: parsePhoneNumberFromString(result.phoneNumber, 'BR')?.number,
+                phone: parsePhoneNumberFromString(result.phoneNumber, 'BR')?.number,
                 email: result.email,
             })
 
@@ -90,8 +88,6 @@ const UpdateUser: React.FC = () => {
                 },
             ])
         } catch (err) {
-            const logError = createAppException('ERROR_CAUGHT', err)
-            logMessageUseCase(logError.toObject())
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
         } finally {
             setLoading(false)
@@ -118,9 +114,8 @@ const UpdateUser: React.FC = () => {
                 initialValues={{
                     email: user.email || '',
                     name: user.displayName || '',
-                    phoneNumber: parsePhoneNumberFromString(user.phoneNumber || '', 'BR')?.formatNational() || '',
+                    phoneNumber: parsePhoneNumberFromString(user.phone || '', 'BR')?.formatNational() || '',
                     password: '',
-                    socialLogin: user.socialLogin,
                     mode: 'update',
                 }}
             >

@@ -45,7 +45,7 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
     }, [block])
 
     const { data, isLoading, mutate } = useSWR(
-        () => (!open || !workoutSignature || !user ? null : [user.uid, workoutSignature]),
+        () => (!open || !workoutSignature || !user ? null : [user.id, workoutSignature]),
         (obj) => getLastWorkoutResultsBySignatureUseCase(obj[0], obj[1], 4)
     )
 
@@ -54,13 +54,14 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
             if (!block) throw new Error('Workout não é válido')
             if (!user) throw new Error('Usuário não autenticado')
 
-            const resultNormalized: Omit<IUserWorkoutResultInput, 'createdAt'> = {
-                result: { type: result.type, value: result.value },
+            const resultNormalized: IUserWorkoutResultInput = {
+                resultType: result.type,
+                resultValue: result.value,
                 isPrivate: result.isPrivate,
                 date: result.date.toISOString(),
                 workoutSignature,
                 workout: block,
-                uid: user.uid,
+                userId: user.id,
             }
 
             await saveWorkoutResult(resultNormalized)
@@ -86,7 +87,7 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
 
     const displayResults = !!data?.length && !isLoading && !!workoutSignature
     const defaultWorkoutResultType = data?.length
-        ? data[0].result.type || getWorkoutRestultType(block?.config.type)
+        ? data[0].resultType || getWorkoutRestultType(block?.config.type)
         : null
     const disableResultTypeSwitch = !!data?.length
 
@@ -104,11 +105,11 @@ const WorkoutResultDialog: React.FC<EventBlockDialogProps> = ({ block, open, onC
                             <ActivityIndicator />
                         ) : displayResults ? (
                             <YStack>
-                                {data.map(({ id, user, result, isPrivate, date }) => (
+                                {data.map(({ id, user, resultType, resultValue, isPrivate, date }) => (
                                     <UserResultItem
                                         key={id}
                                         user={user}
-                                        result={result}
+                                        result={{ type: resultType, value: resultValue }}
                                         isPrivate={isPrivate}
                                         date={date}
                                         my="$2"

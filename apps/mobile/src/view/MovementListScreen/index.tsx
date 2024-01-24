@@ -38,14 +38,12 @@ const MovementListScreen: React.FC = () => {
     const getKey = (
         pageIndex: number,
         previousPageData: IUserMovementResultListResponse[]
-    ): [string, string, string | null | undefined, number] | null => {
-        if (!user?.uid) return null
+    ): [string, string, number, number] | null => {
+        if (!user?.id) return null
 
         if (previousPageData && !previousPageData.length) return null
 
-        const previousLastItem = previousPageData?.[previousPageData.length - 1].movement.id
-
-        return [user.uid, searchInput.length >= 3 ? search : '', pageIndex === 0 ? null : previousLastItem, 30]
+        return [user.id, searchInput.length >= 3 ? search : '', pageIndex, 30]
     }
 
     const { data, isLoading, isValidating, error, setSize, size } = useSWRInfinite(
@@ -97,7 +95,7 @@ const MovementListScreen: React.FC = () => {
                                 </YStack>
                                 {!!item.result && (
                                     <Text color="$gray3" fontWeight="700" fontSize="$5">
-                                        {displayResultValue(item.result.result.type, item.result.result.value)}
+                                        {displayResultValue(item.result.resultType, item.result.resultValue)}
                                     </Text>
                                 )}
                             </XStack>

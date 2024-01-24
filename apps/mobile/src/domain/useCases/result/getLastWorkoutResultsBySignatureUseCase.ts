@@ -1,8 +1,7 @@
-import { IUserWorkoutResult, IUserWorkoutResultResponse } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IUserWorkoutResultResponse } from 'goal-models'
+import { omit } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getWorkoutResultFilters, mergeWorkoutResultAndUser } from '@utils/query/workoutReults'
+import { supabase } from '@common/providers/supabase'
 
 export async function getLastWorkoutResultsBySignatureUseCase(
     userId: string,
@@ -10,20 +9,14 @@ export async function getLastWorkoutResultsBySignatureUseCase(
     limit = 10,
     onlyMe = false
 ): Promise<IUserWorkoutResultResponse[]> {
-    const fs = firebaseProvider.getFirestore()
+    const query = supabase.from('workout_results').select('*, profiles(*)').eq('wokroutSignature', workoutSignature)
 
-    const collectionRef = fs.collection<IUserWorkoutResult>(collections.WORKOUT_RESULTS)
+    if (onlyMe) query.eq('userId', userId)
+    else query.or(`userId.eq.${userId}, isPrivate.eq.false`)
 
-    const query = getWorkoutResultFilters(collectionRef.where('workoutSignature', '==', workoutSignature), {
-        onlyMe,
-        userId,
-    })
+    const { data, error } = await query.limit(limit).order('date', { ascending: false })
 
-    const resultsSnapshot = await query.orderBy('date', 'desc').limit(limit).get({ source: 'server' })
+    if (error) throw error
 
-    if (resultsSnapshot.empty) return []
-
-    const results = await mergeWorkoutResultAndUser(resultsSnapshot.docs)
-
-    return results as IUserWorkoutResultResponse[]
+    return data.map((item) => ({ ...omit(item, ['profiles']), user: item.profiles[0] }))
 }

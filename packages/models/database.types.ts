@@ -34,6 +34,41 @@ export interface Database {
   }
   public: {
     Tables: {
+      days: {
+        Row: {
+          created_at: string
+          date: string
+          id: number
+          name: string | null
+          periods: Json | null
+          worksheetId: number
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: number
+          name?: string | null
+          periods?: Json | null
+          worksheetId: number
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: number
+          name?: string | null
+          periods?: Json | null
+          worksheetId?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "days_worksheetid_fkey"
+            columns: ["worksheetId"]
+            isOneToOne: false
+            referencedRelation: "worksheets"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       movement_results: {
         Row: {
           created_at: string
@@ -111,25 +146,25 @@ export interface Database {
       }
       profiles: {
         Row: {
-          displayname: string | null
+          displayName: string | null
           email: string | null
           id: string
           phone: string | null
-          photourl: string | null
+          photoUrl: string | null
         }
         Insert: {
-          displayname?: string | null
+          displayName?: string | null
           email?: string | null
           id: string
           phone?: string | null
-          photourl?: string | null
+          photoUrl?: string | null
         }
         Update: {
-          displayname?: string | null
+          displayName?: string | null
           email?: string | null
           id?: string
           phone?: string | null
-          photourl?: string | null
+          photoUrl?: string | null
         }
         Relationships: [
           {
@@ -150,8 +185,8 @@ export interface Database {
           resultType: string
           resultValue: number
           userId: string
-          wokroutSignature: string
           workout: Json
+          workoutSignature: string
         }
         Insert: {
           created_at?: string
@@ -161,8 +196,8 @@ export interface Database {
           resultType: string
           resultValue: number
           userId: string
-          wokroutSignature: string
           workout: Json
+          workoutSignature: string
         }
         Update: {
           created_at?: string
@@ -172,8 +207,8 @@ export interface Database {
           resultType?: string
           resultValue?: number
           userId?: string
-          wokroutSignature?: string
           workout?: Json
+          workoutSignature?: string
         }
         Relationships: [
           {
@@ -188,7 +223,6 @@ export interface Database {
       worksheets: {
         Row: {
           created_at: string
-          days: Json | null
           endDate: string
           id: number
           name: string
@@ -197,7 +231,6 @@ export interface Database {
         }
         Insert: {
           created_at?: string
-          days?: Json | null
           endDate: string
           id?: number
           name: string
@@ -206,7 +239,6 @@ export interface Database {
         }
         Update: {
           created_at?: string
-          days?: Json | null
           endDate?: string
           id?: number
           name?: string
@@ -217,7 +249,31 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      highest_movement_results: {
+        Row: {
+          date: string | null
+          movementId: number | null
+          resultType: string | null
+          resultValue: number | null
+          userId: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movement_results_movementid_fkey"
+            columns: ["movementId"]
+            isOneToOne: false
+            referencedRelation: "movements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movement_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Functions: {
       delete_claim: {

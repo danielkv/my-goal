@@ -1,14 +1,15 @@
-import { IDayModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { Models } from 'goal-models'
 
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
-export async function getWorksheetDaysUseCase(worksheetId: string): Promise<IDayModel[]> {
-    const collectionRef = firebaseProvider
-        .getFirestore()
-        .collection<IDayModel>(`${collections.WORKSHEETS}/${worksheetId}/${collections.DAYS}`)
+export async function getWorksheetDaysUseCase(worksheetId: string): Promise<Models<'days'>[]> {
+    const { data, error } = await supabase
+        .from('days')
+        .select()
+        .eq('worksheetId', worksheetId)
+        .order('date', { ascending: true })
 
-    const daysSnapshot = await collectionRef.orderBy('date').get()
+    if (error) throw error
 
-    return daysSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    return data
 }

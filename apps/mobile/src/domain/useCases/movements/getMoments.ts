@@ -1,71 +1,50 @@
-import { IMovement, IUserMovementResult, IUserMovementResultListResponse } from 'goal-models'
-import { collections } from 'goal-utils'
-import { cluster, group, map, sort } from 'radash'
+import { IUserMovementResultListResponse, Models } from 'goal-models'
+import { getPagination } from 'goal-utils'
+import { objectify } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
 export async function getMovementsUseCase(
     userId: string,
     search: string,
-    startAfter?: string | null,
-    limit = 40
+    page: number,
+    pageSize = 20
 ): Promise<IUserMovementResultListResponse[]> {
-    const fs = firebaseProvider.getFirestore()
+    const { from, to } = getPagination({ page, pageSize })
 
-    const movementCollection = fs.collection<Omit<IMovement, 'id'>>(collections.MOVEMENTS)
-    const userMovementResult = fs.collection<Omit<IUserMovementResult, 'id'>>(collections.MOVEMENT_RESULTS)
+    const movementsQuery = supabase.from('movements').select('*').order('movement').range(from, to)
 
-    const insensitive_search = search.toLocaleLowerCase()
+    if (search) movementsQuery.like('movement', search)
 
-    let query = movementCollection.orderBy('movement_insensitive', 'asc')
+    const { data: movements, error } = await movementsQuery
+    if (error) throw error
 
-    if (search.length)
-        query = query
-            .where('movement_insensitive', '>=', insensitive_search)
-            .where('movement_insensitive', '<', insensitive_search + '\uf8ff')
+    const { data: userResults, error: resultsError } = await supabase
+        .from('highest_movement_results')
+        .select('*')
+        .eq('userId', userId)
+        .in(
+            'movementId',
+            movements.map((doc) => doc.id)
+        )
 
-    if (startAfter) {
-        const startAfterSnapshot = await movementCollection.doc(startAfter).get()
-        if (startAfterSnapshot.exists) query = query.startAfter(startAfterSnapshot)
-    }
+    if (resultsError) throw resultsError
 
-    const movementsSnapshot = await query.limit(limit).get({ source: 'server' })
+    const userResultGroups = objectify(userResults, (i) => i.movementId || '') as Record<
+        string,
+        Models<'highest_movement_results'>
+    >
 
-    if (movementsSnapshot.empty) return []
-
-    const movementIds = cluster(
-        movementsSnapshot.docs.map((doc) => doc.id),
-        10
-    )
-
-    const userResults = await map(movementIds, (ids) =>
-        userMovementResult
-            .where('uid', '==', userId)
-            .where('movementId', 'in', ids)
-            // @ts-expect-error
-            .orderBy('result.value', 'desc')
-            .get()
-    )
-
-    const userResultsSnapshot = userResults.map((s) => s.docs).flat()
-
-    const userResultGroups = group(userResultsSnapshot, (f) => f.data().movementId)
-
-    const results = movementsSnapshot.docs.map<IUserMovementResultListResponse>((doc) => {
+    const results = movements.map<IUserMovementResultListResponse>((doc) => {
         const userResult = userResultGroups[doc.id]
         if (!userResult)
             return {
-                movement: { ...doc.data(), id: doc.id },
+                movement: doc,
             }
 
-        const data = doc.data()
-
-        const mainUserResult =
-            data.resultType === 'time' ? sort(userResult, (a) => a.data().result.value)[0] : userResult[0]
-
         return {
-            result: { ...mainUserResult.data(), id: mainUserResult.id },
-            movement: { ...data, id: doc.id },
+            result: userResult,
+            movement: doc,
         }
     })
 

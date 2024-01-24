@@ -1,27 +1,22 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential } from '@contexts/user/userContext'
-import { IUserFB, IUserInput } from '@models/user'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { pick } from 'radash'
 
-const updateUserFn = firebaseProvider.FUNCTION_CALL<
-    { uid: string; data: Partial<FirebaseAuthTypes.UserInfo> },
-    IUserFB
->('updateUser')
+import { supabase } from '@common/providers/supabase'
+import { extractSupabaseUserCredential } from '@contexts/user/userContext'
+import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
+import { IUserInput } from '@models/user'
 
-export async function createUserUseCase(userInput: IUserInput): Promise<IUserFB> {
-    const auth = firebaseProvider.getAuth()
-    const { user } = await auth.createUserWithEmailAndPassword(userInput.email, userInput.password)
-
-    await user.sendEmailVerification()
-
-    await updateUserFn({
-        uid: user.uid,
-        data: { displayName: userInput.displayName, phoneNumber: userInput.phoneNumber },
+export async function createUserUseCase(userInput: IUserInput): Promise<void> {
+    const { data, error } = await supabase.auth.signUp({
+        email: userInput.email,
+        phone: userInput.phone,
+        password: userInput.password,
+        options: {
+            data: {
+                ...pick(userInput, ['displayName', 'phone']),
+            },
+        },
     })
 
-    await user.reload()
-
-    await auth.signOut()
-
-    return extractUserCredential(user)
+    if (error) throw error
+    if (data.user) setLoggedUser(extractSupabaseUserCredential(data.user))
 }

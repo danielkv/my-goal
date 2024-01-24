@@ -2,7 +2,7 @@ import { IUserData } from 'goal-models'
 
 export interface IUserInput {
     displayName: string
-    phoneNumber: string
+    phone: string
     email: string
     password: string
 }

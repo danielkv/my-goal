@@ -1,3 +1,5 @@
+import { Models } from './database.models'
+
 export type TResultType = 'time' | 'reps' | 'weight'
 
 export interface IWorkoutResult {
@@ -5,11 +7,6 @@ export interface IWorkoutResult {
     value: number
 }
 
-export interface IUserResult {
-    id: string
-    uid: string
-    createdAt: string
-    date: string
-    isPrivate: boolean
-    result: IWorkoutResult
-}
+export interface IUserResult extends Models<'movement_results'> {}
+
+export interface IUserHighestResult extends Models<'highest_movement_results'> {}

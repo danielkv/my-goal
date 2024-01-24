@@ -6,7 +6,6 @@ create table
     published boolean not null default false,
     "startDate" date not null,
     "endDate" date not null,
-    days jsonb null,
     constraint worksheets_pkey primary key (id)
   );
 

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { IUserData, IWorkoutResult } from 'goal-models'
+import { IUser, IWorkoutResult } from 'goal-models'
 import { displayResultValue } from 'goal-utils'
 import { Text, XStack, YStack } from 'tamagui'
 
@@ -7,7 +7,7 @@ import Avatar from '@components/Avatar'
 import { Lock } from '@tamagui/lucide-icons'
 
 interface UserResultItemProps {
-    user: IUserData
+    user: IUser
     result: IWorkoutResult
     isPrivate: boolean
     date: string
@@ -17,7 +17,7 @@ const UserResultItem = XStack.styleable<UserResultItemProps>(({ user, result, is
     return (
         <XStack ref={ref} ai="center" jc="space-between" {...props}>
             <XStack ai="center" gap="$2">
-                <Avatar image={user.photoURL} displayName={user.displayName || user.email} size={36} />
+                <Avatar image={user.photoUrl} displayName={user.displayName || user.email || ''} size={36} />
                 <YStack>
                     <XStack ai="center" gap="$1">
                         <Text fontWeight="700" fontSize={16}>

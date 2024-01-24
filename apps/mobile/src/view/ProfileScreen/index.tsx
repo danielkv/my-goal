@@ -111,7 +111,7 @@ const ProfileScreen: React.FC = () => {
     const communityWhatsappLink = Constants.expoConfig?.extra?.COMMUNITY_WHATSAPP_LINK
     const avatarColor = user.displayName ? stringToColor(user.displayName) : color.red5Light.val
     const textAvatarColor = getContrastColor(avatarColor)
-    const profileImage = user.photoURL
+    const profileImage = user.photoUrl
 
     return (
         <Stack f={1}>
@@ -167,10 +167,8 @@ const ProfileScreen: React.FC = () => {
                         {user.displayName}
                     </Text>
                     <Text fontSize={16}>{user.email}</Text>
-                    {user.phoneNumber && (
-                        <Text fontSize={14}>
-                            {parsePhoneNumberFromString(user.phoneNumber, 'BR')?.formatNational()}
-                        </Text>
+                    {user.phone && (
+                        <Text fontSize={14}>{parsePhoneNumberFromString(user.phone, 'BR')?.formatNational()}</Text>
                     )}
                 </LinearGradient>
             </View>

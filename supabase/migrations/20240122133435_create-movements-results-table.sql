@@ -27,6 +27,17 @@ create policy "Only admins and user can update its own Movements results"
   on movement_results for update
   using (  auth.uid() = "userId" OR is_claims_admin() );
 
+CREATE VIEW highest_movement_results AS SELECT
+  DISTINCT ON ("movementId") "movementId",
+  "userId",
+  "date",
+  "resultType",
+  "resultValue"
+FROM public.movement_results
+ORDER BY "movementId",
+  CASE WHEN "resultType" = 'time' THEN "resultValue" END ASC,
+  CASE WHEN "resultType" <> 'time' THEN "resultValue" END DESC;
+
 
 create function public.COUNT_MOVEMENTS()
 returns trigger

@@ -34,9 +34,9 @@ export function extractUserCredential(user: FirebaseAuthTypes.User): IUser {
     return {
         id: user.uid,
         email: user.email || '',
-        photoURL: user.photoURL || '',
+        photoUrl: user.photoURL || '',
         displayName: user.displayName || '',
-        phone: user.phoneNumber || undefined,
+        phone: user.phoneNumber || null,
     }
 }
 
@@ -44,7 +44,7 @@ export function extractSupabaseUserCredential(user: User): IUser {
     return {
         id: user.id,
         email: user.email || '',
-
+        photoUrl: user.user_metadata.photoUrl || null,
         displayName: user.user_metadata.displayName || '',
         phone: user.phone || '',
     }

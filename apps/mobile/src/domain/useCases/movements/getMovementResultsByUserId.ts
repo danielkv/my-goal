@@ -1,36 +1,26 @@
-import { IUserMovementResult, IUserMovementResultResponse, TResultType } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IUserMovementResultResponse, TResultType } from 'goal-models'
+import { getPagination } from 'goal-utils'
+import { omit } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getWorkoutResultFilters, getWorkoutResultOrderBy, mergeWorkoutResultAndUser } from '@utils/query/workoutReults'
+import { supabase } from '@common/providers/supabase'
 
 export async function getMovementResultsByUserIdUseCase(
     userId: string,
-    movementId: string,
+    movementId: number,
     resultType: TResultType,
-    startAfter?: string | null,
+    pageIndex: number,
     limit = 10,
     onlyMe = false
 ): Promise<IUserMovementResultResponse[]> {
-    const fs = firebaseProvider.getFirestore()
+    const query = supabase.from('movement_results').select('*, profiles(*)').eq('movementId', movementId)
 
-    const movementCollection = fs.collection<Omit<IUserMovementResult, 'id'>>(collections.MOVEMENT_RESULTS)
+    if (onlyMe) query.eq('userId', userId)
+    else query.or(`userId.eq.${userId}, isPrivate.eq.false`)
 
-    let query = getWorkoutResultOrderBy(
-        getWorkoutResultFilters(movementCollection.where('movementId', '==', movementId), { onlyMe, userId }),
-        resultType
-    ).orderBy('date', 'desc')
+    const { from, to } = getPagination({ page: pageIndex, pageSize: limit })
 
-    if (startAfter) {
-        const startAfterSnapshot = await movementCollection.doc(startAfter).get()
-        query = query.startAfter(startAfterSnapshot)
-    }
+    const { data, error } = await query.range(from, to).order('date', { ascending: false })
+    if (error) throw error
 
-    const movementSnapshot = await query.limit(limit).get()
-
-    if (movementSnapshot.empty) return []
-
-    const results = await mergeWorkoutResultAndUser(movementSnapshot.docs)
-
-    return results
+    return data.map((item) => ({ ...omit(item, ['profiles']), user: item.profiles[0] }))
 }

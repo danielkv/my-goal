@@ -6,7 +6,7 @@ create table
     date date not null,
     "isPrivate" boolean not null,
     workout jsonb not null,
-    "wokroutSignature" character varying not null,
+    "workoutSignature" character varying not null,
 	"resultType" character varying not null,
     "resultValue" numeric not null,
     constraint workout_results_pkey primary key (id),

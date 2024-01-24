@@ -1,46 +1,25 @@
-import { IUserWorkoutResult, IUserWorkoutResultResponse, TResultType } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IUserWorkoutResultResponse } from 'goal-models'
+import { getPagination } from 'goal-utils'
+import { omit } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getWorkoutResultFilters, getWorkoutResultOrderBy, mergeWorkoutResultAndUser } from '@utils/query/workoutReults'
+import { supabase } from '@common/providers/supabase'
 
 export async function getWorkoutResultsBySignatureUseCase(
     userId: string,
     workoutSignature: string,
-    resultType: TResultType | null,
-    startAfter?: string | null,
+    pageIndex: number,
     limit = 10,
     onlyMe = false
 ): Promise<IUserWorkoutResultResponse[]> {
-    const fs = firebaseProvider.getFirestore()
+    const query = supabase.from('workout_results').select('*, profiles(*)').eq('wokroutSignature', workoutSignature)
 
-    const collectionRef = fs.collection<Omit<IUserWorkoutResult, 'id'>>(collections.WORKOUT_RESULTS)
+    if (onlyMe) query.eq('userId', userId)
+    else query.or(`userId.eq.${userId}, isPrivate.eq.false`)
+    const { from, to } = getPagination({ page: pageIndex, pageSize: limit })
 
-    let query = getWorkoutResultFilters(collectionRef.where('workoutSignature', '==', workoutSignature), {
-        onlyMe,
-        userId,
-    })
+    const { data, error } = await query.range(from, to).order('date', { ascending: false })
 
-    let type = resultType
+    if (error) throw error
 
-    if (!type) {
-        const docSnapshot = await collectionRef.where('workoutSignature', '==', workoutSignature).limit(1).get()
-        if (docSnapshot.empty) return []
-        type = docSnapshot.docs[0].data().result.type
-    }
-
-    query = getWorkoutResultOrderBy(query, type).orderBy('date', 'desc')
-
-    if (startAfter) {
-        const startAfterSnapshot = await collectionRef.doc(startAfter).get()
-        query = query.startAfter(startAfterSnapshot)
-    }
-
-    const resultsSnapshot = await query.limit(limit).get({ source: 'server' })
-
-    if (resultsSnapshot.empty) return []
-
-    const results = await mergeWorkoutResultAndUser(resultsSnapshot.docs)
-
-    return results
+    return data.map((item) => ({ ...omit(item, ['profiles']), user: item.profiles[0] }))
 }
