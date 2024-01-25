@@ -9,7 +9,7 @@ export async function getUserWorkoutsByUserIdUseCase(
     pageSize = 10
 ): Promise<IUserWorkoutResult[]> {
     const { from, to } = getPagination({ page, pageSize })
-    const query = supabase.from('workout_results').select('*, profiles(*)').eq('userId', userId)
+    const query = supabase.from('workout_results').select('*').eq('userId', userId)
 
     const { data, error } = await query.range(from, to).order('date', { ascending: false })
 

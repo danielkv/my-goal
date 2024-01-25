@@ -9,12 +9,6 @@ export type DatabaseModel = MergeDeep<
     {
         public: {
             Tables: {
-                profiles: {
-                    Row: {
-                        displayName: string
-                        email: string
-                    }
-                }
                 days: {
                     Row: {
                         periods: IPeriod[] | null

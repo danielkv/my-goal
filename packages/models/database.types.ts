@@ -115,6 +115,13 @@ export interface Database {
             foreignKeyName: "movement_results_userid_fkey"
             columns: ["userId"]
             isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movement_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -143,38 +150,6 @@ export interface Database {
           resultType?: string
         }
         Relationships: []
-      }
-      profiles: {
-        Row: {
-          displayName: string | null
-          email: string | null
-          id: string
-          phone: string | null
-          photoUrl: string | null
-        }
-        Insert: {
-          displayName?: string | null
-          email?: string | null
-          id: string
-          phone?: string | null
-          photoUrl?: string | null
-        }
-        Update: {
-          displayName?: string | null
-          email?: string | null
-          id?: string
-          phone?: string | null
-          photoUrl?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
       }
       workout_results: {
         Row: {
@@ -214,6 +189,13 @@ export interface Database {
           workoutSignature?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "workout_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "workout_results_userid_fkey"
             columns: ["userId"]
@@ -274,8 +256,45 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movement_results_userid_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           }
         ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          displayName: string | null
+          email: string | null
+          id: string | null
+          last_sign_in_at: string | null
+          phone: string | null
+          photoURL: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          displayName?: never
+          email?: string | null
+          id?: string | null
+          last_sign_in_at?: string | null
+          phone?: string | null
+          photoURL?: never
+        }
+        Update: {
+          created_at?: string | null
+          displayName?: never
+          email?: string | null
+          id?: string | null
+          last_sign_in_at?: string | null
+          phone?: string | null
+          photoURL?: never
+        }
+        Relationships: []
       }
     }
     Functions: {
