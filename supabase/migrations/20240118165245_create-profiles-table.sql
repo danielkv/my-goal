@@ -6,13 +6,11 @@ SELECT
   users.last_sign_in_at,
   users.created_at,
   (users.raw_user_meta_data -> 'displayName') #>> '{}' as "displayName",
-  (users.raw_user_meta_data -> 'photoURL') #>> '{}' as "photoURL"
+  (users.raw_user_meta_data -> 'photoURL') #>> '{}' as "photoUrl"
 FROM
   auth.users
 WHERE
   users.deleted_at IS NULL;
-
-ALTER VIEW public.profiles SET (security_invoker = on);
 
 -- create table public.profiles (
 --   id uuid not null references auth.users on delete cascade,

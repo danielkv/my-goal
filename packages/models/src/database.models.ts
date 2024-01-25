@@ -64,6 +64,13 @@ export type DatabaseModel = MergeDeep<
                         resultValue: number
                     }
                 }
+                profiles: {
+                    Row: {
+                        id: string
+                        displayName: string
+                        email: string
+                    }
+                }
             }
         }
     }

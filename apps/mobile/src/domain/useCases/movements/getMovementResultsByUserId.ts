@@ -10,10 +10,12 @@ export async function getMovementResultsByUserIdUseCase(
     limit = 10,
     onlyMe = false
 ): Promise<IUserMovementResultResponse[]> {
-    const query = supabase.from('movement_results').select('*, user:profiles(*)').eq('movementId', movementId)
+    let query = supabase.from('movement_results').select('*, user:profiles(*)').eq('movementId', movementId)
 
-    if (onlyMe) query.eq('userId', userId)
-    else query.or(`userId.eq.${userId}, isPrivate.eq.false`)
+    if (onlyMe) query = query.eq('userId', userId)
+    else query = query.or(`userId.eq.${userId}, isPrivate.eq.false`)
+
+    query = query.not('userId', 'is', null)
 
     const { from, to } = getPagination({ page: pageIndex, pageSize: limit })
 

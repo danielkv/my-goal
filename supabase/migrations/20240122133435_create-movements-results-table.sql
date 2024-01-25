@@ -35,6 +35,7 @@ CREATE VIEW highest_movement_results AS SELECT
   "resultType",
   "resultValue"
 FROM public.movement_results
+WHERE "userId" IS NOT NULL
 ORDER BY "movementId",
   CASE WHEN "resultType" = 'time' THEN "resultValue" END ASC,
   CASE WHEN "resultType" <> 'time' THEN "resultValue" END DESC;

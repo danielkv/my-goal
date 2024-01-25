@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native'
 
-import { IUserMovementResultInput, IUserMovementResultResponse, IUserResult } from 'goal-models'
+import { IUserHighestResult, IUserMovementResultInput, IUserMovementResultResponse, IUserResult } from 'goal-models'
 import { displayResultValue } from 'goal-utils'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
@@ -35,7 +35,7 @@ const LIST_ITEM_HEIGHT = 70
 const UserMovementResultScreen: React.FC = () => {
     const [addResultFomOpen, setAddResultFomOpen] = useState(false)
     const { setOptions } = useNavigation()
-    const [selectedScore, setselectedScore] = useState<IUserResult | null>(null)
+    const [selectedScore, setSelectedScore] = useState<IUserResult | null>(null)
     const [sliderValue, setSliderValue] = useState([50])
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'UserMovementResult'>>()
     const { space } = getTokens()
@@ -149,7 +149,7 @@ const UserMovementResultScreen: React.FC = () => {
 
     const defaultWorkoutResultType = movement ? movement.resultType : null
 
-    const scoreCalculations = selectedScore || highestScore
+    const scoreCalculations: IUserHighestResult | null = selectedScore || highestScore || null
     const calculatorWeight = Math.round((sliderValue[0] / 100) * (scoreCalculations?.resultValue || 0) * 100) / 100
 
     return (
@@ -163,7 +163,7 @@ const UserMovementResultScreen: React.FC = () => {
                         <XStack br="$3" ai="center" bg={selectedScore ? '$green6' : undefined} px="$2" py="$1" gap="$1">
                             {!selectedScore && <Medal size={13} />}
                             <Text fontSize="$5" color={selectedScore ? 'white' : '$gray4'}>
-                                {displayResultValue(scoreCalculations.resultType, calculatorWeight)}
+                                {displayResultValue(scoreCalculations.resultType, scoreCalculations.resultValue)}
                             </Text>
                         </XStack>
                     )}
@@ -224,7 +224,7 @@ const UserMovementResultScreen: React.FC = () => {
                     const selected = selectedScore?.id === item.id
                     return (
                         <TouchableOpacity
-                            onPress={() => (selected ? setselectedScore(null) : setselectedScore(item))}
+                            onPress={() => (selected ? setSelectedScore(null) : setSelectedScore(item))}
                             onLongPress={handleRemoveMovementResult(item)}
                             style={{
                                 padding: space['2'].val,
