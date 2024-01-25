@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
-import { removeUserUseCase } from '@useCases/auth/removeUser'
+import { deleteAccountUseCase } from '@useCases/auth/removeUser'
 import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
@@ -56,7 +56,7 @@ const ProfileScreen: React.FC = () => {
     const handleConfirmRemoveAccount = async () => {
         try {
             setLoading(true)
-            await removeUserUseCase()
+            await deleteAccountUseCase()
 
             Alert.alert(
                 'Conta excluída',
