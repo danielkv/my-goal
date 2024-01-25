@@ -3,7 +3,7 @@ import { IUserHighestResult } from 'goal-models'
 import { supabase } from '@common/providers/supabase'
 
 export async function getMovementHighestScoreUseCase(
-    movementId: number,
+    movementId: string,
     userId: string
 ): Promise<IUserHighestResult | null> {
     const { data, error } = await supabase

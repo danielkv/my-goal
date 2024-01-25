@@ -38,26 +38,26 @@ export interface Database {
         Row: {
           created_at: string
           date: string
-          id: number
+          id: string
           name: string | null
           periods: Json | null
-          worksheetId: number
+          worksheetId: string
         }
         Insert: {
           created_at?: string
           date: string
-          id?: number
+          id?: string
           name?: string | null
           periods?: Json | null
-          worksheetId: number
+          worksheetId: string
         }
         Update: {
           created_at?: string
           date?: string
-          id?: number
+          id?: string
           name?: string | null
           periods?: Json | null
-          worksheetId?: number
+          worksheetId?: string
         }
         Relationships: [
           {
@@ -73,32 +73,35 @@ export interface Database {
         Row: {
           created_at: string
           date: string
-          id: number
+          fb_old_user_id: string | null
+          id: string
           isPrivate: boolean
-          movementId: number
+          movementId: string
           resultType: string
           resultValue: number
-          userId: string
+          userId: string | null
         }
         Insert: {
           created_at?: string
           date: string
-          id?: number
+          fb_old_user_id?: string | null
+          id?: string
           isPrivate: boolean
-          movementId: number
+          movementId: string
           resultType: string
           resultValue: number
-          userId: string
+          userId?: string | null
         }
         Update: {
           created_at?: string
           date?: string
-          id?: number
+          fb_old_user_id?: string | null
+          id?: string
           isPrivate?: boolean
-          movementId?: number
+          movementId?: string
           resultType?: string
           resultValue?: number
-          userId?: string
+          userId?: string | null
         }
         Relationships: [
           {
@@ -121,24 +124,21 @@ export interface Database {
         Row: {
           countResults: number
           created_at: string
-          fb_old_id: string | null
-          id: number
+          id: string
           movement: string
           resultType: string
         }
         Insert: {
           countResults?: number
           created_at?: string
-          fb_old_id?: string | null
-          id?: number
+          id?: string
           movement: string
           resultType: string
         }
         Update: {
           countResults?: number
           created_at?: string
-          fb_old_id?: string | null
-          id?: number
+          id?: string
           movement?: string
           resultType?: string
         }
@@ -180,33 +180,36 @@ export interface Database {
         Row: {
           created_at: string
           date: string
-          id: number
+          fb_old_user_id: string | null
+          id: string
           isPrivate: boolean
           resultType: string
           resultValue: number
-          userId: string
+          userId: string | null
           workout: Json
           workoutSignature: string
         }
         Insert: {
           created_at?: string
           date: string
-          id?: number
+          fb_old_user_id?: string | null
+          id?: string
           isPrivate: boolean
           resultType: string
           resultValue: number
-          userId: string
+          userId?: string | null
           workout: Json
           workoutSignature: string
         }
         Update: {
           created_at?: string
           date?: string
-          id?: number
+          fb_old_user_id?: string | null
+          id?: string
           isPrivate?: boolean
           resultType?: string
           resultValue?: number
-          userId?: string
+          userId?: string | null
           workout?: Json
           workoutSignature?: string
         }
@@ -224,7 +227,7 @@ export interface Database {
         Row: {
           created_at: string
           endDate: string
-          id: number
+          id: string
           name: string
           published: boolean
           startDate: string
@@ -232,7 +235,7 @@ export interface Database {
         Insert: {
           created_at?: string
           endDate: string
-          id?: number
+          id?: string
           name: string
           published?: boolean
           startDate: string
@@ -240,7 +243,7 @@ export interface Database {
         Update: {
           created_at?: string
           endDate?: string
-          id?: number
+          id?: string
           name?: string
           published?: boolean
           startDate?: string
@@ -252,7 +255,7 @@ export interface Database {
       highest_movement_results: {
         Row: {
           date: string | null
-          movementId: number | null
+          movementId: string | null
           resultType: string | null
           resultValue: number | null
           userId: string | null

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Alert, TouchableOpacity } from 'react-native'
 
-import { IUserMovementResultInput, IUserMovementResultResponse, IUserResult, TResultType } from 'goal-models'
+import { IUserMovementResultInput, IUserMovementResultResponse, IUserResult } from 'goal-models'
 import { displayResultValue } from 'goal-utils'
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
@@ -63,12 +63,12 @@ const UserMovementResultScreen: React.FC = () => {
     const getKey = (
         pageIndex: number,
         previousPageData: IUserMovementResultResponse[]
-    ): [string, number, TResultType, number, number, boolean] | null => {
+    ): [string, string, number, number, boolean] | null => {
         if (!user?.id || !params.movementId || !movement) return null
 
         if (previousPageData && !previousPageData.length) return null
 
-        return [user.id, params.movementId, movement.resultType, pageIndex, 30, workoutResult === 'filtered']
+        return [user.id, params.movementId, pageIndex, 30, workoutResult === 'filtered']
     }
 
     const {
@@ -121,7 +121,7 @@ const UserMovementResultScreen: React.FC = () => {
         }
     }
 
-    const handleConfirmRemoveMovementResult = async (movementResultId: number) => {
+    const handleConfirmRemoveMovementResult = async (movementResultId: string) => {
         try {
             await removeMovementResultUseCase(movementResultId)
 

@@ -27,16 +27,16 @@ export type TReactNavigationStackParamList = {
 
     WorksheetList: undefined
 
-    WorksheetDays: { id: number }
+    WorksheetDays: { id: string }
 
-    DayView: { worksheetId: number; dayId: number }
+    DayView: { worksheetId: string; dayId: string }
 
     Profile: undefined
 
     UserWorkoutList: undefined
     UserWorkout: UserWorkoutScreenProps
     MovementList: undefined
-    UserMovementResult: { movementId: number }
+    UserMovementResult: { movementId: string }
 
     WodTimer: {
         block: IEventBlock

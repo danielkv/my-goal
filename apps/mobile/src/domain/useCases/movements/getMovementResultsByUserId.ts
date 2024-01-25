@@ -1,4 +1,4 @@
-import { IUserMovementResultResponse, TResultType } from 'goal-models'
+import { IUserMovementResultResponse } from 'goal-models'
 import { getPagination } from 'goal-utils'
 import { omit } from 'radash'
 
@@ -6,8 +6,7 @@ import { supabase } from '@common/providers/supabase'
 
 export async function getMovementResultsByUserIdUseCase(
     userId: string,
-    movementId: number,
-    resultType: TResultType,
+    movementId: string,
     pageIndex: number,
     limit = 10,
     onlyMe = false
