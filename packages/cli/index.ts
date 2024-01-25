@@ -1,4 +1,5 @@
 import createUsers from './src/helpers/createUsers'
+import { emulateCreateFbUser } from './src/helpers/emulateCreateFbUser'
 import firebaseInit from './src/helpers/fbInit'
 import { generateSeed } from './src/helpers/generateSeed'
 import { program } from 'commander'
@@ -18,6 +19,15 @@ program
 
         const filePath = nodepath.resolve(__dirname, '..', '..', file)
         return generateSeed(filePath)
+    })
+
+program
+    .command('emulate-fb-user <fbuid>')
+    .description('Create the seed file')
+    .action((fbuid) => {
+        if (!fbuid) throw new Error('fbuid option not defined')
+
+        return emulateCreateFbUser(fbuid)
     })
 
 program

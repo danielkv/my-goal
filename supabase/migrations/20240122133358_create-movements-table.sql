@@ -5,7 +5,6 @@ create table
     "countResults" bigint not null default '0'::bigint,
     movement character varying not null,
     "resultType" character varying not null,
-	fb_old_id text null,
     constraint movements_pkey primary key (id)
   );
 

@@ -5,5 +5,7 @@
     "deno.enablePaths": ["./supabase/functions"],
 
     "deno.lint": true,
-    "deno.unstable": true
+    "deno.unstable": true,
+    "typescript.tsserver.log": "verbose",
+    "deno.enable": true
 }

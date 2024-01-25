@@ -62,7 +62,7 @@ class FirebaseProvider {
     }
 }
 
-const useEmulator = false //__DEV__
+const useEmulator = __DEV__
 
 export const firebaseProvider = new FirebaseProvider({
     emulators: useEmulator

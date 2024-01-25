@@ -17,7 +17,7 @@ alter table public.workout_results enable row level security;
 
 create policy "Workouts are viewable by authenticated user."
   on workout_results for select
-  using ( auth.uid() IS NOT NULL );
+  using ( auth.uid() IS NOT NULL AND (auth.uid() = "userId" OR "isPrivate" = false) );
 
 create policy "Only admins and user can add its own Workouts results"
   on workout_results for insert

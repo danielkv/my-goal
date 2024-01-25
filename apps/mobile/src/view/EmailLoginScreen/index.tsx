@@ -32,7 +32,7 @@ const EmailLoginScreen: React.FC = () => {
         try {
             await logUserInUseCase({ provider: 'email', ...result })
 
-            // navigation.navigate(ERouteName.HomeScreen)
+            navigation.navigate(ERouteName.HomeScreen)
         } catch (err) {
             if (isAppException(err) && err.type === 'EMAIL_NOT_VERIFIED') {
                 return Alert.alert(

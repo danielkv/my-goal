@@ -6,8 +6,8 @@ import * as SplashScreen from 'expo-splash-screen'
 import * as StoreReview from 'expo-store-review'
 
 import { useStorage } from '@common/hooks/useStorage'
-import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential } from '@contexts/user/userContext'
+import { supabase } from '@common/providers/supabase'
+import { extractSupabaseUserCredential } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { initialLoadUseCase } from '@useCases/init/initialLoad'
 import { configureSubscriptionsUseCase } from '@useCases/subscriptions/configureSubscriptions'
@@ -62,27 +62,17 @@ export function useInitialLoad() {
     }, [loaded, currentValue, askedReview])
 
     useEffect(() => {
-        const unsubscribe = firebaseProvider.getAuth().onAuthStateChanged((user) => {
-            if (!user?.emailVerified) {
-                return setLoggedUser(null)
-            }
-
-            return setLoggedUser(extractUserCredential(user))
-        })
-
-        const unsubscribeUserChange = firebaseProvider.getAuth().onUserChanged((user) => {
-            if (!user?.emailVerified) {
-                return setLoggedUser(null)
-            }
-
-            return setLoggedUser(extractUserCredential(user))
-        })
-
         initialLoad()
 
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((event, session) => {
+            if (session && !['SIGNED_IN', 'SIGNED_OUT'].includes(event))
+                setLoggedUser(extractSupabaseUserCredential(session.user))
+        })
+
         return () => {
-            unsubscribe()
-            unsubscribeUserChange()
+            subscription.unsubscribe()
         }
     }, [])
 

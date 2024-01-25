@@ -8,7 +8,6 @@ export async function getWorksheetListUseCase(): Promise<Models<'worksheets'>[]>
         .select()
         .eq('published', true)
         .order('startDate', { ascending: false })
-        .throwOnError()
     if (error) throw error
 
     return data

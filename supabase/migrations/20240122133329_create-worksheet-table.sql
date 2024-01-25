@@ -11,9 +11,9 @@ create table
 
 alter table public.worksheets enable row level security;
 
-create policy "Public worksheets are viewable by authenticated."
+create policy "Public worksheets (faces) are viewable by public."
   on worksheets for select
-  using ( auth.uid() IS NOT NULL );
+  using ( true );
 
 create policy "Only admins can create new worksheets"
   on worksheets for insert
