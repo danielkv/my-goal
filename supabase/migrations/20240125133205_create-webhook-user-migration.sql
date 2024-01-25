@@ -7,6 +7,7 @@ begin
   IF (new.raw_user_meta_data->'fbuid' IS NULL) THEN return new; END IF;
 
   UPDATE public.movement_results SET "userId" = new.id, fb_old_user_id = NULL WHERE fb_old_user_id = new.raw_user_meta_data->>'fbuid';
+  UPDATE public.workout_results SET "userId" = new.id, fb_old_user_id = NULL WHERE fb_old_user_id = new.raw_user_meta_data->>'fbuid';
   
   return new;
 end;

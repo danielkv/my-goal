@@ -30,11 +30,30 @@ as $$
 begin
   insert into public.profiles (id, "displayName", email, "photoUrl", phone)
   values (new.id, new.raw_user_meta_data->>'displayName', new.email, new.raw_user_meta_data->>'photoUrl', new.phone);
+  
   return new;
 end;
 $$;
 
 -- trigger the function every time a user is created
 create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
+create function public.handle_update_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  UPDATE public.profiles SET "displayName" = new.raw_user_meta_data->>'displayName', email = new.email, "photoUrl" = new.raw_user_meta_data->>'photoUrl', phone = new.phone
+  WHERE id = old.id;
+
+  return new;
+end;
+$$;
+
+-- trigger the function every time a user is created
+create trigger on_auth_user_updated
   after insert on auth.users
   for each row execute procedure public.handle_new_user();

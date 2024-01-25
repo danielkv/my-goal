@@ -1,5 +1,6 @@
 import admin from 'firebase-admin'
 import fs from 'fs'
+import { randomUUID } from 'node:crypto'
 import { promisify } from 'node:util'
 import path from 'path'
 import { map } from 'radash'
@@ -18,7 +19,7 @@ async function generateWorksheets() {
     const newDocs: Record<string, any>[] = []
 
     await map(worksheets.docs, async (doc, index) => {
-        const worksheetId = index + 1
+        const worksheetId = randomUUID()
         const days = await collection.doc(doc.id).collection('days').get()
 
         const mappedDays = days.docs.map((day) => {
@@ -60,7 +61,7 @@ async function generateMovements() {
     const resultsDocs: Record<string, any>[] = []
 
     const newDocs = await map(movements.docs, async (doc, index) => {
-        const newMovementId = index + 1
+        const newMovementId = randomUUID()
         const data = doc.data()
         const results = await resultsColelction.where('movementId', '==', doc.id).get()
 
@@ -93,7 +94,7 @@ async function generateMovements() {
     console.log(newDocs.length, 'movimentos exportados')
     console.log(resultsDocs.length, 'resultados exportados')
 
-    const sql = generateSql('movements', ['movement', '"resultType"', '"countResults"'], newDocs)
+    const sql = generateSql('movements', ['id', 'movement', '"resultType"', '"countResults"'], newDocs)
     const sqlResults = generateSql(
         'movement_results',
         [
@@ -112,6 +113,50 @@ async function generateMovements() {
     return [sql, sqlResults]
 }
 
+async function generateWorkouts() {
+    const db = admin.firestore()
+
+    const collection = db.collection('workout_results')
+
+    const workouts = await collection.get()
+
+    const newDocs = await map(workouts.docs, async (doc, index) => {
+        const data = doc.data()
+
+        return {
+            created_at: data.createdAt,
+            '"userId"': null,
+            date: data.date,
+            '"isPrivate"': data.isPrivate,
+            workout: JSON.stringify(data.workout),
+            '"workoutSignature"': data.workoutSignature,
+            '"resultType"': data.result.type,
+            '"resultValue"': data.result.value,
+            fb_old_user_id: data.uid,
+        }
+    })
+
+    console.log(newDocs.length, 'resutlados de workout exportados')
+
+    const sql = generateSql(
+        'workout_results',
+        [
+            'created_at',
+            '"userId"',
+            'date',
+            '"isPrivate"',
+            'workout',
+            '"workoutSignature"',
+            '"resultType"',
+            '"resultValue"',
+            'fb_old_user_id',
+        ],
+        newDocs
+    )
+
+    return [sql]
+}
+
 export async function generateFile(filePath: string, sqls: string[]) {
     const sqlFile = path.resolve(__dirname, filePath)
     const content = sqls.join('\n\n')
@@ -122,8 +167,9 @@ export async function generateFile(filePath: string, sqls: string[]) {
 export async function generateSeed(filePath: string) {
     const worksheetSql = await generateWorksheets()
     const movementSql = await generateMovements()
+    const workoutSql = await generateWorkouts()
 
-    await generateFile(filePath, [...worksheetSql, ...movementSql])
+    await generateFile(filePath, [...worksheetSql, ...movementSql, ...workoutSql])
 }
 
 const stringifyRow = (fields: string[], row: Record<string, any>) =>
