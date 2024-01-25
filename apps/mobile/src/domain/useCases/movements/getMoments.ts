@@ -14,7 +14,7 @@ export async function getMovementsUseCase(
 
     const movementsQuery = supabase.from('movements').select('*').order('movement').range(from, to)
 
-    if (search) movementsQuery.like('movement', search)
+    if (search) movementsQuery.ilike('movement', `%${search}%`)
 
     const { data: movements, error } = await movementsQuery
     if (error) throw error
