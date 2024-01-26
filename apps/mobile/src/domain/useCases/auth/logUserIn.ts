@@ -27,7 +27,7 @@ export async function logUserInUseCase(credentials: Credentials) {
             options: {
                 data: {
                     fbuid: user.uid,
-                    ...pick(extractUserCredential(user), ['displayName', 'phone', 'photoUrl']),
+                    ...pick(extractUserCredential(user), ['displayName', 'photoUrl']),
                     confirmation_sent_at: new Date().toISOString(),
                 },
             },

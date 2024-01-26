@@ -16,10 +16,10 @@ export const setLoggedUser = async (user: IUser | null): Promise<void> => {
         await firebaseProvider
             .getAnalytics()
             .setUserProperties({ name: user.displayName || '', email: user.email || '' })
+
         await Purchases.setAttributes({
-            $displayName: user.displayName || null,
+            $displayName: user.displayName,
             $email: user.email,
-            $phoneNumber: user.phone || null,
         })
         subscriptionInfo = await getUserSubscriptionInfoUseCase()
     } else {
