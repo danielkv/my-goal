@@ -1,10 +1,6 @@
 CREATE VIEW public.profiles AS 
 SELECT
   users.id,
-  users.email,
-  users.phone,
-  users.last_sign_in_at,
-  users.created_at,
   (users.raw_user_meta_data -> 'displayName') #>> '{}' as "displayName",
   (users.raw_user_meta_data -> 'photoURL') #>> '{}' as "photoUrl"
 FROM
@@ -12,12 +8,11 @@ FROM
 WHERE
   users.deleted_at IS NULL;
 
+
 -- create table public.profiles (
 --   id uuid not null references auth.users on delete cascade,
 --   "displayName" varchar,
---   email varchar,
 --   "photoUrl" text,
---   phone varchar,
 --   primary key (id)
 -- );
 
@@ -25,7 +20,7 @@ WHERE
 
 -- create policy "Public profiles are viewable by everyone."
 --   on profiles for select
---   using ( true );
+--   using ( auth.uid() IS NOT NULL );
 
 -- create policy "Users can insert their own profile."
 --   on profiles for insert
@@ -42,8 +37,8 @@ WHERE
 -- security definer set search_path = public
 -- as $$
 -- begin
---   insert into public.profiles (id, "displayName", email, "photoUrl", phone)
---   values (new.id, new.raw_user_meta_data->>'displayName', new.email, new.raw_user_meta_data->>'photoUrl', new.phone);
+--   insert into public.profiles (id, "displayName", "photoUrl")
+--   values (new.id, new.raw_user_meta_data->>'displayName', new.raw_user_meta_data->>'photoUrl');
   
 --   return new;
 -- end;
