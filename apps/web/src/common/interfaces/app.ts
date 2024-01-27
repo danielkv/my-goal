@@ -1,13 +1,17 @@
-import { IWorksheet } from 'goal-models'
+import { IWorksheetInput } from 'goal-models'
 import { ZodType } from 'zod'
 
 export type ZodShape<T extends Record<string, any>> = Required<{
     [k in keyof T]: ZodType<T[k]>
 }>
 
+type NonNullableObject<T extends object> = {
+    [key in keyof T]: NonNullable<T[key]>
+}
+
 export type NestedKeyOf<ObjectType extends object> = ObjectType extends Array<infer T>
     ? T extends object
-        ? number | `${number}.${NestedKeyOf<T>}`
+        ? number | `${number}.${NestedKeyOf<NonNullableObject<T>>}`
         : number
     : {
           [Key in keyof ObjectType]: ObjectType[Key] extends object
@@ -18,7 +22,7 @@ export type NestedKeyOf<ObjectType extends object> = ObjectType extends Array<in
 
 export type ConvertPath<Path extends object> = `worksheet.${NestedKeyOf<Path>}` | 'worksheet'
 
-export type Path = ConvertPath<IWorksheet>
+export type Path = ConvertPath<IWorksheetInput>
 
 export interface IPagination {
     limit?: number

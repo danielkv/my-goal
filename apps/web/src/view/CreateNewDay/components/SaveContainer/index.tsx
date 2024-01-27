@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep'
-import { IWorksheet } from 'goal-models'
+import { IWorksheetInput } from 'goal-models'
 import { omit } from 'radash'
 
 import { Component, Setter, createSignal } from 'solid-js'
@@ -12,9 +12,9 @@ import { saveWorksheetUseCase } from '@useCases/worksheet/saveWorksheet'
 import { getErrorMessage } from '@utils/errors'
 
 interface ISaveContainerProps {
-    worksheet: IWorksheet
-    handleSetWorksheet: SetStoreFunction<IWorksheet>
-    handleSetLastTempSaved: Setter<IWorksheet>
+    worksheet: IWorksheetInput
+    handleSetWorksheet: SetStoreFunction<IWorksheetInput>
+    handleSetLastTempSaved: Setter<IWorksheetInput>
 }
 
 const SaveContainer: Component<ISaveContainerProps> = (props) => {

@@ -7,11 +7,7 @@ export interface IMovementInput {
     movement: string
 }
 
-export interface IMovement extends IMovementInput {
-    id: string
-    movement_insensitive: string
-    countResults: number
-}
+export interface IMovement extends Models<'movements'> {}
 
 export interface IUserMovementResult extends Models<'movement_results'> {}
 

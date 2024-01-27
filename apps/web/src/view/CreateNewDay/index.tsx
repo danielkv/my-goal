@@ -1,6 +1,6 @@
 import cloneDeep from 'clone-deep'
 import deepEqual from 'deep-equal'
-import { IWorksheet, IWorksheetModel } from 'goal-models'
+import { IWorksheet, IWorksheetInput, IWorksheetModel } from 'goal-models'
 import { isWorksheetModel } from 'goal-utils'
 import { debounce } from 'radash'
 import { FiArrowLeft, FiArrowRight, FiEye } from 'solid-icons/fi'
@@ -35,7 +35,8 @@ import SaveContainer from './components/SaveContainer'
 const CreateNewDay: Component = () => {
     redirectToLogin()
 
-    let displayTempSavedTimeout: number
+    let displayTempSavedTimeout: NodeJS.Timeout
+
     const [hasHistorySaved, setHasHistorySaved] = createSignal<IWorksheetModel | null>(null)
     const [lastTempSaved, setLastTempSaved] = createSignal<IWorksheetModel>()
     const [displayTempSaved, setDisplayTempSaved] = createSignal(false)
@@ -46,9 +47,9 @@ const CreateNewDay: Component = () => {
 
     const [currentPath, setCurrentPath] = createSignal<Path>('' as Path)
 
-    const [worksheetStore, doSetWorksheetStore] = createStore<IWorksheet>(createWorksheetValues())
+    const [worksheetStore, doSetWorksheetStore] = createStore<IWorksheetInput>(createWorksheetValues())
 
-    const debouncedSaveTempWorksheet = debounce({ delay: 5000 }, async (worksheet: IWorksheetModel) => {
+    const debouncedSaveTempWorksheet = debounce({ delay: 5000 }, (worksheet: IWorksheet) => {
         try {
             if (deepEqual(worksheet, lastTempSaved())) return
 
@@ -56,7 +57,7 @@ const CreateNewDay: Component = () => {
             if (displayTempSavedTimeout) clearTimeout(displayTempSavedTimeout)
 
             setLoadingTemp(true)
-            await saveTempWorksheetUseCase(worksheet)
+            saveTempWorksheetUseCase(worksheet)
 
             setLastTempSaved(cloneDeep(worksheet))
 
@@ -75,7 +76,7 @@ const CreateNewDay: Component = () => {
     })
 
     //@ts-expect-error
-    const setWorksheetStore: SetStoreFunction<IWorksheet> = (storeFn: StoreSetter<IWorksheet, []>) => {
+    const setWorksheetStore: SetStoreFunction<IWorksheetInput> = (storeFn: StoreSetter<IWorksheetInput, []>) => {
         doSetWorksheetStore(storeFn)
 
         if (isWorksheetModel(worksheetStore)) debouncedSaveTempWorksheet(worksheetStore)

@@ -1,13 +1,6 @@
-import { collections } from 'goal-utils'
+import { supabase } from '@common/providers/supabase'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { movementConverter } from '@utils/converters'
-
-export async function removeMovementUseCase(movementId: string) {
-    const documentRef = firebaseProvider
-        .firestore()
-        .doc(collections.MOVEMENTS, movementId)
-        .withConverter(movementConverter)
-
-    await firebaseProvider.firestore().deleteDoc(documentRef)
+export async function removeMovementUseCase(movementId: string): Promise<void> {
+    const { error } = await supabase.from('movements').delete().eq('id', movementId)
+    if (error) throw error
 }

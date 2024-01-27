@@ -210,6 +210,7 @@ export interface Database {
           created_at: string
           endDate: string
           id: string
+          info: string | null
           name: string
           published: boolean
           startDate: string
@@ -218,6 +219,7 @@ export interface Database {
           created_at?: string
           endDate: string
           id?: string
+          info?: string | null
           name: string
           published?: boolean
           startDate: string
@@ -226,6 +228,7 @@ export interface Database {
           created_at?: string
           endDate?: string
           id?: string
+          info?: string | null
           name?: string
           published?: boolean
           startDate?: string

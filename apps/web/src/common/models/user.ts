@@ -1,15 +1,5 @@
-import { IUserData } from 'goal-models'
+import { IPaginatedResponse, IUserData } from 'goal-models'
 
-export interface IUser extends IUserData {
-    readonly disabled: boolean
-    readonly customClaims?: {
-        [key: string]: any
-    }
-}
+export interface IUserCredential extends IUserData {}
 
-export interface IUserCredential extends Omit<IUser, 'disabled' | 'emailVerified' | 'customClaims'> {}
-
-export interface ListUsersResult {
-    users: IUser[]
-    pageToken?: string
-}
+export type ListUsersResult = IPaginatedResponse<IUserData[]>

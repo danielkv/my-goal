@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { IDay, IPeriod } from 'goal-models'
+import { IDayInput, IPeriod } from 'goal-models'
 import { capitalize } from 'radash'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
@@ -13,7 +13,7 @@ import { createPeriodValues } from '@utils/worksheetInitials'
 import SectionPreview from './section'
 
 export interface PeriodProps extends WorksheetPeace<IPeriod> {
-    day: IDay
+    day: IDayInput
 }
 
 const PeriodPreview: Component<PeriodProps> = (props) => {

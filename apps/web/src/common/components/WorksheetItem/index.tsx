@@ -16,6 +16,8 @@ export interface WorksheetItemProps {
 }
 
 const WorksheetItem: Component<WorksheetItemProps> = (props) => {
+    const isCurrent = dayjs().isBetween(props.worksheet?.startDate, props.worksheet?.endDate)
+
     return (
         <div class="p-10 hover:bg-gray-700 rounded-xl" classList={{ 'opacity-50': props.loading }}>
             <div
@@ -23,7 +25,7 @@ const WorksheetItem: Component<WorksheetItemProps> = (props) => {
                 onClick={props.onClick}
                 classList={{ 'cursor-pointer': !!props.onClick }}
             >
-                <Show when={props.worksheet?.isCurrent}>
+                <Show when={isCurrent}>
                     <div class="w-2 h-2 rounded-full absolute top-2 right-2 bg-red-500"></div>
                 </Show>
                 <div class="absolute left-1/2 top-1/2 -ml-[20px] -mt-[25px]">

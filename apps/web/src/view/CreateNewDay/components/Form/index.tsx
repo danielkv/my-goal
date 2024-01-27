@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep'
-import { IBlock, IDay, IEventBlock, IPeriod, ISection, IWorksheet } from 'goal-models'
+import { IBlock, IDay, IDayInput, IEventBlock, IPeriod, ISection, IWorksheetInput } from 'goal-models'
 
 import { Component, Match, Setter, Switch, createMemo } from 'solid-js'
 import { SetStoreFunction, produce } from 'solid-js/store'
@@ -33,10 +33,10 @@ import SectionForm from '../SectionForm'
 import WorksheetForm from '../WorksheetForm'
 
 export interface FormProps {
-    worksheet: IWorksheet
+    worksheet: IWorksheetInput
     currentPath: Path
     handleSetPath: Setter<Path>
-    handleSetWorksheet: SetStoreFunction<IWorksheet>
+    handleSetWorksheet: SetStoreFunction<IWorksheetInput>
 }
 
 const Form: Component<FormProps> = (props) => {
@@ -86,7 +86,7 @@ const Form: Component<FormProps> = (props) => {
 
                                     props.handleSetWorksheet(
                                         produce((current) => {
-                                            const days = getPeaceFromPath<IDay[]>(current, listPath)
+                                            const days = getPeaceFromPath<IDayInput[]>(current, listPath)
 
                                             if (days.length <= 0)
                                                 return days.push({
@@ -103,8 +103,8 @@ const Form: Component<FormProps> = (props) => {
 
                                     const day = getPeaceFromPath<IDay>(props.worksheet, props.currentPath)
 
-                                    if (!day.periods.length)
-                                        props.handleSetPath(addToPath<IDay>(props.currentPath, `periods.0`))
+                                    if (!day.periods?.length)
+                                        props.handleSetPath(addToPath<IDayInput>(props.currentPath, `periods.0`))
                                 }}
                                 day={getPeaceFromPath(props.worksheet, props.currentPath) || createDayValues()}
                             />

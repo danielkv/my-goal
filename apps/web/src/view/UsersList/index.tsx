@@ -139,7 +139,7 @@ const UsersList: Component = () => {
                                             <TableCell>
                                                 <Stack direction="row" spacing={1}>
                                                     <Box fontWeight="bold">{user.displayName}</Box>
-                                                    <Show when={user.uid === loggedUser()?.uid}>
+                                                    <Show when={user.uid === loggedUser()?.id}>
                                                         <Box>(você)</Box>
                                                     </Show>
                                                     <Show when={user.customClaims?.admin}>
@@ -164,7 +164,7 @@ const UsersList: Component = () => {
                                                     <IconButton
                                                         title={user.disabled ? 'Ativar usuário' : 'Inativar usuário'}
                                                         onClick={() => handleToggleEnableUser(user.uid, user.disabled)}
-                                                        disabled={user.uid === loggedUser()?.uid}
+                                                        disabled={user.uid === loggedUser()?.id}
                                                         color={user.disabled ? 'error' : 'success'}
                                                     >
                                                         {user.disabled ? <ToggleOn /> : <ToggleOff />}
@@ -177,14 +177,14 @@ const UsersList: Component = () => {
                                                                 !!user.customClaims?.admin
                                                             )
                                                         }
-                                                        disabled={user.uid === loggedUser()?.uid}
+                                                        disabled={user.uid === loggedUser()?.id}
                                                     >
                                                         {user.customClaims?.admin ? <PersonRemove /> : <PersonAdd />}
                                                     </IconButton>
                                                     <IconButton
                                                         title="Excluir usuário"
                                                         onClick={() => handleRemoveUser(user.uid)}
-                                                        disabled={user.uid === loggedUser()?.uid}
+                                                        disabled={user.uid === loggedUser()?.id}
                                                     >
                                                         <Delete />
                                                     </IconButton>

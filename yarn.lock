@@ -10973,6 +10973,7 @@ __metadata:
     "@suid/icons-material": ^0.6.3
     "@suid/material": ^0.12.3
     "@suid/vite-plugin": ^0.1.4
+    "@supabase/supabase-js": ^2.39.3
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/clone-deep": ^4.0.1
     "@types/deep-equal": ^1.0.1

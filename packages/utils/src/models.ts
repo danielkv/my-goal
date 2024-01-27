@@ -1,5 +1,15 @@
-import { IBlock, IComplexRound, IEventBlock, IRestBlock, IRestRound, IRound, ITextBlock } from 'goal-models'
-import { IDay, IDayModel, IPeriod, ISection, IWorksheet, IWorksheetModel } from 'goal-models'
+import {
+    IBlock,
+    IComplexRound,
+    IDayInput,
+    IEventBlock,
+    IRestBlock,
+    IRestRound,
+    IRound,
+    ITextBlock,
+    IWorksheetInput,
+} from 'goal-models'
+import { IDay, IDayModel, IPeriod, ISection, IWorksheet } from 'goal-models'
 
 export function isDay(obj: Record<string, any>): obj is IDay {
     if (obj?.hasOwnProperty('name') && obj.hasOwnProperty('date') && obj.hasOwnProperty('periods')) return true
@@ -53,9 +63,15 @@ export function isRestBlock(obj: Record<string, any>): obj is IRestBlock {
     return false
 }
 
-export function isWorksheetModel(obj: IWorksheet): obj is IWorksheetModel {
+export function isWorksheetModel(obj: any): obj is IWorksheet {
     if (!obj?.id) return false
     if (!obj?.days.every(isDayModel)) return false
+
+    return true
+}
+
+export function isWorksheetInput(obj: any): obj is IWorksheetInput {
+    if (!obj?.days.every(isDayInput)) return false
 
     return true
 }
@@ -63,4 +79,10 @@ export function isWorksheetModel(obj: IWorksheet): obj is IWorksheetModel {
 export function isDayModel(obj: IDay): obj is IDayModel {
     if (obj?.id) return true
     return false
+}
+
+export function isDayInput(obj: any): obj is IDayInput {
+    if (!obj?.date) return false
+    if (!obj?.worksheetId) return false
+    return true
 }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { IWorksheet } from 'goal-models'
+import { IWorksheetInput } from 'goal-models'
 import {
     LabelTranslations,
     eventTypes,
@@ -26,7 +26,7 @@ export function getCurrentForm(path: Path): [string, number, Record<string, numb
     return result
 }
 
-export function getBreadcrumbLabel(worksheet: IWorksheet, path: Path): string {
+export function getBreadcrumbLabel(worksheet: IWorksheetInput, path: Path): string {
     if (path === 'worksheet') return 'Planilha'
 
     const peace = getPeaceFromPath<Record<string, any>>(worksheet, path)

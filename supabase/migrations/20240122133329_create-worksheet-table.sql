@@ -4,6 +4,7 @@ create table
     created_at timestamp with time zone not null default now(),
     name character varying not null,
     published boolean not null default false,
+    info text,
     "startDate" date not null,
     "endDate" date not null,
     constraint worksheets_pkey primary key (id)

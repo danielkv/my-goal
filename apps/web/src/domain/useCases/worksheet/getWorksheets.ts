@@ -1,33 +1,10 @@
-import dayjs from 'dayjs'
-import { IWorksheetModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IWorksheet } from 'goal-models'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { worksheetConverter } from '@utils/converters'
+import { supabase } from '@common/providers/supabase'
 
-export async function getWorksheetsUseCase(): Promise<Omit<IWorksheetModel, 'days'>[]> {
-    const collectionRef = firebaseProvider
-        .firestore()
-        .collection(collections.WORKSHEETS)
-        .withConverter(worksheetConverter)
+export async function getWorksheetsUseCase(): Promise<Omit<IWorksheet, 'days'>[]> {
+    const { error, data } = await supabase.from('worksheets').select('*').order('startDate', { ascending: false })
+    if (error) throw error
 
-    const query = firebaseProvider
-        .firestore()
-        .query(collectionRef, firebaseProvider.firestore().orderBy('startDate', 'desc'))
-
-    const snapshot = await firebaseProvider.firestore().getDocs(query)
-
-    const worksheets = snapshot.docs.map((doc) => {
-        const worksheetData = doc.data()
-        const isCurrent = worksheetData.startEndDate
-            ? dayjs().isBetween(worksheetData.startEndDate.start, worksheetData.startEndDate.end, 'day', '[]')
-            : false
-
-        return {
-            ...worksheetData,
-            isCurrent,
-        }
-    })
-
-    return worksheets
+    return data
 }

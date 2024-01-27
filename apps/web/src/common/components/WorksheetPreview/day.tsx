@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { IDay } from 'goal-models'
+import { IDayInput } from 'goal-models'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
 
@@ -11,7 +11,7 @@ import { createDayValues } from '@utils/worksheetInitials'
 
 import PeriodPreview from './period'
 
-export interface DayProps extends WorksheetPeace<IDay> {}
+export interface DayProps extends WorksheetPeace<IDayInput> {}
 
 const DayPreview: Component<DayProps> = (props) => {
     const [parentProps, controlProps] = splitProps(
@@ -25,7 +25,7 @@ const DayPreview: Component<DayProps> = (props) => {
             class="day p-8 rounded-xl"
             classList={{
                 selected: props.currentPath === props.thisPath,
-                empty: !props.item.periods.length,
+                empty: !props.item.periods?.length,
                 hoverable: !!props.onClickPeace,
             }}
             onClick={(e) => {
@@ -55,7 +55,9 @@ const DayPreview: Component<DayProps> = (props) => {
             <Stack class="gap-4">
                 <For each={props.item.periods}>
                     {(period, periodIndex) => {
-                        const periodPath = createMemo(() => addToPath<IDay>(props.thisPath, `periods.${periodIndex()}`))
+                        const periodPath = createMemo(() =>
+                            addToPath<IDayInput>(props.thisPath, `periods.${periodIndex()}`)
+                        )
 
                         return <PeriodPreview day={props.item} item={period} thisPath={periodPath()} {...parentProps} />
                     }}

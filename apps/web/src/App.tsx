@@ -1,13 +1,10 @@
-import { User } from 'firebase/auth'
-
 import { Component, createEffect, onCleanup } from 'solid-js'
 
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 import { theme } from '@common/theme'
 import { setLoggedUser } from '@contexts/user/user.context'
 import { useLocation, useNavigate } from '@solidjs/router'
 import { ThemeProvider } from '@suid/material'
-import { getErrorMessage } from '@utils/errors'
 import { extractUserCredential } from '@utils/users'
 
 import AppRouter from './router'
@@ -23,31 +20,30 @@ const App: Component = () => {
         document.head.appendChild(script)
     })
 
-    function handleAuthStateChanged(user: User | null) {
-        if (!user || !user?.email) return setLoggedUser(null)
+    const {
+        data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+        if (!session) {
+            setLoggedUser(null)
+            return
+        }
 
-        user.getIdTokenResult()
-            .then(({ claims }) => {
-                if (!claims.admin) {
-                    alert('Você não tem permissão para acessar essa página')
-                    navigate('/dashboard/login')
-                    return firebaseProvider.getAuth().signOut()
-                }
+        if (session.user.user_metadata?.claims_admin !== true) {
+            alert('Você não tem permissão para acessar essa página')
+            setLoggedUser(null)
+            navigate('/dashboard/login')
+            return
+        }
 
-                setLoggedUser(extractUserCredential(user))
+        if (session && !['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
+            setLoggedUser(extractUserCredential(session.user))
 
-                if (location.pathname === '/dashboard/login') navigate('/dashboard')
-            })
-            .catch((err) => {
-                alert(getErrorMessage(err))
-                return firebaseProvider.getAuth().signOut()
-            })
-    }
-
-    const unsubscribe = firebaseProvider.getAuth().onAuthStateChanged(handleAuthStateChanged)
+            if (location.pathname === '/dashboard/login') navigate('/dashboard')
+        }
+    })
 
     onCleanup(() => {
-        unsubscribe()
+        subscription.unsubscribe()
     })
 
     return (

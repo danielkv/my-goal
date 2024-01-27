@@ -1,18 +1,10 @@
-import { getDocs } from 'firebase/firestore'
 import { IDayModel } from 'goal-models'
-import { collections } from 'goal-utils'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { dayConverter } from '@utils/converters'
+import { supabase } from '@common/providers/supabase'
 
 export async function getWorksheetDaysUseCase(worksheetId: string): Promise<IDayModel[]> {
-    const collectionRef = firebaseProvider
-        .firestore()
-        .collection(`${collections.WORKSHEETS}/${worksheetId}/days`)
-        .withConverter(dayConverter)
+    const { error, data } = await supabase.from('days').select('*').eq('worksheetId', worksheetId).order('date')
+    if (error) throw error
 
-    const query = firebaseProvider.firestore().query(collectionRef, firebaseProvider.firestore().orderBy('date'))
-    const daysDocs = await getDocs(query)
-
-    return daysDocs.docs.map((doc) => doc.data())
+    return data
 }

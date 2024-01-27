@@ -11,13 +11,13 @@ export type DatabaseModel = MergeDeep<
             Tables: {
                 days: {
                     Row: {
-                        periods: IPeriod[] | null
+                        periods: IPeriod[]
                     }
                     Insert: {
-                        periods: IPeriod[] | null
+                        periods: IPeriod[]
                     }
                     Update: {
-                        periods: IPeriod[] | null
+                        periods: IPeriod[]
                     }
                 }
                 workout_results: {

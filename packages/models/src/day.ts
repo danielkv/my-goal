@@ -1,5 +1,5 @@
 import { IBlock, IRound } from './block'
-import { Models } from './database.models'
+import { Models, ModelsInsert } from './database.models'
 
 export type ISection = {
     name: string
@@ -13,10 +13,18 @@ export type IPeriod = {
 
 export type IDay = Models<'days'>
 
-export type IWorksheet = Models<'worksheets'> & { days: Models<'days'>[] }
+export interface IDayInput extends ModelsInsert<'days'> {}
+
+export interface IWorksheet extends Models<'worksheets'> {
+    days: IDay[]
+}
+
+export interface IWorksheetInput extends ModelsInsert<'worksheets'> {
+    days: IDayInput[]
+}
 
 export type IDayModel = Models<'days'>
 
-export type TPeaces = IDay | IPeriod | ISection | IBlock | IRound
+export type TPeaces = IDayInput | IPeriod | ISection | IBlock | IRound
 
 export type IWorksheetModel = IWorksheet

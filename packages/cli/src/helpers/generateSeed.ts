@@ -35,13 +35,14 @@ async function generateWorksheets() {
                 id: worksheetId,
                 name: data.name,
                 published: data.published,
+                info: data.info,
                 '"startDate"': data.startEndDate.start,
                 '"endDate"': data.startEndDate.end,
             })
         }
     })
 
-    const sql = generateSql('worksheets', ['id', 'name', 'published', '"startDate"', '"endDate"'], newDocs)
+    const sql = generateSql('worksheets', ['id', 'name', 'published', 'info', '"startDate"', '"endDate"'], newDocs)
 
     const sqlDays = generateSql('days', ['date', 'name', 'periods', '"worksheetId"'], allDays)
 
