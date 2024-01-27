@@ -23,23 +23,21 @@ const App: Component = () => {
     const {
         data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-        if (!session) {
+        if (!session || ['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
             setLoggedUser(null)
             return
         }
 
-        if (session.user.user_metadata?.claims_admin !== true) {
+        if (session.user.app_metadata?.claims_admin !== true) {
             alert('Você não tem permissão para acessar essa página')
             setLoggedUser(null)
             navigate('/dashboard/login')
             return
         }
 
-        if (session && !['SIGNED_IN', 'SIGNED_OUT'].includes(event)) {
-            setLoggedUser(extractUserCredential(session.user))
+        setLoggedUser(extractUserCredential(session.user))
 
-            if (location.pathname === '/dashboard/login') navigate('/dashboard')
-        }
+        if (location.pathname === '/dashboard/login') navigate('/dashboard')
     })
 
     onCleanup(() => {

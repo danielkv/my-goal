@@ -5,14 +5,13 @@ import { FiLogIn, FiLogOut, FiUsers } from 'solid-icons/fi'
 import { Component } from 'solid-js'
 
 import LogoSvg from '@assets/logo.svg?component-solid'
-import { firebaseProvider } from '@common/providers/firebase'
-import { loggedUser, setLoggedUser } from '@contexts/user/user.context'
+import { loggedUser } from '@contexts/user/user.context'
 import { A } from '@solidjs/router'
+import { logUserOut } from '@useCases/user/logUserOut'
 
 const DashboardHeader: Component = () => {
     const handleSignOut = () => {
-        setLoggedUser(null)
-        firebaseProvider.getAuth().signOut()
+        logUserOut()
     }
 
     return (
