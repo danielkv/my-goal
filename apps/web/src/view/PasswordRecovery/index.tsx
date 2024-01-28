@@ -1,26 +1,28 @@
+import 'firebaseui/dist/firebaseui.css'
+
 import { Component, onMount } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack } from '@suid/material'
-import { logUserInUseCase } from '@useCases/user/logUserIn'
+import { sendPasswordRecoveryEmail } from '@useCases/user/sendPasswordRecoveryEmail'
 import { getErrorMessage } from '@utils/errors'
 
-import { TLoginForm, loginFormInitialValues, loginFormSchema } from './config'
+import { TPasswordRecoveryForm, loginFormSchema, passwordRecoveryFormInitialValues } from './config'
 
-const LoginPage: Component = () => {
+const PasswordRecoveryPage: Component = () => {
     let input: HTMLInputElement
     const navigate = useNavigate()
 
-    const form = createForm<TLoginForm>({
+    const form = createForm<TPasswordRecoveryForm>({
         validate: zodForm(loginFormSchema),
-        initialValues: loginFormInitialValues,
+        initialValues: passwordRecoveryFormInitialValues,
     })
 
-    const handleSubmit: SubmitHandler<TLoginForm> = async ({ email, password }) => {
+    const handleSubmit: SubmitHandler<TPasswordRecoveryForm> = async ({ email }) => {
         try {
-            await logUserInUseCase(email, password)
+            await sendPasswordRecoveryEmail(email)
 
             navigate('/dashboard')
         } catch (err) {
@@ -35,7 +37,7 @@ const LoginPage: Component = () => {
                 <Container maxWidth="sm">
                     <Paper>
                         <Box padding={5} maxWidth="sm">
-                            <Form<TLoginForm>
+                            <Form<TPasswordRecoveryForm>
                                 of={form}
                                 name="teste"
                                 class="flex flex-col gap-4"
@@ -53,24 +55,10 @@ const LoginPage: Component = () => {
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="password">
-                                    {(field) => (
-                                        <TextInput
-                                            {...field.props}
-                                            class="flex-1"
-                                            label="Senha"
-                                            type="password"
-                                            value={field.value}
-                                            error={field.error}
-                                        />
-                                    )}
-                                </Field>
+
                                 <Stack direction="row" justifyContent="end" alignItems="center" gap={3}>
-                                    <Button variant="text" onClick={() => navigate('/dashboard/password-recovery')}>
-                                        Esqueci minha senha
-                                    </Button>
                                     <Button variant="contained" type="submit">
-                                        Login
+                                        Enviar
                                     </Button>
                                 </Stack>
                             </Form>
@@ -82,4 +70,4 @@ const LoginPage: Component = () => {
     )
 }
 
-export default LoginPage
+export default PasswordRecoveryPage

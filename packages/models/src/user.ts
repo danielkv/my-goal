@@ -1,7 +1,6 @@
 import { Models } from './database.models'
 
 export interface IUserClaims {
-    userrole?: 'default' | 'none'
     claims_admin?: boolean
 }
 
