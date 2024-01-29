@@ -11,7 +11,7 @@ create table
     "resultValue" numeric not null,
 	fb_old_user_id text null,
     constraint workout_results_pkey primary key (id),
-	constraint workout_results_userId_fkey foreign key ("userId") references auth.users (id) on update cascade on delete cascade
+	constraint workout_results_userId_fkey foreign key ("userId") references public.profiles (id) on update cascade on delete cascade
   );
 
 alter table public.workout_results enable row level security;

@@ -10,7 +10,7 @@ create table
     "resultValue" numeric not null,
     fb_old_user_id text null,
     constraint movement_results_pkey primary key (id),
-    constraint movement_results_userId_fkey foreign key ("userId") references auth.users (id) on update cascade on delete cascade,
+    constraint movement_results_userId_fkey foreign key ("userId") references public.profiles (id) on update cascade on delete cascade,
     constraint movement_results_movementId_fkey foreign key ("movementId") references movements (id) on update cascade on delete cascade
   );
 
