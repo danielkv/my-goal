@@ -1,11 +1,13 @@
 import { IMovement, IMovementInput, TResultType } from 'goal-models'
 import { RESULT_TYPES } from 'goal-utils'
+import { debounce } from 'radash'
 import { FiPlus } from 'solid-icons/fi'
 
 import { Component, For, Show, createEffect, createMemo, createResource, createSignal } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
 import DashboardContainer from '@components/DashboardContainer'
+import Pagination from '@components/Pagination'
 import TextInput from '@components/TextInput'
 import { Delete, Edit } from '@suid/icons-material'
 import {
@@ -27,7 +29,7 @@ import {
     Typography,
 } from '@suid/material'
 import { addMovementUseCase } from '@useCases/movements/addMovement'
-import { getMovementsUseCase } from '@useCases/movements/getMovements'
+import { IGetMovements, getMovementsUseCase } from '@useCases/movements/getMovements'
 import { removeMovementUseCase } from '@useCases/movements/removeMovement'
 import { updateMovementUseCase } from '@useCases/movements/updateMovement'
 import { getErrorMessage } from '@utils/errors'
@@ -43,6 +45,17 @@ const MovementListScreen: Component = () => {
     const [loadinAction, setLoadingAction] = createSignal(false)
     const [loadinRemoveAction, setLoadingRemoveAction] = createSignal<string | null>(null)
 
+    const [currentPage, setCurrentPage] = createSignal(0)
+    const [searchInput, setSearchInput] = createSignal('')
+    const [currentSearch, setCurrentSearch] = createSignal('')
+    const debouncedEffect = debounce({ delay: 400 }, (input: string) => {
+        setCurrentSearch(input)
+    })
+
+    createEffect(() => {
+        debouncedEffect(searchInput())
+    })
+
     const buttonsDisabled = createMemo(() => !!loadinRemoveAction() || loadinAction())
 
     const handleCloseDialog = () => {
@@ -52,7 +65,10 @@ const MovementListScreen: Component = () => {
         setMovementResultTypeValue('')
     }
 
-    const [listResult, { refetch }] = createResource('movements', getMovementsUseCase)
+    const [listResult, { refetch }] = createResource(
+        () => ({ page: currentPage(), pageSize: 20, search: currentSearch() } as IGetMovements),
+        getMovementsUseCase
+    )
 
     const handleUpdateMovement = async () => {
         try {
@@ -128,6 +144,18 @@ const MovementListScreen: Component = () => {
         setDialogOpen(true)
     }
 
+    const handleNextPage = () => {
+        const nextPage = listResult()?.nextPage || 0
+        if (!nextPage) return
+        setCurrentPage(nextPage)
+    }
+
+    const handlePrevPage = () => {
+        const prevPage = currentPage() - 1
+        if (prevPage < 0) return
+        setCurrentPage(prevPage)
+    }
+
     createEffect(() => {
         if (dialogOpen()) document.getElementById('movementName')?.focus()
     })
@@ -135,7 +163,7 @@ const MovementListScreen: Component = () => {
     return (
         <DashboardContainer>
             <Container maxWidth="lg">
-                <Box mt={6}>
+                <Box mt={6} pb={10}>
                     <Stack mb={8} direction="row" justifyContent="space-between" alignItems="center">
                         <Typography variant="h1" fontSize={28} fontWeight="bold">
                             Movimentos{' '}
@@ -152,8 +180,22 @@ const MovementListScreen: Component = () => {
                             Adicionar movimento
                         </Button>
                     </Stack>
+                    <Box mb={6}>
+                        <Stack>
+                            <TextInput
+                                class="max-w-md"
+                                label="Busca"
+                                name="Busca"
+                                value={searchInput()}
+                                onInput={(e) => {
+                                    setSearchInput((e.target as HTMLInputElement).value)
+                                }}
+                            />
+                        </Stack>
+                    </Box>
 
-                    <Show when={listResult()?.length}>
+                    <Show when={listResult()?.items.length}>
+                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -164,7 +206,7 @@ const MovementListScreen: Component = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <For each={listResult()}>
+                                <For each={listResult()?.items}>
                                     {(movement) => (
                                         <TableRow>
                                             <TableCell>
@@ -200,6 +242,7 @@ const MovementListScreen: Component = () => {
                                 </For>
                             </TableBody>
                         </Table>
+                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
                     </Show>
                 </Box>
                 <Dialog

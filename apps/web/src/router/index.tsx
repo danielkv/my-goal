@@ -33,7 +33,7 @@ const AppRouter: Component = () => {
                         <Route path="/worksheet/view/:id" element={<Preview />} />
                         <Route path="/worksheet/:id" element={<CreateNewDay />} />
                         <Route path="/users" element={<UsersList />} />
-                        <Route path="/dashboard/movements" element={<MovementListScreen />} />
+                        <Route path="/movements" element={<MovementListScreen />} />
                     </Route>
                     {/* End Dashboard */}
                 </Routes>
