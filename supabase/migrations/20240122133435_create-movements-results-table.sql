@@ -28,6 +28,10 @@ create policy "Only admins and user can update its own Movements results"
   on movement_results for update
   using (  auth.uid() = "userId" OR is_claims_admin() );
 
+create policy "Only admins and user can delete its own Movements results"
+  on days for delete
+  using (auth.uid() = "userId" OR is_claims_admin());
+
 CREATE VIEW highest_movement_results AS SELECT
   DISTINCT ON ("movementId") "movementId",
   "userId",

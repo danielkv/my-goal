@@ -16,9 +16,12 @@ export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<
     if (error) throw error
 
     const hidratedDays = worksheet.days.map<IDayInput>((day) => ({
-        ...day,
+        ...(day.id ? day : omit(day, ['id'])),
         worksheetId: data.id,
     }))
+
+    const { error: removeDaysError } = await supabase.from('days').delete({ count: 'exact' }).eq('worksheetId', data.id)
+    if (removeDaysError) throw removeDaysError
 
     const { error: daysError, data: insertedDays } = await supabase.from('days').insert(hidratedDays).select()
     if (daysError) throw daysError

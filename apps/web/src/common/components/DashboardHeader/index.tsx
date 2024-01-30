@@ -36,11 +36,7 @@ const DashboardHeader: Component = () => {
                         >
                             <FiUsers size={20} />
                         </A>
-                        <A
-                            href="/dashboard/worksheet"
-                            title="Planilhas"
-                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
-                        >
+                        <A href="/dashboard" title="Planilhas" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
                             <FaSolidClipboardList size={20} fill="white" />
                         </A>
                         <button

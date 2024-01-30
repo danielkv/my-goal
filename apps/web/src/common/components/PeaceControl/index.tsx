@@ -33,7 +33,9 @@ const PeaceControl: Component<PeaceControlProps> = (props): JSX.Element => {
         } as TPeaces)
     }
     const handleClickTopDuplicate = () => {
-        props.onAdd?.(props.thisPath, cloneDeep(props.item))
+        const data = (props.item as any).id ? { ...cloneDeep(props.item), id: null } : cloneDeep(props.item)
+
+        props.onAdd?.(props.thisPath, data as TPeaces)
     }
     const handleClickBottomDuplicate = () => {
         props.onAdd?.(pathToNextIndex(props.thisPath), cloneDeep(props.item))

@@ -10,7 +10,7 @@ create table
 
 alter table public.movements enable row level security;
 
-create policy "Movements are viewable by everyone."
+create policy "Movements are viewable by everyone authenticated."
   on movements for select
   using ( auth.uid() IS NOT NULL );
 
@@ -18,6 +18,10 @@ create policy "Only admins can create new Movements"
   on movements for insert
   with check ( is_claims_admin() );
 
-create policy "Only admins can update worksheets"
+create policy "Only admins can update Movements"
   on movements for update
   using ( is_claims_admin() );
+
+create policy "Only admins and delete Movements"
+  on days for delete
+  using (is_claims_admin());
