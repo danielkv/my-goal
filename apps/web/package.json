@@ -35,8 +35,6 @@
 		"dayjs": "^1.11.7",
 		"deep-equal": "^2.2.1",
 		"events": "^3.3.0",
-		"firebase": "^9.22.1",
-		"firebaseui": "^6.0.2",
 		"goal-models": "*",
 		"goal-utils": "*",
 		"html2canvas": "^1.4.1",

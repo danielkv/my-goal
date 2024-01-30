@@ -1,10 +1,7 @@
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 import { IContactForm } from '@view/Home/config'
 
-const sendEmail = firebaseProvider.FUNCTION_CALL<IContactForm, 'ok'>('sendEmail')
-
 export async function sendEmailUseCase(data: IContactForm) {
-    const res = await sendEmail(data)
-
-    return res.data
+    const { error } = await supabase.functions.invoke('sendEmail', { method: 'POST', body: data })
+    if (error) throw error
 }

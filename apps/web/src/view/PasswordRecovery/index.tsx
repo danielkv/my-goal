@@ -1,5 +1,3 @@
-import 'firebaseui/dist/firebaseui.css'
-
 import { Component, onMount } from 'solid-js'
 
 import TextInput from '@components/TextInput'
