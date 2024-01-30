@@ -68,21 +68,22 @@ create trigger on_auth_user_updated
 
 
 CREATE VIEW public.users AS 
-SELECT
+select
   users.id,
   users.email,
-  users.phone as phone,
+  users.phone,
   profiles."displayName",
   profiles."photoUrl",
-  CASE 
-  	when (users.raw_app_meta_data ->> 'claims_admin')::boolean then true
-	  else false
-	end 
-	 as "admin"
-FROM
-  public.profiles
-LEFT JOIN auth.users ON users.id = profiles.id
-WHERE
-  users.deleted_at IS NULL;
+  users.email_confirmed_at IS NULL as "emailVerified",
+  users.banned_until IS NOT NULL as disabled,
+  case
+    when (users.raw_app_meta_data ->> 'claims_admin'::text)::boolean then true
+    else false
+  end as admin
+from
+  profiles
+  left join auth.users on users.id = profiles.id
+where
+  users.deleted_at is null;
 
 revoke all on public.users from anon, authenticated;

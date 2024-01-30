@@ -1,8 +1,9 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { ListUsersResult } from '@models/user'
+import { supabase } from '@common/providers/supabase'
 
-const toggleEnableUserFn = firebaseProvider.FUNCTION_CALL<string, ListUsersResult>('toggleEnableUser')
-
-export async function toggleEnableUserUseCase(uid: string): Promise<void> {
-    await toggleEnableUserFn(uid)
+export async function toggleEnableUserUseCase(id: string, action: 'enable' | 'disable'): Promise<void> {
+    const { error } = await supabase.functions.invoke('toggleEnableUser', {
+        method: 'POST',
+        body: { userId: id, action },
+    })
+    if (error) throw error
 }

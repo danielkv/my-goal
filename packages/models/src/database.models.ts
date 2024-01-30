@@ -64,11 +64,14 @@ export type DatabaseModel = MergeDeep<
                         resultValue: number
                     }
                 }
-                profiles: {
+                users: {
                     Row: {
                         id: string
                         displayName: string
                         email: string
+                        emailVerified: boolean
+                        admin: boolean
+                        disabled: boolean
                     }
                 }
             }

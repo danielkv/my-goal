@@ -1,11 +1,15 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { IPagination } from '@interfaces/app'
-import { ListUsersResult } from '@models/user'
+import { IPaginatedResponse, IPagination, ISorting, IUser, IUserListItem } from 'goal-models'
 
-const getUsersFn = firebaseProvider.FUNCTION_CALL<IPagination, ListUsersResult>('getUsers')
+import { supabase } from '@common/providers/supabase'
 
-export async function getUsersUseCase(args: IPagination): Promise<ListUsersResult> {
-    const result = await getUsersFn(args)
+export interface IGetUsers extends IPagination, ISorting<IUser> {}
 
-    return result.data
+type TResponse = IPaginatedResponse<IUserListItem>
+
+export async function getUsersUseCase(args: IGetUsers): Promise<TResponse> {
+    const { error, data } = await supabase.functions.invoke<TResponse>('listUsers', { method: 'POST', body: args })
+    if (error) throw error
+    if (!data) throw new Error('Ocorreu um erro ao carregar usuários')
+
+    return data
 }

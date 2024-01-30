@@ -15,6 +15,8 @@ export interface IUserData extends IUser {
     phone?: string | null
 }
 
-export interface IUserContext extends IUser {
+export interface IUserContext extends IUserData {
     claims: IUserClaims
 }
+
+export interface IUserListItem extends Models<'users'> {}
