@@ -1,8 +1,8 @@
+import { SocialLoginProvider } from 'goal-models'
+
 import { supabase } from '@common/providers/supabase'
 
-export type SocialLoginProvider = 'google'
-
-export async function socialLoginUseCase(provider: 'google') {
+export async function socialLoginUseCase(provider: SocialLoginProvider) {
     const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

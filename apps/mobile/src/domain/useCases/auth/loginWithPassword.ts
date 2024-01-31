@@ -9,7 +9,7 @@ type EmailCredentials = { provider: 'email'; email: string; password: string }
 
 type Credentials = EmailCredentials
 
-export async function logUserInUseCase(credentials: Credentials) {
+export async function loginWithPasswordUseCase(credentials: Credentials) {
     // try supabase login first
     const { error, data } = await supabase.auth.signInWithPassword(credentials)
     if (!error) return setLoggedUser(extractSupabaseUserCredential(data.user))

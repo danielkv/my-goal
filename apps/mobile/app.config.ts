@@ -27,6 +27,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         },
         assetBundlePatterns: ['./src/assets/**/*'],
         ios: {
+            usesAppleSignIn: true,
             buildNumber: '20',
             bundleIdentifier: BUNDLE_ID,
             appStoreUrl: 'https://apps.apple.com/us/app/my-goal/id6449090065',

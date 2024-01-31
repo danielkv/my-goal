@@ -20,3 +20,5 @@ export interface IUserContext extends IUserData {
 }
 
 export interface IUserListItem extends Models<'users'> {}
+
+export type SocialLoginProvider = 'google' | 'apple'

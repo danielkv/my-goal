@@ -8,7 +8,6 @@ import LogoGoal from '@assets/images/logo-goal.png'
 import Button from '@components/Button'
 import LoginButton from '@components/LoginButton'
 import SafeAreaView from '@components/SafeAreaView'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 
@@ -23,12 +22,8 @@ const LoginScreen: React.FC = () => {
 
     const { size } = getTokens()
 
-    const handleSuccessSocialLogin = (credential: FirebaseAuthTypes.UserCredential) => {
-        if (!credential.user.displayName)
-            navigation.dispatch(
-                StackActions.replace(ERouteName.SubscriptionScreen, { redirect: ERouteName.HomeScreen })
-            )
-        else navigation.dispatch(StackActions.replace(ERouteName.HomeScreen))
+    const handleSuccessSocialLogin = () => {
+        navigation.dispatch(StackActions.replace(ERouteName.HomeScreen))
     }
 
     return (

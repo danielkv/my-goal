@@ -1,3 +1,5 @@
+import { SocialLoginProvider } from 'goal-models'
+
 import { Component, onMount } from 'solid-js'
 
 import SocialLoginButton from '@components/SocialLoginButton'
@@ -6,7 +8,7 @@ import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/
 import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack } from '@suid/material'
 import { logUserInUseCase } from '@useCases/user/logUserIn'
-import { SocialLoginProvider, socialLoginUseCase } from '@useCases/user/socialLogin'
+import { socialLoginUseCase } from '@useCases/user/socialLogin'
 import { getErrorMessage } from '@utils/errors'
 
 import { TLoginForm, loginFormInitialValues, loginFormSchema } from './config'
