@@ -1,10 +1,12 @@
 import { Component, onMount } from 'solid-js'
 
+import SocialLoginButton from '@components/SocialLoginButton'
 import TextInput from '@components/TextInput'
 import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack } from '@suid/material'
 import { logUserInUseCase } from '@useCases/user/logUserIn'
+import { SocialLoginProvider, socialLoginUseCase } from '@useCases/user/socialLogin'
 import { getErrorMessage } from '@utils/errors'
 
 import { TLoginForm, loginFormInitialValues, loginFormSchema } from './config'
@@ -27,6 +29,15 @@ const LoginPage: Component = () => {
             alert(getErrorMessage(err))
         }
     }
+
+    const handleSocialLogin = async (provider: SocialLoginProvider) => {
+        try {
+            await socialLoginUseCase(provider)
+        } catch (err) {
+            alert((err as Error).message)
+        }
+    }
+
     onMount(() => input.focus())
 
     return (
@@ -74,6 +85,10 @@ const LoginPage: Component = () => {
                                     </Button>
                                 </Stack>
                             </Form>
+
+                            <Box mt={3}>
+                                <SocialLoginButton mode="google" onClick={() => handleSocialLogin('google')} />
+                            </Box>
                         </Box>
                     </Paper>
                 </Container>
