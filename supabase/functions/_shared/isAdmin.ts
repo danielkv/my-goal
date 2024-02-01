@@ -1,7 +1,7 @@
 import { createSupabaseClient } from './client.ts'
 
-export async function isAdmin(req: Request) {
-    const client = createSupabaseClient(req)
+export async function isAdmin(authorization: string) {
+    const client = createSupabaseClient(authorization)
 
     const { error: userError, data: userData } = await client.auth.getUser()
     if (userError) return false

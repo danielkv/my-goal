@@ -5,7 +5,7 @@ Deno.serve(async (req) => {
     if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
     if (req.method !== 'POST') return new Response('INVALID METHOD', { status: 404, headers: corsHeaders })
 
-    const client = createSupabaseClient(req)
+    const client = createSupabaseClient(req.headers.get('Authorization')!)
     const { provider } = await req.json()
 
     const { error, data } = await client.auth.signInWithOAuth({

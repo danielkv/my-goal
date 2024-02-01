@@ -1,7 +1,8 @@
 import { corsHeaders } from '../_shared/cors.ts'
 
 Deno.serve(async (req) => {
-    if (req.method === 'OPTION') return new Response('ok', { headers: corsHeaders })
+    if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
+    if (req.method !== 'POST') return new Response('INVALID METHOD', { status: 404, headers: corsHeaders })
 
     const { event } = await req.json()
     const purchaseObject = event?.data?.object

@@ -3,13 +3,13 @@ import { corsHeaders } from '../_shared/cors.ts'
 
 Deno.serve(async (req) => {
     if (req.method === 'OPTION') return new Response('ok', { headers: corsHeaders })
-    const supabase = createSupabaseClient(req)
-
-    const { userId } = await req.json()
-    if (!userId) return new Response('Missing user ID param', { status: 400 })
+    const supabase = createSupabaseClient(req.headers.get('Authorization')!)
 
     const { data, error: userError } = await supabase.auth.getUser()
     if (userError) return new Response(userError.message, { status: 500 })
+
+    const { userId } = await req.json()
+    if (!userId) return new Response('Missing user ID param', { status: 400 })
 
     if (data.user.id !== userId) return new Response('Only the user itself can delete its account', { status: 403 })
 
