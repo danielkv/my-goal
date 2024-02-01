@@ -26,9 +26,9 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({ onSuccess }) => {
 
             await GoogleSignin.hasPlayServices()
 
-            const { idToken, serverAuthCode } = await GoogleSignin.signIn()
+            const { idToken } = await GoogleSignin.signIn()
 
-            if (!idToken || !serverAuthCode) throw new Error('idToken and/or authCode are null')
+            if (!idToken) throw new Error('idToken and/or authCode are null')
 
             await socialLoginUseCase('google', idToken)
 
