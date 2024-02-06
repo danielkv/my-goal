@@ -7,7 +7,7 @@ Deno.serve(async (req) => {
     if (req.method !== 'POST') return new Response('INVALID METHOD', { status: 404, headers: corsHeaders })
 
     try {
-        if (!(await isAdmin(req)))
+        if (!(await isAdmin(req.headers.get('Authorization')!)))
             return new Response('Sem permissão para esta ação', { status: 403, headers: corsHeaders })
 
         const { userId } = await req.json()

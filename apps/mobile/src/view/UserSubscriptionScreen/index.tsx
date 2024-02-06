@@ -15,7 +15,7 @@ import Button from '@components/Button'
 import { useUserContext } from '@contexts/user/userContext'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { Edit2, ExternalLink } from '@tamagui/lucide-icons'
+import { Edit3, ExternalLink } from '@tamagui/lucide-icons'
 import { getUserSubscriptions } from '@useCases/subscriptions/getUserSubscription'
 
 function displayPrice(price: number, period: string | null): string {
@@ -120,7 +120,7 @@ const UserSubscriptionScreen: React.FC = () => {
                         </Text>
                     )}
 
-                    <Button onPress={handleEditSubscription} icon={<Edit2 />}>
+                    <Button onPress={handleEditSubscription} icon={<Edit3 />}>
                         Alterar assinatura
                     </Button>
                     {!!managementURL && (

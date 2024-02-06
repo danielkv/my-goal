@@ -9,7 +9,7 @@ import {
 import { RevokePromotionalEntitlementBody } from './types.ts'
 import cors from 'npm:cors'
 // @deno-types="npm:@types/express@4.17.15"
-import express, { Request } from 'npm:express@4.18.2'
+import express, { Request, Response } from 'npm:express@4.18.2'
 
 const port = 3000
 const app = express()
@@ -34,10 +34,12 @@ app.post(
     '/revenueCat/grantPromotionalEntitlement/',
     checkIsAdminMiddleware,
     validateSchema(grantPromotionalEntitlementSchema),
-    async (req: Request<unknown, unknown, GrantPromotionalEntitlementBody>, res) => {
+    async (req: Request<unknown, unknown, GrantPromotionalEntitlementBody>, res: Response) => {
         const apiKey = Deno.env.get('REVENUECAT_API_KEY')
         if (!apiKey) return res.status(400).send('RevenueCat API key not found')
         const { app_user_id, duration, entitlement_identifier, start_time_ms } = req.body
+
+        console.log(app_user_id, duration, entitlement_identifier, start_time_ms)
 
         const revenueCat = new RevenueCat(apiKey)
 
@@ -56,7 +58,7 @@ app.post(
     '/revenueCat/revokePromotionalEntitlement/',
     checkIsAdminMiddleware,
     validateSchema(revokePromotionalEntitlementSchema),
-    async (req: Request<unknown, unknown, RevokePromotionalEntitlementBody>, res) => {
+    async (req: Request<unknown, unknown, RevokePromotionalEntitlementBody>, res: Response) => {
         const apiKey = Deno.env.get('REVENUECAT_API_KEY')
         if (!apiKey) return res.status(400).send('RevenueCat API key not found')
         const { app_user_id, entitlement_identifier } = req.body

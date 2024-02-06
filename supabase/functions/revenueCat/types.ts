@@ -5,7 +5,7 @@ export const grantPromotionalEntitlementSchema = z.object({
     app_user_id: z.string(),
     entitlement_identifier: z.string(),
     duration: promotionalPeriodSchema,
-    start_time_ms: z.number(),
+    start_time_ms: z.number().optional(),
 })
 
 export type GrantPromotionalEntitlementBody = z.infer<typeof grantPromotionalEntitlementSchema>
