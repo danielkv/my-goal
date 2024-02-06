@@ -1,8 +1,12 @@
-import { Component, For, Show, createResource, createSignal } from 'solid-js'
+import { debounce } from 'radash'
+
+import { Component, For, Show, createEffect, createResource, createSignal } from 'solid-js'
 
 import DashboardContainer from '@components/DashboardContainer'
 import Pagination from '@components/Pagination'
+import TextInput from '@components/TextInput'
 import { loggedUser } from '@contexts/user/user.context'
+import { useNavigate } from '@solidjs/router'
 import {
     AdminPanelSettings,
     Delete,
@@ -32,8 +36,20 @@ import { toggleEnableUserUseCase } from '@useCases/user/toggleEnableUser'
 import { getErrorMessage } from '@utils/errors'
 import { redirectToLogin } from '@utils/redirectToLogin'
 
-const UsersList: Component = () => {
+const UsersListScreen: Component = () => {
     redirectToLogin()
+
+    const [searchInput, setSearchInput] = createSignal('')
+    const [currentSearch, setCurrentSearch] = createSignal('')
+    const debouncedEffect = debounce({ delay: 400 }, (input: string) => {
+        setCurrentSearch(input)
+    })
+
+    createEffect(() => {
+        debouncedEffect(searchInput())
+    })
+
+    const navigate = useNavigate()
 
     const [loadinAction, setLoadingAction] = createSignal<string | null>(null)
     const [currentPage, setCurrentPage] = createSignal<number>(0)
@@ -44,6 +60,7 @@ const UsersList: Component = () => {
             sortBy: 'displayName',
             page: currentPage(),
             pageSize: 10,
+            search: currentSearch(),
         } as IGetUsers
     }, getUsersUseCase)
 
@@ -120,6 +137,20 @@ const UsersList: Component = () => {
                         </Show>
                     </Typography>
 
+                    <Box mb={6}>
+                        <Stack>
+                            <TextInput
+                                class="max-w-md"
+                                label="Busca"
+                                name="Busca"
+                                value={searchInput()}
+                                onInput={(e) => {
+                                    setSearchInput((e.target as HTMLInputElement).value)
+                                }}
+                            />
+                        </Stack>
+                    </Box>
+
                     <Show when={listResult()?.items.length}>
                         <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
                         <Table>
@@ -135,7 +166,11 @@ const UsersList: Component = () => {
                                 <For each={listResult()?.items}>
                                     {(user) => {
                                         return (
-                                            <TableRow>
+                                            <TableRow
+                                                style={{ cursor: 'pointer' }}
+                                                class="hover:bg-gray-800"
+                                                onClick={() => navigate(`/dashboard/users/${user.id}`)}
+                                            >
                                                 <TableCell>
                                                     <Stack direction="row" spacing={1}>
                                                         <Box fontWeight="bold">{user.displayName}</Box>
@@ -211,4 +246,4 @@ const UsersList: Component = () => {
     )
 }
 
-export default UsersList
+export default UsersListScreen
