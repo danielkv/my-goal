@@ -22,7 +22,7 @@ import { useLoggedUser } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
+import { ChevronLeft, Dumbbell, Edit3, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { deleteAccountUseCase } from '@useCases/auth/removeUser'
 import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
@@ -147,7 +147,7 @@ const ProfileScreen: React.FC = () => {
                 ) : (
                     <Stack f={1} ai="center" jc="center" h={HEADER_MIN_HEIGHT}>
                         <Text marginVertical="$6" fontSize="$10" fontWeight="800" color={textAvatarColor}>
-                            {userInitials(user.displayName)}
+                            {userInitials(user.displayName || undefined)}
                         </Text>
                     </Stack>
                 )}
@@ -216,7 +216,7 @@ const ProfileScreen: React.FC = () => {
                             </Button>
                         )}
                         <Button
-                            icon={<Edit size={20} color="white" />}
+                            icon={<Edit3 size={20} color="white" />}
                             onPress={() => navigate(ERouteName.SubscriptionScreen)}
                         >
                             Alterar informações

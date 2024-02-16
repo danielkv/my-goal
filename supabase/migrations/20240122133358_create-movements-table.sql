@@ -23,5 +23,5 @@ create policy "Only admins can update Movements"
   using ( is_claims_admin() );
 
 create policy "Only admins and delete Movements"
-  on days for delete
+  on movements for delete
   using (is_claims_admin());

@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.SUPABASE_URL ?? ''
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-
-const supabase = createClient(supabaseUrl, supabaseKey)
-
 export async function emulateCreateFbUser(fbuid: string) {
+    const supabaseUrl = process.env.SUPABASE_URL ?? ''
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
     await supabase.auth.signUp({
         email: faker.internet.email(),
         password: faker.internet.password(),

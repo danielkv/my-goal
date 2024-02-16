@@ -5,6 +5,8 @@ import { supabase } from '@common/providers/supabase'
 import { extractSupabaseUserCredential, extractUserCredential } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 
+import { confirmMigratedUser } from './confirmMigratedUser'
+
 type EmailCredentials = { provider: 'email'; email: string; password: string }
 
 type Credentials = EmailCredentials
@@ -32,6 +34,8 @@ export async function loginWithPasswordUseCase(credentials: Credentials) {
                 },
             },
         })
+
+        await confirmMigratedUser(user.uid)
 
         if (error) throw error
         if (!data.user) throw new Error('User not found')

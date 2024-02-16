@@ -6,12 +6,12 @@ import path from 'node:path'
 
 config({ path: path.resolve(__dirname, '..', '..', '..', '..', '.env') })
 
-const supabaseUrl = process.env.SUPABASE_URL ?? ''
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-
-const supabase = createClient(supabaseUrl, supabaseKey)
-
 export default async function createUsers(countFakeUsers?: number, adminFilePath?: string) {
+    const supabaseUrl = process.env.SUPABASE_URL ?? ''
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
     if (Number.isNaN(countFakeUsers)) throw new Error('count is nor a number')
 
     if (adminFilePath && fs.existsSync(adminFilePath)) {

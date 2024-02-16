@@ -4,7 +4,9 @@ export interface IUserClaims {
     claims_admin?: boolean
 }
 
-export interface IUser extends Models<'profiles'> {}
+export interface IUser extends Models<'profiles'> {
+    email: string
+}
 
 export interface IUserInput extends IUser {
     password: string

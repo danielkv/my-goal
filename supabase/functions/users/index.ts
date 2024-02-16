@@ -1,4 +1,4 @@
-import { createSupabaseSuperClient } from '../_shared/client.ts'
+import { createSupabaseClient, createSupabaseSuperClient } from '../_shared/client.ts'
 import { checkIsAdminMiddleware } from '../_shared/middlewares.ts'
 import { RevenueCat } from '../_shared/revenuecat.ts'
 // @deno-types="npm:@types/cors@2.8.5"
@@ -15,6 +15,24 @@ app.use(
         preflightContinue: true,
     })
 )
+
+app.post('/users/confirm-migrated-user', async (req, res) => {
+    const { fbuid } = req.body
+
+    const client = createSupabaseClient(req.header('Authorization')!)
+
+    const { error, data } = await client.auth.getUser()
+    if (error) return res.status(500).send(error.message)
+
+    if (data.user.user_metadata.fbuid !== fbuid) return res.status(403).send('Invalid credentials')
+
+    const superClient = createSupabaseSuperClient()
+
+    const { error: updateError } = await superClient.auth.admin.updateUserById(data.user.id, { email_confirm: true })
+    if (updateError) return res.status(500).send(updateError.message)
+
+    return res.send('ok')
+})
 
 app.get('/users', checkIsAdminMiddleware, async (req, res) => {
     const page = req.query.page ? Number(req.query.page) : 0

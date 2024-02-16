@@ -29,5 +29,5 @@ create policy "Only admins and user can update its own Workouts results"
   using (  auth.uid() = "userId" OR is_claims_admin() );
 
 create policy "Only admins and user can delete its own Workouts results"
-  on days for delete
+  on workout_results for delete
   using (auth.uid() = "userId" OR is_claims_admin());

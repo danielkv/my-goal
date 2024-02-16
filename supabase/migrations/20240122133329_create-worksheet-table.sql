@@ -25,5 +25,5 @@ create policy "Only admins can update worksheets"
   using ( is_claims_admin() );
 
 create policy "Only admins and delete worksheets"
-  on days for delete
+  on worksheets for delete
   using (is_claims_admin());
