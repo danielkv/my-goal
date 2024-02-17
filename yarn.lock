@@ -10717,6 +10717,7 @@ __metadata:
     axios: ^1.5.1
     barrelsby: ^2.8.1
     concurrently: ^8.0.1
+    cors: ^2.8.5
     dayjs: ^1.11.7
     eslint-config-google: ^0.14.0
     firebase-admin: ^11.5.0

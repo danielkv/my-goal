@@ -1,11 +1,14 @@
 import { init } from '../../helpers'
 import { createHttpsError } from '../../utils/createHttpsError'
+import * as enableCors from 'cors'
 import { getAuth } from 'firebase-admin/auth'
 import { getFirestore } from 'firebase-admin/firestore'
 import { auth, https } from 'firebase-functions'
 import { pick } from 'radash'
 
 init()
+
+const cors = enableCors({ origin: true })
 
 interface UserData {
     displayName: string
@@ -20,6 +23,26 @@ export const copyUserDataToCollection = auth.user().onCreate((user) => {
     const userData = pick(user, ['uid', 'email', 'emailVerified', 'displayName', 'photoURL', 'phoneNumber'])
 
     return fs.collection('user_data').doc(user.uid).create(userData)
+})
+
+export const getUserByEmail = https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            const email = req.query.email as string
+            if (!email) throw new Error('Email not found')
+
+            const auth = getAuth()
+            const response = await auth.getUserByEmail(email)
+
+            if (!response) throw new Error('User not found')
+
+            res.json(
+                pick(response, ['uid', 'email', 'emailVerified', 'displayName', 'photoURL', 'phoneNumber', 'disabled'])
+            )
+        } catch (err) {
+            res.status(400).send((err as Error).message)
+        }
+    })
 })
 
 export const getUsers = https.onCall(async (data: { limit?: number; pageToken?: string }) => {
