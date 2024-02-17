@@ -3664,9 +3664,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-google-signin/google-signin@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "@react-native-google-signin/google-signin@npm:11.0.0"
+"@react-native-google-signin/google-signin@npm:^10.0.1":
+  version: 10.1.1
+  resolution: "@react-native-google-signin/google-signin@npm:10.1.1"
   peerDependencies:
     expo: ">=47.0.0"
     react: "*"
@@ -3674,7 +3674,7 @@ __metadata:
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: 58651579f2b23bc73b17510fc3d621a72d9a079778deec08aa74d421b5cfa9766ae8395b9c59dfececf61149461f369d1fedebee3635bd0e4c2a1fda7b89d3ef
+  checksum: 773ec6177f3a8671239804ede7825f8857a4772d73e46a7a0b1f59d578698d2d038d669b9e48ab93ef68cedbdedbad1621a8cb4d2f886cb641efb96431af0b22
   languageName: node
   linkType: hard
 
@@ -7100,13 +7100,6 @@ __metadata:
   bin:
     barrelsby: bin/cli.js
   checksum: ca85a809abe99985e368105a732d8cdcd52606fa72c77813f8e76a6f0006b98f53dc7a1618653d43c2c84e1d14260e50cd71f094a3fa4380ffee55431f23cc99
-  languageName: node
-  linkType: hard
-
-"base-64@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "base-64@npm:1.0.0"
-  checksum: d10b64a1fc9b2c5a5f39f1ce1e6c9d1c5b249222bbfa3a0604c592d90623caf74419983feadd8a170f27dc0c3389704f72faafa3e645aeb56bfc030c93ff074a
   languageName: node
   linkType: hard
 
@@ -10761,7 +10754,7 @@ __metadata:
     "@react-native-firebase/auth": ^18.5.0
     "@react-native-firebase/crashlytics": ^18.5.0
     "@react-native-firebase/perf": ^18.5.0
-    "@react-native-google-signin/google-signin": ^11.0.0
+    "@react-native-google-signin/google-signin": ^10.0.1
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
     "@shopify/flash-list": 1.4.3
@@ -10777,7 +10770,6 @@ __metadata:
     "@types/clone-deep": ^4.0.1
     "@types/react": ~18.2.14
     babel-plugin-transform-inline-environment-variables: ^0.4.4
-    base-64: ^1.0.0
     clone-deep: ^4.0.1
     dayjs: ^1.11.7
     dotenv: ^16.0.3

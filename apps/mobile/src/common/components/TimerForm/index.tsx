@@ -9,7 +9,7 @@ import { useTheme } from 'tamagui'
 import Button from '@components/Button'
 import TextField from '@components/TextField'
 import TimeField from '@components/TimeField'
-import { Edit2 } from '@tamagui/lucide-icons'
+import { Edit3 } from '@tamagui/lucide-icons'
 
 export interface TabataFormProps {
     type: 'tabata'
@@ -70,7 +70,7 @@ const TimerForm: React.FC<TimerFormProps> = (props) => {
                     {props.countdown > 0 ? `Countdown ${props.countdown}s` : 'Sem countdown'}
                 </Text>
                 <Button circular onPress={() => setupCountdownDialogOpen(true)}>
-                    <Edit2 color="$gray2" size={20} />
+                    <Edit3 color="$gray2" size={20} />
                 </Button>
             </XStack>
             <YStack ai="center">

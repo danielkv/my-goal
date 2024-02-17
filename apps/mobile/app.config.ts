@@ -9,6 +9,7 @@ const ID_PREFIX = IS_PROD ? 'app' : APP_VARIANT === 'preview' ? 'prev' : 'dev'
 const BUNDLE_ID = `${ID_PREFIX}.mygoal.goal`
 const APP_NAME = IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`
 const RUNTIME_VERSION = '1.6.0'
+const APP_VERSION = '1.6.2'
 
 export default ({ config }: ConfigContext): ExpoConfig => {
     return {
@@ -16,7 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         owner: 'goal',
         name: APP_NAME,
         slug: 'goal-mobile',
-        version: RUNTIME_VERSION,
+        version: APP_VERSION,
         icon: './src/assets/icon.png',
         userInterfaceStyle: 'dark',
         scheme: 'mygoal',
@@ -40,7 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
                 : process.env.GOOGLE_SERVICES_IOS_DEV,
         },
         android: {
-            versionCode: 20,
+            versionCode: 21,
             package: BUNDLE_ID,
             playStoreUrl: 'https://play.google.com/store/apps/details?id=app.mygoal.goal',
             adaptiveIcon: {
