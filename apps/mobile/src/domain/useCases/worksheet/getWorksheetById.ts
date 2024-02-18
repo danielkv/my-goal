@@ -1,20 +1,18 @@
-import { IWorksheetModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IWorksheet } from 'goal-models'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getWorksheetDaysUseCase } from '@useCases/days/getWorksheetDays'
+import { supabase } from '@common/providers/supabase'
 
-export async function getWorksheetByIdUseCase(worksheetId: string): Promise<IWorksheetModel> {
-    const fs = firebaseProvider.getFirestore()
+export async function getWorksheetByIdUseCase(worksheetId: string): Promise<IWorksheet> {
+    const { error, data: worksheetData } = await supabase
+        .from('worksheets')
+        .select('*, days(*)')
+        .eq('id', worksheetId)
+        .order('date', { referencedTable: 'days', ascending: true })
+        .single()
 
-    const docSnapshot = await fs.collection<IWorksheetModel>(collections.WORKSHEETS).doc(worksheetId).get()
-
-    const worksheetData = docSnapshot.data()
-    if (!docSnapshot.exists || !worksheetData) throw new Error('Planilha não encontrada')
+    if (error) throw error
 
     if (!worksheetData.published) throw new Error('Planilha não encontrada')
 
-    const days = await getWorksheetDaysUseCase(worksheetId)
-
-    return { ...worksheetData, days, id: docSnapshot.id }
+    return worksheetData
 }

@@ -3,16 +3,14 @@ import { Alert } from 'react-native'
 
 import * as AppleAuthentication from 'expo-apple-authentication'
 import * as Crypto from 'expo-crypto'
-import { displayArray } from 'goal-utils'
 
-import { firebaseProvider } from '@common/providers/firebase'
 import LoginButton from '@components/LoginButton'
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { socialLoginUseCase } from '@useCases/auth/socialLogin'
 import { AuthException } from '@utils/exceptions/AuthException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 interface AppleLoginProps {
-    onSuccess?(credential: FirebaseAuthTypes.UserCredential): void
+    onSuccess?(): void
 }
 
 const AppleLogin: React.FC<AppleLoginProps> = ({ onSuccess }) => {
@@ -38,19 +36,12 @@ const AppleLogin: React.FC<AppleLoginProps> = ({ onSuccess }) => {
                     nonce: hashedNonce,
                 })
             )
-            .then(async ({ identityToken, fullName }) => {
-                const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+            .then(async ({ identityToken }) => {
+                if (!identityToken) throw new Error('Identity Token and/or nonce are null')
 
-                const credential = await firebaseProvider.getAuth().signInWithCredential(appleCredential)
+                await socialLoginUseCase('apple', identityToken, nonce)
 
-                if (!credential.user.displayName && fullName?.givenName) {
-                    await firebaseProvider.getAuth().currentUser?.updateProfile({
-                        displayName: displayArray([fullName?.givenName, fullName.familyName]),
-                    })
-                    await firebaseProvider.getAuth().currentUser?.reload()
-                }
-
-                onSuccess?.(credential)
+                onSuccess?.()
             })
             .catch((err: any) => {
                 const exception = new AuthException(err)

@@ -13,7 +13,7 @@ import TextField from '@components/TextField'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { Eye, EyeOff, User } from '@tamagui/lucide-icons'
-import { logUserInUseCase } from '@useCases/auth/logUserIn'
+import { loginWithPasswordUseCase } from '@useCases/auth/loginWithPassword'
 import { sendResetPasswordEmailUseCase } from '@useCases/auth/sendResetPasswordEmail'
 import { isAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
@@ -30,7 +30,7 @@ const EmailLoginScreen: React.FC = () => {
 
     const onSubmit: FormikConfig<TLoginForm>['onSubmit'] = async (result) => {
         try {
-            await logUserInUseCase({ provider: 'email', ...result })
+            await loginWithPasswordUseCase({ provider: 'email', ...result })
 
             navigation.navigate(ERouteName.HomeScreen)
         } catch (err) {

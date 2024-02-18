@@ -5,14 +5,13 @@ import { FiLogIn, FiLogOut, FiUsers } from 'solid-icons/fi'
 import { Component } from 'solid-js'
 
 import LogoSvg from '@assets/logo.svg?component-solid'
-import { firebaseProvider } from '@common/providers/firebase'
-import { loggedUser, setLoggedUser } from '@contexts/user/user.context'
+import { loggedUser } from '@contexts/user/user.context'
 import { A } from '@solidjs/router'
+import { logUserOut } from '@useCases/user/logUserOut'
 
 const DashboardHeader: Component = () => {
     const handleSignOut = () => {
-        setLoggedUser(null)
-        firebaseProvider.getAuth().signOut()
+        logUserOut()
     }
 
     return (
@@ -37,11 +36,7 @@ const DashboardHeader: Component = () => {
                         >
                             <FiUsers size={20} />
                         </A>
-                        <A
-                            href="/dashboard/worksheet"
-                            title="Planilhas"
-                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
-                        >
+                        <A href="/dashboard" title="Planilhas" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
                             <FaSolidClipboardList size={20} fill="white" />
                         </A>
                         <button

@@ -1,57 +1,30 @@
-import { IDayModel, IWorksheet, IWorksheetModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IDayInput, IWorksheet, IWorksheetInput } from 'goal-models'
 import { omit } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getWorksheetDaysUseCase } from '@useCases/days/getWorksheetDays'
-import { dayConverter, worksheetConverter } from '@utils/converters'
-import { newId } from '@utils/newId'
+import { supabase } from '@common/providers/supabase'
 
-export async function saveWorksheetUseCase(worksheet: IWorksheet): Promise<IWorksheetModel> {
-    const worksheetId = worksheet.id || newId()
-    const docRef = firebaseProvider
-        .firestore()
-        .doc(collections.WORKSHEETS, worksheetId)
-        .withConverter(worksheetConverter)
-
-    const existingDays = worksheet.id ? await getWorksheetDaysUseCase(worksheet.id) : []
-
-    const worksheetResult: IWorksheetModel = await firebaseProvider
-        .firestore()
-        .runTransaction(firebaseProvider.getFirestore(), async (transaction) => {
-            const startEndDate = {
-                start: worksheet.days.at(0)?.date || '',
-                end: worksheet.days.at(-1)?.date || '',
-            }
-
-            transaction.set(docRef, { ...worksheet, startEndDate, id: '' })
-
-            const daysResult = worksheet.days.map<IDayModel>((day, index) => {
-                const dayId = day.id || newId()
-                const dayDocRef = firebaseProvider
-                    .firestore()
-                    .doc(collections.WORKSHEETS, docRef.id, 'days', dayId)
-                    .withConverter(dayConverter)
-                transaction.set(dayDocRef, day)
-
-                return {
-                    ...omit(day, ['id']),
-                    id: dayId,
-                }
-            })
-
-            const validIds = daysResult.map((day) => day.id)
-            existingDays
-                .filter((day) => !validIds.includes(day.id))
-                .forEach((day) => {
-                    const dayToRemoveRef = firebaseProvider
-                        .firestore()
-                        .doc(collections.WORKSHEETS, docRef.id, 'days', day.id)
-                    transaction.delete(dayToRemoveRef)
-                })
-
-            return { ...worksheet, days: daysResult, id: worksheetId, startEndDate }
+export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<IWorksheet> {
+    const { error, data } = await supabase
+        .from('worksheets')
+        .upsert({
+            ...omit(worksheet, ['days']),
+            startDate: worksheet.days.at(0)?.date || '',
+            endDate: worksheet.days.at(-1)?.date || '',
         })
+        .select()
+        .single()
+    if (error) throw error
 
-    return worksheetResult
+    const hidratedDays = worksheet.days.map<IDayInput>((day) => ({
+        ...(day.id ? day : omit(day, ['id'])),
+        worksheetId: data.id,
+    }))
+
+    const { error: removeDaysError } = await supabase.from('days').delete({ count: 'exact' }).eq('worksheetId', data.id)
+    if (removeDaysError) throw removeDaysError
+
+    const { error: daysError, data: insertedDays } = await supabase.from('days').insert(hidratedDays).select()
+    if (daysError) throw daysError
+
+    return { ...data, days: insertedDays }
 }

@@ -2,11 +2,11 @@ import { IUserData } from 'goal-models'
 
 export interface IUserInput {
     displayName: string
-    phoneNumber: string
+    phone: string
     email: string
     password: string
 }
 
-export interface IUser extends IUserData {
+export interface IUserFB extends IUserData {
     socialLogin: boolean
 }

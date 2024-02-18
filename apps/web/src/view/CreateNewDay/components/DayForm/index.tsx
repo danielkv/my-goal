@@ -46,7 +46,13 @@ const DayForm: Component<DayFormProps> = (props) => {
 
             <Field of={form} name="name">
                 {(field) => (
-                    <TextInput class="flex-1" label="Nome" value={field.value} error={field.error} {...field.props} />
+                    <TextInput
+                        class="flex-1"
+                        label="Nome"
+                        value={field.value || ''}
+                        error={field.error}
+                        {...field.props}
+                    />
                 )}
             </Field>
 

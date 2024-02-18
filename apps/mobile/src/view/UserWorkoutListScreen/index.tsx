@@ -21,7 +21,7 @@ type TGrouptWorkoutResults = (IUserWorkoutResult | string)[]
 function _convertToSections(results: IUserWorkoutResult[]): TGrouptWorkoutResults {
     if (!results.length) return []
 
-    const groups = group(results, (item) => dayjs(item.createdAt).format('YYYY-MM-DD'))
+    const groups = group(results, (item) => item.date)
 
     return Object.entries(groups).reduce<TGrouptWorkoutResults>((acc, [date, workouts]) => {
         if (!workouts) return acc
@@ -41,17 +41,12 @@ const UserWorkoutListScreen: React.FC = () => {
 
     const user = usePreventAccess(APP_ENTITLEMENTS.SAVE_WORKOUT_RESULT)
 
-    const getKey = (
-        pageIndex: number,
-        previousPageData: IUserWorkoutResult[]
-    ): [string, string | null | undefined, number] | null => {
-        if (!user?.uid) return null
+    const getKey = (pageIndex: number, previousPageData: IUserWorkoutResult[]): [string, number, number] | null => {
+        if (!user?.id) return null
 
         if (previousPageData && !previousPageData.length) return null
 
-        const previousLastItem = previousPageData?.[previousPageData.length - 1].id
-
-        return [user.uid, pageIndex === 0 ? null : previousLastItem, 2]
+        return [user.id, pageIndex, 2]
     }
 
     const { data, isLoading, size, setSize, error } = useSWRInfinite(getKey, (arg) =>
@@ -114,7 +109,7 @@ const UserWorkoutListScreen: React.FC = () => {
                     else
                         return (
                             <Stack mb="$2" mx="$6" mt="$3">
-                                <TouchableOpacity onPress={handleOnPressBlock(item.workoutSignature, item.result.type)}>
+                                <TouchableOpacity onPress={handleOnPressBlock(item.workoutSignature, item.resultType)}>
                                     <EventBlock disableButton block={item.workout} />
                                 </TouchableOpacity>
                             </Stack>

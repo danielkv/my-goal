@@ -1,19 +1,28 @@
-import { collections } from 'goal-utils'
+import { IMovement, IPaginatedResponse, IPagination, ISorting } from 'goal-models'
+import { buildPaginatedResponse, getPagination, getSorting } from 'goal-utils'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { movementConverter } from '@utils/converters'
+import { supabase } from '@common/providers/supabase'
 
-export async function getMovementsUseCase() {
-    const collectionRef = firebaseProvider
-        .firestore()
-        .collection(collections.MOVEMENTS)
-        .withConverter(movementConverter)
+export interface IGetMovements extends IPagination, ISorting<IMovement> {
+    search?: string
+}
 
-    const query = firebaseProvider
-        .firestore()
-        .query(collectionRef, firebaseProvider.firestore().orderBy('movement_insensitive', 'asc'))
+export async function getMovementsUseCase(args: IGetMovements): Promise<IPaginatedResponse<IMovement>> {
+    const { from, to } = getPagination(args)
+    const { sortBy, order } = getSorting(args, 'movement')
 
-    const snapshot = await firebaseProvider.firestore().getDocs(query)
+    let query = supabase
+        .from('movements')
+        .select('*', { count: 'exact' })
+        .order(sortBy, { ascending: order === 'asc' })
+        .range(from, to)
 
-    return snapshot.docs.map((doc) => doc.data())
+    if (args.search && args.search.length >= 3) query = query.ilike('movement', `%${args.search}%`)
+
+    const { error, data, count: total } = await query
+
+    if (error) throw error
+    if (total === null) throw new Error('Erro na contagem dos dados')
+
+    return buildPaginatedResponse(data, total, args)
 }

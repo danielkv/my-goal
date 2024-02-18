@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { RefreshControl } from 'react-native'
 
+import useSWR from 'swr'
+import { Stack, getTokens, useTheme } from 'tamagui'
+
 import ActivityIndicator from '@components/ActivityIndicator'
 import AlertBox from '@components/AlertBox'
 import { useLoggedUser } from '@contexts/user/userContext'
@@ -9,9 +12,6 @@ import { ERouteName } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
 import { getWorksheetListUseCase } from '@useCases/worksheet/getWorksheetList'
 import { getErrorMessage } from '@utils/getErrorMessage'
-
-import useSWR from 'swr'
-import { Stack, getTokens, useTheme } from 'tamagui'
 
 import WorksheetListItem from './components/WorksheetListItem'
 
@@ -51,7 +51,7 @@ const WorksheetListScreen: React.FC = () => {
                     />
                 </Stack>
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => String(item.id)}
             ListHeaderComponent={() => {
                 if (user) return null
                 return <AlertBox mb="$4" type="info" text="Para ver qualquer planilha você precisa estar logado" />

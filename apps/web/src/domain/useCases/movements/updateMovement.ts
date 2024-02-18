@@ -1,14 +1,13 @@
-import { IMovement } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IMovementInput } from 'goal-models'
+import { pick } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { movementConverter } from '@utils/converters'
+import { supabase } from '@common/providers/supabase'
 
-export async function updateMovementUseCase(movementId: string, movement: IMovement) {
-    const documentRef = firebaseProvider
-        .firestore()
-        .doc(collections.MOVEMENTS, movementId)
-        .withConverter(movementConverter)
+export async function updateMovementUseCase(movementId: string, movement: IMovementInput): Promise<void> {
+    const { error } = await supabase
+        .from('movements')
+        .update(pick(movement, ['movement', 'resultType']))
+        .eq('id', movementId)
 
-    await firebaseProvider.firestore().updateDoc(documentRef, documentRef.converter?.toFirestore(movement))
+    if (error) throw error
 }

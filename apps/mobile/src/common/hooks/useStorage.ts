@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
-import { logMessageUseCase } from '@useCases/log/logMessage'
-import { createAppException } from '@utils/exceptions/AppException'
 
 export function useStorage<T = any>(key: string, defaultValue?: T) {
     const [loading, setLoading] = useState(true)
@@ -23,8 +21,6 @@ export function useStorage<T = any>(key: string, defaultValue?: T) {
             }
             setCurrentValue(value)
         } catch (err) {
-            const logError = createAppException('ERROR_CAUGHT', err)
-            logMessageUseCase(logError.toObject())
             setError(err as Error)
         } finally {
             setLoading(false)
@@ -37,8 +33,6 @@ export function useStorage<T = any>(key: string, defaultValue?: T) {
             setCurrentValue(value)
             await setItemNative(value as string)
         } catch (err) {
-            const logError = createAppException('ERROR_CAUGHT', err)
-            logMessageUseCase(logError.toObject())
             setError(err as Error)
         } finally {
             setLoadingSet(false)

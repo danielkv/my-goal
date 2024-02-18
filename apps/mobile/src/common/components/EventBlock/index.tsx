@@ -20,8 +20,8 @@ const EventBlock: React.FC<PeriodEventBlock> = ({ block, disableButton, onPress 
     const blockHeader = eventBlockDisplay.displayHeader(block)
 
     const blockTimerMode = useMemo(() => checkIsTimedWorkout(block), [])
-    const timerType = blockTimerType(block)
 
+    const timerType = blockTimerType(block)
     const handleOnPress = () => {
         if (!onPress) return
 

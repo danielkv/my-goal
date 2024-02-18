@@ -11,7 +11,7 @@ export interface ITimer {
 abstract class TimerBase extends EventEmitter {
     protected _startTime: number = 0
     protected _currentTime: number = 0
-    protected tickInterval!: number
+    protected tickInterval!: NodeJS.Timeout
     protected _intervalTimeout: number = 50
     status: TTimerStatus = 'initial'
 

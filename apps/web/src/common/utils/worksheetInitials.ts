@@ -1,6 +1,6 @@
 import {
     IBlock,
-    IDay,
+    IDayInput,
     IEventBlock,
     IEventMovement,
     IMovementWeight,
@@ -9,7 +9,7 @@ import {
     IRound,
     ISection,
     ITextBlock,
-    IWorksheet,
+    IWorksheetInput,
 } from 'goal-models'
 
 export function createMovementWeightValues(): IMovementWeight {
@@ -73,18 +73,20 @@ export function createPeriodValues(): IPeriod {
     }
 }
 
-export function createDayValues(): IDay {
+export function createDayValues(): IDayInput {
     return {
         name: '',
         date: '',
         periods: [],
+        worksheetId: 'none',
     }
 }
 
-export function createWorksheetValues(): IWorksheet {
+export function createWorksheetValues(): IWorksheetInput {
     return {
         name: '',
         startDate: '',
+        endDate: '',
         days: [],
     }
 }

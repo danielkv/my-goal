@@ -1,28 +1,23 @@
-import { IUserResult, TResultType } from './result'
-import { IUserData } from './user'
+import { Models, ModelsInsert } from './database.models'
+import { IUserHighestResult, TResultType } from './result'
+import { IUser } from './user'
 
 export interface IMovementInput {
     resultType: TResultType
     movement: string
 }
 
-export interface IMovement extends IMovementInput {
-    id: string
-    movement_insensitive: string
-    countResults: number
-}
+export interface IMovement extends Models<'movements'> {}
 
-export interface IUserMovementResult extends IUserResult {
-    movementId: string
-}
+export interface IUserMovementResult extends Models<'movement_results'> {}
 
 export interface IUserMovementResultResponse extends IUserMovementResult {
-    user: IUserData
+    user: IUser
 }
 
 export interface IUserMovementResultListResponse {
-    movement: IMovement
-    result?: IUserMovementResult
+    movement: Models<'movements'>
+    result?: IUserHighestResult
 }
 
-export interface IUserMovementResultInput extends Omit<IUserMovementResult, 'id'> {}
+export interface IUserMovementResultInput extends ModelsInsert<'movement_results'> {}

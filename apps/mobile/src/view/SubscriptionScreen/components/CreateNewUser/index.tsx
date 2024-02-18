@@ -9,8 +9,6 @@ import Button from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { createUserUseCase } from '@useCases/auth/createUser'
-import { logMessageUseCase } from '@useCases/log/logMessage'
-import { createAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { TSubscriptionForm, initialValues, validationSchema } from '@view/SubscriptionScreen/config'
 
@@ -23,7 +21,7 @@ const CreateNewUser: React.FC = () => {
         try {
             await createUserUseCase({
                 displayName: result.name,
-                phoneNumber: parsePhoneNumberFromString(result.phoneNumber, 'BR')?.number || '',
+                phone: parsePhoneNumberFromString(result.phoneNumber, 'BR')?.number || '',
                 email: result.email,
                 password: result.password,
             })
@@ -34,8 +32,6 @@ const CreateNewUser: React.FC = () => {
                 [{ style: 'default', onPress: () => navigation.navigate(ERouteName.LoginScreen) }]
             )
         } catch (err) {
-            const logError = createAppException('ERROR_CAUGHT', err)
-            logMessageUseCase(logError.toObject())
             Alert.alert('Ocorreu um erro', getErrorMessage(err))
         }
     }

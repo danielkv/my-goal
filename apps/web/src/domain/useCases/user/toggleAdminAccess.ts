@@ -1,8 +1,9 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { ListUsersResult } from '@models/user'
+import { supabase } from '@common/providers/supabase'
 
-const toggleAdminAccessFn = firebaseProvider.FUNCTION_CALL<string, ListUsersResult>('toggleAdminAccess')
-
-export async function toggleAdminAccessUseCase(uid: string): Promise<void> {
-    await toggleAdminAccessFn(uid)
+export async function toggleAdminAccessUseCase(id: string, action: 'promote' | 'demote'): Promise<void> {
+    const { error } = await supabase.functions.invoke('toggleUserClaimAdmin', {
+        method: 'POST',
+        body: { userId: id, action },
+    })
+    if (error) throw error
 }

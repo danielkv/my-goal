@@ -1,8 +1,9 @@
 import Purchases from 'react-native-purchases'
 
+import { IUser } from 'goal-models'
+
 import { firebaseProvider } from '@common/providers/firebase'
 import { useUserContext } from '@contexts/user/userContext'
-import { IUser } from '@models/user'
 import { getUserSubscriptionInfoUseCase } from '@useCases/subscriptions/getUserSubscriptionInfo'
 
 export const setLoggedUser = async (user: IUser | null): Promise<void> => {
@@ -10,15 +11,15 @@ export const setLoggedUser = async (user: IUser | null): Promise<void> => {
 
     if (user?.email) {
         await Purchases.logIn(user.email)
-        await firebaseProvider.getAnalytics().setUserId(user.uid)
+        await firebaseProvider.getAnalytics().setUserId(user.id)
         //        await firebaseProvider.getAnalytics().logLogin({})
         await firebaseProvider
             .getAnalytics()
             .setUserProperties({ name: user.displayName || '', email: user.email || '' })
+
         await Purchases.setAttributes({
-            $displayName: user.displayName || null,
+            $displayName: user.displayName,
             $email: user.email,
-            $phoneNumber: user.phoneNumber || null,
         })
         subscriptionInfo = await getUserSubscriptionInfoUseCase()
     } else {

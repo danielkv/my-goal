@@ -90,7 +90,8 @@ const WorksheetList: Component = () => {
                     <div>Carregando...</div>
                 </Show>
                 <Show when={!list.loading && !!list.resource}>
-                    <div class="flex">
+                    <div class="flex flex-wrap">
+                        <WorksheetItem onClick={handleClickWorksheetNew} />
                         <For each={list.resource}>
                             {(worksheet) => (
                                 <WorksheetItem
@@ -103,7 +104,6 @@ const WorksheetList: Component = () => {
                                 />
                             )}
                         </For>
-                        <WorksheetItem onClick={handleClickWorksheetNew} />
                     </div>
                 </Show>
             </div>

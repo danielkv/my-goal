@@ -1,8 +1,10 @@
-import { collections } from 'goal-utils'
-
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
 export async function toggleWorksheetPublishedUseCase(worksheetId: string, currentState: boolean): Promise<void> {
-    const docRef = firebaseProvider.firestore().doc(collections.WORKSHEETS, worksheetId)
-    await firebaseProvider.firestore().setDoc(docRef, { published: !currentState }, { merge: true })
+    const { error } = await supabase
+        .from('worksheets')
+        .update({ published: !currentState })
+        .eq('id', worksheetId)
+        .single()
+    if (error) throw error
 }

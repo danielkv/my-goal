@@ -1,12 +1,18 @@
 import { faker } from '@faker-js/faker'
-import * as admin from 'firebase-admin'
+import { createClient } from '@supabase/supabase-js'
+import { config } from 'dotenv'
 import fs from 'node:fs'
-import { pick } from 'radash'
+import path from 'node:path'
+
+config({ path: path.resolve(__dirname, '..', '..', '..', '..', '.env') })
 
 export default async function createUsers(countFakeUsers?: number, adminFilePath?: string) {
-    if (Number.isNaN(countFakeUsers)) throw new Error('count is nor a number')
+    const supabaseUrl = process.env.SUPABASE_URL ?? ''
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
 
-    const auth = admin.auth()
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    if (Number.isNaN(countFakeUsers)) throw new Error('count is nor a number')
 
     if (adminFilePath && fs.existsSync(adminFilePath)) {
         const adminData = JSON.parse(fs.readFileSync(adminFilePath, { encoding: 'utf-8' }))
@@ -14,23 +20,34 @@ export default async function createUsers(countFakeUsers?: number, adminFilePath
         if (!adminData.displayName || !adminData.email || !adminData.password)
             throw new Error('Admin user needs these fields: displatName, email, password')
 
-        const userCreated = await auth.getUserByEmail(adminData.email).catch(() => null)
+        const { data, error } = await supabase.auth.admin.createUser({
+            email: adminData.email,
+            password: adminData.password,
+            email_confirm: adminData.email_confirm,
+            user_metadata: {
+                displayName: adminData.displayName,
+            },
+        })
 
-        if (!userCreated) {
-            const user = await auth.createUser(pick(adminData, ['displayName', 'email', 'password', 'emailVerified']))
+        if (error) throw error
 
-            auth.setCustomUserClaims(user.uid, { admin: true })
-        } else console.log('Admin user already exists, skipping...')
+        await supabase.rpc('set_claim', {
+            uid: data.user.id,
+            claim: 'claims_admin',
+            value: true,
+        })
     } else {
         console.log('Admin user will not be created')
     }
 
     const fakerUserPromises = Array.from({ length: countFakeUsers || 8 }).map(() => {
-        return auth.createUser({
-            displayName: faker.person.fullName(),
+        return supabase.auth.admin.createUser({
             email: faker.internet.email(),
             password: faker.internet.password(),
-            emailVerified: faker.datatype.boolean(),
+            email_confirm: faker.datatype.boolean(),
+            user_metadata: {
+                displayName: faker.person.fullName(),
+            },
         })
     })
 

@@ -1,10 +1,12 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { createAppException } from '@utils/exceptions/AppException'
+import { supabase } from '@common/providers/supabase'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
-export async function removeUserUseCase(): Promise<void> {
-    const auth = firebaseProvider.getAuth()
+export async function deleteAccountUseCase(): Promise<void> {
+    const { error, data } = await supabase.auth.getUser()
+    if (error) throw new Error('Ocorreu um erro ao solicitar usuário')
 
-    if (!auth.currentUser) throw createAppException('NOT_LOGGED_IN', 'Nenhum usuário logado')
+    const userId = data.user.id
 
-    await auth.currentUser.delete()
+    const { error: deleteError } = await supabase.functions.invoke('deleteAccount', { body: { userId } })
+    if (deleteError) throw new Error(`Ocorreu um erro ao excluir conta: ${getErrorMessage(deleteError)}`)
 }

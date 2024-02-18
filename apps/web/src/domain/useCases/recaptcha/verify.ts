@@ -1,4 +1,4 @@
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
 interface IVerifyResponse {
     success: boolean
@@ -8,10 +8,13 @@ interface IVerifyResponse {
     action: string
 }
 
-const recaptchaVerify = firebaseProvider.FUNCTION_CALL<string, IVerifyResponse>('recaptchaVerify')
+export async function recaptchaVerifyUseCase(token: string): Promise<IVerifyResponse> {
+    const { error, data } = await supabase.functions.invoke<IVerifyResponse>('recaptchaVerify', {
+        method: 'POST',
+        body: { token },
+    })
+    if (error) throw error
+    if (!data) throw new Error('Could not verify token')
 
-export async function recaptchaVerifyUseCase(token: string) {
-    const res = await recaptchaVerify(token)
-
-    return res.data
+    return data
 }

@@ -3,8 +3,6 @@ import { Component } from 'react'
 import { Stack } from 'tamagui'
 
 import AlertBox from '@components/AlertBox'
-import { logMessageUseCase } from '@useCases/log/logMessage'
-import { createAppException } from '@utils/exceptions/AppException'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 export class ErrorBoundary extends Component<any, any> {
@@ -18,9 +16,6 @@ export class ErrorBoundary extends Component<any, any> {
     }
 
     componentDidCatch(error: any, errorInfo: any) {
-        const logError = createAppException('ERROR_BOUNDARY', error, errorInfo)
-        logMessageUseCase(logError.toObject())
-
         this.setState({ error: true, errorInfo })
     }
 

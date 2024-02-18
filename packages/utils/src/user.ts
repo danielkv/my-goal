@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
-import { IUserData, TResultType } from 'goal-models'
+import { IUser, TResultType } from 'goal-models'
 
-export function isUserDataComplete(user?: IUserData | null): boolean {
+export function isUserDataComplete(user?: IUser | null): boolean {
     if (!user) return false
     if (!user.displayName || !user.email) return false
 

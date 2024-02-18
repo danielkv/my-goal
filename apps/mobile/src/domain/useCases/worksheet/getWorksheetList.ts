@@ -1,26 +1,14 @@
-import { IWorksheetModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { Models } from 'goal-models'
 
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
-export function getWorksheetListUseCase(): Promise<IWorksheetModel[]> {
-    const fs = firebaseProvider.getFirestore()
+export async function getWorksheetListUseCase(): Promise<Models<'worksheets'>[]> {
+    const { data, error } = await supabase
+        .from('worksheets')
+        .select()
+        .eq('published', true)
+        .order('startDate', { ascending: false })
+    if (error) throw error
 
-    return fs
-        .collection<IWorksheetModel>(collections.WORKSHEETS)
-        .orderBy('startDate', 'desc')
-        .where('published', '==', true)
-        .get({ source: 'server' })
-        .then((snapshot) => {
-            const worksheets = snapshot.docs.map((doc) => {
-                const worksheetData = doc.data()
-
-                return {
-                    ...worksheetData,
-                    id: doc.id,
-                }
-            })
-
-            return worksheets
-        })
+    return data
 }

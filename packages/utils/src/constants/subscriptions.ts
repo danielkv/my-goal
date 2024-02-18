@@ -1,6 +1,6 @@
 import {
     APP_ENTITLEMENTS,
-    IEntitlementInfo,
+    IEntitlementDetails,
     IOffering,
     IPackage,
     IStoreProduct,
@@ -38,7 +38,7 @@ export const FREE_PRODUCT: IStoreProduct = {
     presentedOfferingIdentifier: null,
 }
 
-export const SAVE_PR_ENTITLEMENT: IEntitlementInfo = {
+export const SAVE_PR_ENTITLEMENT: IEntitlementDetails = {
     identifier: 'save_pr',
     isActive: true,
     willRenew: true,
@@ -58,7 +58,7 @@ export const SAVE_PR_ENTITLEMENT: IEntitlementInfo = {
     billingIssueDetectedAtMillis: null,
     ownershipType: 'UNKNOWN',
 }
-export const TIMER_ENTITLEMENT: IEntitlementInfo = {
+export const TIMER_ENTITLEMENT: IEntitlementDetails = {
     identifier: 'timer',
     isActive: true,
     willRenew: true,

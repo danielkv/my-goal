@@ -5,10 +5,13 @@ import CreateNewDay from '@view/CreateNewDay'
 import Home from '@view/Home'
 import LoginPage from '@view/Login'
 import MovementListScreen from '@view/MovementListScreen'
+import PasswordRecoveryPage from '@view/PasswordRecovery'
 import Preview from '@view/Preview'
 import PrivacyPolicy from '@view/PrivacyPolicy'
+import ResetPasswordPage from '@view/ResetPassword'
 import TermsOfUse from '@view/TermsOfUse'
-import UsersList from '@view/UsersList'
+import UserDetailsScreen from '@view/UserDetailsScreen'
+import UsersListScreen from '@view/UsersList'
 import WorksheetList from '@view/WorksheetList'
 
 const AppRouter: Component = () => {
@@ -24,12 +27,15 @@ const AppRouter: Component = () => {
                     {/* Dashboard */}
                     <Route path="/dashboard">
                         <Route path="/login" element={<LoginPage />} />
+                        <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+                        <Route path="/reset-password" element={<ResetPasswordPage />} />
                         <Route path="/" element={<WorksheetList />} />
                         <Route path="/worksheet/new" element={<CreateNewDay />} />
                         <Route path="/worksheet/view/:id" element={<Preview />} />
                         <Route path="/worksheet/:id" element={<CreateNewDay />} />
-                        <Route path="/users" element={<UsersList />} />
-                        <Route path="/dashboard/movements" element={<MovementListScreen />} />
+                        <Route path="/users" element={<UsersListScreen />} />
+                        <Route path="/users/:id" element={<UserDetailsScreen />} />
+                        <Route path="/movements" element={<MovementListScreen />} />
                     </Route>
                     {/* End Dashboard */}
                 </Routes>

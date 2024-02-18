@@ -22,9 +22,9 @@ import { useLoggedUser } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { ChevronLeft, Dumbbell, Edit, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
+import { ChevronLeft, Dumbbell, Edit3, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
-import { removeUserUseCase } from '@useCases/auth/removeUser'
+import { deleteAccountUseCase } from '@useCases/auth/removeUser'
 import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
@@ -56,7 +56,7 @@ const ProfileScreen: React.FC = () => {
     const handleConfirmRemoveAccount = async () => {
         try {
             setLoading(true)
-            await removeUserUseCase()
+            await deleteAccountUseCase()
 
             Alert.alert(
                 'Conta excluída',
@@ -111,7 +111,7 @@ const ProfileScreen: React.FC = () => {
     const communityWhatsappLink = Constants.expoConfig?.extra?.COMMUNITY_WHATSAPP_LINK
     const avatarColor = user.displayName ? stringToColor(user.displayName) : color.red5Light.val
     const textAvatarColor = getContrastColor(avatarColor)
-    const profileImage = user.photoURL
+    const profileImage = user.photoUrl
 
     return (
         <Stack f={1}>
@@ -147,7 +147,7 @@ const ProfileScreen: React.FC = () => {
                 ) : (
                     <Stack f={1} ai="center" jc="center" h={HEADER_MIN_HEIGHT}>
                         <Text marginVertical="$6" fontSize="$10" fontWeight="800" color={textAvatarColor}>
-                            {userInitials(user.displayName)}
+                            {userInitials(user.displayName || undefined)}
                         </Text>
                     </Stack>
                 )}
@@ -167,10 +167,8 @@ const ProfileScreen: React.FC = () => {
                         {user.displayName}
                     </Text>
                     <Text fontSize={16}>{user.email}</Text>
-                    {user.phoneNumber && (
-                        <Text fontSize={14}>
-                            {parsePhoneNumberFromString(user.phoneNumber, 'BR')?.formatNational()}
-                        </Text>
+                    {user.phone && (
+                        <Text fontSize={14}>{parsePhoneNumberFromString(user.phone, 'BR')?.formatNational()}</Text>
                     )}
                 </LinearGradient>
             </View>
@@ -218,7 +216,7 @@ const ProfileScreen: React.FC = () => {
                             </Button>
                         )}
                         <Button
-                            icon={<Edit size={20} color="white" />}
+                            icon={<Edit3 size={20} color="white" />}
                             onPress={() => navigate(ERouteName.SubscriptionScreen)}
                         >
                             Alterar informações

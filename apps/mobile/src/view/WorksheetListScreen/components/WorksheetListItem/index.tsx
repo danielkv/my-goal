@@ -1,26 +1,22 @@
 import dayjs from 'dayjs'
-import { IWorksheetModel } from 'goal-models'
+import { Models } from 'goal-models'
 import { Circle, H5, Stack, Text, XStack, YStack } from 'tamagui'
 
 import Button from '@components/Button'
 import { FileSpreadsheet } from '@tamagui/lucide-icons'
 
 export interface WorksheetListItemProps {
-    item: IWorksheetModel
+    item: Models<'worksheets'>
 
-    onPress?: (item: IWorksheetModel) => void
+    onPress?: (item: Models<'worksheets'>) => void
 }
 
 const WorksheetListItem: React.FC<WorksheetListItemProps> = ({ item, onPress }) => {
-    const isCurrent = item.startEndDate
-        ? dayjs().isBetween(item.startEndDate.start, item.startEndDate.end, 'day', '[]')
-        : false
+    const isCurrent = dayjs().isBetween(item.startDate, item.endDate, 'day', '[]')
 
-    const startEndDateDisplay = item.startEndDate
-        ? `${dayjs(item.startEndDate.start).format('DD/MM/YYYY')} - ${dayjs(item.startEndDate.end).format(
-              'DD/MM/YYYY'
-          )}`
-        : dayjs(item.startDate).format('DD/MM/YYYY')
+    const startEndDateDisplay = `${dayjs(item.startDate).format('DD/MM/YYYY')} - ${dayjs(item.endDate).format(
+        'DD/MM/YYYY'
+    )}`
 
     return (
         <Stack>

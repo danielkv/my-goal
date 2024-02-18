@@ -1,20 +1,20 @@
-import { IWorksheet } from 'goal-models'
+import { IWorksheetInput } from 'goal-models'
 import { get, isNumber, set } from 'radash'
 
 import { NestedKeyOf, Path } from '@interfaces/app'
 
-export function getPeaceFromPath<T>(object: IWorksheet, path: Path, until?: string): T {
+export function getPeaceFromPath<T>(object: IWorksheetInput, path: Path, until?: string): T {
     let normalizedPath = path.replace(/worksheet.?/, '')
 
     if (until) {
         normalizedPath = splicePath(path, until)
     }
-    const result = get<IWorksheet, T>(object, normalizedPath)
+    const result = get<IWorksheetInput, T>(object, normalizedPath)
 
     return result as T
 }
 
-export function setPeaceFromPath<T>(current: IWorksheet, path: Path, newValue: T): IWorksheet {
+export function setPeaceFromPath<T>(current: IWorksheetInput, path: Path, newValue: T): IWorksheetInput {
     const normalizedPath = path.replace(/worksheet.?/, '')
 
     const result = set(current, normalizedPath, newValue)
@@ -59,7 +59,7 @@ export function pathToPreviousIndex(path: Path, count = 1): Path {
     return finalPath
 }
 
-export function findNextIndexPath(current: IWorksheet, path: Path): Path | null {
+export function findNextIndexPath(current: IWorksheetInput, path: Path): Path | null {
     const currentIndex = getLastIndex(path)
     if (currentIndex === -1) return null
 
@@ -81,7 +81,7 @@ export function findNextIndexPath(current: IWorksheet, path: Path): Path | null 
     return pathToNextIndex(path, 1)
 }
 
-export function findPreviousIndexPath(current: IWorksheet, path: Path, root = true): Path | null {
+export function findPreviousIndexPath(current: IWorksheetInput, path: Path, root = true): Path | null {
     const currentIndex = getLastIndex(path)
     if (currentIndex === -1) return null
 

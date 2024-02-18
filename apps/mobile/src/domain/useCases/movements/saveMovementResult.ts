@@ -1,17 +1,11 @@
 import { ANALYTICS_EVENTS, IUserMovementResultInput } from 'goal-models'
-import { collections } from 'goal-utils'
 
 import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
-export async function saveMovementResultUseCase(result: Omit<IUserMovementResultInput, 'createdAt'>): Promise<void> {
-    const fs = firebaseProvider.getFirestore()
-    const collectionRef = fs.collection<IUserMovementResultInput>(collections.MOVEMENT_RESULTS)
-
-    const dataAdd: IUserMovementResultInput = {
-        ...result,
-        createdAt: new Date().toISOString(),
-    }
+export async function saveMovementResultUseCase(result: IUserMovementResultInput): Promise<void> {
+    const { error } = await supabase.from('movement_results').insert(result)
+    if (error) throw error
 
     await firebaseProvider.getAnalytics().logEvent(ANALYTICS_EVENTS.SAVE_PR)
-    await collectionRef.add(dataAdd)
 }

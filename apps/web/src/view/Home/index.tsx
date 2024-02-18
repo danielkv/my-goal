@@ -123,7 +123,7 @@ const Home: Component = () => {
         <>
             {!!loggedUser() && (
                 <div class="flex flex-row gap-2 justify-center items-center fixed z-20 w-full bg-[#ffcc00] py-2 text-gray-600 font-bold text-center">
-                    Logado como {loggedUser()?.email}
+                    Logado como {loggedUser()?.displayName}
                     <Button variant="contained" color="secondary" size="small" onClick={() => navigate('/dashboard')}>
                         Ir para dashboard
                     </Button>

@@ -8,14 +8,15 @@ import { Calendar } from '@tamagui/lucide-icons'
 
 export interface WorksheetDayItemProps {
     item: IDayModel
-
     onPress?: (item: IDayModel) => void
 }
 
 const WorksheetDayItem: React.FC<WorksheetDayItemProps> = ({ item, onPress }) => {
     const date = dayjs(item.date)
 
-    const periodsDisplay = `${item.periods.length} ${pluralize(item.periods.length, 'período')}`
+    const periodsDisplay = item.periods?.length
+        ? `${item.periods.length} ${pluralize(item.periods.length, 'período')}`
+        : 'Nenhum período'
 
     return (
         <Stack>

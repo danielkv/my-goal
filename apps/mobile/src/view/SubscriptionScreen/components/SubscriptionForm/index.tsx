@@ -36,7 +36,6 @@ const SubscriptionForm: React.FC = () => {
                 componentLeft={<User color="$gray5" size={22} />}
                 keyboardType="email-address"
                 onChangeText={handleChange('email')}
-                disabled={values.socialLogin}
                 value={values.email}
                 error={errors.email}
                 autoCapitalize="none"

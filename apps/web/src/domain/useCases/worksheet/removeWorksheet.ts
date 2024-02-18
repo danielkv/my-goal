@@ -1,9 +1,6 @@
-import { collections } from 'goal-utils'
-
-import { firebaseProvider } from '@common/providers/firebase'
+import { supabase } from '@common/providers/supabase'
 
 export async function removeWorksheetUseCase(worksheetId: string): Promise<void> {
-    const docRef = firebaseProvider.firestore().doc(collections.WORKSHEETS, worksheetId)
-
-    await firebaseProvider.firestore().deleteDoc(docRef)
+    const { error } = await supabase.from('worksheets').delete().eq('id', worksheetId)
+    if (error) throw error
 }

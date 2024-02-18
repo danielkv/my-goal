@@ -1,8 +1,9 @@
-import { firebaseProvider } from '@common/providers/firebase'
-import { ListUsersResult } from '@models/user'
+import { supabase } from '@common/providers/supabase'
 
-const removeUserFn = firebaseProvider.FUNCTION_CALL<string, ListUsersResult>('removeUser')
-
-export async function removeUserUseCase(uid: string): Promise<void> {
-    await removeUserFn(uid)
+export async function removeUserUseCase(userId: string): Promise<void> {
+    const { error } = await supabase.functions.invoke('removeUser', {
+        method: 'POST',
+        body: { userId },
+    })
+    if (error) throw error
 }

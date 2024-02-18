@@ -1,0 +1,13 @@
+diff --git a/lib/index.js b/lib/index.js
+index 9c8c1e511bfac66ac2ace1011e6d90165f16e8e6..b13a1bdf6bb90bd10c8c3677ead6489b39391671 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -179,7 +179,7 @@ class FirebaseAuthModule extends FirebaseModule {
+     // but we need it in Auth if it exists. During app configuration we store
+     // mappings from app name to authDomain, this auth constructor
+     // is a reasonable time to use the mapping and set it into auth natively
+-    this.native.configureAuthDomain();
++	if (typeof this.native.configureAuthDomain === 'function') this.native.configureAuthDomain();
+   }
+ 
+   get languageCode() {

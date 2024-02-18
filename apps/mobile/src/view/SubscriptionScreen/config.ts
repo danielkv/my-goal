@@ -8,7 +8,6 @@ export type TSubscriptionForm = {
     password: string
     phoneNumber: string
     mode: TFormMode
-    socialLogin: boolean
 }
 
 export const initialValues = (): TSubscriptionForm => {
@@ -18,7 +17,6 @@ export const initialValues = (): TSubscriptionForm => {
             email: 'daniel_kv@hotmail.com',
             password: '123456',
             phoneNumber: '48 98844 6691',
-            socialLogin: false,
             mode: 'new',
         }
 
@@ -27,7 +25,6 @@ export const initialValues = (): TSubscriptionForm => {
         email: '',
         password: '',
         phoneNumber: '',
-        socialLogin: false,
         mode: 'new',
     }
 }

@@ -47,21 +47,12 @@ const UserWorkoutScreen: React.FC = () => {
     const getKey = (
         pageIndex: number,
         previousPageData: IUserWorkoutResult[]
-    ): [string, string, TResultType, string | null | undefined, number, boolean] | null => {
-        if (!user?.uid) return null
+    ): [string, string, number, number, boolean] | null => {
+        if (!user?.id) return null
 
         if (previousPageData && !previousPageData.length) return null
 
-        const previousLastItem = previousPageData?.[previousPageData.length - 1].id
-
-        return [
-            user.uid,
-            params.workoutSignature,
-            params.resultType,
-            pageIndex === 0 ? null : previousLastItem,
-            2,
-            workoutResult === 'filtered',
-        ]
+        return [user.id, params.workoutSignature, pageIndex, 2, workoutResult === 'filtered']
     }
 
     const {
@@ -72,7 +63,7 @@ const UserWorkoutScreen: React.FC = () => {
         size,
         mutate,
         error,
-    } = useSWRInfinite(getKey, (res) => getWorkoutResultsBySignatureUseCase(...res))
+    } = useSWRInfinite(getKey, (args) => getWorkoutResultsBySignatureUseCase(...args))
 
     const mainResult = workouts?.[0][0]
     const workout = mainResult?.workout
@@ -95,13 +86,14 @@ const UserWorkoutScreen: React.FC = () => {
             if (!mainResult || !workout) throw new Error('Workout não é válido')
             if (!user) throw new Error('Usuário não autenticado')
 
-            const resultNormalized: Omit<IUserWorkoutResultInput, 'createdAt'> = {
-                result: { type: result.type, value: result.value },
+            const resultNormalized: IUserWorkoutResultInput = {
+                resultType: result.type,
+                resultValue: result.value,
                 isPrivate: result.isPrivate,
                 date: result.date.toISOString(),
                 workoutSignature: mainResult.workoutSignature,
                 workout,
-                uid: user.uid,
+                userId: user.id,
             }
 
             await saveWorkoutResult(resultNormalized)
@@ -115,7 +107,7 @@ const UserWorkoutScreen: React.FC = () => {
     }
 
     const defaultWorkoutResultType = mainResult
-        ? mainResult.result.type || getWorkoutRestultType(mainResult.workout.config.type)
+        ? mainResult.resultType || getWorkoutRestultType(mainResult.workout.config.type)
         : null
     const disableResultTypeSwitch = !!mainResult
 
@@ -154,8 +146,14 @@ const UserWorkoutScreen: React.FC = () => {
                         </Stack>
                     )
                 }}
-                renderItem={({ item: { user, result, isPrivate, date } }) => (
-                    <UserResultItem user={user} result={result} isPrivate={isPrivate} date={date} my="$2" />
+                renderItem={({ item: { user, resultType, resultValue, isPrivate, date } }) => (
+                    <UserResultItem
+                        user={user}
+                        result={{ type: resultType, value: resultValue }}
+                        isPrivate={isPrivate}
+                        date={date}
+                        my="$2"
+                    />
                 )}
                 contentContainerStyle={{
                     padding: space[6].val,

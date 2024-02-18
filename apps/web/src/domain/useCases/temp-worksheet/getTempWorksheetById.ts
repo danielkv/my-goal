@@ -1,30 +1,15 @@
-import dayjs from 'dayjs'
-import { IWorksheetModel } from 'goal-models'
-import { collections } from 'goal-utils'
+import { IWorksheet } from 'goal-models'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { getTempWorksheetDaysUseCase } from '@useCases/temp_days/getTempWorksheetDays'
-import { worksheetConverter } from '@utils/converters'
+import { getTempWorksheetKey } from '@utils/getTempWorksheetKey'
 
-export async function getTempWorksheetByIdUseCase(worksheetId: string): Promise<IWorksheetModel | null> {
-    const collectionRef = firebaseProvider
-        .firestore()
-        .doc(collections.TEMP_WORKSHEETS, worksheetId)
-        .withConverter(worksheetConverter)
+export function getTempWorksheetByIdUseCase(worksheetId: string): IWorksheet | null {
+    const data = window.localStorage.getItem(getTempWorksheetKey(worksheetId))
 
-    const snapshot = await firebaseProvider.firestore().getDoc(collectionRef)
-    if (!snapshot.exists()) return null
+    if (!data) return null
 
-    const days = await getTempWorksheetDaysUseCase(worksheetId)
-    const worksheetData = snapshot.data()
-
-    const isCurrent = worksheetData.startEndDate
-        ? dayjs().isBetween(worksheetData.startEndDate.start, worksheetData.startEndDate.end, 'day', '[]')
-        : false
-
-    return {
-        ...worksheetData,
-        isCurrent,
-        days,
+    try {
+        return JSON.parse(data) as IWorksheet
+    } catch (err) {
+        return null
     }
 }

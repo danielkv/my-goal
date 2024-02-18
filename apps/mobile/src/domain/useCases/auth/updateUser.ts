@@ -1,28 +1,16 @@
 import { pick } from 'radash'
 
-import { firebaseProvider } from '@common/providers/firebase'
-import { extractUserCredential } from '@contexts/user/userContext'
-import { IUser, IUserInput } from '@models/user'
-import { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { supabase } from '@common/providers/supabase'
+import { extractSupabaseUserCredential } from '@contexts/user/userContext'
+import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
+import { IUserInput } from '@models/user'
 
-const updateUserFn = firebaseProvider.FUNCTION_CALL<{ uid: string; data: Partial<FirebaseAuthTypes.UserInfo> }, IUser>(
-    'updateUser'
-)
-
-export async function updateUserUseCase(userInput: Partial<Omit<IUserInput, 'password'>>): Promise<IUser> {
-    const user = firebaseProvider.getAuth().currentUser
-    if (!user) throw new Error('Usuário não está logado')
-
-    await updateUserFn({
-        uid: user.uid,
-        data: pick(userInput, ['displayName', 'email', 'phoneNumber']),
+export async function updateUserUseCase(userInput: Partial<Omit<IUserInput, 'password'>>): Promise<void> {
+    const { data, error } = await supabase.auth.updateUser({
+        email: userInput.email,
+        phone: userInput.phone,
+        data: pick(userInput, ['displayName', 'phone']),
     })
-
-    await user.reload()
-
-    if (user.email !== userInput.email) {
-        await user.sendEmailVerification()
-    }
-
-    return extractUserCredential(user)
+    if (error) throw error
+    if (data.user) setLoggedUser(extractSupabaseUserCredential(data.user))
 }

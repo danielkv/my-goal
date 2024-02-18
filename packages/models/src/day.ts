@@ -1,4 +1,5 @@
 import { IBlock, IRound } from './block'
+import { Models, ModelsInsert } from './database.models'
 
 export type ISection = {
     name: string
@@ -10,35 +11,20 @@ export type IPeriod = {
     sections: ISection[]
 }
 
-export type IDay = {
-    id?: string
-    name: string
-    date: string // YYYY-MM-DD
-    periods: IPeriod[]
-}
+export type IDay = Models<'days'>
 
-type IStartEndDate = {
-    start: string
-    end: string
-}
+export interface IDayInput extends ModelsInsert<'days'> {}
 
-export type IWorksheet = {
-    id?: string
-    name: string
-    info?: string
-    startDate: string // YYYY-MM-DD
+export interface IWorksheet extends Models<'worksheets'> {
     days: IDay[]
-    published?: boolean
-    isCurrent?: boolean
-    startEndDate?: IStartEndDate
 }
 
-export type IDayModel = IDay & { id: string }
-
-export type TPeaces = IDay | IPeriod | ISection | IBlock | IRound
-
-export type IWorksheetModel = Omit<IWorksheet, 'id' | 'days'> & {
-    id: string
-    days: IDayModel[]
-    startEndDate: IStartEndDate
+export interface IWorksheetInput extends ModelsInsert<'worksheets'> {
+    days: IDayInput[]
 }
+
+export type IDayModel = Models<'days'>
+
+export type TPeaces = IDayInput | IPeriod | ISection | IBlock | IRound
+
+export type IWorksheetModel = IWorksheet

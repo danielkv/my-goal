@@ -1,6 +1,6 @@
 //export type TAppOfferingIdentifier = 'app_premium_subscription' | 'app_pro_subscription' | 'app_free_subscription'
 
-export type TEntitlementsInfo = Record<string, IEntitlementInfo>
+export type TEntitlementsInfo = Record<string, IEntitlementDetails>
 
 export enum APP_ENTITLEMENTS {
     WEEKLY_WORKOUT_ACCESS = 'weekly_workout_access',
@@ -79,7 +79,7 @@ export interface IStoreProduct {
     readonly presentedOfferingIdentifier: string | null
 }
 
-export interface IEntitlementInfo {
+export interface IEntitlementDetails {
     readonly identifier: string
     readonly isActive: boolean
     readonly willRenew: boolean
@@ -99,3 +99,29 @@ export interface IEntitlementInfo {
     readonly billingIssueDetectedAtMillis: number | null
     readonly ownershipType: 'FAMILY_SHARED' | 'PURCHASED' | 'UNKNOWN'
 }
+
+export interface IEntitlementAPI {
+    expires_date: string | null
+    grace_period_expires_date: string | null
+    product_identifier: string
+    purchase_date: string | null
+}
+
+export type IEntitlementAPIList = Record<string, IEntitlementAPI>
+
+export interface ISubscriptionAPI {
+    expires_date: string
+    purchase_date: string
+    original_purchase_date: string
+    ownership_type: 'PURCHASED' | 'FAMILY_SHARED'
+    period_type: 'normal' | 'trial' | 'intro'
+    store: 'app_store' | 'mac_app_store' | 'play_store' | 'amazon' | 'stripe' | 'promotional'
+    is_sandbox: boolean
+    unsubscribe_detected_at: string | null
+    billing_issues_detected_at: string | null
+    grace_period_expires_date: string | null
+    refunded_at: string | null
+    auto_resume_date: string | null
+}
+
+export type ISubscriptionAPIList = Record<string, ISubscriptionAPI>

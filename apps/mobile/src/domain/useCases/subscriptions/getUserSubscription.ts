@@ -1,12 +1,12 @@
 import Purchases from 'react-native-purchases'
 
-import { APP_ENTITLEMENTS, IEntitlementInfo, IStoreProduct } from 'goal-models'
+import { APP_ENTITLEMENTS, IEntitlementDetails, IStoreProduct } from 'goal-models'
 import { APP_ENTITLEMENT_DESCRIPTIONS, FREE_ENTITLEMENTS, FREE_PRODUCT } from 'goal-utils'
 import { alphabetical } from 'radash'
 
 interface UserSubscription {
     subscriptions: IStoreProduct[]
-    entitlements: IEntitlementInfo[]
+    entitlements: IEntitlementDetails[]
 }
 
 export async function getUserSubscriptions(): Promise<UserSubscription> {

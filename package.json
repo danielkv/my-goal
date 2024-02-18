@@ -14,7 +14,14 @@
 		"cli": "yarn workspace goal-cli cli",
 		"dev:functions": "yarn workspace goal-functions dev",
 		"dev:web": "yarn workspace goal-web dev",
-		"dev:mobile": "yarn workspace goal-mobile start"
+		"dev:mobile": "yarn workspace goal-mobile start",
+		"sb": "yarn supabase"
 	},
-	"packageManager": "yarn@3.6.2"
+	"packageManager": "yarn@3.6.2",
+	"dependencies": {
+		"supabase": "^1.142.2"
+	},
+	"resolutions": {
+		"@react-native-firebase/auth@^18.5.0": "patch:@react-native-firebase/auth@npm%3A18.8.0#./.yarn/patches/@react-native-firebase-auth-npm-18.8.0-697101adfe.patch"
+	}
 }

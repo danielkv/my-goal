@@ -1,15 +1,15 @@
-import { IWorksheet } from 'goal-models'
+import { IWorksheetInput } from 'goal-models'
 import { omit } from 'radash'
 import { z } from 'zod'
 
 import { createWorksheetValues } from '@utils/worksheetInitials'
 
-export type TWorksheetForm = Omit<IWorksheet, 'days' | 'id'>
+export type TWorksheetForm = Omit<IWorksheetInput, 'days'>
 
 export const worksheetInitialValues: TWorksheetForm = omit(createWorksheetValues(), ['days'])
 
 export const worksheetFormSchema = z.object({
     name: z.string({ required_error: 'Nome é obrigatório' }).nonempty('Nome é obrigatório'),
     startDate: z.string({ required_error: 'Data de início é obrigatória' }).nonempty('Data de início é obrigatória'),
-    info: z.string().optional(),
+    info: z.string().nullable(),
 })

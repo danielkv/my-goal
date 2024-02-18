@@ -1,16 +1,16 @@
-import { User } from 'firebase/auth'
+import { IUserContext } from 'goal-models'
 import { pick } from 'radash'
 
-import { IUserCredential } from '@models/user'
+import { User } from '@supabase/supabase-js'
 
-export function extractUserCredential(user: User): IUserCredential | null {
-    const credential = pick(user, ['uid', 'email', 'displayName', 'photoURL', 'phoneNumber'])
+export function extractUserCredential(user: User): IUserContext | null {
+    const credential = pick(user, ['id', 'phone'])
 
     return {
         ...credential,
-        displayName: credential.displayName || '',
-        photoURL: credential.photoURL || '',
-        phoneNumber: credential.phoneNumber || '',
-        email: credential.email || '',
+        displayName: user.user_metadata.displayName,
+        photoUrl: user.user_metadata.photoUrl || null,
+        email: user.email || '',
+        claims: pick(user.app_metadata, ['claims_admin']),
     }
 }
