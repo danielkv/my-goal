@@ -13,7 +13,7 @@ export async function socialLoginUseCase(provider: SocialLoginProvider, token: s
     // migrate data from firebase
     if (!data.user.user_metadata.fbuid) {
         const url = `${fbBaseUrl}/getUserByEmail?email=${data.user.email}`
-        const fbUser = await fetch(url, { method: 'GET' }).then(async (res) => {
+        const fbUser = await fetch(url, { method: 'GET' }).then((res) => {
             if (!res.ok) return null
 
             return res.json()

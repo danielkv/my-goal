@@ -7,6 +7,7 @@ export async function getWorksheetByIdUseCase(worksheetId: string): Promise<IWor
         .from('worksheets')
         .select('*, days(*)')
         .eq('id', worksheetId)
+        .order('date', { referencedTable: 'days', ascending: true })
         .single()
 
     if (error) throw error
