@@ -24,7 +24,7 @@ const PeriodPreview: Component<PeriodProps> = (props) => {
     )
 
     return (
-        <Stack
+        <div
             class="period bg-gray-900 rounded-xl w-96"
             classList={{
                 selected: props.currentPath === props.thisPath,
@@ -68,7 +68,7 @@ const PeriodPreview: Component<PeriodProps> = (props) => {
                     }}
                 </For>
             </Stack>
-        </Stack>
+        </div>
     )
 }
 
