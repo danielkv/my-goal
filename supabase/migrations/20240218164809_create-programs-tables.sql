@@ -3,6 +3,7 @@ create table
     id uuid not null default gen_random_uuid (),
     created_at timestamp with time zone not null default now(),
     name character varying not null,
+	image text not null,
     amount double precision not null,
     expiration numeric not null default '0'::numeric,
     block_segments character varying null,

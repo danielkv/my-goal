@@ -177,6 +177,221 @@ export interface Database {
           }
         ]
       }
+      program_classes: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          session_id: string
+          text: string | null
+          video: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          session_id: string
+          text?: string | null
+          video?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          session_id?: string
+          text?: string | null
+          video?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_classes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "program_sessions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_segments: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          program_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          program_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          program_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_segments_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          segment_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          segment_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          segment_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_sessions_segment_id_fkey"
+            columns: ["segment_id"]
+            isOneToOne: false
+            referencedRelation: "program_segments"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      programs: {
+        Row: {
+          amount: number
+          block_segments: string | null
+          created_at: string
+          expiration: number
+          id: string
+          image: string
+          name: string
+        }
+        Insert: {
+          amount: number
+          block_segments?: string | null
+          created_at?: string
+          expiration?: number
+          id?: string
+          image: string
+          name: string
+        }
+        Update: {
+          amount?: number
+          block_segments?: string | null
+          created_at?: string
+          expiration?: number
+          id?: string
+          image?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_programs: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          paid_amount: number
+          program_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          paid_amount: number
+          program_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          paid_amount?: number
+          program_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_programs_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_programs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_programs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_seen_classes: {
+        Row: {
+          class_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_seen_classes_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "program_classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_seen_classes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_seen_classes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       workout_results: {
         Row: {
           created_at: string

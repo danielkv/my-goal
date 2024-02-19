@@ -8,6 +8,7 @@ import MovementListScreen from '@view/MovementListScreen'
 import PasswordRecoveryPage from '@view/PasswordRecovery'
 import Preview from '@view/Preview'
 import PrivacyPolicy from '@view/PrivacyPolicy'
+import ProgramListScreen from '@view/ProgramList'
 import ResetPasswordPage from '@view/ResetPassword'
 import TermsOfUse from '@view/TermsOfUse'
 import UserDetailsScreen from '@view/UserDetailsScreen'
@@ -36,6 +37,8 @@ const AppRouter: Component = () => {
                         <Route path="/users" element={<UsersListScreen />} />
                         <Route path="/users/:id" element={<UserDetailsScreen />} />
                         <Route path="/movements" element={<MovementListScreen />} />
+
+                        <Route path="/programs" element={<ProgramListScreen />} />
                     </Route>
                     {/* End Dashboard */}
                 </Routes>
