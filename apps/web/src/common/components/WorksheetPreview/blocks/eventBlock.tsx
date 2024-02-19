@@ -53,7 +53,7 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                         const timerType = createMemo(() => roundTimerType(round))
 
                         return (
-                            <Stack
+                            <div
                                 class="mx-1 p-2 round rounded-xl"
                                 classList={{
                                     selected: props.currentPath === roundPath(),
@@ -109,7 +109,7 @@ const EventBlockPreview: Component<EventBlockPreviewProps> = (props) => {
                                         }}
                                     </For>
                                 </Show>
-                            </Stack>
+                            </div>
                         )
                     }}
                 </For>

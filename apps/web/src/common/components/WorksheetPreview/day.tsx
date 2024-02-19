@@ -21,7 +21,7 @@ const DayPreview: Component<DayProps> = (props) => {
     )
 
     return (
-        <Stack
+        <div
             class="day p-8 rounded-xl"
             classList={{
                 selected: props.currentPath === props.thisPath,
@@ -63,7 +63,7 @@ const DayPreview: Component<DayProps> = (props) => {
                     }}
                 </For>
             </Stack>
-        </Stack>
+        </div>
     )
 }
 
