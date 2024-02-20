@@ -24,7 +24,7 @@ const FileInput: Component<FileInputProps> = (props) => {
     return (
         <>
             <Show when={!!props.value}>
-                {<img src={imagePreview() || ''} class="max-w-full" />}
+                {<img src={imagePreview() || ''} class="max-w-full aspect-square h-auto object-cover rounded-lg" />}
                 <Button variant="contained" onClick={props.onRemove}>
                     Remover imagem
                 </Button>

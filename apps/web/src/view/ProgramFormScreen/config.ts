@@ -35,6 +35,8 @@ export const programFormSchema = z.object({
         })
         .array()
         .nonempty('Insira ao menos 1 segmento'),
+
+    //.nonempty('Insira ao menos 1 segmento'),
 })
 
 export const createEmptyClass = (o?: Partial<ModelsInsert<'program_classes'>>): ModelsInsert<'program_classes'> => ({

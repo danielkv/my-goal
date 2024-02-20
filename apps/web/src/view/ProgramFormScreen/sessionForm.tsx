@@ -30,7 +30,9 @@ const SessionForm: Component<SessionFormProps> = (props) => {
             </Stack>
             <Stack p={2} gap={2}>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
-                    {(field, fieldProps) => <TextInput {...fieldProps} label="Nome" error={field.error} />}
+                    {(field, fieldProps) => (
+                        <TextInput {...fieldProps} label="Nome" error={field.error} value={field.value} />
+                    )}
                 </Field>
                 <FieldArray of={props.form} name={`${props.fieldArray.name}.${props.index}.classes`}>
                     {(fieldArray) => (

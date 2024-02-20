@@ -17,6 +17,7 @@ import {
     Select,
     Stack,
 } from '@suid/material'
+import { saveProgramUseCase } from '@useCases/programs/saveProgram'
 import { getErrorMessage } from '@utils/errors'
 import FileInput from '@view/CreateNewDay/components/FileInput'
 
@@ -32,8 +33,7 @@ const ProgramFormScreen: Component = () => {
 
     const handleSubmit: SubmitHandler<TProgramForm> = async (result) => {
         try {
-            console.log(result)
-            // await saveProgramUseCase(result)
+            await saveProgramUseCase(result)
         } catch (err) {
             alert(getErrorMessage(err))
         }
@@ -54,7 +54,7 @@ const ProgramFormScreen: Component = () => {
                                     onRemove={() => {
                                         setValue(form, 'image', null)
                                     }}
-                                    value={field.value || null}
+                                    value={(field.value as File) || null}
                                     error={field.error}
                                 />
                             )}
@@ -144,12 +144,24 @@ const ProgramFormScreen: Component = () => {
                                                         >
                                                             <FiTrash />
                                                         </IconButton>
-                                                        <input
-                                                            type="text"
-                                                            name="segmentName"
-                                                            class="!bg-gray-600 outline-none focus:border-b-2 font-[inherit] w-full"
-                                                            value="Semana 1"
-                                                        />
+                                                        <Field name={`${segmentsArray.name}.${segmentIndex()}.name`}>
+                                                            {(field, props) => (
+                                                                <Stack justifyContent="center" width="100%">
+                                                                    <input
+                                                                        type="text"
+                                                                        class="!bg-gray-600 outline-none focus:border-b-2 font-[inherit] w-full"
+                                                                        {...props}
+                                                                        // @ts-expect-error
+                                                                        value={field.value}
+                                                                    />
+                                                                    {!!field.error && (
+                                                                        <FormHelperText error>
+                                                                            {field.error}
+                                                                        </FormHelperText>
+                                                                    )}
+                                                                </Stack>
+                                                            )}
+                                                        </Field>
                                                     </Stack>
                                                     <FieldArray
                                                         name={`${segmentsArray.name}.${segmentIndex()}.sessions`}
