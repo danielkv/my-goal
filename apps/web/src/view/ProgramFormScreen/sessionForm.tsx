@@ -5,7 +5,7 @@ import { Component, For } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import { Field, FieldArray, FieldArrayStore, FormStore, insert, remove } from '@modular-forms/solid'
-import { Card, IconButton, Stack } from '@suid/material'
+import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
 
 import ClassForm from './classForm'
 import { createEmptyClass } from './config'
@@ -30,7 +30,7 @@ const SessionForm: Component<SessionFormProps> = (props) => {
             </Stack>
             <Stack p={2} gap={2}>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
-                    {(_, fieldProps) => <TextInput {...fieldProps} label="Nome" />}
+                    {(field, fieldProps) => <TextInput {...fieldProps} label="Nome" error={field.error} />}
                 </Field>
                 <FieldArray of={props.form} name={`${props.fieldArray.name}.${props.index}.classes`}>
                     {(fieldArray) => (
@@ -42,6 +42,7 @@ const SessionForm: Component<SessionFormProps> = (props) => {
                                     )}
                                 </For>
                             </Stack>
+                            {!!fieldArray.error && <FormHelperText error>Insira ao menos 1 classe</FormHelperText>}
                             <Stack alignItems="center">
                                 <IconButton
                                     onClick={() =>

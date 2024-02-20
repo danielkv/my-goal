@@ -4,17 +4,39 @@ import { Component, For } from 'solid-js'
 
 import DashboardContainer from '@components/DashboardContainer'
 import TextInput from '@components/TextInput'
-import { SubmitHandler, createForm, insert, remove } from '@modular-forms/solid'
-import { Box, Button, Container, Drawer, FormControl, IconButton, MenuItem, Select, Stack } from '@suid/material'
+import { SubmitHandler, createForm, insert, remove, setValue, zodForm } from '@modular-forms/solid'
+import {
+    Box,
+    Button,
+    Container,
+    Drawer,
+    FormControl,
+    FormHelperText,
+    IconButton,
+    MenuItem,
+    Select,
+    Stack,
+} from '@suid/material'
+import { getErrorMessage } from '@utils/errors'
+import FileInput from '@view/CreateNewDay/components/FileInput'
 
-import { TProgramForm, createEmptySegment, createEmptySession, programInitialValues } from './config'
+import { TProgramForm, createEmptyProgram, createEmptySegment, createEmptySession, programFormSchema } from './config'
 import SessionForm from './sessionForm'
 
 const ProgramFormScreen: Component = () => {
-    const [form, { Form, Field, FieldArray }] = createForm<TProgramForm>({ initialValues: programInitialValues })
+    const [form, { Form, Field, FieldArray }] = createForm<TProgramForm>({
+        initialValues: createEmptyProgram(),
+        // @ts-expect-error
+        validate: zodForm(programFormSchema),
+    })
 
-    const handleSubmit: SubmitHandler<TProgramForm> = (result) => {
-        console.log(result)
+    const handleSubmit: SubmitHandler<TProgramForm> = async (result) => {
+        try {
+            console.log(result)
+            // await saveProgramUseCase(result)
+        } catch (err) {
+            alert(getErrorMessage(err))
+        }
     }
 
     return (
@@ -25,40 +47,75 @@ const ProgramFormScreen: Component = () => {
                     variant="permanent"
                 >
                     <Stack gap={3} p={3}>
-                        <Field name="name">{(_, props) => <TextInput {...props} label="Nome" />}</Field>
+                        <Field type="File" name="image">
+                            {(field, props) => (
+                                <FileInput
+                                    {...props}
+                                    onRemove={() => {
+                                        setValue(form, 'image', null)
+                                    }}
+                                    value={field.value || null}
+                                    error={field.error}
+                                />
+                            )}
+                        </Field>
+                        <Field name="name">
+                            {(field, props) => (
+                                <TextInput {...props} label="Nome" error={field.error} value={field.value || ''} />
+                            )}
+                        </Field>
                         <Field type="number" name="amount">
-                            {(_, props) => <TextInput {...props} label="Valor" />}
+                            {(field, props) => (
+                                <TextInput
+                                    {...props}
+                                    label="Valor"
+                                    type="number"
+                                    error={field.error}
+                                    value={field.value || ''}
+                                />
+                            )}
                         </Field>
                         <Field type="number" name="expiration">
-                            {(_, props) => <TextInput {...props} label="Expira em" type="number" />}
+                            {(field, props) => (
+                                <TextInput
+                                    {...props}
+                                    label="Expira em"
+                                    type="number"
+                                    error={field.error}
+                                    value={field.value || ''}
+                                />
+                            )}
                         </Field>
                         <Field name="block_segments">
-                            {(field, props) => (
-                                <FormControl variant="outlined" size="small">
-                                    <label class="text-sm">Tipo de bloqueio</label>
-                                    {/* @ts-expect-error */}
-                                    <Select
-                                        style={{
-                                            'background-color': 'white',
-                                            'border-radius': '0.375rem',
-                                            color: '#333',
-                                            height: '35px',
-                                        }}
-                                        sx={{ ['& .MuiSelect-icon']: { color: 'black' } }}
-                                        {...props}
-                                    >
-                                        <MenuItem value="none" selected={field.value === 'none'}>
-                                            Sem bloqueio
-                                        </MenuItem>
-                                        <MenuItem value="weekly" selected={field.value === 'weekly'}>
-                                            1 semana
-                                        </MenuItem>
-                                        <MenuItem value="monthly" selected={field.value === 'monthly'}>
-                                            1 mês
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
-                            )}
+                            {(field, props) => {
+                                return (
+                                    <FormControl variant="outlined" size="small">
+                                        <label class="text-sm">Tipo de bloqueio</label>
+                                        {/* @ts-expect-error */}
+                                        <Select
+                                            error={!!field.error}
+                                            style={{
+                                                'background-color': 'white',
+                                                'border-radius': '0.375rem',
+                                                color: '#333',
+                                                height: '35px',
+                                            }}
+                                            sx={{ ['& .MuiSelect-icon']: { color: 'black' } }}
+                                            {...props}
+                                        >
+                                            <MenuItem value="none" selected={field.value === 'none'}>
+                                                Sem bloqueio
+                                            </MenuItem>
+                                            <MenuItem value="weekly" selected={field.value === 'weekly'}>
+                                                1 semana
+                                            </MenuItem>
+                                            <MenuItem value="monthly" selected={field.value === 'monthly'}>
+                                                1 mês
+                                            </MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                )
+                            }}
                         </Field>
                         <Stack direction="row" gap={3} justifyContent="flex-end">
                             <Button color="secondary" variant="contained">
@@ -110,6 +167,11 @@ const ProgramFormScreen: Component = () => {
                                                                         )}
                                                                     </For>
                                                                 </Stack>
+                                                                {!!sessionArray.error && (
+                                                                    <FormHelperText error>
+                                                                        Insira ao menos 1 sessão
+                                                                    </FormHelperText>
+                                                                )}
                                                                 <Stack alignItems="center">
                                                                     <IconButton
                                                                         onClick={() =>
@@ -128,6 +190,9 @@ const ProgramFormScreen: Component = () => {
                                                 </Stack>
                                             )}
                                         </For>
+                                        {!!segmentsArray.error && (
+                                            <FormHelperText error>Insira ao menos 1 segmento</FormHelperText>
+                                        )}
                                         <Button
                                             onClick={() =>
                                                 insert(form, 'segments', {

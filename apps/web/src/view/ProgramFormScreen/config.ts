@@ -3,37 +3,38 @@ import { z } from 'zod'
 
 export type TProgramForm = IProgramInput
 
-export const programInitialValues: TProgramForm = {
-    amount: 0,
-    block_segments: 'weekly',
-    expiration: 365,
-    image: '',
-    name: '',
-    segments: [],
-}
-
 export const programFormSchema = z.object({
-    name: z.string(),
-    amount: z.number(),
+    name: z.string({ required_error: 'Nome é obrigatório' }).min(1, { message: 'Nome é obrigatório' }),
+    amount: z.number({ invalid_type_error: 'Número inválido', required_error: 'Valor é obrigatório' }),
     block_segments: z.enum(['none', 'weekly', 'monthly']),
-    expiration: z.number(),
+    expiration: z.number({ invalid_type_error: 'Número inválido', required_error: 'Expiração é obrigatória' }),
+    image: z.instanceof(File, { message: 'Selecione um imagem' }),
     segments: z
         .object({
-            name: z.string(),
+            name: z.string({ required_error: 'Nome é obrigatório' }).min(1, { message: 'Nome é obrigatório' }),
             sessions: z
                 .object({
-                    name: z.string(),
+                    name: z.string({ required_error: 'Nome é obrigatório' }).min(1, { message: 'Nome é obrigatório' }),
                     classes: z
                         .object({
-                            name: z.string(),
-                            video: z.string(),
-                            text: z.string(),
+                            name: z
+                                .string({ required_error: 'Nome é obrigatório' })
+                                .min(1, { message: 'Nome é obrigatório' }),
+                            video: z
+                                .string({ required_error: 'Vídeo é obrigatório' })
+                                .min(1, { message: 'Vídeo é obrigatório' }),
+                            text: z
+                                .string({ required_error: 'Texto é obrigatório' })
+                                .min(1, { message: 'Texto é obrigatório' }),
                         })
-                        .array(),
+                        .array()
+                        .nonempty('Insira ao menos 1 classe'),
                 })
-                .array(),
+                .array()
+                .nonempty('Insira ao menos 1 sessão'),
         })
-        .array(),
+        .array()
+        .nonempty('Insira ao menos 1 segmento'),
 })
 
 export const createEmptyClass = (o?: Partial<ModelsInsert<'program_classes'>>): ModelsInsert<'program_classes'> => ({
@@ -60,5 +61,17 @@ export const createEmptySegment = (o?: Partial<IProgramSegmentInput>): IProgramS
     program_id: '',
     name: '',
     sessions: [createEmptySession()],
+    ...o,
+})
+
+export const createEmptyProgram = (o?: Partial<IProgramInput>): IProgramInput => ({
+    id: '',
+    created_at: '',
+    name: '',
+    amount: 0,
+    expiration: 365,
+    block_segments: 'none',
+    image: null,
+    segments: [createEmptySegment()],
     ...o,
 })

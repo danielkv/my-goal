@@ -56,6 +56,19 @@ export type DatabaseModel = MergeDeep<
                         resultType: TResultType
                     }
                 }
+                programs: {
+                    Row: {
+                        block_segments: 'none' | 'weekly' | 'monthly'
+                    }
+                    Insert: {
+                        block_segments: 'none' | 'weekly' | 'monthly'
+                        image: File | null
+                    }
+                    Update: {
+                        block_segments: 'none' | 'weekly' | 'monthly'
+                        image: File | null
+                    }
+                }
             }
             Views: {
                 highest_movement_results: {

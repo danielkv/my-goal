@@ -27,13 +27,26 @@ const ClassForm: Component<ClassFormProps> = (props) => {
             </Stack>
             <Stack p={2} gap={2}>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
-                    {(_, fieldProps) => <TextInput {...fieldProps} label="Nome" />}
+                    {(field, fieldProps) => (
+                        <TextInput {...fieldProps} label="Nome" error={field.error} value={field.value || ''} />
+                    )}
                 </Field>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.video`}>
-                    {(_, fieldProps) => <TextInput {...fieldProps} label="Vídeo" />}
+                    {(field, fieldProps) => (
+                        <TextInput {...fieldProps} label="Vídeo" error={field.error} value={field.value || ''} />
+                    )}
                 </Field>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.text`}>
-                    {(_, fieldProps) => <TextInput {...fieldProps} multiline rows={5} label="Texto" />}
+                    {(field, fieldProps) => (
+                        <TextInput
+                            {...fieldProps}
+                            multiline
+                            rows={5}
+                            label="Texto"
+                            error={field.error}
+                            value={field.value || ''}
+                        />
+                    )}
                 </Field>
             </Stack>
         </Card>
