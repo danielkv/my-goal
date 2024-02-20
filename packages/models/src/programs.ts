@@ -5,11 +5,11 @@ export type IProgramSessionInput = ModelsInsert<'program_sessions'> & {
 }
 
 export type IProgramSegmentInput = ModelsInsert<'program_segments'> & {
-    sessions: IProgramSession[]
+    sessions: IProgramSessionInput[]
 }
 
 export type IProgramInput = ModelsInsert<'programs'> & {
-    segments: IProgramSegment[]
+    segments: IProgramSegmentInput[]
 }
 
 export type IProgramSession = Models<'program_sessions'> & { classes: Models<'program_classes'>[] }

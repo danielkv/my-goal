@@ -4,10 +4,11 @@ import { FiPlus, FiTrash } from 'solid-icons/fi'
 import { Component, For } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, FieldArray, FieldArrayStore, FormStore } from '@modular-forms/solid'
+import { Field, FieldArray, FieldArrayStore, FormStore, insert, remove } from '@modular-forms/solid'
 import { Card, IconButton, Stack } from '@suid/material'
 
 import ClassForm from './classForm'
+import { createEmptyClass } from './config'
 
 interface SessionFormProps {
     form: FormStore<IProgramInput, any>
@@ -19,22 +20,41 @@ const SessionForm: Component<SessionFormProps> = (props) => {
     return (
         <Card class="relative !overflow-visible">
             <Stack direction="row" gap={2} position="absolute" right={16} top={-14}>
-                <IconButton class="!bg-gray-500 hover:!bg-gray-400" size="small">
+                <IconButton
+                    onClick={() => remove(props.form, props.fieldArray.name, { at: props.index })}
+                    class="!bg-gray-500 hover:!bg-gray-400"
+                    size="small"
+                >
                     <FiTrash />
                 </IconButton>
-                <IconButton class="!bg-gray-500 hover:!bg-gray-400" size="small">
-                    <FiPlus />
-                </IconButton>
             </Stack>
-            <Stack p={3} gap={3}>
+            <Stack p={2} gap={2}>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
                     {(_, fieldProps) => <TextInput {...fieldProps} label="Nome" />}
                 </Field>
                 <FieldArray of={props.form} name={`${props.fieldArray.name}.${props.index}.classes`}>
                     {(fieldArray) => (
-                        <For each={fieldArray.items}>
-                            {(_, index) => <ClassForm form={props.form} fieldArray={fieldArray} index={index()} />}
-                        </For>
+                        <Stack gap={1}>
+                            <Stack gap={2}>
+                                <For each={fieldArray.items}>
+                                    {(_, index) => (
+                                        <ClassForm form={props.form} fieldArray={fieldArray} index={index()} />
+                                    )}
+                                </For>
+                            </Stack>
+                            <Stack alignItems="center">
+                                <IconButton
+                                    onClick={() =>
+                                        insert(props.form, fieldArray.name, {
+                                            at: fieldArray.items.length,
+                                            value: createEmptyClass(),
+                                        })
+                                    }
+                                >
+                                    <FiPlus title="Nova classe" />
+                                </IconButton>
+                            </Stack>
+                        </Stack>
                     )}
                 </FieldArray>
             </Stack>

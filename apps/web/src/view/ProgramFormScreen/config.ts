@@ -1,4 +1,4 @@
-import { IProgramInput } from 'goal-models'
+import { IProgramInput, IProgramSegmentInput, IProgramSessionInput, ModelsInsert } from 'goal-models'
 import { z } from 'zod'
 
 export type TProgramForm = IProgramInput
@@ -34,4 +34,31 @@ export const programFormSchema = z.object({
                 .array(),
         })
         .array(),
+})
+
+export const createEmptyClass = (o?: Partial<ModelsInsert<'program_classes'>>): ModelsInsert<'program_classes'> => ({
+    id: '',
+    created_at: '',
+    session_id: '',
+    name: '',
+    text: '',
+    video: '',
+    ...o,
+})
+export const createEmptySession = (o?: Partial<IProgramSessionInput>): IProgramSessionInput => ({
+    id: '',
+    created_at: '',
+    segment_id: '',
+    name: '',
+    classes: [createEmptyClass()],
+    ...o,
+})
+
+export const createEmptySegment = (o?: Partial<IProgramSegmentInput>): IProgramSegmentInput => ({
+    id: '',
+    created_at: '',
+    program_id: '',
+    name: '',
+    sessions: [createEmptySession()],
+    ...o,
 })

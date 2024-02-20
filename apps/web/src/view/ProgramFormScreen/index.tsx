@@ -1,4 +1,4 @@
-import { FiTrash } from 'solid-icons/fi'
+import { FiPlus, FiTrash } from 'solid-icons/fi'
 
 import { Component, For } from 'solid-js'
 
@@ -7,7 +7,7 @@ import TextInput from '@components/TextInput'
 import { SubmitHandler, createForm, insert, remove } from '@modular-forms/solid'
 import { Box, Button, Container, Drawer, FormControl, IconButton, MenuItem, Select, Stack } from '@suid/material'
 
-import { TProgramForm, programInitialValues } from './config'
+import { TProgramForm, createEmptySegment, createEmptySession, programInitialValues } from './config'
 import SessionForm from './sessionForm'
 
 const ProgramFormScreen: Component = () => {
@@ -33,11 +33,11 @@ const ProgramFormScreen: Component = () => {
                             {(_, props) => <TextInput {...props} label="Expira em" type="number" />}
                         </Field>
                         <Field name="block_segments">
-                            {(_, props) => (
+                            {(field, props) => (
                                 <FormControl variant="outlined" size="small">
                                     <label class="text-sm">Tipo de bloqueio</label>
+                                    {/* @ts-expect-error */}
                                     <Select
-                                        {...props}
                                         style={{
                                             'background-color': 'white',
                                             'border-radius': '0.375rem',
@@ -45,11 +45,17 @@ const ProgramFormScreen: Component = () => {
                                             height: '35px',
                                         }}
                                         sx={{ ['& .MuiSelect-icon']: { color: 'black' } }}
-                                        value="weekly"
+                                        {...props}
                                     >
-                                        <MenuItem value="none">Sem bloqueio</MenuItem>
-                                        <MenuItem value="weekly">1 semana</MenuItem>
-                                        <MenuItem value="monthly">1 mês</MenuItem>
+                                        <MenuItem value="none" selected={field.value === 'none'}>
+                                            Sem bloqueio
+                                        </MenuItem>
+                                        <MenuItem value="weekly" selected={field.value === 'weekly'}>
+                                            1 semana
+                                        </MenuItem>
+                                        <MenuItem value="monthly" selected={field.value === 'monthly'}>
+                                            1 mês
+                                        </MenuItem>
                                     </Select>
                                 </FormControl>
                             )}
@@ -66,13 +72,13 @@ const ProgramFormScreen: Component = () => {
                 </Drawer>
                 <Box style={{ 'padding-left': '500px' }}>
                     <Container maxWidth="md">
-                        <Stack py={3} gap={3}>
+                        <Stack py={2} gap={2}>
                             <FieldArray name="segments">
                                 {(segmentsArray) => (
                                     <>
                                         <For each={segmentsArray.items}>
                                             {(_, segmentIndex) => (
-                                                <Stack py={3} gap={3}>
+                                                <Stack py={2} gap={2}>
                                                     <Stack direction="row">
                                                         <IconButton
                                                             onClick={() =>
@@ -91,16 +97,32 @@ const ProgramFormScreen: Component = () => {
                                                     <FieldArray
                                                         name={`${segmentsArray.name}.${segmentIndex()}.sessions`}
                                                     >
-                                                        {(fieldArray) => (
-                                                            <For each={fieldArray.items}>
-                                                                {(_, index) => (
-                                                                    <SessionForm
-                                                                        form={form}
-                                                                        fieldArray={fieldArray}
-                                                                        index={index()}
-                                                                    />
-                                                                )}
-                                                            </For>
+                                                        {(sessionArray) => (
+                                                            <Stack gap={1}>
+                                                                <Stack gap={2}>
+                                                                    <For each={sessionArray.items}>
+                                                                        {(_, index) => (
+                                                                            <SessionForm
+                                                                                form={form}
+                                                                                fieldArray={sessionArray}
+                                                                                index={index()}
+                                                                            />
+                                                                        )}
+                                                                    </For>
+                                                                </Stack>
+                                                                <Stack alignItems="center">
+                                                                    <IconButton
+                                                                        onClick={() =>
+                                                                            insert(form, sessionArray.name, {
+                                                                                at: sessionArray.items.length,
+                                                                                value: createEmptySession(),
+                                                                            })
+                                                                        }
+                                                                    >
+                                                                        <FiPlus title="Nova sessão" />
+                                                                    </IconButton>
+                                                                </Stack>
+                                                            </Stack>
                                                         )}
                                                     </FieldArray>
                                                 </Stack>
@@ -109,39 +131,15 @@ const ProgramFormScreen: Component = () => {
                                         <Button
                                             onClick={() =>
                                                 insert(form, 'segments', {
-                                                    at: 0,
-
-                                                    value: {
-                                                        created_at: '',
-                                                        id: '',
-                                                        program_id: '',
-                                                        name: '',
-                                                        sessions: [
-                                                            {
-                                                                name: '',
-                                                                created_at: '',
-                                                                id: '',
-                                                                segment_id: '',
-                                                                classes: [
-                                                                    {
-                                                                        name: 'asd',
-                                                                        id: 'asd',
-                                                                        created_at: '',
-                                                                        session_id: '',
-                                                                        text: '',
-                                                                        video: '',
-                                                                    },
-                                                                ],
-                                                            },
-                                                        ],
-                                                    },
+                                                    at: segmentsArray.items.length,
+                                                    value: createEmptySegment(),
                                                 })
                                             }
                                             class="self-center"
                                             variant="contained"
                                             color="secondary"
                                         >
-                                            Adicionar Segmento
+                                            Novo Segmento
                                         </Button>
                                     </>
                                 )}
