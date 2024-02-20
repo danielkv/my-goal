@@ -3,7 +3,7 @@ import { ISection } from 'goal-models'
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TSectionForm, sectionFormSchema } from './config'
 
@@ -13,7 +13,7 @@ export interface SectionFormProps {
 }
 
 const SectionForm: Component<SectionFormProps> = (props) => {
-    const form = createForm<TSectionForm>({
+    const [form, { Form, Field }] = createForm<TSectionForm>({
         validate: zodForm(sectionFormSchema),
         initialValues: props.section,
     })
@@ -30,10 +30,10 @@ const SectionForm: Component<SectionFormProps> = (props) => {
     }
 
     return (
-        <Form<TSectionForm> of={form} name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <Field of={form} name="name">
-                {(field) => (
-                    <TextInput class="flex-1" label="Nome" value={field.value} error={field.error} {...field.props} />
+        <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <Field name="name">
+                {(field, props) => (
+                    <TextInput class="flex-1" label="Nome" value={field.value} error={field.error} {...props} />
                 )}
             </Field>
             <button class="btn btn-main self-end" type="submit">

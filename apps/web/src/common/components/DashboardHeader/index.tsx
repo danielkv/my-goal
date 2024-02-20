@@ -1,6 +1,7 @@
 import { CgGym } from 'solid-icons/cg'
 import { FaSolidClipboardList } from 'solid-icons/fa'
 import { FiLogIn, FiLogOut, FiUsers } from 'solid-icons/fi'
+import { TbFileSpreadsheet } from 'solid-icons/tb'
 
 import { Component } from 'solid-js'
 
@@ -35,6 +36,13 @@ const DashboardHeader: Component = () => {
                             class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
                         >
                             <FiUsers size={20} />
+                        </A>
+                        <A
+                            href="/dashboard/programs"
+                            title="Programas"
+                            class="bg-gray-900 p-3 rounded-full hover:bg-gray-700"
+                        >
+                            <TbFileSpreadsheet size={20} />
                         </A>
                         <A href="/dashboard" title="Planilhas" class="bg-gray-900 p-3 rounded-full hover:bg-gray-700">
                             <FaSolidClipboardList size={20} fill="white" />

@@ -3130,12 +3130,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@modular-forms/solid@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "@modular-forms/solid@npm:0.11.0"
+"@modular-forms/solid@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "@modular-forms/solid@npm:0.20.0"
   peerDependencies:
     solid-js: ^1.3.1
-  checksum: afb8dc8dc87dab36498a771653efde9648dca61d3c73bc0c66e47fc0aab4ad01dc25168ccdcadc4333893d19de8120dafcc521602674bc2cf56e9407a35d0372
+  checksum: 0fadb23a67c93e274a042f81129903f0773d904d1f46d548d414c9fa84c760b8768aae15cb11ee558e277525514d280e0ebaf8bc03a38dddedfe8057684985dd
   languageName: node
   linkType: hard
 
@@ -10848,7 +10848,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "goal-web@workspace:apps/web"
   dependencies:
-    "@modular-forms/solid": ^0.11.0
+    "@modular-forms/solid": ^0.20.0
     "@solidjs/router": ^0.8.2
     "@suid/icons-material": ^0.6.3
     "@suid/material": ^0.12.3

@@ -16,7 +16,7 @@ import HomeFeature, { HomeFeatureProps } from '@components/HomeFeature'
 import StripePriceTable from '@components/StripePriceTable'
 import TextInput from '@components/TextInput'
 import { loggedUser } from '@contexts/user/user.context'
-import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
 import { ChevronLeft, ChevronRight } from '@suid/icons-material'
 import { Button, Container, IconButton, Stack } from '@suid/material'
@@ -89,7 +89,7 @@ const Home: Component = () => {
         })
     })
 
-    const form = createForm<IContactForm>({
+    const [form, { Form, Field }] = createForm<IContactForm>({
         validate: zodForm(formSchema),
         initialValues: initialContactForm,
     })
@@ -204,56 +204,56 @@ const Home: Component = () => {
                                 <div class="text-3xl font-bold">Precisa de ajuda ou tem uma dúvida?</div>
                                 <div class="text-xl">Entre em contato</div>
                             </div>
-                            <Form of={form} onSubmit={handleSubmit} class="flex flex-col gap-2">
-                                <Field of={form} name="subject">
-                                    {(field) => (
+                            <Form onSubmit={handleSubmit} class="flex flex-col gap-2">
+                                <Field name="subject">
+                                    {(field, props) => (
                                         <TextInput
                                             disabled={loadingMail()}
                                             label="Assunto"
                                             error={field.error}
                                             value={field.value}
                                             required
-                                            {...field.props}
+                                            {...props}
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="name">
-                                    {(field) => (
+                                <Field name="name">
+                                    {(field, props) => (
                                         <TextInput
                                             disabled={loadingMail()}
                                             required
                                             label="Nome"
                                             error={field.error}
                                             value={field.value}
-                                            {...field.props}
+                                            {...props}
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="email">
-                                    {(field) => (
+                                <Field name="email">
+                                    {(field, props) => (
                                         <TextInput
                                             disabled={loadingMail()}
                                             required
                                             label="Email"
                                             error={field.error}
                                             value={field.value}
-                                            {...field.props}
+                                            {...props}
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="phone">
-                                    {(field) => (
+                                <Field name="phone">
+                                    {(field, props) => (
                                         <TextInput
                                             disabled={loadingMail()}
                                             label="Telefone"
                                             error={field.error}
                                             value={field.value}
-                                            {...field.props}
+                                            {...props}
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="message">
-                                    {(field) => (
+                                <Field name="message">
+                                    {(field, props) => (
                                         <TextInput
                                             disabled={loadingMail()}
                                             rows={5}
@@ -262,7 +262,7 @@ const Home: Component = () => {
                                             label="Mensagem"
                                             error={field.error}
                                             value={field.value}
-                                            {...field.props}
+                                            {...props}
                                         />
                                     )}
                                 </Field>

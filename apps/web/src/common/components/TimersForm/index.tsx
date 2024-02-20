@@ -5,12 +5,11 @@ import { Component, For, Show, createMemo } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import TimeInput from '@components/TimeInput'
-import { Field, FormState, getValue } from '@modular-forms/solid'
+import { Field, FormStore, getValue } from '@modular-forms/solid'
 import { Stack } from '@suid/material'
 
-export type TTImersFormState = FormState<{ config: TTimer; [K: string]: any }>
 export interface TimersFormProps {
-    of: TTImersFormState
+    of: FormStore<Record<string, any> & { config: TTimer }, undefined>
 }
 
 const TimersForm: Component<TimersFormProps> = (props) => {
@@ -18,11 +17,11 @@ const TimersForm: Component<TimersFormProps> = (props) => {
 
     return (
         <Stack gap={2}>
-            <Field of={props.of} name="config.numberOfRounds">
-                {(field) => {
+            <Field of={props.of} type="number" name="config.numberOfRounds">
+                {(field, props) => {
                     return (
                         <TextInput
-                            {...field.props}
+                            {...props}
                             class="flex-1"
                             label="Rounds"
                             type="number"
@@ -34,11 +33,11 @@ const TimersForm: Component<TimersFormProps> = (props) => {
             </Field>
             <Stack direction="row" gap={2}>
                 <Field of={props.of} name="config.type">
-                    {(field) => {
+                    {(field, props) => {
                         return (
                             <div class="flex flex-col flex-1 min-w-[100px]">
                                 <label class="text-sm mb-2">Timer</label>
-                                <select class="input input-full" {...field.props}>
+                                <select class="input input-full" {...props}>
                                     <For each={Object.entries(timerTypes)}>
                                         {([key, label]) => (
                                             <option value={key} selected={field.value === key}>
@@ -53,9 +52,9 @@ const TimersForm: Component<TimersFormProps> = (props) => {
                 </Field>
                 <Show when={type() === 'emom'}>
                     <Field of={props.of} name="config.each">
-                        {(field) => (
+                        {(field, props) => (
                             <TimeInput
-                                {...field.props}
+                                {...props}
                                 class="flex-1"
                                 label="A Cada"
                                 value={field.value}
@@ -66,33 +65,21 @@ const TimersForm: Component<TimersFormProps> = (props) => {
                 </Show>
                 <Show when={type() === 'tabata'}>
                     <Field of={props.of} name="config.work">
-                        {(field) => (
-                            <TimeInput
-                                {...field.props}
-                                class="flex-1"
-                                label="Work"
-                                value={field.value}
-                                error={field.error}
-                            />
+                        {(field, props) => (
+                            <TimeInput {...props} class="flex-1" label="Work" value={field.value} error={field.error} />
                         )}
                     </Field>
                     <Field of={props.of} name="config.rest">
-                        {(field) => (
-                            <TimeInput
-                                {...field.props}
-                                class="flex-1"
-                                label="Rest"
-                                value={field.value}
-                                error={field.error}
-                            />
+                        {(field, props) => (
+                            <TimeInput {...props} class="flex-1" label="Rest" value={field.value} error={field.error} />
                         )}
                     </Field>
                 </Show>
                 <Show when={['for_time', 'max_weight', 'amrap'].includes(type() as string)}>
                     <Field of={props.of} name="config.timecap">
-                        {(field) => (
+                        {(field, props) => (
                             <TimeInput
-                                {...field.props}
+                                {...props}
                                 class="flex-1"
                                 label="Timecap"
                                 value={field.value}

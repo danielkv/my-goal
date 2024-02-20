@@ -1,7 +1,7 @@
 import { Component, onMount } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack } from '@suid/material'
 import { sendPasswordRecoveryEmail } from '@useCases/user/sendPasswordRecoveryEmail'
@@ -13,7 +13,7 @@ const PasswordRecoveryPage: Component = () => {
     let input: HTMLInputElement
     const navigate = useNavigate()
 
-    const form = createForm<TPasswordRecoveryForm>({
+    const [_, { Form, Field }] = createForm<TPasswordRecoveryForm>({
         validate: zodForm(loginFormSchema),
         initialValues: passwordRecoveryFormInitialValues,
     })
@@ -35,16 +35,11 @@ const PasswordRecoveryPage: Component = () => {
                 <Container maxWidth="sm">
                     <Paper>
                         <Box padding={5} maxWidth="sm">
-                            <Form<TPasswordRecoveryForm>
-                                of={form}
-                                name="teste"
-                                class="flex flex-col gap-4"
-                                onSubmit={handleSubmit}
-                            >
-                                <Field of={form} name="email">
-                                    {(field) => (
+                            <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+                                <Field name="email">
+                                    {(field, props) => (
                                         <TextInput
-                                            {...field.props}
+                                            {...props}
                                             ref={(ele) => (input = ele)}
                                             class="flex-1"
                                             label="Email"

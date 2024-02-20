@@ -4,6 +4,7 @@ export * from "./src/database.models";
 export * from "./src/day";
 export * from "./src/movement-results";
 export * from "./src/pagination";
+export * from "./src/programs";
 export * from "./src/result";
 export * from "./src/shared";
 export * from "./src/sorting";

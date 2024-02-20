@@ -2,7 +2,7 @@ import { Component, Match, Show, Switch, createSignal, onMount } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import { loggedUser } from '@contexts/user/user.context'
-import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
 import { useNavigate, useSearchParams } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack, Typography } from '@suid/material'
 import { resetPasswordUseCase } from '@useCases/user/resetPassoword'
@@ -16,7 +16,7 @@ const ResetPasswordPage: Component = () => {
     const [params] = useSearchParams<{ token?: string }>()
     const [changed, setChanged] = createSignal(false)
 
-    const form = createForm<TResetPasswordForm>({
+    const [_, { Form, Field }] = createForm<TResetPasswordForm>({
         validate: zodForm(loginFormSchema),
         initialValues: passwordRecoveryFormInitialValues,
     })
@@ -54,17 +54,12 @@ const ResetPasswordPage: Component = () => {
                                     </Stack>
                                 </Match>
                                 <Match when={!changed()}>
-                                    <Form<TResetPasswordForm>
-                                        of={form}
-                                        name="teste"
-                                        class="flex flex-col gap-4"
-                                        onSubmit={handleSubmit}
-                                    >
+                                    <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
                                         <Typography>Digite sua nova senha</Typography>
-                                        <Field of={form} name="password">
-                                            {(field) => (
+                                        <Field name="password">
+                                            {(field, props) => (
                                                 <TextInput
-                                                    {...field.props}
+                                                    {...props}
                                                     ref={(ele) => (input = ele)}
                                                     class="flex-1"
                                                     label="Nova senha"
@@ -73,10 +68,10 @@ const ResetPasswordPage: Component = () => {
                                                 />
                                             )}
                                         </Field>
-                                        <Field of={form} name="repeatPassword">
-                                            {(field) => (
+                                        <Field name="repeatPassword">
+                                            {(field, props) => (
                                                 <TextInput
-                                                    {...field.props}
+                                                    {...props}
                                                     class="flex-1"
                                                     label="Repita a senha"
                                                     value={field.value}
