@@ -39,6 +39,8 @@ const SaveContainer: Component<ISaveContainerProps> = (props) => {
 
             props.handleSetLastTempSaved(result)
             props.handleSetWorksheet(result)
+
+            navigate(`/dashboard/worksheet/${result.id}`)
         } catch (err) {
             alert(getErrorMessage(err))
         } finally {
