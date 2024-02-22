@@ -1,5 +1,6 @@
 import cloneDeep from 'clone-deep'
 import { TPeaces } from 'goal-models'
+import { omit } from 'radash'
 import { FiArrowDown, FiArrowUp, FiCopy, FiPlus, FiTrash2 } from 'solid-icons/fi'
 
 import { Component, JSX } from 'solid-js'
@@ -33,12 +34,16 @@ const PeaceControl: Component<PeaceControlProps> = (props): JSX.Element => {
         } as TPeaces)
     }
     const handleClickTopDuplicate = () => {
-        const data = (props.item as any).id ? { ...cloneDeep(props.item), id: null } : cloneDeep(props.item)
+        // @ts-expect-error
+        const data = omit(cloneDeep(props.item), ['id']) as TPeaces
 
-        props.onAdd?.(props.thisPath, data as TPeaces)
+        props.onAdd?.(props.thisPath, data)
     }
     const handleClickBottomDuplicate = () => {
-        props.onAdd?.(pathToNextIndex(props.thisPath), cloneDeep(props.item))
+        // @ts-expect-error
+        const data = omit(cloneDeep(props.item), ['id']) as TPeaces
+
+        props.onAdd?.(pathToNextIndex(props.thisPath), data)
     }
     const handleClickTopMove = () => {
         props.onMove?.(props.thisPath, 'up')
