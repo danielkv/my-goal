@@ -3,6 +3,7 @@ import { pluralize } from 'goal-utils'
 
 import { Component } from 'solid-js'
 
+import { useNavigate } from '@solidjs/router'
 import { Card, Stack } from '@suid/material'
 
 interface ProgramItemProps {
@@ -11,8 +12,13 @@ interface ProgramItemProps {
 }
 
 const ProgramItem: Component<ProgramItemProps> = (props) => {
+    const navigate = useNavigate()
+
     return (
-        <Card class="cursor-pointer hover:bg-gray-800" onClick={() => console.log('123')}>
+        <Card
+            class="cursor-pointer hover:bg-gray-800"
+            onclick={() => navigate(`/dashboard/program/${props.program.id}`)}
+        >
             <Stack direction="row">
                 <img src={props.program.image} class="w-[100px] h-auto object-cover" />
                 <Stack px={2} py={1}>

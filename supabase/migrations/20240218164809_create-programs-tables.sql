@@ -82,7 +82,7 @@ alter table public.user_seen_classes enable row level security;
 
 create policy "Programs are viewable by the user who bought it."
   on programs for select
-  using ( is_claims_admin() OR EXISTS(SELECT user_id FROM user_programs WHERE program_id = programs.id and user_id = auth.uid() AND expires_at >= now()) );
+  using ( true );
 
 create policy "Only admins can insert new programs"
   on programs for insert
@@ -90,6 +90,7 @@ create policy "Only admins can insert new programs"
 
 create policy "Only admins can update programs"
   on programs for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() );
 
 create policy "Only admins can delete programs"
@@ -108,6 +109,7 @@ create policy "Only admins can insert new program_segments"
 
 create policy "Only admins can update program_segments"
   on program_segments for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() );
 
 create policy "Only admins can delete program_segments"
@@ -126,6 +128,7 @@ create policy "Only admins can insert new program_sessions"
 
 create policy "Only admins can update program_sessions"
   on program_sessions for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() );
 
 create policy "Only admins can delete program_sessions"
@@ -144,6 +147,7 @@ create policy "Only admins can insert new program_classes"
 
 create policy "Only admins can update program_classes"
   on program_classes for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() );
 
 create policy "Only admins can delete program_classes"
@@ -162,6 +166,7 @@ create policy "Admins and owners can insert new user_programs"
 
 create policy "Only admins can update user_programs"
   on user_programs for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() );
 
 create policy "Only admins can delete user_programs"
@@ -180,6 +185,7 @@ create policy "Admins and owners can insert new user_seen_classes"
 
 create policy "Admins and owners can update user_seen_classes"
   on user_seen_classes for update
+  USING (is_claims_admin())
   with check ( is_claims_admin() OR user_id = auth.uid() );
 
 create policy "Admins and owners can delete user_seen_classes"

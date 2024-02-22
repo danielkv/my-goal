@@ -41,6 +41,7 @@ const AppRouter: Component = () => {
 
                         <Route path="/programs" element={<ProgramListScreen />} />
                         <Route path="/program/new" element={<ProgramFormScreen />} />
+                        <Route path="/program/:programId" element={<ProgramFormScreen />} />
                     </Route>
                     {/* End Dashboard */}
                 </Routes>

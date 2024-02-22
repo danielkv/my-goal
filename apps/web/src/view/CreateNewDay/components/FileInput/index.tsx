@@ -5,7 +5,7 @@ import { Button, FormHelperText } from '@suid/material'
 type FileInputProps = {
     ref: (element: HTMLInputElement) => void
     name: string
-    value?: File | null
+    value?: File | string | null
     onInput: JSX.EventHandler<HTMLInputElement, InputEvent>
     onChange: JSX.EventHandler<HTMLInputElement, Event>
     onBlur: JSX.EventHandler<HTMLInputElement, FocusEvent>
@@ -19,7 +19,12 @@ type FileInputProps = {
 }
 
 const FileInput: Component<FileInputProps> = (props) => {
-    const imagePreview = createMemo(() => (props.value ? URL.createObjectURL(props.value) : null))
+    const imagePreview = createMemo(() => {
+        if (!props.value) return null
+        if (typeof props.value === 'string') return props.value
+
+        return props.value ? URL.createObjectURL(props.value) : null
+    })
 
     return (
         <>

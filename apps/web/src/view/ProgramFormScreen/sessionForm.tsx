@@ -29,6 +29,9 @@ const SessionForm: Component<SessionFormProps> = (props) => {
                 </IconButton>
             </Stack>
             <Stack p={2} gap={2}>
+                <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.id`} type="string">
+                    {(field) => <input value={field.value} hidden />}
+                </Field>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
                     {(field, fieldProps) => (
                         <TextInput {...fieldProps} label="Nome" error={field.error} value={field.value} />
