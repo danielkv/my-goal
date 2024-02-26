@@ -5,6 +5,9 @@ create table
     name character varying not null,
 	image text not null,
     amount double precision not null,
+	stripe_product_id character varying,
+    stripe_payment_link_id character varying null,
+	payment_url text null,
     expiration numeric not null default '0'::numeric,
     block_segments character varying null,
     constraint programs_pkey primary key (id)

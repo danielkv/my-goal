@@ -1,8 +1,9 @@
 import { IProgramInput } from 'goal-models'
 import { FiPlus, FiTrash } from 'solid-icons/fi'
 
-import { Component, For } from 'solid-js'
+import { Component, For, createSignal } from 'solid-js'
 
+import ActivityIndicator from '@components/ActivityIndicator'
 import TextInput from '@components/TextInput'
 import { SubmitHandler, createForm, insert, remove, setValue, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
@@ -32,6 +33,8 @@ interface ProgramFormProps {
 const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) => {
     const navigate = useNavigate()
 
+    const [loading, setLoading] = createSignal(false)
+
     const [form, { Form, Field, FieldArray }] = createForm<TProgramForm>({
         initialValues: initialValues,
         // @ts-expect-error
@@ -40,9 +43,14 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
 
     const handleSubmit: SubmitHandler<TProgramForm> = async (result) => {
         try {
-            await saveProgramUseCase(result)
+            setLoading(true)
+            const saved = await saveProgramUseCase(result)
+
+            navigate(`/dashboard/program/${saved.id}`)
         } catch (err) {
             alert(getErrorMessage(err))
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -124,13 +132,14 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                             <Button
                                 color="secondary"
                                 variant="contained"
+                                disabled={loading()}
                                 onClick={() => navigate('/dashboard/programs')}
                             >
                                 Cancelar
                             </Button>
                         )}
-                        <Button variant="contained" type="submit">
-                            Salvar
+                        <Button variant="contained" type="submit" disabled={loading()}>
+                            {loading() ? <ActivityIndicator color="white" /> : 'Salvar'}
                         </Button>
                     </Stack>
                 </Stack>
@@ -194,6 +203,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                                                             )}
                                                             <Stack alignItems="center">
                                                                 <IconButton
+                                                                    disabled={loading()}
                                                                     onClick={() =>
                                                                         insert(form, sessionArray.name, {
                                                                             at: sessionArray.items.length,
@@ -214,6 +224,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                                         <FormHelperText error>Insira ao menos 1 segmento</FormHelperText>
                                     )}
                                     <Button
+                                        disabled={loading()}
                                         onClick={() =>
                                             insert(form, 'segments', {
                                                 at: segmentsArray.items.length,

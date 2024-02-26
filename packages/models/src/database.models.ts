@@ -65,7 +65,7 @@ export type DatabaseModel = MergeDeep<
                         image?: File | string | null
                     }
                     Update: {
-                        block_segments: 'none' | 'weekly' | 'monthly'
+                        block_segments?: 'none' | 'weekly' | 'monthly'
                         image?: File | string | null
                     }
                 }

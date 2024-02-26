@@ -279,6 +279,9 @@ export interface Database {
           id: string
           image: string
           name: string
+          payment_url: string | null
+          stripe_payment_link_id: string | null
+          stripe_product_id: string | null
         }
         Insert: {
           amount: number
@@ -288,6 +291,9 @@ export interface Database {
           id?: string
           image: string
           name: string
+          payment_url?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
         }
         Update: {
           amount?: number
@@ -297,6 +303,9 @@ export interface Database {
           id?: string
           image?: string
           name?: string
+          payment_url?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
         }
         Relationships: []
       }
