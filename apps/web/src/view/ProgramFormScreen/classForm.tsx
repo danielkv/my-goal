@@ -1,11 +1,20 @@
 import { IProgramInput } from 'goal-models'
 import { FiTrash } from 'solid-icons/fi'
+import { createTiptapEditor } from 'solid-tiptap'
 
-import { Component } from 'solid-js'
+import { Component, Show } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, FieldArrayStore, FormStore, remove } from '@modular-forms/solid'
+import { Field, FieldArrayStore, FormStore, getValue, remove, setValue } from '@modular-forms/solid'
 import { Card, IconButton, Stack } from '@suid/material'
+import BubbleMenu from '@tiptap/extension-bubble-menu'
+import BulletList from '@tiptap/extension-bullet-list'
+import Heading from '@tiptap/extension-heading'
+import TextAlign from '@tiptap/extension-text-align'
+import Underline from '@tiptap/extension-underline'
+import StarterKit from '@tiptap/starter-kit'
+
+import EditorMenu from './components/EditorMenu'
 
 interface ClassFormProps {
     form: FormStore<IProgramInput, any>
@@ -14,6 +23,33 @@ interface ClassFormProps {
 }
 
 const ClassForm: Component<ClassFormProps> = (props) => {
+    const textInputName = `${props.fieldArray.name}.${props.index}.text` as const
+
+    let editorRef!: HTMLDivElement
+    let bubleMenuRef!: HTMLDivElement
+
+    const editor = createTiptapEditor(() => ({
+        element: editorRef!,
+        extensions: [
+            StarterKit,
+            BubbleMenu.configure({ element: bubleMenuRef! }),
+            BulletList.configure({ keepMarks: true, HTMLAttributes: { class: 'editor-list' } }),
+            TextAlign.configure({
+                types: ['heading', 'paragraph'],
+                alignments: ['left', 'center', 'right'],
+            }),
+            Underline,
+            Heading.configure({
+                levels: [1, 2],
+                HTMLAttributes: { class: 'editor-heading' },
+            }),
+        ],
+        onUpdate({ editor }) {
+            setValue(props.form, textInputName, editor.getHTML())
+        },
+        content: getValue(props.form, `${props.fieldArray.name}.${props.index}.text`),
+    }))
+
     return (
         <Card class="!bg-gray-700 relative !overflow-visible">
             <Stack direction="row" gap={2} position="absolute" right={16} top={-14}>
@@ -40,15 +76,13 @@ const ClassForm: Component<ClassFormProps> = (props) => {
                     )}
                 </Field>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.text`}>
-                    {(field, fieldProps) => (
-                        <TextInput
-                            {...fieldProps}
-                            multiline
-                            rows={5}
-                            label="Texto"
-                            error={field.error}
-                            value={field.value || ''}
-                        />
+                    {() => (
+                        <>
+                            <div ref={editorRef} />
+                            <Show when={editor()}>
+                                {(editorInstance) => <EditorMenu editor={editorInstance()} ref={bubleMenuRef} />}
+                            </Show>
+                        </>
                     )}
                 </Field>
             </Stack>

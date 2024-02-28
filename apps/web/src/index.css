@@ -256,3 +256,17 @@
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+ul.editor-list {
+    list-style: disc;
+    padding-left: 1.2em;
+}
+
+h1.editor-heading {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+h2.editor-heading {
+    font-size: 1.2em;
+    font-weight: bold;
+}
