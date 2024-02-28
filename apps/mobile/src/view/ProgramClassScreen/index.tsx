@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Dimensions, TouchableHighlight, View } from 'react-native'
+import RenderHtml from 'react-native-render-html'
 import YoutubePlayer, { PLAYER_STATES, YoutubeIframeRef } from 'react-native-youtube-iframe'
 
 import dayjs from 'dayjs'
@@ -194,7 +195,11 @@ const ProgramClassScreen: React.FC = () => {
             </Stack>
             {orientation === 'portrait' && (
                 <Stack m="$6" gap="$4">
-                    <Text>{data?.text}</Text>
+                    <RenderHtml
+                        contentWidth={Dimensions.get('screen').width}
+                        source={{ html: data?.text || '' }}
+                        tagsStyles={tagStyles}
+                    />
                     <Stack gap="$3">
                         <Button
                             loading={loadingMarkAsWatched}
@@ -211,6 +216,21 @@ const ProgramClassScreen: React.FC = () => {
             )}
         </ScrollView>
     )
+}
+
+const tagStyles = {
+    body: {
+        color: 'white',
+    },
+    h1: {
+        fontSize: '1.5em',
+    },
+    h2: {
+        fontSize: '1.2em',
+    },
+    ul: { margin: 0, marginLeft: 7, paddingLeft: 5 },
+    li: { margin: 0 },
+    p: { margin: 0, marginBottom: 8 },
 }
 
 export default ProgramClassScreen
