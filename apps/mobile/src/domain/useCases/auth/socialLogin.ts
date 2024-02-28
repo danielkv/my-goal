@@ -3,6 +3,7 @@ import { SocialLoginProvider } from 'goal-models'
 import { supabase } from '@common/providers/supabase'
 import { extractSupabaseUserCredential } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
 const fbBaseUrl = process.env.EXPO_PUBLIC_FB_FUNCTIONS_BASE_URL
 
@@ -13,11 +14,13 @@ export async function socialLoginUseCase(provider: SocialLoginProvider, token: s
     // migrate data from firebase
     if (!data.user.user_metadata.fbuid) {
         const url = `${fbBaseUrl}/getUserByEmail?email=${data.user.email}`
-        const fbUser = await fetch(url, { method: 'GET' }).then((res) => {
-            if (!res.ok) return null
+        const fbUser = await fetch(url, { method: 'GET' })
+            .then((res) => {
+                if (!res.ok) return null
 
-            return res.json()
-        })
+                return res.json()
+            })
+            .catch((err) => console.log(getErrorMessage(err)))
 
         if (fbUser) {
             supabase.auth.updateUser({

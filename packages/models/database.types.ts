@@ -309,6 +309,56 @@ export interface Database {
         }
         Relationships: []
       }
+      user_classes_details: {
+        Row: {
+          class_id: string
+          id: string
+          user_id: string
+          watched_at: string | null
+        }
+        Insert: {
+          class_id: string
+          id?: string
+          user_id: string
+          watched_at?: string | null
+        }
+        Update: {
+          class_id?: string
+          id?: string
+          user_id?: string
+          watched_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_classes_details_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "program_classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_classes_details_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "program_classes_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_classes_details_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_classes_details_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       user_programs: {
         Row: {
           created_at: string
@@ -351,49 +401,6 @@ export interface Database {
           },
           {
             foreignKeyName: "user_programs_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      user_seen_classes: {
-        Row: {
-          class_id: string
-          created_at: string
-          id: string
-          user_id: string
-        }
-        Insert: {
-          class_id: string
-          created_at?: string
-          id?: string
-          user_id: string
-        }
-        Update: {
-          class_id?: string
-          created_at?: string
-          id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_seen_classes_class_id_fkey"
-            columns: ["class_id"]
-            isOneToOne: false
-            referencedRelation: "program_classes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_seen_classes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_seen_classes_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -501,6 +508,26 @@ export interface Database {
             columns: ["userId"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_classes_details: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          name: string | null
+          session_id: string | null
+          text: string | null
+          video: string | null
+          watched_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_classes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "program_sessions"
             referencedColumns: ["id"]
           }
         ]

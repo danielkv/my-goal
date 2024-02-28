@@ -1,12 +1,12 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { XStack } from 'tamagui'
+
 import { useOrientation } from '@common/hooks/useOrientation'
 import MenuButton from '@components/MenuButton'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { FileSpreadsheet, Home, Timer } from '@tamagui/lucide-icons'
-
-import { XStack } from 'tamagui'
+import { FileSpreadsheet, Home, Layers, Timer } from '@tamagui/lucide-icons'
 
 const AppBottomBar: React.FC = () => {
     const { navigate } = useNavigation()
@@ -27,6 +27,11 @@ const AppBottomBar: React.FC = () => {
                 label="Planilhas"
                 Icon={() => <FileSpreadsheet size={22} color="$gray4" />}
                 onPress={() => navigate(ERouteName.WorksheetList)}
+            />
+            <MenuButton
+                label="Programas"
+                Icon={() => <Layers size={22} color="$gray4" />}
+                onPress={() => navigate(ERouteName.ProgramList)}
             />
             <MenuButton
                 label="Timers"

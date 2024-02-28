@@ -21,3 +21,7 @@ export type IProgramSegment = Models<'program_segments'> & {
 export type IProgram = Models<'programs'> & {
     segments: IProgramSegment[]
 }
+
+export type IUserProgram = Models<'programs'> & {
+    user_programs: Models<'user_programs'>[]
+}

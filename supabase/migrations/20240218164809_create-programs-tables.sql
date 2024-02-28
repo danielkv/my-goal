@@ -69,23 +69,26 @@ alter table public.user_programs enable row level security;
 
 
 create table
-  public.user_seen_classes (
+  public.user_classes_details (
     id uuid not null default gen_random_uuid (),
-    created_at timestamp with time zone not null default now(),
     class_id uuid not null,
     user_id uuid not null,
+    watched_at timestamp with time zone null,
     constraint user_seen_classes_pkey primary key (id),
-    constraint user_seen_classes_class_id_fkey foreign key (class_id) references program_classes (id) on update cascade on delete cascade,
-    constraint user_seen_classes_user_id_fkey foreign key (user_id) references auth.users (id) on update cascade on delete cascade
+    constraint user_classes_details_class_id_fkey foreign key (class_id) references program_classes (id) on update cascade on delete cascade,
+    constraint user_classes_details_user_id_fkey foreign key (user_id) references auth.users (id) on update cascade on delete cascade
   ) tablespace pg_default;
 
-alter table public.user_seen_classes enable row level security;
+CREATE VIEW program_classes_details WITH(security_invoker=true) AS
+	SELECT program_classes.*, user_classes_details.watched_at as watched_at from
+		public.program_classes
+		LEFT JOIN public.user_classes_details ON user_classes_details.class_id = program_classes.id;
 
 -- PROGRAMS
 
 create policy "Programs are viewable by the user who bought it."
   on programs for select
-  using ( true );
+  using ( is_claims_admin() OR EXISTS(SELECT user_id FROM user_programs WHERE user_programs.program_id = program_segments.id and user_programs.user_id = auth.uid() AND expires_at >= now()) );
 
 create policy "Only admins can insert new programs"
   on programs for insert
@@ -104,7 +107,7 @@ create policy "Only admins can delete programs"
 
 create policy "Program_segments are viewable by the user who bought it."
   on program_segments for select
-  using ( is_claims_admin() OR EXISTS(SELECT user_id FROM user_programs WHERE user_programs.program_id = program_segments.id and user_programs.user_id = auth.uid() AND expires_at >= now()) );
+  using ( is_claims_admin() OR EXISTS(SELECT user_id FROM user_programs WHERE user_programs.program_id = program_segments.program_id and user_programs.user_id = auth.uid() AND expires_at >= now()) );
 
 create policy "Only admins can insert new program_segments"
   on program_segments for insert
@@ -179,18 +182,18 @@ create policy "Only admins can delete user_programs"
 -- USER SEEN CLASSES
 
 create policy "User_seen_classes are viewable by the admin and owner."
-  on user_seen_classes for select
+  on user_classes_details for select
   using ( is_claims_admin() OR user_id = auth.uid() );
 
-create policy "Admins and owners can insert new user_seen_classes"
-  on user_seen_classes for insert
+create policy "Admins and owners can insert new user_classes_details"
+  on user_classes_details for insert
   with check ( is_claims_admin() OR user_id = auth.uid() );
 
-create policy "Admins and owners can update user_seen_classes"
-  on user_seen_classes for update
+create policy "Admins and owners can update user_classes_details"
+  on user_classes_details for update
   USING (is_claims_admin())
   with check ( is_claims_admin() OR user_id = auth.uid() );
 
-create policy "Admins and owners can delete user_seen_classes"
-  on user_seen_classes for delete
+create policy "Admins and owners can delete user_classes_details"
+  on user_classes_details for delete
   using ( is_claims_admin() OR user_id = auth.uid() );
