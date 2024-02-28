@@ -44,7 +44,7 @@ const ClassForm: Component<ClassFormProps> = (props) => {
                 HTMLAttributes: { class: 'editor-heading' },
             }),
         ],
-        onUpdate({ editor }) {
+        onBlur({ editor }) {
             setValue(props.form, textInputName, editor.getHTML())
         },
         content: getValue(props.form, `${props.fieldArray.name}.${props.index}.text`),
