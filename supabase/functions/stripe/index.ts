@@ -32,7 +32,7 @@ app.post<any, unknown, CreateProgramProductSchema>(
             const stripePrice = await stripe.prices.create({
                 currency: 'brl',
                 unit_amount: price,
-                product_data: { name, metadata: { programId: programId || '' } },
+                product_data: { name, metadata: { programId: programId || '', category: 'program' } },
             })
 
             const paymentLink = await stripe.paymentLinks.create({
