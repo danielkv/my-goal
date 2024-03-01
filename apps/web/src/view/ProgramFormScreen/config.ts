@@ -1,4 +1,10 @@
-import { IProgramInput, IProgramSegmentInput, IProgramSessionInput, ModelsInsert } from 'goal-models'
+import {
+    IProgramGroupInput,
+    IProgramInput,
+    IProgramSegmentInput,
+    IProgramSessionInput,
+    ModelsInsert,
+} from 'goal-models'
 import { z } from 'zod'
 
 export type TProgramForm = IProgramInput
@@ -15,20 +21,32 @@ export const programFormSchema = z.object({
             sessions: z
                 .object({
                     name: z.string({ required_error: 'Nome é obrigatório' }).min(1, { message: 'Nome é obrigatório' }),
-                    classes: z
+                    groups: z
                         .object({
                             name: z
                                 .string({ required_error: 'Nome é obrigatório' })
                                 .min(1, { message: 'Nome é obrigatório' }),
-                            video: z
-                                .string({ required_error: 'Vídeo é obrigatório' })
-                                .min(1, { message: 'Vídeo é obrigatório' }),
+                            video: z.string().optional(),
                             text: z
                                 .string({ required_error: 'Texto é obrigatório' })
                                 .min(1, { message: 'Texto é obrigatório' }),
+                            movements: z
+                                .object({
+                                    name: z
+                                        .string({ required_error: 'Nome é obrigatório' })
+                                        .min(1, { message: 'Nome é obrigatório' }),
+                                    video: z
+                                        .string({ required_error: 'Vídeo é obrigatório' })
+                                        .min(1, { message: 'Vídeo é obrigatório' }),
+                                    text: z
+                                        .string({ required_error: 'Texto é obrigatório' })
+                                        .min(1, { message: 'Texto é obrigatório' }),
+                                })
+                                .array()
+                                .nonempty('Insira ao menos 1 movimento'),
                         })
                         .array()
-                        .nonempty('Insira ao menos 1 classe'),
+                        .nonempty('Insira ao menos 1 grupo'),
                 })
                 .array()
                 .nonempty('Insira ao menos 1 sessão'),
@@ -37,13 +55,25 @@ export const programFormSchema = z.object({
         .nonempty('Insira ao menos 1 segmento'),
 })
 
-export const createEmptyClass = (o?: Partial<ModelsInsert<'program_classes'>>): ModelsInsert<'program_classes'> => ({
+export const createEmptyMovement = (
+    o?: Partial<ModelsInsert<'program_movements'>>
+): ModelsInsert<'program_movements'> => ({
+    id: '',
+    created_at: '',
+    group_id: '',
+    name: '',
+    text: '',
+    video: '',
+    ...o,
+})
+export const createEmptyGroup = (o?: Partial<IProgramGroupInput>): IProgramGroupInput => ({
     id: '',
     created_at: '',
     session_id: '',
     name: '',
     text: '',
     video: '',
+    movements: [createEmptyMovement()],
     ...o,
 })
 export const createEmptySession = (o?: Partial<IProgramSessionInput>): IProgramSessionInput => ({
@@ -51,7 +81,7 @@ export const createEmptySession = (o?: Partial<IProgramSessionInput>): IProgramS
     created_at: '',
     segment_id: '',
     name: '',
-    classes: [createEmptyClass()],
+    groups: [createEmptyGroup()],
     ...o,
 })
 

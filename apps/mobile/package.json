@@ -48,6 +48,7 @@
 		"expo-keep-awake": "~12.3.0",
 		"expo-linear-gradient": "~12.3.0",
 		"expo-linking": "~5.0.2",
+		"expo-navigation-bar": "~2.3.0",
 		"expo-screen-orientation": "~6.0.6",
 		"expo-splash-screen": "~0.20.5",
 		"expo-status-bar": "~1.6.0",

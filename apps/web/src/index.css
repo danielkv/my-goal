@@ -257,6 +257,16 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.tiptap {
+    @apply bg-white;
+    border-radius: 6px;
+    padding: 3px 5px;
+    color: black;
+    min-height: 100px;
+    padding-top: 50px;
+    outline: none;
+}
+
 ul.editor-list {
     list-style: disc;
     padding-left: 1.2em;

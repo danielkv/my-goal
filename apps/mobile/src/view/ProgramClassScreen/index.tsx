@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Dimensions, TouchableHighlight, View } from 'react-native'
 import RenderHtml from 'react-native-render-html'
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context'
 import YoutubePlayer, { PLAYER_STATES, YoutubeIframeRef } from 'react-native-youtube-iframe'
 
 import dayjs from 'dayjs'
+import * as NavigationBar from 'expo-navigation-bar'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { getYoutubeVideoId } from 'goal-utils'
 import useSWR from 'swr'
@@ -21,9 +23,9 @@ import { toggleClassWatchedUseCase } from '@useCases/programs/toggleClassWatched
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
-function getVideoSize(orientation: TOrientation): [number, number] {
-    const screenW = Dimensions.get('screen').width
-    const screenH = Dimensions.get('screen').height
+function getVideoSize(orientation: TOrientation, insets: EdgeInsets): [number, number] {
+    const screenW = Dimensions.get('screen').width - (insets.left + insets.right)
+    const screenH = Dimensions.get('screen').height - (insets.top + insets.bottom)
     const aspectRatio = 16 / 9
 
     if (orientation === 'landscape') return [screenH * aspectRatio, screenH]
@@ -32,22 +34,22 @@ function getVideoSize(orientation: TOrientation): [number, number] {
 }
 
 const ProgramClassScreen: React.FC = () => {
+    const user = usePreventAccess()
+    const insets = useSafeAreaInsets()
+    const orientation = useOrientation()
+
     const { dispatch, setOptions } = useNavigation()
     const [loadingMarkAsWatched, setLoadingMarkAsWatched] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [loadingVideo, setLoadingVideo] = useState(true)
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
-    const [[videoWidth, videoHeight], setVideoSize] = useState<[number, number]>(getVideoSize('portrait'))
+    const [[videoWidth, videoHeight], setVideoSize] = useState<[number, number]>(() => getVideoSize('portrait', insets))
 
     const videoRef = useRef<YoutubeIframeRef>(null)
     const sliderTimerRef = useRef<NodeJS.Timeout>()
 
     const { params } = useRoute<RouteProp<TReactNavigationStackParamList, 'ProgramClassScreen'>>()
-
-    const user = usePreventAccess()
-
-    const orientation = useOrientation()
 
     useFocusEffect(
         useCallback(() => {
@@ -60,7 +62,7 @@ const ProgramClassScreen: React.FC = () => {
         if (orientation === 'portrait') setOptions({ headerShown: true })
         else setOptions({ headerShown: false })
 
-        setVideoSize(getVideoSize(orientation))
+        setVideoSize(getVideoSize(orientation, insets))
     }, [orientation])
 
     useEffect(() => {
@@ -143,7 +145,7 @@ const ProgramClassScreen: React.FC = () => {
 
     return (
         <ScrollView bounces={orientation === 'portrait'}>
-            <Stack position="relative">
+            <Stack position="relative" mt={orientation === 'landscape' ? insets.top : 0}>
                 <View pointerEvents="none">
                     <YoutubePlayer
                         ref={videoRef}

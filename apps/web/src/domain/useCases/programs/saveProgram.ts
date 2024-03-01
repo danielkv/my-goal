@@ -38,18 +38,29 @@ export async function saveProgramUseCase(data: IProgramInput): Promise<Models<'p
     if (segmentsError) throw segmentsError
 
     const sessionsToSave = program.segments.flatMap((segment) =>
-        segment.sessions.map((session) => omit(session, ['classes']))
+        segment.sessions.map((session) => omit(session, ['groups']))
     )
     const { error: sessionsError } = await supabase
         .from('program_sessions')
         .upsert(sessionsToSave, { onConflict: 'id', ignoreDuplicates: false })
     if (sessionsError) throw sessionsError
 
-    const classesToSave = program.segments.flatMap((segment) => segment.sessions.flatMap((session) => session.classes))
-    const { error: classesError } = await supabase
-        .from('program_classes')
-        .upsert(classesToSave, { onConflict: 'id', ignoreDuplicates: false })
-    if (classesError) throw classesError
+    const groupsToSave = program.segments.flatMap((segment) =>
+        segment.sessions.flatMap((session) => session.groups.map((group) => omit(group, ['movements'])))
+    )
+    const { error: groupsError } = await supabase
+        .from('program_groups')
+        .upsert(groupsToSave, { onConflict: 'id', ignoreDuplicates: false })
+    if (groupsError) throw groupsError
+
+    const movementsToSave = program.segments.flatMap((segment) =>
+        segment.sessions.flatMap((session) => session.groups.flatMap((group) => group.movements))
+    )
+
+    const { error: movementsError } = await supabase
+        .from('program_movements')
+        .upsert(movementsToSave, { onConflict: 'id', ignoreDuplicates: false })
+    if (movementsError) throw movementsError
 
     await _createUpdateStripeProduct(programSaved, previousProgram, data)
 
@@ -100,24 +111,48 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
         }
     }
 
-    const { error: classesError, data: classesData } = await supabase
+    const { error: groupsError, data: groupsData } = await supabase
         .from('program_classes')
         .select()
         .in(
             'session_id',
             sessionsData.map((s) => s.id)
         )
-    if (classesError) throw classesError
-    if (!classesData.length) return
+    if (groupsError) throw groupsError
+    if (!groupsData.length) return
 
     {
-        const classesIdsToDelete = diff(
-            classesData.map((i) => i.id),
-            program.segments.flatMap((s) => s.sessions.flatMap((s) => s.classes.map((s) => s.id)))
+        const groupsIdsToDelete = diff(
+            groupsData.map((i) => i.id),
+            program.segments.flatMap((s) => s.sessions.flatMap((s) => s.groups.map((s) => s.id)))
         )
 
-        if (classesIdsToDelete.length) {
-            const { error } = await supabase.from('program_classes').delete().in('id', classesIdsToDelete)
+        if (groupsIdsToDelete.length) {
+            const { error } = await supabase.from('program_classes').delete().in('id', groupsIdsToDelete)
+            if (error) throw error
+        }
+    }
+
+    const { error: movementsError, data: movementsData } = await supabase
+        .from('program_movements')
+        .select()
+        .in(
+            'session_id',
+            sessionsData.map((s) => s.id)
+        )
+    if (movementsError) throw movementsError
+    if (!movementsData.length) return
+
+    {
+        const movementIdsToDelete = diff(
+            movementsData.map((i) => i.id),
+            program.segments.flatMap((s) =>
+                s.sessions.flatMap((s) => s.groups.flatMap((s) => s.movements.map((s) => s.id)))
+            )
+        )
+
+        if (movementIdsToDelete.length) {
+            const { error } = await supabase.from('program_classes').delete().in('id', movementIdsToDelete)
             if (error) throw error
         }
     }
@@ -208,12 +243,20 @@ function _prepareData(program: IProgramInput): IProgramInput {
                         ...session,
                         segment_id: segmentId,
                         id: sessionId,
-                        classes: session.classes.map((pClass) => {
-                            const classId = pClass.id || self.crypto.randomUUID()
+                        groups: session.groups.map((group) => {
+                            const groupId = group.id || self.crypto.randomUUID()
                             return {
-                                ...pClass,
+                                ...group,
                                 session_id: sessionId,
-                                id: classId,
+                                id: groupId,
+                                movements: group.movements.map((movement) => {
+                                    const movementId = movement.id || self.crypto.randomUUID()
+                                    return {
+                                        ...movement,
+                                        group_id: groupId,
+                                        id: movementId,
+                                    }
+                                }),
                             }
                         }),
                     }

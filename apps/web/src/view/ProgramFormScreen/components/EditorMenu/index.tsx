@@ -10,7 +10,6 @@ import EditorMenuButton from '../EditorMenuButton'
 
 interface EditorMenuProps {
     editor: Editor
-    ref: HTMLDivElement | ((el: HTMLDivElement) => void)
 }
 const EditorMenu: Component<EditorMenuProps> = (props) => {
     const isHeading1 = createEditorTransaction(
@@ -55,11 +54,14 @@ const EditorMenu: Component<EditorMenuProps> = (props) => {
     )
 
     return (
-        <Stack direction="row" ref={props.ref} gap={1} class="bg-gray-900 rounded-md" p={1}>
+        <Stack direction="row" gap={1} class="bg-white rounded-md " p={1}>
             <Stack direction="row">
                 <EditorMenuButton
                     active={isHeading1()}
-                    onClick={() => props.editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                    onClick={(e) => {
+                        e.preventDefault()
+                        props.editor.chain().focus().toggleHeading({ level: 1 }).run()
+                    }}
                 >
                     H1
                 </EditorMenuButton>

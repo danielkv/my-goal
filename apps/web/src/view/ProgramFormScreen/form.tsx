@@ -171,6 +171,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                                                                 <input
                                                                     type="text"
                                                                     class="!bg-gray-600 outline-none focus:border-b-2 font-[inherit] w-full"
+                                                                    placeholder="Nome do segmento"
                                                                     {...props}
                                                                     // @ts-expect-error
                                                                     value={field.value}

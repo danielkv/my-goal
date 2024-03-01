@@ -10,7 +10,7 @@ export async function getProgramListUseCase(filter: IGetProgramListFilter): Prom
 
     const { error, data, count } = await supabase
         .from('programs')
-        .select('*, user_programs(*)', { count: 'exact' })
+        .select('*, user_programs!inner(*)', { count: 'exact' })
         .range(from, to)
         .order('name')
 

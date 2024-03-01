@@ -1,5 +1,6 @@
 import { Component, JSX, splitProps } from 'solid-js'
 
+import { FormHelperText } from '@suid/material'
 import { TextFieldProps } from '@suid/material/TextField'
 
 type TMultilineProps = {
@@ -40,10 +41,10 @@ const TextInput: Component<TextInputProps> = (props) => {
     return (
         <div class={`${props.class} flex flex-col`}>
             {props.label && (
-                <label class="text-sm">
+                <FormHelperText>
                     {props.label}
                     {props.required && '*'}
-                </label>
+                </FormHelperText>
             )}
             {props.multiline ? (
                 <textarea

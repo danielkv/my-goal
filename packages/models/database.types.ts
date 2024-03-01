@@ -177,7 +177,7 @@ export interface Database {
           }
         ]
       }
-      program_classes: {
+      program_groups: {
         Row: {
           created_at: string
           id: string
@@ -204,10 +204,52 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "program_classes_session_id_fkey"
+            foreignKeyName: "program_groups_session_id_fkey"
             columns: ["session_id"]
             isOneToOne: false
             referencedRelation: "program_sessions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_movements: {
+        Row: {
+          created_at: string
+          group_id: string
+          id: string
+          name: string | null
+          text: string | null
+          video: string | null
+        }
+        Insert: {
+          created_at?: string
+          group_id: string
+          id?: string
+          name?: string | null
+          text?: string | null
+          video?: string | null
+        }
+        Update: {
+          created_at?: string
+          group_id?: string
+          id?: string
+          name?: string | null
+          text?: string | null
+          video?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_movements_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "program_movements_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups_details"
             referencedColumns: ["id"]
           }
         ]
@@ -309,49 +351,49 @@ export interface Database {
         }
         Relationships: []
       }
-      user_classes_details: {
+      user_groups_details: {
         Row: {
-          class_id: string
+          group_id: string
           id: string
           user_id: string
           watched_at: string | null
         }
         Insert: {
-          class_id: string
+          group_id: string
           id?: string
           user_id: string
           watched_at?: string | null
         }
         Update: {
-          class_id?: string
+          group_id?: string
           id?: string
           user_id?: string
           watched_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "user_classes_details_class_id_fkey"
-            columns: ["class_id"]
+            foreignKeyName: "user_groups_details_group_id_fkey"
+            columns: ["group_id"]
             isOneToOne: false
-            referencedRelation: "program_classes"
+            referencedRelation: "program_groups"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "user_classes_details_class_id_fkey"
-            columns: ["class_id"]
+            foreignKeyName: "user_groups_details_group_id_fkey"
+            columns: ["group_id"]
             isOneToOne: false
-            referencedRelation: "program_classes_details"
+            referencedRelation: "program_groups_details"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "user_classes_details_user_id_fkey"
+            foreignKeyName: "user_groups_details_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "user_classes_details_user_id_fkey"
+            foreignKeyName: "user_groups_details_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
@@ -512,7 +554,7 @@ export interface Database {
           }
         ]
       }
-      program_classes_details: {
+      program_groups_details: {
         Row: {
           created_at: string | null
           id: string | null
@@ -524,7 +566,7 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "program_classes_session_id_fkey"
+            foreignKeyName: "program_groups_session_id_fkey"
             columns: ["session_id"]
             isOneToOne: false
             referencedRelation: "program_sessions"

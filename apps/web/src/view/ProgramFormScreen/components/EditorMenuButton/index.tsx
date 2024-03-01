@@ -1,10 +1,11 @@
 import { Component, ParentProps } from 'solid-js'
+import { JSX } from 'solid-js'
 
 import { IconButton } from '@suid/material'
 
 interface EditorMenuButtonProps {
     active?: boolean
-    onClick?: () => void
+    onClick?: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
 }
 
 const EditorMenuButton: Component<ParentProps<EditorMenuButtonProps>> = (props) => {
@@ -13,7 +14,7 @@ const EditorMenuButton: Component<ParentProps<EditorMenuButtonProps>> = (props) 
             class={props.active ? '!bg-gray-600' : ''}
             onClick={props.onClick}
             size="small"
-            style={{ width: '30px', height: '30px', 'font-size': '14px' }}
+            style={{ width: '30px', height: '30px', 'font-size': '14px', color: props.active ? 'white' : 'black' }}
         >
             {props.children}
         </IconButton>

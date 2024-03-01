@@ -7,8 +7,8 @@ import TextInput from '@components/TextInput'
 import { Field, FieldArray, FieldArrayStore, FormStore, insert, remove } from '@modular-forms/solid'
 import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
 
-import ClassForm from './classForm'
-import { createEmptyClass } from './config'
+import { createEmptyGroup } from './config'
+import GroupForm from './groupForm'
 
 interface SessionFormProps {
     form: FormStore<IProgramInput, any>
@@ -18,7 +18,7 @@ interface SessionFormProps {
 
 const SessionForm: Component<SessionFormProps> = (props) => {
     return (
-        <Card class="relative !overflow-visible">
+        <Card class="relative !overflow-visible !bg-gray-900">
             <Stack direction="row" gap={2} position="absolute" right={16} top={-14}>
                 <IconButton
                     onClick={() => remove(props.form, props.fieldArray.name, { at: props.index })}
@@ -34,16 +34,16 @@ const SessionForm: Component<SessionFormProps> = (props) => {
                 </Field>
                 <Field of={props.form} name={`${props.fieldArray.name}.${props.index}.name`}>
                     {(field, fieldProps) => (
-                        <TextInput {...fieldProps} label="Nome" error={field.error} value={field.value} />
+                        <TextInput {...fieldProps} label="Nome da sessão" error={field.error} value={field.value} />
                     )}
                 </Field>
-                <FieldArray of={props.form} name={`${props.fieldArray.name}.${props.index}.classes`}>
+                <FieldArray of={props.form} name={`${props.fieldArray.name}.${props.index}.groups`}>
                     {(fieldArray) => (
                         <Stack gap={1}>
                             <Stack gap={2}>
                                 <For each={fieldArray.items}>
                                     {(_, index) => (
-                                        <ClassForm form={props.form} fieldArray={fieldArray} index={index()} />
+                                        <GroupForm form={props.form} fieldArray={fieldArray} index={index()} />
                                     )}
                                 </For>
                             </Stack>
@@ -53,11 +53,11 @@ const SessionForm: Component<SessionFormProps> = (props) => {
                                     onClick={() =>
                                         insert(props.form, fieldArray.name, {
                                             at: fieldArray.items.length,
-                                            value: createEmptyClass(),
+                                            value: createEmptyGroup(),
                                         })
                                     }
                                 >
-                                    <FiPlus title="Nova classe" />
+                                    <FiPlus title="Novo grupo" />
                                 </IconButton>
                             </Stack>
                         </Stack>
