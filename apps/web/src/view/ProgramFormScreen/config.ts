@@ -1,11 +1,7 @@
-import {
-    IProgramGroupInput,
-    IProgramInput,
-    IProgramSegmentInput,
-    IProgramSessionInput,
-    ModelsInsert,
-} from 'goal-models'
+import { IProgramGroupInput, IProgramInput, IProgramSegmentInput, IProgramSessionInput } from 'goal-models'
 import { z } from 'zod'
+
+import { JSONContent } from '@tiptap/core'
 
 export type TProgramForm = IProgramInput
 
@@ -30,20 +26,6 @@ export const programFormSchema = z.object({
                             text: z
                                 .string({ required_error: 'Texto é obrigatório' })
                                 .min(1, { message: 'Texto é obrigatório' }),
-                            movements: z
-                                .object({
-                                    name: z
-                                        .string({ required_error: 'Nome é obrigatório' })
-                                        .min(1, { message: 'Nome é obrigatório' }),
-                                    video: z
-                                        .string({ required_error: 'Vídeo é obrigatório' })
-                                        .min(1, { message: 'Vídeo é obrigatório' }),
-                                    text: z
-                                        .string({ required_error: 'Texto é obrigatório' })
-                                        .min(1, { message: 'Texto é obrigatório' }),
-                                })
-                                .array()
-                                .nonempty('Insira ao menos 1 movimento'),
                         })
                         .array()
                         .nonempty('Insira ao menos 1 grupo'),
@@ -55,25 +37,26 @@ export const programFormSchema = z.object({
         .nonempty('Insira ao menos 1 segmento'),
 })
 
-export const createEmptyMovement = (
-    o?: Partial<ModelsInsert<'program_movements'>>
-): ModelsInsert<'program_movements'> => ({
-    id: '',
-    created_at: '',
-    group_id: '',
-    name: '',
-    text: '',
-    video: '',
-    ...o,
-})
+export function extractMentions(json: JSONContent): { id: string; label: string }[] {
+    const mentions = []
+
+    if (json.type === 'mention' && json.attrs?.id && json.attrs.label)
+        mentions.push(json.attrs as { id: string; label: string })
+
+    if (json.content) json.content.forEach((cont) => mentions.push(...extractMentions(cont)))
+
+    return mentions
+}
+
 export const createEmptyGroup = (o?: Partial<IProgramGroupInput>): IProgramGroupInput => ({
     id: '',
     created_at: '',
     session_id: '',
     name: '',
+    jsontext: '',
     text: '',
     video: '',
-    movements: [createEmptyMovement()],
+    movements: [],
     ...o,
 })
 export const createEmptySession = (o?: Partial<IProgramSessionInput>): IProgramSessionInput => ({

@@ -112,7 +112,7 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
     }
 
     const { error: groupsError, data: groupsData } = await supabase
-        .from('program_classes')
+        .from('program_groups')
         .select()
         .in(
             'session_id',
@@ -128,7 +128,7 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
         )
 
         if (groupsIdsToDelete.length) {
-            const { error } = await supabase.from('program_classes').delete().in('id', groupsIdsToDelete)
+            const { error } = await supabase.from('program_groups').delete().in('id', groupsIdsToDelete)
             if (error) throw error
         }
     }
@@ -137,8 +137,8 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
         .from('program_movements')
         .select()
         .in(
-            'session_id',
-            sessionsData.map((s) => s.id)
+            'group_id',
+            groupsData.map((s) => s.id)
         )
     if (movementsError) throw movementsError
     if (!movementsData.length) return
@@ -152,7 +152,7 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
         )
 
         if (movementIdsToDelete.length) {
-            const { error } = await supabase.from('program_classes').delete().in('id', movementIdsToDelete)
+            const { error } = await supabase.from('program_movements').delete().in('id', movementIdsToDelete)
             if (error) throw error
         }
     }

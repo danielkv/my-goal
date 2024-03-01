@@ -1,11 +1,8 @@
 import { Models, ModelsInsert } from './database.models'
-import { IUserHighestResult, TResultType } from './result'
+import { IUserHighestResult } from './result'
 import { IUser } from './user'
 
-export interface IMovementInput {
-    resultType: TResultType
-    movement: string
-}
+export interface IMovementInput extends ModelsInsert<'movements'> {}
 
 export interface IMovement extends Models<'movements'> {}
 

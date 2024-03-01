@@ -18,7 +18,7 @@ export type IProgramInput = ModelsInsert<'programs'> & {
 
 export type IProgramGroup = Models<'program_groups'> & { movements: Models<'program_movements'>[] }
 
-export type IProgramSession = Models<'program_sessions'> & { classes: IProgramGroup[] }
+export type IProgramSession = Models<'program_sessions'> & { groups: IProgramGroup[] }
 
 export type IProgramSegment = Models<'program_segments'> & {
     sessions: IProgramSession[]

@@ -127,6 +127,8 @@ export interface Database {
           id: string
           movement: string
           resultType: string
+          text: string | null
+          video: string | null
         }
         Insert: {
           countResults?: number
@@ -134,6 +136,8 @@ export interface Database {
           id?: string
           movement: string
           resultType: string
+          text?: string | null
+          video?: string | null
         }
         Update: {
           countResults?: number
@@ -141,6 +145,8 @@ export interface Database {
           id?: string
           movement?: string
           resultType?: string
+          text?: string | null
+          video?: string | null
         }
         Relationships: []
       }
@@ -181,6 +187,7 @@ export interface Database {
         Row: {
           created_at: string
           id: string
+          jsontext: string | null
           name: string | null
           session_id: string
           text: string | null
@@ -189,6 +196,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: string
+          jsontext?: string | null
           name?: string | null
           session_id: string
           text?: string | null
@@ -197,6 +205,7 @@ export interface Database {
         Update: {
           created_at?: string
           id?: string
+          jsontext?: string | null
           name?: string | null
           session_id?: string
           text?: string | null
@@ -214,28 +223,19 @@ export interface Database {
       }
       program_movements: {
         Row: {
-          created_at: string
           group_id: string
           id: string
-          name: string | null
-          text: string | null
-          video: string | null
+          movement_id: string
         }
         Insert: {
-          created_at?: string
           group_id: string
           id?: string
-          name?: string | null
-          text?: string | null
-          video?: string | null
+          movement_id: string
         }
         Update: {
-          created_at?: string
           group_id?: string
           id?: string
-          name?: string | null
-          text?: string | null
-          video?: string | null
+          movement_id?: string
         }
         Relationships: [
           {
@@ -250,6 +250,13 @@ export interface Database {
             columns: ["group_id"]
             isOneToOne: false
             referencedRelation: "program_groups_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "program_movements_movement_id_fkey"
+            columns: ["movement_id"]
+            isOneToOne: false
+            referencedRelation: "movements"
             referencedColumns: ["id"]
           }
         ]

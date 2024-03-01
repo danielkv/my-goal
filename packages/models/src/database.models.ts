@@ -30,19 +30,25 @@ export type DatabaseModel = MergeDeep<
                         resultType: TResultType
                     }
                     Update: {
-                        workout: IEventBlock
-                        resultType: TResultType
+                        workout?: IEventBlock
+                        resultType?: TResultType
                     }
                 }
                 movements: {
                     Row: {
                         resultType: TResultType
+                        video?: string
+                        text?: string
                     }
                     Insert: {
                         resultType: TResultType
+                        video?: string
+                        text?: string
                     }
                     Update: {
-                        resultType: TResultType
+                        resultType?: TResultType
+                        video?: string
+                        text?: string
                     }
                 }
                 movement_results: {

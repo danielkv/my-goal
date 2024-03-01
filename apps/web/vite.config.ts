@@ -13,4 +13,7 @@ export default defineConfig({
     build: {
         target: 'esnext',
     },
+    optimizeDeps: {
+        include: ['prosemirror-state', 'prosemirror-transform', 'prosemirror-model', 'prosemirror-view'],
+    },
 })

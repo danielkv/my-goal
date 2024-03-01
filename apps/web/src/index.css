@@ -280,3 +280,9 @@ h2.editor-heading {
     font-size: 1.2em;
     font-weight: bold;
 }
+
+.mention-movement {
+    background-color: rgb(201, 255, 201);
+    padding: 2px 5px;
+    border-radius: 4px;
+}

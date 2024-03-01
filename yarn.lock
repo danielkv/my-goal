@@ -3330,7 +3330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.7, @popperjs/core@npm:^2.11.8":
+"@popperjs/core@npm:^2.11.7, @popperjs/core@npm:^2.11.8, @popperjs/core@npm:^2.9.0":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
@@ -5804,6 +5804,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-bubble-menu@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@tiptap/extension-bubble-menu@npm:2.2.4"
+  dependencies:
+    tippy.js: ^6.3.7
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: ff69ee6784e5ee83bf0359c6ab92cd26ee936e0036bf42d63a5db79b4f2ffd0d7edf7b3b4d3f594f319988759c63707f7bbfdaa6576093c7691ecf288fa10768
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-bullet-list@npm:^2.2.4":
   version: 2.2.4
   resolution: "@tiptap/extension-bullet-list@npm:2.2.4"
@@ -5848,6 +5860,18 @@ __metadata:
     "@tiptap/core": ^2.0.0
     "@tiptap/pm": ^2.0.0
   checksum: eccc125414abaad4e274bf15c41919b143924e3ea0a487c3f1133aa506faf97d4027cf9b0b6d721242cd3dabcdaf264cf3ea0015c2dc296380c903853e3b7e02
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-floating-menu@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@tiptap/extension-floating-menu@npm:2.2.4"
+  dependencies:
+    tippy.js: ^6.3.7
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: 9b00d118bd90623799e2dbfed026258f8d8b68283436d25e572678814d2b095dadb4c59c50fe247829c26d6592c970ad567d09f2021ce673c65028b4de6c9610
   languageName: node
   linkType: hard
 
@@ -5908,12 +5932,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-link@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@tiptap/extension-link@npm:2.2.4"
+  dependencies:
+    linkifyjs: ^4.1.0
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: fd9fab168c5fcf5675c4c35bbc498029b8a3ca7518204d4abea6270c8e784c365d810e6b5b5d1ad8ccf2feb0ef607b3451839258686a47c478cff7453dda0de8
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-list-item@npm:^2.2.4":
   version: 2.2.4
   resolution: "@tiptap/extension-list-item@npm:2.2.4"
   peerDependencies:
     "@tiptap/core": ^2.0.0
   checksum: 6d45fef31503433de2a74aee892d0df33ba740e6a3b40591675ced8a891b891bf8f1a3c955bab5a3bcc19cadeb92a76ce4001cbcfb0408cb8edd3e245fbb2e78
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-mention@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@tiptap/extension-mention@npm:2.2.4"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+    "@tiptap/suggestion": ^2.0.0
+  checksum: b9f1141aba497d1a246bc5c3c87f5ce2ad43a1f3ed545a0ad5f7b8f3a7c97ef953b1e1b2ac295c2a55c235b089c93d303833c27d065c0ad49d5c5dfb9b31fc31
   languageName: node
   linkType: hard
 
@@ -6021,6 +6068,16 @@ __metadata:
     "@tiptap/extension-strike": ^2.2.4
     "@tiptap/extension-text": ^2.2.4
   checksum: 24b856525901bc94f55a827d3293eb944dcfb82ef59db357fabe2619eb75bf162a8ec5fc0f81da557ea40bb63c0d62d679d4d082dbb75d04e503bacb8bd39fab
+  languageName: node
+  linkType: hard
+
+"@tiptap/suggestion@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "@tiptap/suggestion@npm:2.2.4"
+  peerDependencies:
+    "@tiptap/core": ^2.0.0
+    "@tiptap/pm": ^2.0.0
+  checksum: 3c918b2397a362f7d5705c82025744b2cba176ca1e50a7d2e4545e4dec05427ee59923ed020ad433d9ecfca9a4c2f5bec836c02f7f107e674716b333523fe2ee
   languageName: node
   linkType: hard
 
@@ -11318,13 +11375,18 @@ __metadata:
     "@suid/vite-plugin": ^0.1.4
     "@supabase/supabase-js": ^2.39.3
     "@tiptap/core": ^2.2.4
+    "@tiptap/extension-bubble-menu": ^2.2.4
     "@tiptap/extension-bullet-list": ^2.2.4
+    "@tiptap/extension-floating-menu": ^2.2.4
     "@tiptap/extension-heading": ^2.2.4
+    "@tiptap/extension-link": ^2.2.4
     "@tiptap/extension-list-item": ^2.2.4
+    "@tiptap/extension-mention": ^2.2.4
     "@tiptap/extension-text-align": ^2.2.4
     "@tiptap/extension-underline": ^2.2.4
     "@tiptap/pm": ^2.2.4
     "@tiptap/starter-kit": ^2.2.4
+    "@tiptap/suggestion": ^2.2.4
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/clone-deep": ^4.0.1
     "@types/deep-equal": ^1.0.1
@@ -11343,12 +11405,18 @@ __metadata:
     keen-slider: ^6.8.6
     postcss: ^8.4.21
     prettier: ^2.8.7
+    prosemirror-model: ^1.19.4
+    prosemirror-state: ^1.4.3
+    prosemirror-transform: ^1.8.0
+    prosemirror-view: ^1.33.1
     radash: ^10.8.1
     sass: ^1.62.0
     solid-icons: ^1.0.4
     solid-js: ^1.6.10
     solid-tiptap: ^0.7.0
     tailwindcss: ^3.3.0
+    tippy.js: ^6.3.7
+    tiptap-solid: ^1.0.0
     typescript: ^4.9.5
     vite: ^4.1.1
     vite-plugin-solid: ^2.5.0
@@ -13274,6 +13342,13 @@ __metadata:
   dependencies:
     uc.micro: ^2.0.0
   checksum: b0b86cadaf816b64c947a83994ceaad1c15f9fe7e079776ab88699fb71afd7b8fc3fd3d0ae5ebec8c92c1d347be9ba257b8aef338c0ebf81b0d27dcf429a765a
+  languageName: node
+  linkType: hard
+
+"linkifyjs@npm:^4.1.0":
+  version: 4.1.3
+  resolution: "linkifyjs@npm:4.1.3"
+  checksum: 023d467499a717a49ebbfa256a80cb2811a3b038ff2593e5be0fb8a4715b0a63bf80c571838e19e120833d5b9874464f3a1448965c8eebbde8c19458b3a6c6e4
   languageName: node
   linkType: hard
 
@@ -15808,7 +15883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prosemirror-view@npm:^1.0.0, prosemirror-view@npm:^1.1.0, prosemirror-view@npm:^1.13.3, prosemirror-view@npm:^1.27.0, prosemirror-view@npm:^1.31.0, prosemirror-view@npm:^1.32.7":
+"prosemirror-view@npm:^1.0.0, prosemirror-view@npm:^1.1.0, prosemirror-view@npm:^1.13.3, prosemirror-view@npm:^1.27.0, prosemirror-view@npm:^1.31.0, prosemirror-view@npm:^1.32.7, prosemirror-view@npm:^1.33.1":
   version: 1.33.1
   resolution: "prosemirror-view@npm:1.33.1"
   dependencies:
@@ -18432,6 +18507,27 @@ __metadata:
   version: 2.2.0
   resolution: "tinyspy@npm:2.2.0"
   checksum: 36431acaa648054406147a92b9bde494b7548d0f9f3ffbcc02113c25a6e59f3310cbe924353d7f4c51436299150bec2dbb3dc595748f58c4ddffea22d5baaadb
+  languageName: node
+  linkType: hard
+
+"tippy.js@npm:^6.3.7":
+  version: 6.3.7
+  resolution: "tippy.js@npm:6.3.7"
+  dependencies:
+    "@popperjs/core": ^2.9.0
+  checksum: cac955318a65288e8d2dca05059878b003c6e66f92c94f7810f5bc5448eb6646abdf7dacc9bd00020e2611592598d0aae3a28ec9a45349a159603c3fdddce5fb
+  languageName: node
+  linkType: hard
+
+"tiptap-solid@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tiptap-solid@npm:1.0.0"
+  peerDependencies:
+    "@tiptap/core": ^2.2.2
+    "@tiptap/extension-bubble-menu": ^2.2.2
+    "@tiptap/extension-floating-menu": ^2.2.2
+    solid-js: ^1.8.0
+  checksum: c492bf64547dd6003a56851c80fb8e11ac3237251af8076991d623d9dd28635d5ef209788a090cab31e99f5789381a0023b3b5a168e7b5714579772c92f6dca8
   languageName: node
   linkType: hard
 
