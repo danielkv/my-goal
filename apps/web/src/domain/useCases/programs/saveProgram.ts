@@ -59,7 +59,7 @@ export async function saveProgramUseCase(data: IProgramInput): Promise<Models<'p
 
     const { error: movementsError } = await supabase
         .from('program_movements')
-        .upsert(movementsToSave, { onConflict: 'id', ignoreDuplicates: false })
+        .insert(movementsToSave.map((item) => omit(item, ['id'])))
     if (movementsError) throw movementsError
 
     await _createUpdateStripeProduct(programSaved, previousProgram, data)
@@ -133,29 +133,14 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
         }
     }
 
-    const { error: movementsError, data: movementsData } = await supabase
+    const { error: movementsError } = await supabase
         .from('program_movements')
-        .select()
+        .delete()
         .in(
             'group_id',
             groupsData.map((s) => s.id)
         )
     if (movementsError) throw movementsError
-    if (!movementsData.length) return
-
-    {
-        const movementIdsToDelete = diff(
-            movementsData.map((i) => i.id),
-            program.segments.flatMap((s) =>
-                s.sessions.flatMap((s) => s.groups.flatMap((s) => s.movements.map((s) => s.id)))
-            )
-        )
-
-        if (movementIdsToDelete.length) {
-            const { error } = await supabase.from('program_movements').delete().in('id', movementIdsToDelete)
-            if (error) throw error
-        }
-    }
 }
 
 async function _createUpdateStripeProduct(
@@ -231,32 +216,37 @@ function _prepareData(program: IProgramInput): IProgramInput {
     return {
         ...program,
         id: programId,
-        segments: program.segments.map((segment) => {
+        segments: program.segments.map((segment, segmentOrder) => {
             const segmentId = segment.id || self.crypto.randomUUID()
             return {
                 ...segment,
+                order: segmentOrder,
                 program_id: programId,
                 id: segmentId,
-                sessions: segment.sessions.map((session) => {
+                sessions: segment.sessions.map((session, sessionOrder) => {
                     const sessionId = session.id || self.crypto.randomUUID()
                     return {
                         ...session,
+                        order: sessionOrder,
                         segment_id: segmentId,
                         id: sessionId,
-                        groups: session.groups.map((group) => {
+                        groups: session.groups.map((group, groupOrder) => {
                             const groupId = group.id || self.crypto.randomUUID()
                             return {
                                 ...group,
+                                order: groupOrder,
                                 session_id: sessionId,
                                 id: groupId,
-                                movements: group.movements.map((movement) => {
-                                    const movementId = movement.id || self.crypto.randomUUID()
-                                    return {
-                                        ...movement,
-                                        group_id: groupId,
-                                        id: movementId,
-                                    }
-                                }),
+                                movements:
+                                    group.movements?.map((movement, movementOrder) => {
+                                        const movementId = movement.id || self.crypto.randomUUID()
+                                        return {
+                                            ...movement,
+                                            order: movementOrder,
+                                            group_id: groupId,
+                                            id: movementId,
+                                        }
+                                    }) || [],
                             }
                         }),
                     }

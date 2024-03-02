@@ -17,7 +17,7 @@ import {
     setValues,
 } from '@modular-forms/solid'
 import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
-import { Mark, mergeAttributes } from '@tiptap/core'
+import { mergeAttributes } from '@tiptap/core'
 import Mention from '@tiptap/extension-mention'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
