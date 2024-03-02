@@ -33,33 +33,61 @@ interface ClassFormProps {
     index: number
 }
 
-const MentionSpan = Mark.create({
+export const CustomMention = Mention.extend({
     addAttributes() {
         return {
-            class: {
+            id: {
                 default: null,
-                parseHTML: (element: HTMLElement) => {
-                    // Get the attribute value from markup if it's available, otherwise assign null as the attribute value
-                    return element.hasAttribute('class') ? element.getAttribute('class') : null
+                parseHTML: (element) => {
+                    return {
+                        id: element.getAttribute('data-mention-uuid'),
+                    }
+                },
+                renderHTML: (attributes) => {
+                    if (!attributes.id) {
+                        return {}
+                    }
+
+                    return {
+                        'data-mention-uuid': attributes.id,
+                    }
                 },
             },
-            'data-id': {
+            label: {
                 default: null,
-                parseHTML: (element: HTMLElement) => {
-                    // Get the attribute value from markup if it's available, otherwise assign null as the attribute value
-                    return element.hasAttribute('data-id') ? element.getAttribute('data-id') : null
+                parseHTML: (element) => {
+                    return {
+                        label: element.textContent,
+                    }
+                },
+                renderHTML: (attributes) => {
+                    if (!attributes.label) {
+                        return {}
+                    }
+
+                    return {
+                        label: attributes.label,
+                    }
                 },
             },
         }
     },
-    name: 'mention-mark',
-    group: 'mention',
-
     parseHTML() {
-        return [{ tag: 'span[class]' }]
+        return [
+            {
+                tag: 'span[data-mention-uuid]',
+            },
+        ]
     },
-    renderHTML({ HTMLAttributes }) {
-        return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+
+    renderHTML({ node, HTMLAttributes }) {
+        const outputText = `${this.options.suggestion.char}${node.attrs.label}`
+
+        return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), outputText]
+    },
+
+    renderText({ node }) {
+        return `${this.options.suggestion.char}${node.attrs.label}`
     },
 })
 
@@ -79,12 +107,10 @@ const GroupForm: Component<ClassFormProps> = (props) => {
             }),
             Underline,
 
-            MentionSpan,
-            Mention.configure({
+            CustomMention.configure({
                 HTMLAttributes: {
                     class: 'mention-movement',
                 },
-
                 suggestion,
             }),
         ],
