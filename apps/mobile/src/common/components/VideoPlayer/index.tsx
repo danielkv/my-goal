@@ -67,7 +67,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, maxHeight, maxWidth
 
         return () => {
             if (Platform.OS === 'android') NavigationBar.setVisibilityAsync('visible')
-            setStatusBarHidden(true, 'none')
+            setStatusBarHidden(false, 'none')
         }
     }, [orientation])
 
