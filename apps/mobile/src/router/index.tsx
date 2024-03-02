@@ -180,7 +180,7 @@ function Router() {
             <Stack.Screen name={ERouteName.ProgramGroupScreen} options={{ title: '' }} component={ProgramGroupScreen} />
             <Stack.Screen
                 name={ERouteName.ProgramMovementScreen}
-                options={{ title: 'Movimento' }}
+                options={{ title: '' }}
                 component={ProgramMovementScreen}
             />
         </Stack.Navigator>

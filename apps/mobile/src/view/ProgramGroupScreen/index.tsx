@@ -13,7 +13,7 @@ import Button from '@components/Button'
 import VideoPlayer from '@components/VideoPlayer'
 import { RouteProp, StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
-import { ChevronDown, ChevronUp, Eye, EyeOff } from '@tamagui/lucide-icons'
+import { ChevronDown, ChevronUp, Eye, EyeOff, VideoOff } from '@tamagui/lucide-icons'
 import { getGroupByIdUseCase } from '@useCases/programs/getGroupById'
 import { toggleGroupWatchedUseCase } from '@useCases/programs/toggleGroupWatched'
 import { getErrorMessage } from '@utils/getErrorMessage'
@@ -168,12 +168,11 @@ const ProgramGroupScreen: React.FC = () => {
 
                                         const thumbnail = videoUrl && getYoutubeVideoThumbnail(videoUrl)
 
-                                        if (!thumbnail) return <Text>Sem vídeo</Text>
-
                                         return (
                                             <TouchableOpacity
                                                 key={movement.id}
                                                 onPress={() =>
+                                                    thumbnail &&
                                                     navigate(ERouteName.ProgramMovementScreen, {
                                                         movementId: movement.movement_id,
                                                         title: movement.movement.movement,
@@ -181,7 +180,13 @@ const ProgramGroupScreen: React.FC = () => {
                                                 }
                                             >
                                                 <XStack ai="center" gap="$2">
-                                                    <Image source={{ uri: thumbnail }} width={80} height={60} />
+                                                    {thumbnail ? (
+                                                        <Image source={{ uri: thumbnail }} width={80} height={60} />
+                                                    ) : (
+                                                        <Stack w={80} h={60} bg="$gray6" ai="center" jc="center">
+                                                            <VideoOff />
+                                                        </Stack>
+                                                    )}
                                                     <Text fontWeight="bold" fontSize="$5">
                                                         {movement.movement.movement}
                                                     </Text>
