@@ -4,6 +4,7 @@ import { XStack } from 'tamagui'
 
 import { useOrientation } from '@common/hooks/useOrientation'
 import MenuButton from '@components/MenuButton'
+import { useDisplayProgramsMenu } from '@hooks/programs/useDisplayProgramsMenu'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
 import { FileSpreadsheet, Home, Layers, Timer } from '@tamagui/lucide-icons'
@@ -11,6 +12,8 @@ import { FileSpreadsheet, Home, Layers, Timer } from '@tamagui/lucide-icons'
 const AppBottomBar: React.FC = () => {
     const { navigate } = useNavigation()
     const orientation = useOrientation()
+
+    const displayProgramsMenu = useDisplayProgramsMenu()
 
     const { bottom } = useSafeAreaInsets()
 
@@ -28,11 +31,13 @@ const AppBottomBar: React.FC = () => {
                 Icon={() => <FileSpreadsheet size={22} color="$gray4" />}
                 onPress={() => navigate(ERouteName.WorksheetList)}
             />
-            <MenuButton
-                label="Programas"
-                Icon={() => <Layers size={22} color="$gray4" />}
-                onPress={() => navigate(ERouteName.ProgramList)}
-            />
+            {displayProgramsMenu && (
+                <MenuButton
+                    label="Programas"
+                    Icon={() => <Layers size={22} color="$gray4" />}
+                    onPress={() => navigate(ERouteName.ProgramList)}
+                />
+            )}
             <MenuButton
                 label="Timers"
                 Icon={() => <Timer size={22} color="$gray4" />}
