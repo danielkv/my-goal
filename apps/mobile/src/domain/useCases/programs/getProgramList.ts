@@ -12,7 +12,7 @@ export async function getProgramListUseCase(filter: IGetProgramListFilter): Prom
         .from('programs')
         .select('*, user_programs!inner(*)', { count: 'exact' })
         .range(from, to)
-        .order('name')
+        .order('expires_at', { referencedTable: 'user_programs' })
 
     if (error) throw error
     if (count === null) throw new Error('Erro ao buscar o total de items')

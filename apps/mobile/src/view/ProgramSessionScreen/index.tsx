@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { Dimensions, TouchableOpacity } from 'react-native'
 
+import { pluralize } from 'goal-utils'
 import useSWR from 'swr'
 import { Stack, Text, XStack, getTokens, useTheme } from 'tamagui'
 import { Image } from 'tamagui'
@@ -11,8 +12,8 @@ import TransparentHeader from '@components/TransparentHeader'
 import { RouteProp, StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
 import { FlashList } from '@shopify/flash-list'
-import { Check, PlaySquare } from '@tamagui/lucide-icons'
-import { getClassesBySessionIdUseCase } from '@useCases/programs/getClassesBySessionId'
+import { ArrowRightCircle, Check } from '@tamagui/lucide-icons'
+import { getGroupsBySessionIdUseCase } from '@useCases/programs/getGroupsBySessionId'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
@@ -36,7 +37,7 @@ const ProgramSessioncreen: React.FC = () => {
 
     const { data, isLoading, error } = useSWR(
         () => (params.image && params.title && params.sessionId ? ['classList', params.sessionId] : null),
-        (args) => getClassesBySessionIdUseCase(args[1])
+        (args) => getGroupsBySessionIdUseCase(args[1])
     )
 
     if (error) return <AlertBox type="error" title="Ocorreu um erro" text={getErrorMessage(error)} />
@@ -67,7 +68,10 @@ const ProgramSessioncreen: React.FC = () => {
                         onPress={() =>
                             item.id &&
                             item.name &&
-                            navigate(ERouteName.ProgramClassScreen, { classId: item.id, title: item.name })
+                            navigate(ERouteName.ProgramGroupScreen, {
+                                groupId: item.id,
+                                title: item.name,
+                            })
                         }
                     >
                         <XStack my="$3" mx="$6" ai="center" gap="$2">
@@ -75,15 +79,17 @@ const ProgramSessioncreen: React.FC = () => {
                                 {item.watched_at ? (
                                     <Check size={18} color="$green10" />
                                 ) : (
-                                    <PlaySquare size={18} color="$gray4" />
+                                    <ArrowRightCircle size={18} color="$gray4" />
                                 )}
                             </Stack>
                             <Text color="white" fontSize="$5">
                                 {item.name}
                             </Text>
-                            <Text color="$gray4" fontSize="$3">
-                                10min
-                            </Text>
+                            {!!item.movements.length && (
+                                <Text color="$gray4" fontSize="$3">
+                                    {item.movements.length} {pluralize(item.movements.length, 'movimento')}
+                                </Text>
+                            )}
                         </XStack>
                     </TouchableOpacity>
                 )}

@@ -22,8 +22,9 @@ export async function getSegmentsByProgramIdUseCase(
         .from('program_segments')
         .select('*, sessions:program_sessions(*)', { count: 'exact' })
         .eq('program_id', filter.programId)
+        .order('order')
+        .order('order', { referencedTable: 'program_sessions' })
         .range(from, to)
-        .order('name')
 
     if (error) throw error
     if (count === null) throw new Error('Erro ao buscar o total de items')

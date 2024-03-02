@@ -69,7 +69,7 @@ const ProgramSegmentsScreen: React.FC = () => {
 
     return (
         <>
-            <TransparentHeader />
+            <TransparentHeader title={params.program.name} />
             <FlashList
                 data={listData}
                 ListHeaderComponent={() => (

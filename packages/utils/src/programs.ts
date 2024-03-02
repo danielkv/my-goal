@@ -17,3 +17,10 @@ export function getYoutubeVideoId(url: string): string | null {
 
     return _url.searchParams.get('v') || _url.searchParams.get('videoId')
 }
+
+export function getYoutubeVideoThumbnail(url: string, img = 0): string | null {
+    const videoId = getYoutubeVideoId(url)
+    if (!videoId) return null
+
+    return `https://img.youtube.com/vi/${videoId}/${img}.jpg`
+}

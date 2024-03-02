@@ -13,8 +13,9 @@ import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
 import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
-import ProgramClassScreen from '@view/ProgramClassScreen'
+import ProgramGroupScreen from '@view/ProgramGroupScreen'
 import ProgramListScreen from '@view/ProgramListScreen'
+import ProgramMovementScreen from '@view/ProgramMovementScreen'
 import ProgramSegmentsScreen from '@view/ProgramSegmentsScreen'
 import ProgramSessioncreen from '@view/ProgramSessionScreen'
 import SelectSubscriptionScreen from '@view/SelectSubscriptionScreen'
@@ -176,7 +177,12 @@ function Router() {
                 options={{ title: '', headerShown: false }}
                 component={ProgramSessioncreen}
             />
-            <Stack.Screen name={ERouteName.ProgramClassScreen} options={{ title: '' }} component={ProgramClassScreen} />
+            <Stack.Screen name={ERouteName.ProgramGroupScreen} options={{ title: '' }} component={ProgramGroupScreen} />
+            <Stack.Screen
+                name={ERouteName.ProgramMovementScreen}
+                options={{ title: 'Movimento' }}
+                component={ProgramMovementScreen}
+            />
         </Stack.Navigator>
     )
 }

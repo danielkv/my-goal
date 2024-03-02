@@ -189,6 +189,7 @@ export interface Database {
           id: string
           jsontext: string | null
           name: string | null
+          order: number
           session_id: string
           text: string | null
           video: string | null
@@ -198,6 +199,7 @@ export interface Database {
           id?: string
           jsontext?: string | null
           name?: string | null
+          order?: number
           session_id: string
           text?: string | null
           video?: string | null
@@ -207,6 +209,7 @@ export interface Database {
           id?: string
           jsontext?: string | null
           name?: string | null
+          order?: number
           session_id?: string
           text?: string | null
           video?: string | null
@@ -226,16 +229,19 @@ export interface Database {
           group_id: string
           id: string
           movement_id: string
+          order: number
         }
         Insert: {
           group_id: string
           id?: string
           movement_id: string
+          order?: number
         }
         Update: {
           group_id?: string
           id?: string
           movement_id?: string
+          order?: number
         }
         Relationships: [
           {
@@ -266,18 +272,21 @@ export interface Database {
           created_at: string
           id: string
           name: string | null
+          order: number
           program_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           name?: string | null
+          order?: number
           program_id: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string | null
+          order?: number
           program_id?: string
         }
         Relationships: [
@@ -295,18 +304,21 @@ export interface Database {
           created_at: string
           id: string
           name: string
+          order: number
           segment_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           name: string
+          order?: number
           segment_id: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
+          order?: number
           segment_id?: string
         }
         Relationships: [
@@ -565,7 +577,9 @@ export interface Database {
         Row: {
           created_at: string | null
           id: string | null
+          jsontext: string | null
           name: string | null
+          order: number | null
           session_id: string | null
           text: string | null
           video: string | null

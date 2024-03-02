@@ -45,7 +45,8 @@ export type TReactNavigationStackParamList = {
     ProgramList: undefined
     ProgramSegments: { program: IUserProgram }
     ProgramSession: { image: string; title: string; sessionId: string }
-    ProgramClassScreen: { classId: string; title: string }
+    ProgramGroupScreen: { groupId: string; title: string }
+    ProgramMovementScreen: { movementId: string; title?: string }
 
     SelectSubscription?: TRedirectParams
 
@@ -91,7 +92,8 @@ export enum ERouteName {
     ProgramList = 'ProgramList',
     ProgramSegments = 'ProgramSegments',
     ProgramSession = 'ProgramSession',
-    ProgramClassScreen = 'ProgramClassScreen',
+    ProgramGroupScreen = 'ProgramGroupScreen',
+    ProgramMovementScreen = 'ProgramMovementScreen',
 
     WodTimer = 'WodTimer',
 
