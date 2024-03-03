@@ -8,7 +8,13 @@ export function useDisplayProgramsMenu() {
 
     const { data } = useSWR(
         () => (!!user ? ['programList', 0, 10] : null),
-        () => getProgramListUseCase({})
+        () => getProgramListUseCase({}),
+        {
+            refreshInterval(data) {
+                if (data?.items.length) return 0
+                return 60000
+            },
+        }
     )
 
     if (!user || !data) return false
