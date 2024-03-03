@@ -21,7 +21,7 @@ app.use(
 app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
     try {
         const stripe = createStripe()
-        const endpointSecret = 'whsec_9a800a001cf17e194ae01f07f9aff7babaafcd7440177b2098dfee0f495c5df7'
+        const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SIGNATURE') || ''
         const sig = req.header('stripe-signature')
         if (!sig) throw new Error('Stripe signature is empty')
 
