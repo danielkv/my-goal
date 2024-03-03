@@ -13,31 +13,36 @@ import Button from '@components/Button'
 import VideoPlayer from '@components/VideoPlayer'
 import { RouteProp, StackActions, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { ERouteName, TReactNavigationStackParamList } from '@router/types'
-import { ChevronDown, ChevronUp, Eye, EyeOff, VideoOff } from '@tamagui/lucide-icons'
+import { ChevronDown, ChevronUp, Eye, EyeOff, Video, VideoOff } from '@tamagui/lucide-icons'
 import { getGroupByIdUseCase } from '@useCases/programs/getGroupById'
 import { toggleGroupWatchedUseCase } from '@useCases/programs/toggleGroupWatched'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { usePreventAccess } from '@utils/preventAccess'
 
-const MentionRenderer: CustomTextualRenderer = ({ TDefaultRenderer, ...props }) => {
+const MentionRenderer: CustomTextualRenderer = ({ TDefaultRenderer, tnode, ...defaultRendererProps }) => {
     const { navigate } = useNavigation()
-    const attrs = (props.tnode as any).init.domNode.attribs as Record<string, string>
+    const attrs = (tnode as any).init.domNode.attribs as Record<string, string>
 
-    if (attrs['class'] === 'mention-movement' && attrs['data-mention-uuid'])
+    if (attrs['class'] === 'mention-movement' && attrs['data-mention-uuid'] && attrs.label)
         return (
-            <TDefaultRenderer
-                {...props}
-                style={{ backgroundColor: 'rgb(201, 255, 201)', color: '#333' }}
-                onPress={() =>
-                    navigate(ERouteName.ProgramMovementScreen, {
-                        movementId: attrs['data-mention-uuid'],
-                        title: attrs.label,
-                    })
-                }
-            />
+            <TDefaultRenderer {...defaultRendererProps} tnode={tnode}>
+                <TouchableOpacity
+                    onPress={() =>
+                        navigate(ERouteName.ProgramMovementScreen, {
+                            movementId: attrs['data-mention-uuid'],
+                            title: attrs.label,
+                        })
+                    }
+                >
+                    <XStack br="$2" ai="center" gap="$1" bg="rgb(201, 255, 201)" px="$2">
+                        <Text color="$gray9">{attrs.label}</Text>
+                        <Video color="$gray9" />
+                    </XStack>
+                </TouchableOpacity>
+            </TDefaultRenderer>
         )
 
-    return <TDefaultRenderer {...props} />
+    return <TDefaultRenderer tnode={tnode} {...defaultRendererProps} />
 }
 
 const MIN_SHEET_HEIGHT = 80
