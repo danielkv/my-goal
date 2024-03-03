@@ -8,6 +8,6 @@ export type TLoginForm = {
 export const loginFormInitialValues: TLoginForm = { email: '', password: '' }
 
 export const loginFormSchema = z.object({
-    login: z.string().email(),
+    email: z.string().email({ message: 'Email inválido' }),
     password: z.string(),
 })
