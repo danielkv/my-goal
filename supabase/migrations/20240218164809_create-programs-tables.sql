@@ -91,6 +91,8 @@ create table
     constraint user_groups_details_user_id_fkey foreign key (user_id) references auth.users (id) on update cascade on delete cascade
   ) tablespace pg_default;
 
+alter table public.user_groups_details enable row level security;
+
 CREATE VIEW program_groups_details WITH(security_invoker=true) AS
 	SELECT program_groups.*, user_groups_details.watched_at as watched_at from
 		public.program_groups
