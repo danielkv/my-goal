@@ -44,9 +44,10 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
     const handleSubmit: SubmitHandler<TProgramForm> = async (result) => {
         try {
             setLoading(true)
-            const saved = await saveProgramUseCase(result)
+            const { program, error } = await saveProgramUseCase(result)
+            if (error) alert(`Atenção! O programa foi salvo com sucesso, porém houve um problema: ${error}`)
 
-            navigate(`/dashboard/program/${saved.id}`)
+            navigate(`/dashboard/program/${program.id}`)
         } catch (err) {
             alert(getErrorMessage(err))
         } finally {

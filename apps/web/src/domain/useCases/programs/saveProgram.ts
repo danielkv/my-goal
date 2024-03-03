@@ -12,7 +12,10 @@ interface IStripeProductResponse {
     payment_link_id: string
 }
 
-export async function saveProgramUseCase(data: IProgramInput): Promise<Models<'programs'>> {
+export async function saveProgramUseCase(data: IProgramInput): Promise<{
+    program: Models<'programs'>
+    error?: string
+}> {
     const previousProgram = await _getPreviousProgram(data.id)
     const program = _prepareData(data)
 
@@ -62,9 +65,13 @@ export async function saveProgramUseCase(data: IProgramInput): Promise<Models<'p
         .insert(movementsToSave.map((item) => omit(item, ['id'])))
     if (movementsError) throw movementsError
 
-    await _createUpdateStripeProduct(programSaved, previousProgram, data)
+    try {
+        await _createUpdateStripeProduct(programSaved, previousProgram, data)
+    } catch (err) {
+        return { program: programSaved, error: 'Produto não foi criado no Stripe' }
+    }
 
-    return programSaved
+    return { program: programSaved }
 }
 
 async function _removeDeletedProgramParts(program: IProgramInput) {
