@@ -21,6 +21,7 @@ create table
     created_at timestamp with time zone not null default now(),
     name character varying null,
     program_id uuid not null,
+	"order" smallint not null default '0'::smallint,
     constraint program_segments_pkey primary key (id),
     constraint program_segments_program_id_fkey foreign key (program_id) references programs (id) on update cascade on delete cascade
   ) tablespace pg_default;
@@ -33,6 +34,7 @@ alter table public.program_segments enable row level security;
     created_at timestamp with time zone not null default now(),
     name character varying not null,
     segment_id uuid not null,
+	"order" smallint not null default '0'::smallint,
     constraint program_sessions_pkey primary key (id),
     constraint program_sessions_segment_id_fkey foreign key (segment_id) references program_segments (id) on update cascade on delete cascade
   ) tablespace pg_default;
@@ -46,7 +48,9 @@ create table
     name character varying null,
     video text null,
     text text null,
+    jsontext text null,
     session_id uuid not null,
+	"order" smallint not null default '0'::smallint,
     constraint program_groups_pkey primary key (id),
     constraint program_groups_session_id_fkey foreign key (session_id) references program_sessions (id) on update cascade on delete cascade
   ) tablespace pg_default;
@@ -58,6 +62,7 @@ create table
     id uuid not null default gen_random_uuid (),
     movement_id uuid not null,
     group_id uuid not null,
+	"order" smallint not null default '0'::smallint,
     constraint program_movements_pkey primary key (id),
     constraint program_movements_group_id_fkey foreign key (group_id) references program_groups (id) on update cascade on delete cascade,
     constraint program_movements_movement_id_fkey foreign key (movement_id) references movements (id) on update cascade on delete cascade
