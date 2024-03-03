@@ -1,4 +1,5 @@
 import { IProgramGroupInput, IProgramInput, IProgramSegmentInput, IProgramSessionInput } from 'goal-models'
+import { getYoutubeVideoId } from 'goal-utils'
 import { z } from 'zod'
 
 import { JSONContent } from '@tiptap/core'
@@ -22,7 +23,16 @@ export const programFormSchema = z.object({
                             name: z
                                 .string({ required_error: 'Nome é obrigatório' })
                                 .min(1, { message: 'Nome é obrigatório' }),
-                            video: z.string().optional(),
+                            video: z
+                                .string()
+                                .optional()
+                                .refine(
+                                    (url) => {
+                                        if (!url) return true
+                                        return !!getYoutubeVideoId(url)
+                                    },
+                                    { message: 'Formato de URL inválido' }
+                                ),
                             text: z
                                 .string({ required_error: 'Texto é obrigatório' })
                                 .min(1, { message: 'Texto é obrigatório' }),
