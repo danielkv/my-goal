@@ -16,7 +16,7 @@ const DashboardHeader: Component = () => {
     }
 
     return (
-        <div class="h-[80px] bg-gray-800 flex items-center px-6 justify-between">
+        <div class="h-[80px] bg-gray-800 flex items-center px-6 justify-between z-[999999] relative">
             <A href="/">
                 <LogoSvg height={50} />
             </A>

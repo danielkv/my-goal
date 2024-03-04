@@ -1,12 +1,13 @@
 import { IProgramInput } from 'goal-models'
 import { FiPlus, FiTrash } from 'solid-icons/fi'
 
-import { Component, For, createSignal } from 'solid-js'
+import { Component, For, Show, createMemo, createSignal } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
 import TextInput from '@components/TextInput'
 import { SubmitHandler, createForm, insert, remove, setValue, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
+import { ChevronRight } from '@suid/icons-material'
 import {
     Box,
     Button,
@@ -18,6 +19,7 @@ import {
     MenuItem,
     Select,
     Stack,
+    useMediaQuery,
 } from '@suid/material'
 import { saveProgramUseCase } from '@useCases/programs/saveProgram'
 import { getErrorMessage } from '@utils/errors'
@@ -34,6 +36,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
     const navigate = useNavigate()
 
     const [loading, setLoading] = createSignal(false)
+    const [drawerOpen, setDrawerOpen] = createSignal(false)
 
     const [form, { Form, Field, FieldArray }] = createForm<TProgramForm>({
         initialValues: initialValues,
@@ -55,11 +58,30 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
         }
     }
 
+    const mdScreen = useMediaQuery((theme) => theme.breakpoints.up('md'))
+    const xlScreen = useMediaQuery((theme) => theme.breakpoints.up('xl'))
+
+    const contentPadding = createMemo(() => {
+        if (xlScreen()) return '500px'
+        return mdScreen() ? '300px' : '0'
+    })
+
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} style={{ display: 'contents' }}>
             <Drawer
-                sx={{ [`& .MuiDrawer-paper`]: { width: '500px', boxSizing: 'border-box', marginTop: '80px' } }}
-                variant="permanent"
+                onBackdropClick={() => setDrawerOpen(false)}
+                open={drawerOpen()}
+                sx={{
+                    [`& .MuiDrawer-paper`]: {
+                        width: { xs: '300px', xl: '500px' },
+
+                        //height: 'calc(100% + 200px)',
+                        boxSizing: 'border-box',
+                        paddingTop: '80px',
+                        //paddingBottom: '80px',
+                    },
+                }}
+                variant={mdScreen() ? 'permanent' : 'temporary'}
             >
                 <Stack gap={3} p={3}>
                     <Field name="id" type="string">
@@ -145,106 +167,119 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                     </Stack>
                 </Stack>
             </Drawer>
-            <Box style={{ 'padding-left': '500px' }}>
-                <Container maxWidth="md">
-                    <Stack py={2} gap={2}>
-                        <FieldArray name="segments">
-                            {(segmentsArray) => (
-                                <>
-                                    <For each={segmentsArray.items}>
-                                        {(_, segmentIndex) => (
-                                            <Stack py={2} gap={2}>
-                                                <Stack direction="row">
-                                                    <IconButton
-                                                        onClick={() => remove(form, 'segments', { at: segmentIndex() })}
+            <div style={{ height: 'calc(100% - 80px)', overflow: 'auto' }}>
+                <Box style={{ 'padding-left': contentPadding() }}>
+                    <Show when={!mdScreen()}>
+                        <IconButton class="!bg-gray-900 hover:!bg-gray-600" onClick={() => setDrawerOpen(true)}>
+                            <ChevronRight />
+                        </IconButton>
+                    </Show>
+                    <Container maxWidth="md">
+                        <Stack py={2} gap={2}>
+                            <FieldArray name="segments">
+                                {(segmentsArray) => (
+                                    <>
+                                        <For each={segmentsArray.items}>
+                                            {(_, segmentIndex) => (
+                                                <Stack py={2} gap={2}>
+                                                    <Stack direction="row">
+                                                        <IconButton
+                                                            onClick={() =>
+                                                                remove(form, 'segments', { at: segmentIndex() })
+                                                            }
+                                                        >
+                                                            <FiTrash />
+                                                        </IconButton>
+                                                        <Field
+                                                            name={`${segmentsArray.name}.${segmentIndex()}.id`}
+                                                            type="string"
+                                                        >
+                                                            {(field) => <input value={field.value} hidden />}
+                                                        </Field>
+                                                        <Field name={`${segmentsArray.name}.${segmentIndex()}.name`}>
+                                                            {(field, props) => (
+                                                                <Stack justifyContent="center" width="100%">
+                                                                    <input
+                                                                        type="text"
+                                                                        class="!bg-gray-600 outline-none focus:border-b-2 font-[inherit] w-full"
+                                                                        placeholder="Nome do segmento"
+                                                                        {...props}
+                                                                        // @ts-expect-error
+                                                                        value={field.value}
+                                                                    />
+                                                                    {!!field.error && (
+                                                                        <FormHelperText error>
+                                                                            {field.error}
+                                                                        </FormHelperText>
+                                                                    )}
+                                                                </Stack>
+                                                            )}
+                                                        </Field>
+                                                    </Stack>
+                                                    <FieldArray
+                                                        name={`${segmentsArray.name}.${segmentIndex()}.sessions`}
                                                     >
-                                                        <FiTrash />
-                                                    </IconButton>
-                                                    <Field
-                                                        name={`${segmentsArray.name}.${segmentIndex()}.id`}
-                                                        type="string"
-                                                    >
-                                                        {(field) => <input value={field.value} hidden />}
-                                                    </Field>
-                                                    <Field name={`${segmentsArray.name}.${segmentIndex()}.name`}>
-                                                        {(field, props) => (
-                                                            <Stack justifyContent="center" width="100%">
-                                                                <input
-                                                                    type="text"
-                                                                    class="!bg-gray-600 outline-none focus:border-b-2 font-[inherit] w-full"
-                                                                    placeholder="Nome do segmento"
-                                                                    {...props}
-                                                                    // @ts-expect-error
-                                                                    value={field.value}
-                                                                />
-                                                                {!!field.error && (
-                                                                    <FormHelperText error>{field.error}</FormHelperText>
+                                                        {(sessionArray) => (
+                                                            <Stack gap={1}>
+                                                                <Stack gap={2}>
+                                                                    <For each={sessionArray.items}>
+                                                                        {(_, index) => (
+                                                                            <SessionForm
+                                                                                form={form}
+                                                                                fieldArray={sessionArray}
+                                                                                index={index()}
+                                                                            />
+                                                                        )}
+                                                                    </For>
+                                                                </Stack>
+                                                                {!!sessionArray.error && (
+                                                                    <FormHelperText error>
+                                                                        Insira ao menos 1 sessão
+                                                                    </FormHelperText>
                                                                 )}
+                                                                <Stack alignItems="center">
+                                                                    <IconButton
+                                                                        disabled={loading()}
+                                                                        onClick={() =>
+                                                                            insert(form, sessionArray.name, {
+                                                                                at: sessionArray.items.length,
+                                                                                value: createEmptySession(),
+                                                                            })
+                                                                        }
+                                                                    >
+                                                                        <FiPlus title="Nova sessão" />
+                                                                    </IconButton>
+                                                                </Stack>
                                                             </Stack>
                                                         )}
-                                                    </Field>
+                                                    </FieldArray>
                                                 </Stack>
-                                                <FieldArray name={`${segmentsArray.name}.${segmentIndex()}.sessions`}>
-                                                    {(sessionArray) => (
-                                                        <Stack gap={1}>
-                                                            <Stack gap={2}>
-                                                                <For each={sessionArray.items}>
-                                                                    {(_, index) => (
-                                                                        <SessionForm
-                                                                            form={form}
-                                                                            fieldArray={sessionArray}
-                                                                            index={index()}
-                                                                        />
-                                                                    )}
-                                                                </For>
-                                                            </Stack>
-                                                            {!!sessionArray.error && (
-                                                                <FormHelperText error>
-                                                                    Insira ao menos 1 sessão
-                                                                </FormHelperText>
-                                                            )}
-                                                            <Stack alignItems="center">
-                                                                <IconButton
-                                                                    disabled={loading()}
-                                                                    onClick={() =>
-                                                                        insert(form, sessionArray.name, {
-                                                                            at: sessionArray.items.length,
-                                                                            value: createEmptySession(),
-                                                                        })
-                                                                    }
-                                                                >
-                                                                    <FiPlus title="Nova sessão" />
-                                                                </IconButton>
-                                                            </Stack>
-                                                        </Stack>
-                                                    )}
-                                                </FieldArray>
-                                            </Stack>
+                                            )}
+                                        </For>
+                                        {!!segmentsArray.error && (
+                                            <FormHelperText error>Insira ao menos 1 segmento</FormHelperText>
                                         )}
-                                    </For>
-                                    {!!segmentsArray.error && (
-                                        <FormHelperText error>Insira ao menos 1 segmento</FormHelperText>
-                                    )}
-                                    <Button
-                                        disabled={loading()}
-                                        onClick={() =>
-                                            insert(form, 'segments', {
-                                                at: segmentsArray.items.length,
-                                                value: createEmptySegment(),
-                                            })
-                                        }
-                                        class="self-center"
-                                        variant="contained"
-                                        color="secondary"
-                                    >
-                                        Novo Segmento
-                                    </Button>
-                                </>
-                            )}
-                        </FieldArray>
-                    </Stack>
-                </Container>
-            </Box>
+                                        <Button
+                                            disabled={loading()}
+                                            onClick={() =>
+                                                insert(form, 'segments', {
+                                                    at: segmentsArray.items.length,
+                                                    value: createEmptySegment(),
+                                                })
+                                            }
+                                            class="self-center"
+                                            variant="contained"
+                                            color="secondary"
+                                        >
+                                            Novo Segmento
+                                        </Button>
+                                    </>
+                                )}
+                            </FieldArray>
+                        </Stack>
+                    </Container>
+                </Box>
+            </div>
         </Form>
     )
 }
