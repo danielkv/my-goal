@@ -1,4 +1,4 @@
-import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer } from 'goal-models'
+import { IEMOMTimer, IEventBlock, IRound, ITabataTimer, ITimecapTimer, IUserProgram } from 'goal-models'
 
 import { UserWorkoutScreenProps } from '@view/UserWorkoutScreen'
 
@@ -42,6 +42,12 @@ export type TReactNavigationStackParamList = {
         block: IEventBlock
     }
 
+    ProgramList: undefined
+    ProgramSegments: { program: IUserProgram }
+    ProgramSession: { image: string; title: string; sessionId: string }
+    ProgramGroupScreen: { groupId: string; title: string }
+    ProgramMovementScreen: { movementId: string; title?: string }
+
     SelectSubscription?: TRedirectParams
 
     UserSubscription: undefined
@@ -82,6 +88,12 @@ export enum ERouteName {
     MovementList = 'MovementList',
     UserMovementResult = 'UserMovementResult',
     UserSubscription = 'UserSubscription',
+
+    ProgramList = 'ProgramList',
+    ProgramSegments = 'ProgramSegments',
+    ProgramSession = 'ProgramSession',
+    ProgramGroupScreen = 'ProgramGroupScreen',
+    ProgramMovementScreen = 'ProgramMovementScreen',
 
     WodTimer = 'WodTimer',
 

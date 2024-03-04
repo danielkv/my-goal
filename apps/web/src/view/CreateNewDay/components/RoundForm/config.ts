@@ -15,7 +15,7 @@ export const weightTypes: { key: TWeightTypes; label: string }[] = [
 ]
 
 export const eventRoundFormSchema = z.object({
-    type: z.string(),
+    type: z.string().optional(),
     movements: z.array(
         z.object({
             name: z

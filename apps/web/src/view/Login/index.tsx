@@ -4,7 +4,7 @@ import { Component, onMount } from 'solid-js'
 
 import SocialLoginButton from '@components/SocialLoginButton'
 import TextInput from '@components/TextInput'
-import { Field, Form, SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
 import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack } from '@suid/material'
 import { logUserInUseCase } from '@useCases/user/logUserIn'
@@ -17,7 +17,7 @@ const LoginPage: Component = () => {
     let input: HTMLInputElement
     const navigate = useNavigate()
 
-    const form = createForm<TLoginForm>({
+    const [_, { Form, Field }] = createForm<TLoginForm>({
         validate: zodForm(loginFormSchema),
         initialValues: loginFormInitialValues,
     })
@@ -48,16 +48,11 @@ const LoginPage: Component = () => {
                 <Container maxWidth="sm">
                     <Paper>
                         <Box padding={5} maxWidth="sm">
-                            <Form<TLoginForm>
-                                of={form}
-                                name="teste"
-                                class="flex flex-col gap-4"
-                                onSubmit={handleSubmit}
-                            >
-                                <Field of={form} name="email">
-                                    {(field) => (
+                            <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+                                <Field name="email">
+                                    {(field, props) => (
                                         <TextInput
-                                            {...field.props}
+                                            {...props}
                                             ref={(ele) => (input = ele)}
                                             class="flex-1"
                                             label="Email"
@@ -66,10 +61,10 @@ const LoginPage: Component = () => {
                                         />
                                     )}
                                 </Field>
-                                <Field of={form} name="password">
-                                    {(field) => (
+                                <Field name="password">
+                                    {(field, props) => (
                                         <TextInput
-                                            {...field.props}
+                                            {...props}
                                             class="flex-1"
                                             label="Senha"
                                             type="password"

@@ -1,6 +1,9 @@
 import { createSupabaseClient, createSupabaseSuperClient } from '../_shared/client.ts'
+import { validateSchema } from '../_shared/middlewares.ts'
 import { checkIsAdminMiddleware } from '../_shared/middlewares.ts'
 import { RevenueCat } from '../_shared/revenuecat.ts'
+import { toggleUserClaimAdmin } from './config.ts'
+import { TToggleUserClaimAdminBody } from './config.ts'
 // @deno-types="npm:@types/cors@2.8.5"
 import cors from 'npm:cors@2.8.5'
 // @deno-types="npm:@types/express@4.17.15"
@@ -33,6 +36,31 @@ app.post('/users/confirm-migrated-user', async (req, res) => {
 
     return res.send('ok')
 })
+
+// deno-lint-ignore no-explicit-any
+app.post<any, any, any, TToggleUserClaimAdminBody>(
+    '/users/toggle-user-claim-admin',
+    checkIsAdminMiddleware,
+    validateSchema(toggleUserClaimAdmin),
+    async (req, res) => {
+        try {
+            const { action, userId } = req.body
+
+            const superClient = createSupabaseSuperClient()
+
+            const { error: error } = await superClient.rpc('set_claim', {
+                uid: userId,
+                claim: 'claims_admin',
+                value: action === 'promote',
+            })
+            if (error) return new Response(error.message)
+
+            return res.send('ok')
+        } catch (err) {
+            return res.status(400).send(err)
+        }
+    }
+)
 
 app.get('/users', checkIsAdminMiddleware, async (req, res) => {
     const page = req.query.page ? Number(req.query.page) : 0

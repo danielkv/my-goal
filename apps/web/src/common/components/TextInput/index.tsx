@@ -1,5 +1,8 @@
 import { Component, JSX, splitProps } from 'solid-js'
 
+import { FormHelperText } from '@suid/material'
+import { TextFieldProps } from '@suid/material/TextField'
+
 type TMultilineProps = {
     multiline: true
     ref?: (element: HTMLTextAreaElement) => void
@@ -18,6 +21,8 @@ type TSinglelineeProps = {
 
 export type TextInputProps = {
     name: string
+    inputProps?: TextFieldProps['inputProps']
+    InputProps?: TextFieldProps['InputProps']
     type?: 'text' | 'email' | 'tel' | 'password' | 'url' | 'number' | 'date'
     label?: string
     placeholder?: string
@@ -30,16 +35,16 @@ export type TextInputProps = {
 } & (TMultilineProps | TSinglelineeProps)
 
 const TextInput: Component<TextInputProps> = (props) => {
-    const [singlelineProps] = splitProps(props, ['type', 'placeholder'])
-    const [multilineProps] = splitProps(props, ['rows', 'placeholder'])
+    const [singlelineProps] = splitProps(props, ['type', 'placeholder', 'InputProps', 'inputProps'])
+    const [multilineProps] = splitProps(props, ['rows', 'placeholder', 'InputProps', 'inputProps'])
 
     return (
         <div class={`${props.class} flex flex-col`}>
             {props.label && (
-                <label class="text-sm">
+                <FormHelperText>
                     {props.label}
                     {props.required && '*'}
-                </label>
+                </FormHelperText>
             )}
             {props.multiline ? (
                 <textarea

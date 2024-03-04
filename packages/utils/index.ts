@@ -2,6 +2,7 @@ export * from "./src/getWorkoutResultType";
 export * from "./src/models";
 export * from "./src/numbers";
 export * from "./src/pagination";
+export * from "./src/programs";
 export * from "./src/removeNull";
 export * from "./src/sorting";
 export * from "./src/strings";

@@ -3,7 +3,7 @@ import { IDay } from 'goal-models'
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TDayForm, dayFormSchema } from './config'
 
@@ -13,7 +13,7 @@ export interface DayFormProps {
 }
 
 const DayForm: Component<DayFormProps> = (props) => {
-    const form = createForm<TDayForm>({
+    const [form, { Form, Field }] = createForm<TDayForm>({
         validate: zodForm(dayFormSchema),
         initialValues: props.day,
     })
@@ -30,11 +30,11 @@ const DayForm: Component<DayFormProps> = (props) => {
     }
 
     return (
-        <Form<TDayForm> of={form} name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <Field of={form} name="date">
-                {(field) => (
+        <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <Field name="date">
+                {(field, props) => (
                     <TextInput
-                        {...field.props}
+                        {...props}
                         class="flex-1"
                         label="Data"
                         type="date"
@@ -44,15 +44,9 @@ const DayForm: Component<DayFormProps> = (props) => {
                 )}
             </Field>
 
-            <Field of={form} name="name">
-                {(field) => (
-                    <TextInput
-                        class="flex-1"
-                        label="Nome"
-                        value={field.value || ''}
-                        error={field.error}
-                        {...field.props}
-                    />
+            <Field name="name">
+                {(field, props) => (
+                    <TextInput class="flex-1" label="Nome" value={field.value || ''} error={field.error} {...props} />
                 )}
             </Field>
 

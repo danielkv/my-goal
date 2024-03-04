@@ -13,6 +13,11 @@ import HomeScreen from '@view/HomeScreen'
 import LoginScreen from '@view/LoginScreen'
 import MovementListScreen from '@view/MovementListScreen'
 import ProfileScreen from '@view/ProfileScreen'
+import ProgramGroupScreen from '@view/ProgramGroupScreen'
+import ProgramListScreen from '@view/ProgramListScreen'
+import ProgramMovementScreen from '@view/ProgramMovementScreen'
+import ProgramSegmentsScreen from '@view/ProgramSegmentsScreen'
+import ProgramSessioncreen from '@view/ProgramSessionScreen'
 import SelectSubscriptionScreen from '@view/SelectSubscriptionScreen'
 import SubscriptionScreen from '@view/SubscriptionScreen'
 import EmomTimerScreen from '@view/Timers/EmomTimerScreen'
@@ -39,7 +44,6 @@ function Router() {
     return (
         <Stack.Navigator
             screenOptions={{
-                title: 'Goal',
                 contentStyle: { backgroundColor: theme.gray7.val },
                 headerStyle: { backgroundColor: theme.gray9.val },
                 headerTitleStyle: { color: 'white' },
@@ -47,6 +51,7 @@ function Router() {
                 headerTintColor: theme.gray3.val,
                 headerTitleAlign: 'left',
                 animation: Platform.OS === 'android' ? 'fade_from_bottom' : 'default',
+                title: 'Goal',
                 headerRight: () => {
                     const user = useLoggedUser()
 
@@ -153,6 +158,30 @@ function Router() {
                 name={ERouteName.UserSubscription}
                 options={{ title: 'Sua assinatura' }}
                 component={UserSubscriptionScreen}
+            />
+
+            <Stack.Screen
+                name={ERouteName.ProgramList}
+                options={{ title: 'Programas' }}
+                component={ProgramListScreen}
+            />
+
+            <Stack.Screen
+                name={ERouteName.ProgramSegments}
+                options={{ title: 'Programas', headerShown: false }}
+                component={ProgramSegmentsScreen}
+            />
+
+            <Stack.Screen
+                name={ERouteName.ProgramSession}
+                options={{ title: '', headerShown: false }}
+                component={ProgramSessioncreen}
+            />
+            <Stack.Screen name={ERouteName.ProgramGroupScreen} options={{ title: '' }} component={ProgramGroupScreen} />
+            <Stack.Screen
+                name={ERouteName.ProgramMovementScreen}
+                options={{ title: '' }}
+                component={ProgramMovementScreen}
             />
         </Stack.Navigator>
     )

@@ -7,18 +7,7 @@ import { Component, For, JSX, Show, createEffect, createMemo, on } from 'solid-j
 import TextInput from '@components/TextInput'
 import TimeInput from '@components/TimeInput'
 import TimersForm from '@components/TimersForm'
-import {
-    Field,
-    FieldArray,
-    Form,
-    SubmitHandler,
-    createForm,
-    getValue,
-    insert,
-    remove,
-    reset,
-    zodForm,
-} from '@modular-forms/solid'
+import { FieldArray, SubmitHandler, createForm, getValue, insert, remove, reset, zodForm } from '@modular-forms/solid'
 import { createRoundMovementValues } from '@utils/worksheetInitials'
 
 import { TRoundForm, eventRoundFormSchema, weightTypes } from './config'
@@ -29,7 +18,7 @@ export interface BlockFormProps {
 }
 
 const RoundForm: Component<BlockFormProps> = (props) => {
-    const form = createForm<TRoundForm>({
+    const [form, { Form, Field }] = createForm<TRoundForm>({
         validate: zodForm(eventRoundFormSchema),
         initialValues: props.round,
     })
@@ -69,18 +58,18 @@ const RoundForm: Component<BlockFormProps> = (props) => {
     }
 
     return (
-        <Form<TRoundForm> of={form} name="teste" class="flex flex-col gap-6" onSubmit={handleSubmit}>
-            <Field of={form} name="type">
-                {(field) => {
+        <Form name="teste" class="flex flex-col gap-6" onSubmit={handleSubmit}>
+            <Field name="type">
+                {(field, props) => {
                     const handleInput: JSX.EventHandler<HTMLSelectElement, InputEvent> = (e) => {
                         reset(form, { initialValues: { type: 'rest', time: 0 } })
 
-                        field.props.onInput(e)
+                        props.onInput(e)
                     }
                     return (
                         <div class="flex flex-col flex-1 min-w-[100px]">
                             <label class="text-sm mb-2">Tipo de round</label>
-                            <select class="input input-full" {...field.props} onInput={handleInput}>
+                            <select class="input input-full" {...props} onInput={handleInput}>
                                 <For each={Object.entries(roundTypes)}>
                                     {([key, label]) => (
                                         <option value={key} selected={field.value === key}>
@@ -95,15 +84,9 @@ const RoundForm: Component<BlockFormProps> = (props) => {
             </Field>
 
             <Show when={getValue(form, 'type') === 'rest'}>
-                <Field of={form} name="time">
-                    {(field) => (
-                        <TimeInput
-                            {...field.props}
-                            class="flex-1"
-                            label="Tempo"
-                            value={field.value}
-                            error={field.error}
-                        />
+                <Field name="time">
+                    {(field, props) => (
+                        <TimeInput {...props} class="flex-1" label="Tempo" value={field.value} error={field.error} />
                     )}
                 </Field>
             </Show>
@@ -118,11 +101,11 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                         <For each={array.items}>
                             {(_, index) => (
                                 <div class="paper flex flex-col gap-3">
-                                    <Field of={form} name={`${array.name}.${index()}.name`}>
-                                        {(field) => {
+                                    <Field name={`${array.name}.${index()}.name`}>
+                                        {(field, props) => {
                                             return (
                                                 <TextInput
-                                                    {...field.props}
+                                                    {...props}
                                                     class="flex-1"
                                                     label="Nome"
                                                     value={field.value}
@@ -131,10 +114,10 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                                             )
                                         }}
                                     </Field>
-                                    <Field of={form} name={`${array.name}.${index()}.reps`}>
-                                        {(field) => (
+                                    <Field name={`${array.name}.${index()}.reps`}>
+                                        {(field, props) => (
                                             <TextInput
-                                                {...field.props}
+                                                {...props}
                                                 class="flex-1"
                                                 label="Repetições"
                                                 value={field.value}
@@ -143,10 +126,10 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                                         )}
                                     </Field>
 
-                                    <Field of={form} name={`${array.name}.${index()}.videoUrl`}>
-                                        {(field) => (
+                                    <Field name={`${array.name}.${index()}.videoUrl`}>
+                                        {(field, props) => (
                                             <TextInput
-                                                {...field.props}
+                                                {...props}
                                                 class="flex-1"
                                                 label="Vídeo"
                                                 value={field.value}
@@ -156,11 +139,11 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                                     </Field>
 
                                     <div class="flex gap-6 items-start">
-                                        <Field of={form} name={`${array.name}.${index()}.weight.type`}>
-                                            {(field) => (
+                                        <Field name={`${array.name}.${index()}.weight.type`}>
+                                            {(field, props) => (
                                                 <div class="flex flex-1 flex-col">
                                                     <label class="text-sm mb-2">Tipo de carga</label>
-                                                    <select class="input" {...field.props}>
+                                                    <select class="input" {...props}>
                                                         <For each={weightTypes}>
                                                             {(item) => (
                                                                 <option
@@ -176,10 +159,10 @@ const RoundForm: Component<BlockFormProps> = (props) => {
                                             )}
                                         </Field>
                                         <Show when={getValue(form, `${array.name}.${index()}.weight.type`) !== 'none'}>
-                                            <Field of={form} name={`${array.name}.${index()}.weight.value`}>
-                                                {(field) => (
+                                            <Field name={`${array.name}.${index()}.weight.value`}>
+                                                {(field, props) => (
                                                     <TextInput
-                                                        {...field.props}
+                                                        {...props}
                                                         class="flex-1"
                                                         label="Peso"
                                                         value={field.value}

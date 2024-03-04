@@ -127,6 +127,8 @@ export interface Database {
           id: string
           movement: string
           resultType: string
+          text: string | null
+          video: string | null
         }
         Insert: {
           countResults?: number
@@ -134,6 +136,8 @@ export interface Database {
           id?: string
           movement: string
           resultType: string
+          text?: string | null
+          video?: string | null
         }
         Update: {
           countResults?: number
@@ -141,6 +145,8 @@ export interface Database {
           id?: string
           movement?: string
           resultType?: string
+          text?: string | null
+          video?: string | null
         }
         Relationships: []
       }
@@ -172,6 +178,292 @@ export interface Database {
             foreignKeyName: "profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_groups: {
+        Row: {
+          created_at: string
+          id: string
+          jsontext: string | null
+          name: string | null
+          order: number
+          session_id: string
+          text: string | null
+          video: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          jsontext?: string | null
+          name?: string | null
+          order?: number
+          session_id: string
+          text?: string | null
+          video?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          jsontext?: string | null
+          name?: string | null
+          order?: number
+          session_id?: string
+          text?: string | null
+          video?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_groups_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "program_sessions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_movements: {
+        Row: {
+          group_id: string
+          id: string
+          movement_id: string
+          order: number
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          movement_id: string
+          order?: number
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          movement_id?: string
+          order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_movements_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "program_movements_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "program_movements_movement_id_fkey"
+            columns: ["movement_id"]
+            isOneToOne: false
+            referencedRelation: "movements"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_segments: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          order: number
+          program_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          order?: number
+          program_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          order?: number
+          program_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_segments_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          order: number
+          segment_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          order?: number
+          segment_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          order?: number
+          segment_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_sessions_segment_id_fkey"
+            columns: ["segment_id"]
+            isOneToOne: false
+            referencedRelation: "program_segments"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      programs: {
+        Row: {
+          amount: number
+          block_segments: string | null
+          created_at: string
+          expiration: number
+          id: string
+          image: string
+          name: string
+          payment_url: string | null
+          stripe_payment_link_id: string | null
+          stripe_product_id: string | null
+        }
+        Insert: {
+          amount: number
+          block_segments?: string | null
+          created_at?: string
+          expiration?: number
+          id?: string
+          image: string
+          name: string
+          payment_url?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
+        }
+        Update: {
+          amount?: number
+          block_segments?: string | null
+          created_at?: string
+          expiration?: number
+          id?: string
+          image?: string
+          name?: string
+          payment_url?: string | null
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
+        }
+        Relationships: []
+      }
+      user_groups_details: {
+        Row: {
+          group_id: string
+          id: string
+          user_id: string
+          watched_at: string | null
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          user_id: string
+          watched_at?: string | null
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          user_id?: string
+          watched_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_groups_details_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_groups_details_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "program_groups_details"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_groups_details_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_groups_details_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_programs: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          paid_amount: number
+          program_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          paid_amount: number
+          program_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          paid_amount?: number
+          program_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_programs_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_programs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_programs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -277,6 +569,28 @@ export interface Database {
             columns: ["userId"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      program_groups_details: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          jsontext: string | null
+          name: string | null
+          order: number | null
+          session_id: string | null
+          text: string | null
+          video: string | null
+          watched_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_groups_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "program_sessions"
             referencedColumns: ["id"]
           }
         ]

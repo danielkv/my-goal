@@ -7,7 +7,6 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
 } from 'react-native-reanimated'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import Constants from 'expo-constants'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -18,11 +17,12 @@ import parsePhoneNumberFromString from 'libphonenumber-js/min'
 import { Stack, Text, XStack, YStack, getTokens } from 'tamagui'
 
 import Button from '@components/Button'
+import TransparentHeader from '@components/TransparentHeader'
 import { useLoggedUser } from '@contexts/user/userContext'
 import { setLoggedUser } from '@helpers/authentication/setLoggedUser'
 import { useNavigation } from '@react-navigation/native'
 import { ERouteName } from '@router/types'
-import { ChevronLeft, Dumbbell, Edit3, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
+import { Dumbbell, Edit3, LogOut, Medal, MessageCircle, UserCircle2 } from '@tamagui/lucide-icons'
 import { logUserOutUseCase } from '@useCases/auth/logUserOut'
 import { deleteAccountUseCase } from '@useCases/auth/removeUser'
 import { userIsEntitledUseCase } from '@useCases/subscriptions/userHasEntitlement'
@@ -33,11 +33,9 @@ const HEADER_MAX_HEIGHT = Dimensions.get('screen').height / 2.1
 const HEADER_MIN_HEIGHT = Dimensions.get('screen').height / 4
 
 const ProfileScreen: React.FC = () => {
-    const { navigate, reset, goBack } = useNavigation()
+    const { navigate, reset } = useNavigation()
     const user = useLoggedUser()
     const { space, color } = getTokens()
-
-    const insets = useSafeAreaInsets()
 
     const [loading, setLoading] = useState(false)
 
@@ -115,28 +113,7 @@ const ProfileScreen: React.FC = () => {
 
     return (
         <Stack f={1}>
-            <LinearGradient
-                colors={['rgba(30,30,30,0.9)', 'transparent']}
-                style={{
-                    zIndex: 999,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    paddingTop: insets.top,
-                    paddingBottom: space[6].val,
-                }}
-            >
-                <Button
-                    onPress={() => {
-                        goBack()
-                    }}
-                    circular
-                    transparent
-                    icon={<ChevronLeft size={30} />}
-                    pressStyle={{ bg: 'rgba(0,0,0,0.1)' }}
-                />
-            </LinearGradient>
+            <TransparentHeader />
             <View style={{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: avatarColor, zIndex: -1 }}>
                 {profileImage ? (
                     <Animated.Image

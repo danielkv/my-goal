@@ -4,7 +4,7 @@ import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
 import TimeInput from '@components/TimeInput'
-import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TRestBlockForm, restBlockFormSchema } from './config'
 
@@ -14,7 +14,7 @@ export interface RestBlockFormProps {
 }
 
 const RestBlockForm: Component<RestBlockFormProps> = (props) => {
-    const form = createForm<TRestBlockForm>({
+    const [form, { Form, Field }] = createForm<TRestBlockForm>({
         validate: zodForm(restBlockFormSchema),
         initialValues: props.block,
     })
@@ -31,16 +31,16 @@ const RestBlockForm: Component<RestBlockFormProps> = (props) => {
     }
 
     return (
-        <Form<TRestBlockForm> of={form} name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <Field of={form} name="time">
-                {(field) => (
-                    <TimeInput {...field.props} class="flex-1" label="Tempo" value={field.value} error={field.error} />
+        <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <Field type="number" name="time">
+                {(field, props) => (
+                    <TimeInput {...props} class="flex-1" label="Tempo" value={field.value} error={field.error} />
                 )}
             </Field>
 
-            <Field of={form} name="text">
-                {(field) => (
-                    <TextInput {...field.props} class="flex-1" label="Texto" value={field.value} error={field.error} />
+            <Field name="text">
+                {(field, props) => (
+                    <TextInput {...props} class="flex-1" label="Texto" value={field.value} error={field.error} />
                 )}
             </Field>
 

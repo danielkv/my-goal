@@ -3,7 +3,7 @@ import { ITextBlock } from 'goal-models'
 import { Component, createEffect, createMemo, on } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, Form, SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
+import { SubmitHandler, createForm, reset, zodForm } from '@modular-forms/solid'
 
 import { TRestBlockForm, textBlockFormSchema } from './config'
 
@@ -13,12 +13,13 @@ export interface TextBlockFormProps {
 }
 
 const TextBlockForm: Component<TextBlockFormProps> = (props) => {
-    const form = createForm<TRestBlockForm>({
+    const [form, { Form, Field }] = createForm<TRestBlockForm>({
         validate: zodForm(textBlockFormSchema),
         initialValues: props.block,
     })
 
     const memoData = createMemo(() => props.block)
+
     createEffect(
         on(memoData, () => {
             reset(form, { initialValues: memoData() })
@@ -30,10 +31,10 @@ const TextBlockForm: Component<TextBlockFormProps> = (props) => {
     }
 
     return (
-        <Form<TRestBlockForm> of={form} name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <Field of={form} name="text">
-                {(field) => (
-                    <TextInput {...field.props} class="flex-1" label="Texto" value={field.value} error={field.error} />
+        <Form name="teste" class="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <Field name="text">
+                {(field, props) => (
+                    <TextInput {...props} class="flex-1" label="Texto" value={field.value} error={field.error} />
                 )}
             </Field>
 
