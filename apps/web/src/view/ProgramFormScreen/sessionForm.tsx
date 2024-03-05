@@ -1,10 +1,10 @@
 import { IProgramInput } from 'goal-models'
-import { FiPlus, FiTrash } from 'solid-icons/fi'
+import { FiChevronDown, FiChevronUp, FiPlus, FiTrash } from 'solid-icons/fi'
 
 import { Component, For } from 'solid-js'
 
 import TextInput from '@components/TextInput'
-import { Field, FieldArray, FieldArrayStore, FormStore, insert, remove } from '@modular-forms/solid'
+import { Field, FieldArray, FieldArrayStore, FormStore, insert, remove, swap } from '@modular-forms/solid'
 import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
 
 import { createEmptyGroup } from './config'
@@ -19,7 +19,33 @@ interface SessionFormProps {
 const SessionForm: Component<SessionFormProps> = (props) => {
     return (
         <Card class="relative !overflow-visible !bg-gray-900">
-            <Stack direction="row" gap={2} position="absolute" right={16} top={-14}>
+            <Stack direction="row" gap={1} position="absolute" right={16} top={-4}>
+                <IconButton
+                    disabled={props.index <= 0}
+                    onClick={() =>
+                        swap(props.form, props.fieldArray.name, {
+                            at: props.index,
+                            and: props.index - 1,
+                        })
+                    }
+                    class="!bg-gray-500 hover:!bg-gray-400"
+                    size="small"
+                >
+                    <FiChevronUp />
+                </IconButton>
+                <IconButton
+                    disabled={props.index >= props.fieldArray.items.length - 1}
+                    onClick={() =>
+                        swap(props.form, props.fieldArray.name, {
+                            at: props.index,
+                            and: props.index + 1,
+                        })
+                    }
+                    class="!bg-gray-500 hover:!bg-gray-400"
+                    size="small"
+                >
+                    <FiChevronDown />
+                </IconButton>
                 <IconButton
                     onClick={() => remove(props.form, props.fieldArray.name, { at: props.index })}
                     class="!bg-gray-500 hover:!bg-gray-400"

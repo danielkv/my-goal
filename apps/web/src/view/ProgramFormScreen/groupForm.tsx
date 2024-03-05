@@ -1,6 +1,6 @@
 import { IProgramInput } from 'goal-models'
 import { pluralize } from 'goal-utils'
-import { FiTrash } from 'solid-icons/fi'
+import { FiChevronDown, FiChevronUp, FiTrash } from 'solid-icons/fi'
 import { EditorContent, createEditor } from 'tiptap-solid'
 
 import { Component, For, Show } from 'solid-js'
@@ -15,6 +15,7 @@ import {
     remove,
     setValue,
     setValues,
+    swap,
 } from '@modular-forms/solid'
 import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
 import { mergeAttributes } from '@tiptap/core'
@@ -131,7 +132,33 @@ const GroupForm: Component<ClassFormProps> = (props) => {
 
     return (
         <Card class="!bg-gray-700 relative !overflow-visible">
-            <Stack direction="row" gap={2} position="absolute" right={16} top={-14}>
+            <Stack direction="row" gap={1} position="absolute" right={16} top={-4}>
+                <IconButton
+                    disabled={props.index <= 0}
+                    onClick={() =>
+                        swap(props.form, props.fieldArray.name, {
+                            at: props.index,
+                            and: props.index - 1,
+                        })
+                    }
+                    class="!bg-gray-500 hover:!bg-gray-400"
+                    size="small"
+                >
+                    <FiChevronUp />
+                </IconButton>
+                <IconButton
+                    disabled={props.index >= props.fieldArray.items.length - 1}
+                    onClick={() =>
+                        swap(props.form, props.fieldArray.name, {
+                            at: props.index,
+                            and: props.index + 1,
+                        })
+                    }
+                    class="!bg-gray-500 hover:!bg-gray-400"
+                    size="small"
+                >
+                    <FiChevronDown />
+                </IconButton>
                 <IconButton
                     onClick={() => remove(props.form, props.fieldArray.name, { at: props.index })}
                     class="!bg-gray-500 hover:!bg-gray-400"
