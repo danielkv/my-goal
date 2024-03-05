@@ -17,6 +17,7 @@ import {
     FormControl,
     FormHelperText,
     IconButton,
+    InputLabel,
     MenuItem,
     Select,
     Stack,
@@ -127,7 +128,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                     <Field name="block_segments">
                         {(field) => (
                             <FormControl variant="outlined" size="small">
-                                <label class="text-sm">Tipo de bloqueio</label>
+                                <InputLabel class="text-sm">Tipo de bloqueio</InputLabel>
 
                                 <Select
                                     error={!!field.error}
