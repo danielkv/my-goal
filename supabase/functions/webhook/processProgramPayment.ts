@@ -19,6 +19,7 @@ export async function processProgramPayment(
     const { error: createProgramPaymentError } = await supabase.from('user_programs').insert({
         program_id: programId,
         paid_amount: lineItem.amount_total / 100,
+        method: 'stripe',
         user_id: userId,
         expires_at: expires_at.toISOString(),
     })
