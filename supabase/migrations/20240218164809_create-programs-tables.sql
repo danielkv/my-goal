@@ -78,6 +78,7 @@ create table
 	user_id uuid not null,
     expires_at timestamp with time zone not null,
     paid_amount double precision not null,
+    method text null,
     constraint user_programs_pkey primary key (id),
     constraint user_programs_program_id_fkey foreign key (program_id) references programs (id),
 	constraint user_programs_user_id_fkey foreign key (user_id) references auth.users (id) on update cascade on delete cascade

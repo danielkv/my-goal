@@ -33,6 +33,7 @@ import { getErrorMessage } from '@utils/errors'
 import { redirectToLogin } from '@utils/redirectToLogin'
 
 import AddUserProgramForm from './components/AddUserProgramForm'
+import { paymentMethodsMap } from './components/config'
 
 const UserDetailsScreen: Component = () => {
     redirectToLogin()
@@ -242,6 +243,7 @@ const UserDetailsScreen: Component = () => {
                                         <TableCell>Data da compra</TableCell>
                                         <TableCell>Nome</TableCell>
                                         <TableCell>Valor Pago</TableCell>
+                                        <TableCell>Método de pagamento</TableCell>
                                         <TableCell>Expira em</TableCell>
                                         <TableCell>Ações</TableCell>
                                     </TableRow>
@@ -261,6 +263,13 @@ const UserDetailsScreen: Component = () => {
                                                             style: 'currency',
                                                             currency: 'BRL',
                                                         }).format(userProgram.paid_amount)}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {userProgram.method
+                                                            ? paymentMethodsMap[
+                                                                  userProgram.method as keyof typeof paymentMethodsMap
+                                                              ] || userProgram.method
+                                                            : '-'}
                                                     </TableCell>
                                                     <TableCell>
                                                         {dayjs(userProgram.expires_at).format('DD/MM/YYYY HH:mm')}

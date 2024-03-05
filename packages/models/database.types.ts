@@ -425,6 +425,7 @@ export interface Database {
           created_at: string
           expires_at: string
           id: string
+          method: string | null
           paid_amount: number
           program_id: string | null
           user_id: string
@@ -433,6 +434,7 @@ export interface Database {
           created_at?: string
           expires_at: string
           id?: string
+          method?: string | null
           paid_amount: number
           program_id?: string | null
           user_id: string
@@ -441,6 +443,7 @@ export interface Database {
           created_at?: string
           expires_at?: string
           id?: string
+          method?: string | null
           paid_amount?: number
           program_id?: string | null
           user_id?: string

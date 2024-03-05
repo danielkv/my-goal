@@ -10,6 +10,7 @@ import {
     DialogContent,
     DialogTitle,
     FormControl,
+    FormHelperText,
     FormLabel,
     MenuItem,
     Select,
@@ -19,7 +20,7 @@ import { listProgramsUseCase } from '@useCases/programs/listPrograms'
 import { sellUserProgram } from '@useCases/programs/sellUserProgram'
 import { getErrorMessage } from '@utils/errors'
 
-import { TUserProgramForm, userProgramFormSchema } from './config'
+import { TUserProgramForm, paymentMethodsMap, userProgramFormSchema } from './config'
 
 interface AddUserProgramFormProps {
     open: boolean
@@ -67,7 +68,7 @@ const AddUserProgramForm: Component<AddUserProgramFormProps> = (props) => {
                                 <Show when={programs()?.items}>
                                     {(items) => (
                                         <FormControl variant="outlined" size="small">
-                                            <FormLabel class="!text-sm">Tipo de bloqueio</FormLabel>
+                                            <FormLabel class="!text-sm">Programa</FormLabel>
                                             <Select
                                                 value={field.value}
                                                 error={!!field.error}
@@ -89,6 +90,33 @@ const AddUserProgramForm: Component<AddUserProgramFormProps> = (props) => {
                                         </FormControl>
                                     )}
                                 </Show>
+                            )}
+                        </Field>
+                        <Field name="method">
+                            {(field) => (
+                                <FormControl variant="outlined" size="small">
+                                    <FormLabel class="!text-sm">Método de pagamento</FormLabel>
+                                    <Select
+                                        value={field.value}
+                                        error={!!field.error}
+                                        style={{
+                                            'background-color': 'white',
+                                            'border-radius': '0.375rem',
+                                            color: '#333',
+                                            height: '35px',
+                                        }}
+                                        sx={{ ['& .MuiSelect-icon']: { color: 'black' } }}
+                                        onChange={(e) => {
+                                            setValue(form, 'method', e.target.value)
+                                        }}
+                                    >
+                                        <For each={Object.entries(paymentMethodsMap)}>
+                                            {([value, label]) => <MenuItem value={value}>{label}</MenuItem>}
+                                        </For>
+                                    </Select>
+
+                                    {!!field.error && <FormHelperText error>{field.error}</FormHelperText>}
+                                </FormControl>
                             )}
                         </Field>
                         <Field type="number" name="paid_amount">
