@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
 import { IUserProgram } from 'goal-models'
-import { H5, Stack, Text, XStack, YStack } from 'tamagui'
+import { H5, Image, Stack, Text, XStack, YStack } from 'tamagui'
 
 import Button from '@components/Button'
-import { FileSpreadsheet } from '@tamagui/lucide-icons'
 
 export interface WorksheetListItemProps {
     item: IUserProgram
@@ -25,13 +24,15 @@ const ProgramListItem: React.FC<WorksheetListItemProps> = ({ item, onPress }) =>
                 w="auto"
                 h="auto"
                 bg="$gray9"
+                p={0}
+                overflow="hidden"
                 elevation={3}
                 pressStyle={{ bg: '$gray8' }}
                 onPress={() => onPress?.(item)}
             >
-                <XStack f={1} py="$4" ai="center" gap="$3">
-                    <FileSpreadsheet size={24} color="$gray4" />
-                    <YStack f={1}>
+                <XStack f={1} gap="$3">
+                    <Image source={{ uri: item.image }} width={100} resizeMode="cover" />
+                    <YStack f={1} py="$4">
                         <H5 fontWeight="700" lineHeight="$1" fontSize="$5" color="$gray1">
                             {item.name}
                         </H5>
