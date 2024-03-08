@@ -267,7 +267,10 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                                                                 <FiTrash />
                                                             </IconButton>
                                                         </Stack>
-                                                        <Show when={displayContent()}>
+                                                        <div
+                                                            class="segment"
+                                                            classList={{ hiddenSegment: !displayContent() }}
+                                                        >
                                                             <FieldArray
                                                                 name={`${
                                                                     segmentsArray.name
@@ -307,7 +310,7 @@ const ProgramForm: Component<ProgramFormProps> = ({ initialValues, editing }) =>
                                                                     </Stack>
                                                                 )}
                                                             </FieldArray>
-                                                        </Show>
+                                                        </div>
                                                     </Stack>
                                                 )
                                             }}
