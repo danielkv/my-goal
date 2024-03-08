@@ -7,6 +7,7 @@ import { EditorMenuList, EditorMenuListProps, EditorMenuListRef } from '@compone
 import { SuggestionOptions } from '@tiptap/suggestion'
 
 export const suggestion: Omit<SuggestionOptions, 'editor'> = {
+    allowSpaces: true,
     items: () => [],
     render: () => {
         let component: SolidRenderer<EditorMenuListProps>
