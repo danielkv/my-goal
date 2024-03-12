@@ -19,7 +19,7 @@
 	},
 	"packageManager": "yarn@3.6.2",
 	"dependencies": {
-		"supabase": "^1.142.2"
+		"supabase": "^1.148.6"
 	},
 	"resolutions": {
 		"@react-native-firebase/auth@^18.5.0": "patch:@react-native-firebase/auth@npm%3A18.8.0#./.yarn/patches/@react-native-firebase-auth-npm-18.8.0-697101adfe.patch"

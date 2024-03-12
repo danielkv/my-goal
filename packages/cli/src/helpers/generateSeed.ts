@@ -1,11 +1,77 @@
+import { RevenueCat } from './revenuecat'
+import { User, createClient } from '@supabase/supabase-js'
+import dayjs from 'dayjs'
+import { config } from 'dotenv'
 import admin from 'firebase-admin'
 import fs from 'fs'
 import { randomUUID } from 'node:crypto'
 import { promisify } from 'node:util'
 import path from 'path'
-import { map } from 'radash'
+import { map, reduce, sort } from 'radash'
+
+config({ path: path.resolve(__dirname, '..', '..', '..', '..', '.env') })
 
 const writeFileAsync = promisify(fs.writeFile)
+
+async function generateStandardUserWorksheets(worksheetId: string) {
+    const supabaseUrl = process.env.SUPABASE_URL ?? ''
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+    const revenueCatApiKey = process.env.REVENUECAT_API_KEY ?? ''
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const { error, data } = await supabase.auth.admin.listUsers({ perPage: 100 })
+    if (error) throw error
+
+    const revenuecat = new RevenueCat(revenueCatApiKey)
+
+    const userWorksheets = await reduce<User, Record<string, any>[]>(
+        data.users,
+        async (acc, user) => {
+            const userEmail = user.email
+
+            if (!userEmail) return acc
+
+            const subscriber = await revenuecat.getSubscriber(userEmail)
+            if (!subscriber.subscriber.entitlements) return acc
+
+            const filteredEnt = Object.entries<Record<string, any>>(subscriber.subscriber.entitlements).filter(
+                ([_, value]) => {
+                    return dayjs().isBefore(value.expires_date)
+                }
+            )
+
+            if (!filteredEnt.length) return acc
+
+            const highestExpiration = sort(filteredEnt, ([_, v]) => dayjs(v.expires_date).unix(), true)[0][1]
+
+            const entitlements = filteredEnt.map(([key]) => key)
+
+            acc.push({
+                user_id: user.id,
+                paid_amount: entitlements.length === 4 ? 99.9 : 39.9,
+                method: 'revenuecat',
+                worksheet_id: worksheetId,
+                entitlements,
+                expires_at: highestExpiration.expires_date,
+                created_at: highestExpiration.purchased_date || dayjs().toISOString(),
+            })
+
+            return acc
+        },
+        []
+    )
+
+    console.log(`${userWorksheets.length} planilhas de usuários exporados`)
+
+    const sqlUserWorksheets = generateSql(
+        'user_worksheets',
+        ['created_at', 'expires_at', 'worksheet_id', 'user_id', 'paid_amount', 'method', 'entitlements'],
+        userWorksheets
+    )
+
+    return sqlUserWorksheets
+}
 
 async function generateWorksheets() {
     const db = admin.firestore()
@@ -18,13 +84,15 @@ async function generateWorksheets() {
 
     const newDocs: Record<string, any>[] = []
 
+    const worksheetId = randomUUID()
+
     await map(worksheets.docs, async (doc, index) => {
-        const worksheetId = randomUUID()
+        const worksheetWeekId = randomUUID()
         const days = await collection.doc(doc.id).collection('days').get()
 
         const mappedDays = days.docs.map((day) => {
             const data = day.data()
-            return { '"worksheetId"': worksheetId, ...data, periods: JSON.stringify(data.periods) }
+            return { '"worksheetId"': worksheetWeekId, ...data, periods: JSON.stringify(data.periods) }
         })
 
         const data = doc.data()
@@ -32,23 +100,42 @@ async function generateWorksheets() {
         if (data.startEndDate !== undefined) {
             allDays.push(...mappedDays)
             newDocs.push({
-                id: worksheetId,
+                id: worksheetWeekId,
                 name: data.name,
                 published: data.published,
                 info: data.info,
+                worksheet_id: worksheetId,
                 '"startDate"': data.startEndDate.start,
                 '"endDate"': data.startEndDate.end,
             })
         }
     })
 
-    const sql = generateSql('worksheets', ['id', 'name', 'published', 'info', '"startDate"', '"endDate"'], newDocs)
+    const sqlWorksheet = generateSql(
+        'worksheets',
+        ['id', 'name', 'published'],
+        [
+            {
+                id: worksheetId,
+                name: 'Planilha',
+                published: true,
+            },
+        ]
+    )
+
+    const sqlWeeks = generateSql(
+        'worksheet_weeks',
+        ['id', 'name', 'published', 'info', '"startDate"', '"endDate"', 'worksheet_id'],
+        newDocs
+    )
 
     const sqlDays = generateSql('days', ['date', 'name', 'periods', '"worksheetId"'], allDays)
 
+    const sqlUserWorksheets = await generateStandardUserWorksheets(worksheetId)
+
     console.log(newDocs.length, 'planilhas exportadas')
     console.log(allDays.length, 'dias exportados')
-    return [sql, sqlDays]
+    return [sqlWorksheet, sqlWeeks, sqlDays, sqlUserWorksheets]
 }
 
 async function generateMovements() {
@@ -165,18 +252,12 @@ export async function generateFile(filePath: string, sqls: string[]) {
     await writeFileAsync(sqlFile, content)
 }
 
-export async function generateSeed(filePath: string) {
-    const worksheetSql = await generateWorksheets()
-    const movementSql = await generateMovements()
-    const workoutSql = await generateWorkouts()
-
-    await generateFile(filePath, [...worksheetSql, ...movementSql, ...workoutSql])
-}
-
 const stringifyRow = (fields: string[], row: Record<string, any>) =>
     fields.map((field) => {
         const value = row[field]
         if (value === undefined || value === null) return 'NULL'
+
+        if (Array.isArray(value)) return `'{${value.join(',')}}'`
 
         return typeof value === 'string' ? `'${value}'` : value
     })
@@ -187,4 +268,12 @@ function generateSql(table: string, fields: string[], data: Record<string, any>[
     const values = data.map((row) => `(${stringifyRow(fields, row)})`).join(',\n')
 
     return `${header}\n${values};`
+}
+
+export async function generateSeed(filePath: string) {
+    const worksheetSql = await generateWorksheets()
+    const movementSql = await generateMovements()
+    const workoutSql = await generateWorkouts()
+
+    await generateFile(filePath, [...worksheetSql, ...movementSql, ...workoutSql])
 }

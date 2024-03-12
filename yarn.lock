@@ -11429,7 +11429,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "goal@workspace:."
   dependencies:
-    supabase: ^1.142.2
+    supabase: ^1.148.6
   languageName: unknown
   linkType: soft
 
@@ -18042,9 +18042,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:^1.142.2":
-  version: 1.144.2
-  resolution: "supabase@npm:1.144.2"
+"supabase@npm:^1.148.6":
+  version: 1.149.1
+  resolution: "supabase@npm:1.149.1"
   dependencies:
     bin-links: ^4.0.3
     https-proxy-agent: ^7.0.2
@@ -18052,7 +18052,7 @@ __metadata:
     tar: 6.2.0
   bin:
     supabase: bin/supabase
-  checksum: dce46f35fa0f8478aa738d4311d3204d313b74bc1b34fb2f37e1c061d214c576aae43d3e502b3a215e3fc17c44125facf0e5d48b180474ab32a06d5beb44739a
+  checksum: 32e91100c72fcf3773efe29b84dbb49337da4ee7f064f79df017e1ffaa586cdc9ab84aa4ed49a6e84c1c1c9c734a7c3846299ab62116ab1a6b5a62a6722a2c26
   languageName: node
   linkType: hard
 
