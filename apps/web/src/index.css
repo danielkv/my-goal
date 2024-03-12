@@ -265,26 +265,38 @@ code {
     min-height: 100px;
     padding-top: 50px;
     outline: none;
-}
 
-ul.editor-list {
-    list-style: disc;
-    padding-left: 1.2em;
-}
+    ul.editor-list {
+        list-style: disc;
+        padding-left: 1.2em;
+    }
 
-h1.editor-heading {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-h2.editor-heading {
-    font-size: 1.2em;
-    font-weight: bold;
-}
+    h1.editor-heading {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    h2.editor-heading {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
 
-.mention-movement {
-    background-color: rgb(201, 255, 201);
-    padding: 2px 5px;
-    border-radius: 4px;
+    .mention-movement {
+        background-color: rgb(201, 255, 201);
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    .timer {
+        background-color: rgb(226, 248, 164);
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
+
+    .weight-pct {
+        background-color: rgb(250, 225, 157);
+        padding: 2px 5px;
+        border-radius: 4px;
+    }
 }
 
 .segment {

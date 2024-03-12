@@ -5,23 +5,23 @@ import dayjs from 'dayjs'
 import { IEMOMTimer, ITabataTimer, ITimecapTimer, TTimer, TTimerTypes } from 'goal-models'
 
 export class BaseTransformer extends RegexHelper {
-    protected timeRegex = /^((?<t1>\d+)\s?(?<t1_type>m(?:in)?|s(?:ec)?)?(?:(?<t2>\d+)\s?s(?:ec)?)?)$/i
+    public timeRegex = /^((?<t1>\d+)\s?(?<t1_type>m(?:in)?|s(?:ec)?)?(?:(?<t2>\d+)\s?s(?:ec)?)?)$/i
 
-    protected numberRegex = /(?:(\d|\?)+(?:[\d\-\*\,\/\sa\?]*(?:\d|\?))?|max)/
-    protected weightTypeRegex = /kg|%|lb/is
+    public numberRegex = /(?:(\d|\?)+(?:[\d\-\*\,\/\sa\?]*(?:\d|\?))?|max)/
+    public weightTypeRegex = /kg|%|lb/is
 
-    protected repsTypeRegex = /x|m|km|s|mi|min|sec|cal/i
-    protected timerTypeRegex = /emom|for time|amrap|tabata/i
-    protected restRegex = this.mergeRegex([
+    public repsTypeRegex = /x|m|km|s|mi|min|sec|cal/i
+    public timerTypeRegex = /emom|for time|amrap|tabata/i
+    public restRegex = this.mergeRegex([
         '^((?:(?:rest\\s)(?<time1>',
         this.timeRegex,
         '))|(?:(?<time2>',
         this.timeRegex,
         ')(?:\\s(?:rest))))',
     ])
-    protected tabataTimeRegex = this.mergeRegex(['(?<work>', this.timeRegex, ')/(?<rest>', this.timeRegex, ')'])
+    public tabataTimeRegex = this.mergeRegex(['(?<work>', this.timeRegex, ')/(?<rest>', this.timeRegex, ')'])
 
-    protected weightRegex = this.mergeRegex([
+    public weightRegex = this.mergeRegex([
         '(?:((?<weight>',
         this.numberRegex,
         ')?)',
@@ -30,7 +30,7 @@ export class BaseTransformer extends RegexHelper {
         ')+)?',
     ])
 
-    protected repsRegex = this.mergeRegex([
+    public repsRegex = this.mergeRegex([
         '((?<reps_number>',
         /(?:\d+\º\s)?/,
         this.numberRegex,
@@ -39,35 +39,35 @@ export class BaseTransformer extends RegexHelper {
         ')?)+)',
     ])
 
-    protected movementBaseRegex = this.mergeRegex(['^(?<reps>', this.repsRegex, '\\s+)?(?<name>.+)$'])
+    public movementBaseRegex = this.mergeRegex(['^(?<reps>', this.repsRegex, '\\s+)?(?<name>.+)$'])
 
-    protected weightBaseRegex = this.mergeRegex(['^(?<movement>.+)\\s+(?<weight>', this.weightRegex, ')$'])
+    public weightBaseRegex = this.mergeRegex(['^(?<movement>.+)\\s+(?<weight>', this.weightRegex, ')$'])
 
     // emom 2 rounds 1min
-    protected timerEmomRegex = this.mergeRegex(
+    public timerEmomRegex = this.mergeRegex(
         ['^emom(?:\\s(?<numberOfRounds>\\d+)(?:\\srounds?|x)?)?', '(?:\\s', '(?<time>', this.timeRegex, ')', ')'],
         'i'
     )
     // E3M 15min
-    protected timerEmomEachRegex = this.mergeRegex(
+    public timerEmomEachRegex = this.mergeRegex(
         ['^e(?<each>\\d+)m', '(?:\\s*?', '(?<time>', this.timeRegex, ')', ')'],
         'i'
     )
 
     // tabata 2 rounds 20s/10s
-    protected timerTabataRegex = this.mergeRegex(
+    public timerTabataRegex = this.mergeRegex(
         ['^tabata(?:\\s(?<numberOfRounds>\\d+)(?:\\srounds?|x)?)?', '(?:\\s', '(?<time>', this.tabataTimeRegex, '))?'],
         'i'
     )
 
     // 2 rounds amrap 3min
-    protected timerAmrapRegex = this.mergeRegex(
+    public timerAmrapRegex = this.mergeRegex(
         ['^amrap\\s+', '(?:(?<numberOfRounds>\\d+)(?:\\s*?rounds?|x)?\\s+)?', '(?<time>', this.timeRegex, ')?'],
         'i'
     )
 
     // 2 rounds for time 3min
-    protected timerFortimeRegex = this.mergeRegex(
+    public timerFortimeRegex = this.mergeRegex(
         [
             '^(?:for(?:\\s|-)?time)',
             '(?:\\s',
@@ -81,7 +81,7 @@ export class BaseTransformer extends RegexHelper {
         'i'
     )
 
-    protected timerGenericRegex = this.mergeRegex(
+    public timerGenericRegex = this.mergeRegex(
         [
             '^(?:(?<numberOfRounds>',
             this.numberRegex,
@@ -95,7 +95,7 @@ export class BaseTransformer extends RegexHelper {
         'i'
     )
 
-    protected headerRegex = this.mergeRegex([
+    public headerRegex = this.mergeRegex([
         '^(?:(?:(?<number>',
         this.numberRegex,
         ')(?:x|\\s+rounds?)?)|',
@@ -123,7 +123,7 @@ export class BaseTransformer extends RegexHelper {
         return text.replaceAll(/\t/g, '').trim()
     }
 
-    protected extractTimerFromString(text: string): (TTimer & { reps?: string }) | null {
+    public extractTimerFromString(text: string): (TTimer & { reps?: string }) | null {
         const match = text.match(this.headerRegex)
 
         if (!match?.groups) return null
@@ -168,7 +168,7 @@ export class BaseTransformer extends RegexHelper {
         return { numberOfRounds: reps.split('-').length, reps }
     }
 
-    protected extractNumberHeaderFromString(text: string): { type: 'not_timed'; reps?: string } | null {
+    public extractNumberHeaderFromString(text: string): { type: 'not_timed'; reps?: string } | null {
         const numberOfRoundsObj = this.extractRounds(text)
 
         return {
@@ -177,9 +177,7 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected extractFortimeTimerFromString(
-        text: string
-    ): (ITimecapTimer & { type: 'for_time'; reps?: string }) | null {
+    public extractFortimeTimerFromString(text: string): (ITimecapTimer & { type: 'for_time'; reps?: string }) | null {
         const matchSpecific = text.match(this.timerFortimeRegex)
 
         if (!matchSpecific?.groups) return null
@@ -202,9 +200,7 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected extractGenericTimerFromString(
-        text: string
-    ): (ITimecapTimer & { type: 'for_time'; reps?: string }) | null {
+    public extractGenericTimerFromString(text: string): (ITimecapTimer & { type: 'for_time'; reps?: string }) | null {
         const matchSpecific = text.match(this.timerGenericRegex)
 
         if (!matchSpecific?.groups) return null
@@ -227,7 +223,7 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected extractAmrapTimerFromString(text: string): (ITimecapTimer & { reps?: string }) | null {
+    public extractAmrapTimerFromString(text: string): (ITimecapTimer & { reps?: string }) | null {
         const matchSpecific = text.match(this.timerAmrapRegex)
         if (!matchSpecific?.groups) return null
         const numberOfRoundsObj = this.extractRounds(matchSpecific?.groups?.numberOfRounds)
@@ -245,7 +241,7 @@ export class BaseTransformer extends RegexHelper {
         return null
     }
 
-    protected extractTabataTimerFromString(text: string): (ITabataTimer & { reps?: string }) | null {
+    public extractTabataTimerFromString(text: string): (ITabataTimer & { reps?: string }) | null {
         const matchSpecific = text.match(this.timerTabataRegex)
         if (!matchSpecific?.groups) return null
 
@@ -270,7 +266,7 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected extractEmomTimerFromString(text: string): (IEMOMTimer & { reps?: string }) | null {
+    public extractEmomTimerFromString(text: string): (IEMOMTimer & { reps?: string }) | null {
         const matchSpecific = text.match(this.timerEmomRegex)
         if (!matchSpecific?.groups) return null
 
@@ -298,7 +294,7 @@ export class BaseTransformer extends RegexHelper {
         return null
     }
 
-    protected extractEmomEachTimerFromString(text: string): (IEMOMTimer & { reps?: string }) | null {
+    public extractEmomEachTimerFromString(text: string): (IEMOMTimer & { reps?: string }) | null {
         const matchSpecific = text.match(this.timerEmomEachRegex)
 
         if (!matchSpecific?.groups?.time || !matchSpecific?.groups?.each)
@@ -318,9 +314,9 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected extractTimeByType(type: Extract<TTimerTypes, 'tabata'>, time: string): [number, number]
-    protected extractTimeByType(type: Exclude<TTimerTypes, 'tabata'>, time: string): number
-    protected extractTimeByType(type: TTimerTypes, time: string): number | [number, number] {
+    public extractTimeByType(type: Extract<TTimerTypes, 'tabata'>, time: string): [number, number]
+    public extractTimeByType(type: Exclude<TTimerTypes, 'tabata'>, time: string): number
+    public extractTimeByType(type: TTimerTypes, time: string): number | [number, number] {
         if (!time) return 0
 
         if (type === 'tabata') {
@@ -336,7 +332,7 @@ export class BaseTransformer extends RegexHelper {
         return this.extractTime(time)
     }
 
-    protected extractTime(time: string): number {
+    public extractTime(time: string): number {
         const match = time.match(this.timeRegex)
         if (!match?.groups) return 0
 
@@ -350,14 +346,14 @@ export class BaseTransformer extends RegexHelper {
         return dayjs.duration({ minutes, seconds }).asSeconds()
     }
 
-    protected findRest(text: string): number | null {
+    public findRest(text: string): number | null {
         const match = text.match(this.restRegex)
         if (!match?.groups?.time1 && !match?.groups?.time2) return null
 
         return this.extractTime(match?.groups.time1 || match?.groups.time2)
     }
 
-    protected timerToString(obj: TTimer, sequence?: string | null): string | null {
+    public timerToString(obj: TTimer, sequence?: string | null): string | null {
         const rounds = this.arrayToString(
             [sequence || (obj.numberOfRounds && obj.numberOfRounds > 1 ? obj.numberOfRounds : null)],
             '',
@@ -403,7 +399,7 @@ export class BaseTransformer extends RegexHelper {
         }
     }
 
-    protected roundsToString(rounds?: number, suffix = 'rounds', prefix?: string): string {
+    public roundsToString(rounds?: number, suffix = 'rounds', prefix?: string): string {
         if (!rounds) return ''
         if (rounds <= 1) return ''
         return this.arrayToString([prefix, rounds, suffix])

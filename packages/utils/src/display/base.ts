@@ -2,11 +2,11 @@ import { getTimeFromSeconds } from '../time'
 import { TTimer } from 'goal-models'
 
 export class BaseDisplay {
-    protected displayRest(time: number): string {
+    public displayRest(time: number): string {
         return `${getTimeFromSeconds(time)} Rest`
     }
 
-    protected displayTimer(obj: TTimer, sequence?: string | null): string | null {
+    public displayTimer(obj: TTimer, sequence?: string | null): string | null {
         const rounds = this.displayArray(
             [sequence || (obj.numberOfRounds && obj.numberOfRounds > 1 ? obj.numberOfRounds : null)],
             '',
@@ -52,7 +52,7 @@ export class BaseDisplay {
         }
     }
 
-    protected displayNumberOfRounds(rounds?: number, suffix = 'rounds', prefix?: string): string {
+    public displayNumberOfRounds(rounds?: number, suffix = 'rounds', prefix?: string): string {
         if (!rounds) return ''
         if (rounds <= 1) return ''
         return this.displayArray([prefix, rounds, suffix])

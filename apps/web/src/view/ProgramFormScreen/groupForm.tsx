@@ -5,6 +5,7 @@ import { EditorContent, createEditor } from 'tiptap-solid'
 
 import { Component, For, Show } from 'solid-js'
 
+import { suggestion } from '@common/utils/editor/suggestions'
 import TextInput from '@components/TextInput'
 import {
     Field,
@@ -23,10 +24,11 @@ import Mention from '@tiptap/extension-mention'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
+import { WeightPercent } from '@utils/editor/percentWeight'
+import { TimerNode } from '@utils/editor/timerNode'
 
 import EditorMenu from './components/EditorMenu'
 import { extractMentions } from './config'
-import { suggestion } from './suggestions'
 
 interface ClassFormProps {
     form: FormStore<IProgramInput, any>
@@ -114,6 +116,8 @@ const GroupForm: Component<ClassFormProps> = (props) => {
                 },
                 suggestion,
             }),
+            WeightPercent,
+            TimerNode,
         ],
         onUpdate({ editor }) {
             const movements = extractMentions(editor.getJSON()).map((item) => ({ group_id: '', movement_id: item.id }))
