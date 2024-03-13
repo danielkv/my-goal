@@ -6,7 +6,7 @@ import { mergeProps } from 'solid-js'
 import { EditorMenuList, EditorMenuListProps, EditorMenuListRef } from '@components/EditorMentionList'
 import { SuggestionOptions } from '@tiptap/suggestion'
 
-export const suggestion: Omit<SuggestionOptions, 'editor'> = {
+export const movementSuggestion: Omit<SuggestionOptions, 'editor'> = {
     allowSpaces: true,
     items: () => [],
     render: () => {

@@ -3,7 +3,7 @@ import { PluginKey } from 'prosemirror-state'
 import { escapeForRegEx, mergeAttributes } from '@tiptap/core'
 import Mention from '@tiptap/extension-mention'
 
-import { suggestion } from './suggestions'
+import { movementSuggestion } from './movement-suggestion'
 
 export const WeightPercent = Mention.extend({
     name: 'weightPercent',
@@ -45,18 +45,15 @@ export const WeightPercent = Mention.extend({
             },
         }
     },
-    parseHTML() {
-        return [
-            {
-                tag: `span[data-type="${this.name}"]`,
-            },
-        ]
-    },
 
     renderHTML({ node, HTMLAttributes }) {
         const outputText = `${node.attrs.percentage}${this.options.suggestion.char}${node.attrs.label}`
 
-        return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), outputText]
+        return [
+            'span',
+            mergeAttributes(this.options.HTMLAttributes, { 'data-type': this.name }, HTMLAttributes),
+            outputText,
+        ]
     },
 
     renderText({ node }) {
@@ -67,7 +64,7 @@ export const WeightPercent = Mention.extend({
         class: 'weight-pct',
     },
     suggestion: {
-        ...suggestion,
+        ...movementSuggestion,
         pluginKey: new PluginKey('weightPercent'),
         char: '%',
 

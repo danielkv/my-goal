@@ -150,13 +150,6 @@ export const TimerNode = Node.create<TimerOptions>({
         return ['span', { 'data-type': this.name, class: 'timer', ...HTMLAttributes }, text]
     },
 
-    // renderText({ node }) {
-    //     return this.options.renderText({
-    //         options: this.options,
-    //         node,
-    //     })
-    // },
-
     parseHTML() {
         return [
             {

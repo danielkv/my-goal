@@ -5,7 +5,6 @@ import { EditorContent, createEditor } from 'tiptap-solid'
 
 import { Component, For, Show } from 'solid-js'
 
-import { suggestion } from '@common/utils/editor/suggestions'
 import TextInput from '@components/TextInput'
 import {
     Field,
@@ -19,11 +18,10 @@ import {
     swap,
 } from '@modular-forms/solid'
 import { Card, FormHelperText, IconButton, Stack } from '@suid/material'
-import { mergeAttributes } from '@tiptap/core'
-import Mention from '@tiptap/extension-mention'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
+import { MentionMovement } from '@utils/editor/movement'
 import { WeightPercent } from '@utils/editor/percentWeight'
 import { TimerNode } from '@utils/editor/timerNode'
 
@@ -35,64 +33,6 @@ interface ClassFormProps {
     fieldArray: FieldArrayStore<IProgramInput, `segments.${number}.sessions.${number}.groups`>
     index: number
 }
-
-export const CustomMention = Mention.extend({
-    addAttributes() {
-        return {
-            id: {
-                default: null,
-                parseHTML: (element) => {
-                    return {
-                        id: element.getAttribute('data-mention-uuid'),
-                    }
-                },
-                renderHTML: (attributes) => {
-                    if (!attributes.id) {
-                        return {}
-                    }
-
-                    return {
-                        'data-mention-uuid': attributes.id,
-                    }
-                },
-            },
-            label: {
-                default: null,
-                parseHTML: (element) => {
-                    return {
-                        label: element.textContent,
-                    }
-                },
-                renderHTML: (attributes) => {
-                    if (!attributes.label) {
-                        return {}
-                    }
-
-                    return {
-                        label: attributes.label,
-                    }
-                },
-            },
-        }
-    },
-    parseHTML() {
-        return [
-            {
-                tag: 'span[data-mention-uuid]',
-            },
-        ]
-    },
-
-    renderHTML({ node, HTMLAttributes }) {
-        const outputText = `${this.options.suggestion.char}${node.attrs.label}`
-
-        return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), outputText]
-    },
-
-    renderText({ node }) {
-        return `${this.options.suggestion.char}${node.attrs.label}`
-    },
-})
 
 const GroupForm: Component<ClassFormProps> = (props) => {
     const textInputName = `${props.fieldArray.name}.${props.index}.text` as const
@@ -109,13 +49,7 @@ const GroupForm: Component<ClassFormProps> = (props) => {
                 alignments: ['left', 'center', 'right'],
             }),
             Underline,
-
-            CustomMention.configure({
-                HTMLAttributes: {
-                    class: 'mention-movement',
-                },
-                suggestion,
-            }),
+            MentionMovement,
             WeightPercent,
             TimerNode,
         ],
