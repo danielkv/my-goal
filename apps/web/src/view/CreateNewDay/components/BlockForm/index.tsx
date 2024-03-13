@@ -1,4 +1,4 @@
-import { IBlock, IEventBlock, IRestBlock, ITextBlock, TBlockType } from 'goal-models'
+import { IBlockV1, IEventBlock, IRestBlock, ITextBlock, TBlockType } from 'goal-models'
 
 import { Component, For, Match, Switch, createEffect, createSignal } from 'solid-js'
 
@@ -11,7 +11,7 @@ import { TBlockForm, blockTypes } from './config'
 
 export interface BlockFormProps {
     onClickNext(data: TBlockForm): void
-    block: IBlock
+    block: IBlockV1
 }
 
 const BlockForm: Component<BlockFormProps> = (props) => {

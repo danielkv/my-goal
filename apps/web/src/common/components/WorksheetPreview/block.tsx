@@ -1,4 +1,4 @@
-import { IBlock, IEventBlock, IRestBlock, ITextBlock } from 'goal-models'
+import { IBlockV1, IEventBlock, IRestBlock, ITextBlock } from 'goal-models'
 
 import { Component, Match, Switch, createMemo, splitProps } from 'solid-js'
 
@@ -10,7 +10,7 @@ import EventBlockPreview from './blocks/eventBlock'
 import RestBlockPreview from './blocks/restBlock'
 import TextBlockPreview from './blocks/textBlock'
 
-export interface BlockProps extends WorksheetPeace<IBlock> {
+export interface BlockProps extends WorksheetPeace<IBlockV1> {
     sectionNumber: number
     blockNumber: number
 }

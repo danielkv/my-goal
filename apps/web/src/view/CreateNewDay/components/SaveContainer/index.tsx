@@ -14,7 +14,7 @@ import { getErrorMessage } from '@utils/errors'
 interface ISaveContainerProps {
     worksheet: IWorksheetInput
     handleSetWorksheet: SetStoreFunction<IWorksheetInput>
-    handleSetLastTempSaved: Setter<IWorksheetInput>
+    handleSetLastTempSaved: Setter<IWorksheetInput | undefined>
 }
 
 const SaveContainer: Component<ISaveContainerProps> = (props) => {

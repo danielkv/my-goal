@@ -1,6 +1,6 @@
 import cloneDeep from 'clone-deep'
 import deepEqual from 'deep-equal'
-import { IWorksheet, IWorksheetInput, IWorksheetModel } from 'goal-models'
+import { IWorksheet, IWorksheetInput } from 'goal-models'
 import { isWorksheetModel } from 'goal-utils'
 import { debounce } from 'radash'
 import { FiArrowLeft, FiArrowRight, FiEye } from 'solid-icons/fi'
@@ -37,8 +37,8 @@ const CreateNewDay: Component = () => {
 
     let displayTempSavedTimeout: NodeJS.Timeout
 
-    const [hasHistorySaved, setHasHistorySaved] = createSignal<IWorksheetModel | null>(null)
-    const [lastTempSaved, setLastTempSaved] = createSignal<IWorksheetModel>()
+    const [hasHistorySaved, setHasHistorySaved] = createSignal<IWorksheetInput | null>(null)
+    const [lastTempSaved, setLastTempSaved] = createSignal<IWorksheetInput>()
     const [displayTempSaved, setDisplayTempSaved] = createSignal(false)
     const [loadingTemp, setLoadingTemp] = createSignal(false)
     const [loading, setLoading] = createSignal(false)

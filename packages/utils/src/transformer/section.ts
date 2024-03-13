@@ -2,7 +2,7 @@ import { BaseTransformer } from './base'
 import { EventBlockTransformer, eventBlockTransformer } from './eventblock'
 import { RestBlockTransformer, restBlockTransformer } from './restBlock'
 import { TextBlockTransformer, textBlockTransformer } from './textBlock'
-import { IBlock } from 'goal-models'
+import { IBlockV1 } from 'goal-models'
 
 export class SectionTransformer extends BaseTransformer {
     private breakline = '\n-\n'
@@ -14,13 +14,13 @@ export class SectionTransformer extends BaseTransformer {
         super()
     }
 
-    toObject(text: string): IBlock[] {
+    toObject(text: string): IBlockV1[] {
         const textBlocks = this.normalizeText(text).split(this.breakline)
 
         return textBlocks.map((t) => this.typeToObject(t))
     }
 
-    toString(objs: IBlock[]): string {
+    toString(objs: IBlockV1[]): string {
         return objs
             .map((obj) => {
                 switch (obj.type) {
@@ -37,7 +37,7 @@ export class SectionTransformer extends BaseTransformer {
             .join(this.breakline)
     }
 
-    private typeToObject(text: string): IBlock {
+    private typeToObject(text: string): IBlockV1 {
         const matchRest = this.restBlockTransformer.toObject(text)
         if (matchRest) return matchRest
 

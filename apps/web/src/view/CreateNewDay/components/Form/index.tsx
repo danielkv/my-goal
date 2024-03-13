@@ -194,7 +194,7 @@ const Form: Component<FormProps> = (props) => {
 
                                     const block = getPeaceFromPath<IBlock>(props.worksheet, props.currentPath)
 
-                                    if (block.type === 'event' && !block.rounds.length)
+                                    if (!block.v2 && block.type === 'event' && !block.rounds.length)
                                         props.handleSetPath(addToPath<IBlock>(props.currentPath, `rounds.0`))
                                 }}
                             />

@@ -1,3 +1,5 @@
+import { IProgramInput } from 'goal-models'
+
 import { Component, createEffect, createSignal } from 'solid-js'
 
 import DashboardContainer from '@components/DashboardContainer'
@@ -19,7 +21,7 @@ const ProgramFormScreen: Component = () => {
 
         getProgramByIdUseCase(params.programId)
             .then((result) => {
-                setInitialValues(result)
+                setInitialValues(result as IProgramInput)
                 setLoading(false)
             })
             .catch((err) => alert(getErrorMessage(err)))

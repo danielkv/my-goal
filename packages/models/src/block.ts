@@ -32,8 +32,6 @@ export type IRound =
 
 export type TBlockType = 'event' | 'rest' | 'text' | ''
 
-//export type TEventType = 'default' | 'max_weight'
-
 export type IEventBlock = {
     type: 'event'
     name?: string
@@ -58,4 +56,13 @@ export type IEmptyBlock = {
     type: ''
 }
 
-export type IBlock = { info?: string; type: TBlockType } & (IEventBlock | IRestBlock | ITextBlock | IEmptyBlock)
+export type IBlockV1 = { info?: string; type: TBlockType; v2?: false | undefined } & (
+    | IEventBlock
+    | IRestBlock
+    | ITextBlock
+    | IEmptyBlock
+)
+
+export type IBlockV2 = { v2: true; text: string }
+
+export type IBlock = IBlockV1 | IBlockV2
