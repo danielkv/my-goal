@@ -1,0 +1,51 @@
+input.worksheetInput {
+    color-scheme: dark;
+    background-color: transparent;
+
+    border-bottom: 1px solid white;
+
+    &:focus {
+        outline: none;
+
+        @apply border-b-red-500;
+    }
+}
+
+.worksheetV2 {
+    :global {
+        .hoverable:hover > .icon-btn {
+            display: flex !important;
+        }
+    }
+    .block-editor {
+        position: relative;
+        :global {
+            .tiptap {
+                padding: 8px;
+                color: white;
+                font-size: 14px;
+                @apply bg-gray-800;
+            }
+            .mention-movement,
+            .weight-pct,
+            .timer {
+                @apply text-gray-700;
+            }
+
+            .editor-menu {
+                @apply bg-gray-800;
+                position: absolute;
+                top: 8px;
+                left: -50px;
+                flex-direction: column;
+                & > div {
+                    flex-direction: column;
+                }
+
+                & button {
+                    color: white !important;
+                }
+            }
+        }
+    }
+}

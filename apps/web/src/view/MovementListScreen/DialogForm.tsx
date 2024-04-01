@@ -7,6 +7,7 @@ import { For } from 'solid-js'
 import { createSignal } from 'solid-js'
 
 import ActivityIndicator from '@components/ActivityIndicator'
+import EditorMenu from '@components/EditorMenu'
 import TextInput from '@components/TextInput'
 import { createForm, getValue, setValue, setValues, zodForm } from '@modular-forms/solid'
 import {
@@ -25,7 +26,6 @@ import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
 import { saveMovementUseCase } from '@useCases/movements/saveMovement'
 import { getErrorMessage } from '@utils/errors'
-import EditorMenu from '@view/ProgramFormScreen/components/EditorMenu'
 
 import { TMovementForm, createEmptyMovement, movementFormSchema } from './config'
 

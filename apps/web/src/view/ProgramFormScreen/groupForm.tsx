@@ -25,7 +25,8 @@ import { MentionMovement } from '@utils/editor/movement'
 import { WeightPercent } from '@utils/editor/percentWeight'
 import { TimerNode } from '@utils/editor/timerNode'
 
-import EditorMenu from './components/EditorMenu'
+import EditorMenu from '../../common/components/EditorMenu'
+
 import { extractMentions } from './config'
 
 interface ClassFormProps {

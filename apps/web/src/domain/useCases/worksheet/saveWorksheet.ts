@@ -8,7 +8,7 @@ export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<
     const orderdDays = sort(worksheet.days, (item) => dayjs(item.date).unix())
 
     const { error, data } = await supabase
-        .from('worksheets')
+        .from('worksheet_weeks')
         .upsert(
             {
                 ...omit(worksheet, ['days']),

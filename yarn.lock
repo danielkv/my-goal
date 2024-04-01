@@ -1730,6 +1730,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@csstools/selector-resolve-nested@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@csstools/selector-resolve-nested@npm:1.1.0"
+  peerDependencies:
+    postcss-selector-parser: ^6.0.13
+  checksum: bb7591e790cf6112157870f8ba3ebb7018924b88f49feff51ab07476ceca3b290cae900734e0aad30d308add07e07082f0e61625b3931572c04952c5531df2b2
+  languageName: node
+  linkType: hard
+
+"@csstools/selector-specificity@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@csstools/selector-specificity@npm:3.0.2"
+  peerDependencies:
+    postcss-selector-parser: ^6.0.13
+  checksum: af3cc9282b600170b7de0fed2106830ab353359bd11f66cf71259419c9bddf8f0773c3a6e513cd9f66fd7e4920a1786a7c288723cbb3ae207974c1e7de26293e
+  languageName: node
+  linkType: hard
+
 "@emotion/is-prop-valid@npm:^0.8.2":
   version: 0.8.8
   resolution: "@emotion/is-prop-valid@npm:0.8.8"
@@ -11403,6 +11421,7 @@ __metadata:
     jspdf: ^2.5.1
     keen-slider: ^6.8.6
     postcss: ^8.4.21
+    postcss-nesting: ^12.1.0
     prettier: ^2.8.7
     prosemirror-model: ^1.19.4
     prosemirror-state: ^1.4.3
@@ -11429,7 +11448,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "goal@workspace:."
   dependencies:
-    supabase: ^1.148.6
+    supabase: ^1.151.1
   languageName: unknown
   linkType: soft
 
@@ -15527,6 +15546,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-nesting@npm:^12.1.0":
+  version: 12.1.0
+  resolution: "postcss-nesting@npm:12.1.0"
+  dependencies:
+    "@csstools/selector-resolve-nested": ^1.1.0
+    "@csstools/selector-specificity": ^3.0.2
+    postcss-selector-parser: ^6.0.13
+  peerDependencies:
+    postcss: ^8.4
+  checksum: 0ed54aed44a7041a28f2e680d07336637ced7366aeba96431b2469cc405e80d74bdebcc3fe0be56a36b9885919ae765a40664923745008577ffd427e22388640
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:^6.0.11":
   version: 6.0.15
   resolution: "postcss-selector-parser@npm:6.0.15"
@@ -15534,6 +15566,16 @@ __metadata:
     cssesc: ^3.0.0
     util-deprecate: ^1.0.2
   checksum: 57decb94152111004f15e27b9c61131eb50ee10a3288e7fcf424cebbb4aba82c2817517ae718f8b5d704ee9e02a638d4a2acff8f47685c295a33ecee4fd31055
+  languageName: node
+  linkType: hard
+
+"postcss-selector-parser@npm:^6.0.13":
+  version: 6.0.16
+  resolution: "postcss-selector-parser@npm:6.0.16"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: e1cd68e33a39e3dc1e1e5bd8717be5bbe3cc23a4cecb466c3acb2f3a77daad7a47df4d6137a76f8db74cf160d2fb16b2cfdb4ccbebdfda844690f8d545fe281d
   languageName: node
   linkType: hard
 
@@ -18042,17 +18084,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:^1.148.6":
-  version: 1.149.1
-  resolution: "supabase@npm:1.149.1"
+"supabase@npm:^1.151.1":
+  version: 1.152.4
+  resolution: "supabase@npm:1.152.4"
   dependencies:
     bin-links: ^4.0.3
     https-proxy-agent: ^7.0.2
     node-fetch: ^3.3.2
-    tar: 6.2.0
+    tar: 6.2.1
   bin:
     supabase: bin/supabase
-  checksum: 32e91100c72fcf3773efe29b84dbb49337da4ee7f064f79df017e1ffaa586cdc9ab84aa4ed49a6e84c1c1c9c734a7c3846299ab62116ab1a6b5a62a6722a2c26
+  checksum: 7859224a979e2240427cfb34b82dc2b1debbab91e9e3ed315e4837a3630241eae02c60f2ae06b4f289660f8f77bdfd80111d5dc2d6930939c489c9c425602f5f
   languageName: node
   linkType: hard
 
@@ -18281,7 +18323,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:6.2.0, tar@npm:^6.0.2, tar@npm:^6.0.5, tar@npm:^6.1.11, tar@npm:^6.1.2":
+"tar@npm:6.2.1":
+  version: 6.2.1
+  resolution: "tar@npm:6.2.1"
+  dependencies:
+    chownr: ^2.0.0
+    fs-minipass: ^2.0.0
+    minipass: ^5.0.0
+    minizlib: ^2.1.1
+    mkdirp: ^1.0.3
+    yallist: ^4.0.0
+  checksum: f1322768c9741a25356c11373bce918483f40fa9a25c69c59410c8a1247632487edef5fe76c5f12ac51a6356d2f1829e96d2bc34098668a2fc34d76050ac2b6c
+  languageName: node
+  linkType: hard
+
+"tar@npm:^6.0.2, tar@npm:^6.0.5, tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.2.0
   resolution: "tar@npm:6.2.0"
   dependencies:

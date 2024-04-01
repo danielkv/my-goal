@@ -14,11 +14,11 @@ import { RiSystemTimerLine } from 'solid-icons/ri'
 
 import { Component, For, Show, createMemo } from 'solid-js'
 
-import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
 import { createEventRoundValues } from '@utils/worksheetInitials'
+import PeaceControl from '@view/NewWorksheet/components/PeaceControl'
 
 export interface EventBlockPreviewProps extends WorksheetPeace<IEventBlock> {}
 

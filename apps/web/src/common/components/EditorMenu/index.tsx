@@ -6,7 +6,7 @@ import { Component } from 'solid-js'
 import { Stack } from '@suid/material'
 import { Editor } from '@tiptap/core'
 
-import EditorMenuButton from '../EditorMenuButton'
+import EditorMenuButton from '../../../view/ProgramFormScreen/components/EditorMenuButton'
 
 interface EditorMenuProps {
     editor: Editor
@@ -54,17 +54,16 @@ const EditorMenu: Component<EditorMenuProps> = (props) => {
     )
 
     return (
-        <Stack direction="row" gap={1} class="bg-white rounded-md " p={1}>
+        <Stack direction="row" gap={1} class="bg-white rounded-md editor-menu" p={1}>
+            <EditorMenuButton
+                active={isHeading1()}
+                onClick={() => {
+                    props.editor.chain().focus().toggleHeading({ level: 1 }).run()
+                }}
+            >
+                H1
+            </EditorMenuButton>
             <Stack direction="row">
-                <EditorMenuButton
-                    active={isHeading1()}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        props.editor.chain().focus().toggleHeading({ level: 1 }).run()
-                    }}
-                >
-                    H1
-                </EditorMenuButton>
                 <EditorMenuButton
                     active={isHeading2()}
                     onClick={() => props.editor.chain().focus().toggleHeading({ level: 2 }).run()}

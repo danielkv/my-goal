@@ -3,12 +3,12 @@ import { FiEdit } from 'solid-icons/fi'
 
 import { Component, For, Show, createMemo, createSignal, splitProps } from 'solid-js'
 
-import PeaceControl from '@components/PeaceControl'
 import SectionEditor from '@components/SectionEditor'
 import { WorksheetPeace } from '@interfaces/preview'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
 import { createSectionValues } from '@utils/worksheetInitials'
+import PeaceControl from '@view/NewWorksheet/components/PeaceControl'
 
 import BlockPreview from './block'
 

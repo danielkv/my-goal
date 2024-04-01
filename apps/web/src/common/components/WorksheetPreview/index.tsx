@@ -14,7 +14,7 @@ const WorksheetPreview: Component<WorksheetPreviewProps> = (props) => {
     const [parentProps] = splitProps(props, ['currentPath', 'onAdd', 'onRemove', 'onMove', 'onUpdate', 'onClickPeace'])
 
     return (
-        <div class="worksheet">
+        <div class="worksheet worksheetV1">
             <h1
                 class="text-xl font-bold m-2 p-2"
                 classList={{

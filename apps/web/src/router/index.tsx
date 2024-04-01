@@ -5,6 +5,7 @@ import CreateNewDay from '@view/CreateNewDay'
 import Home from '@view/Home'
 import LoginPage from '@view/Login'
 import MovementListScreen from '@view/MovementListScreen'
+import NewWorksheet from '@view/NewWorksheet'
 import PasswordRecoveryPage from '@view/PasswordRecovery'
 import Preview from '@view/Preview'
 import PrivacyPolicy from '@view/PrivacyPolicy'
@@ -38,6 +39,7 @@ const AppRouter: Component = () => {
                         <Route path="/users" element={<UsersListScreen />} />
                         <Route path="/users/:id" element={<UserDetailsScreen />} />
                         <Route path="/movements" element={<MovementListScreen />} />
+                        <Route path="/worksheetV2" element={<NewWorksheet />} />
 
                         <Route path="/programs" element={<ProgramListScreen />} />
                         <Route path="/program/new" element={<ProgramFormScreen />} />

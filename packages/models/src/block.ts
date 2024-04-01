@@ -65,4 +65,4 @@ export type IBlockV1 = { info?: string; type: TBlockType; v2?: false | undefined
 
 export type IBlockV2 = { v2: true; text: string }
 
-export type IBlock = IBlockV1 | IBlockV2
+export type IBlock<Version extends 'v1' | 'v2' = 'v1'> = Version extends 'v2' ? IBlockV2 : IBlockV1

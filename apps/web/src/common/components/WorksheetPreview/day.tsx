@@ -3,11 +3,11 @@ import { IDayInput } from 'goal-models'
 
 import { Component, For, createMemo, splitProps } from 'solid-js'
 
-import PeaceControl from '@components/PeaceControl'
 import { WorksheetPeace } from '@interfaces/preview'
 import { Stack } from '@suid/material'
 import { addToPath } from '@utils/paths'
 import { createDayValues } from '@utils/worksheetInitials'
+import PeaceControl from '@view/NewWorksheet/components/PeaceControl'
 
 import PeriodPreview from './period'
 
