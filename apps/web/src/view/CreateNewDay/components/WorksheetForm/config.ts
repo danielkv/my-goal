@@ -9,7 +9,7 @@ export type TWorksheetForm = Omit<IWorksheetInput, 'days'>
 export const worksheetInitialValues: TWorksheetForm = omit(createWorksheetValues(), ['days'])
 
 export const worksheetFormSchema = z.object({
-    name: z.string({ required_error: 'Nome é obrigatório' }).nonempty('Nome é obrigatório'),
-    startDate: z.string({ required_error: 'Data de início é obrigatória' }).nonempty('Data de início é obrigatória'),
-    info: z.string().nullable(),
+    name: z.string({ required_error: 'Nome é obrigatório' }).min(1, 'Nome é obrigatório'),
+    startDate: z.string({ required_error: 'Data de início é obrigatória' }).min(1, 'Data de início é obrigatória'),
+    // info: z.string().nullable(),
 })
