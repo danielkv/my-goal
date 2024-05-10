@@ -1,23 +1,23 @@
 import { IDayInput, IWorksheetInput, IWorksheetModel } from 'goal-models'
 import { omit } from 'radash'
 
-import { getWorksheetByIdUseCase } from './getWorksheetById'
-import { saveWorksheetUseCase } from './saveWorksheet'
+import { getWorksheetWeekByIdUseCase } from './getWorksheetWeekById'
+import { saveWorksheetWeekUseCase } from './saveWorksheet'
 
-export async function duplicateWorksheetUseCase(worksheetId: string): Promise<IWorksheetModel> {
-    const worksheet = await getWorksheetByIdUseCase(worksheetId)
+export async function duplicateWeekUseCase(weekId: string): Promise<IWorksheetModel> {
+    const week = await getWorksheetWeekByIdUseCase(weekId)
 
-    const duplicatedWorksheet: IWorksheetInput = omit(worksheet, ['id'])
-    duplicatedWorksheet.published = false
-    duplicatedWorksheet.name = `Cópia de ${worksheet.name}`
+    const duplicatedWeek: IWorksheetInput = omit(week, ['id'])
+    duplicatedWeek.published = false
+    duplicatedWeek.name = `Cópia de ${week.name}`
 
-    if (duplicatedWorksheet.days) {
-        duplicatedWorksheet.days = worksheet.days.map<IDayInput>((day) => omit(day, ['id']))
+    if (duplicatedWeek.days) {
+        duplicatedWeek.days = week.days.map<IDayInput>((day) => omit(day, ['id']))
     } else {
-        duplicatedWorksheet.days = []
+        duplicatedWeek.days = []
     }
 
-    const result = await saveWorksheetUseCase(duplicatedWorksheet)
+    const result = await saveWorksheetWeekUseCase(duplicatedWeek)
 
     return result
 }

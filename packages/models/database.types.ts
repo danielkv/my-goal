@@ -583,6 +583,7 @@ export type Database = {
           name: string
           published: boolean
           startDate: string
+          version: string | null
           worksheet_id: string | null
         }
         Insert: {
@@ -593,6 +594,7 @@ export type Database = {
           name: string
           published?: boolean
           startDate: string
+          version?: string | null
           worksheet_id?: string | null
         }
         Update: {
@@ -603,6 +605,7 @@ export type Database = {
           name?: string
           published?: boolean
           startDate?: string
+          version?: string | null
           worksheet_id?: string | null
         }
         Relationships: [
@@ -617,6 +620,7 @@ export type Database = {
       }
       worksheets: {
         Row: {
+          amount: number
           community_url: string | null
           created_at: string
           description: string | null
@@ -624,8 +628,11 @@ export type Database = {
           image: string | null
           name: string
           published: boolean
+          stripe_payment_link_id: string | null
+          stripe_product_id: string | null
         }
         Insert: {
+          amount: number
           community_url?: string | null
           created_at?: string
           description?: string | null
@@ -633,8 +640,11 @@ export type Database = {
           image?: string | null
           name: string
           published?: boolean
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
         }
         Update: {
+          amount?: number
           community_url?: string | null
           created_at?: string
           description?: string | null
@@ -642,6 +652,8 @@ export type Database = {
           image?: string | null
           name?: string
           published?: boolean
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
         }
         Relationships: []
       }

@@ -4,7 +4,7 @@ import { Component, Match, Switch, createMemo, splitProps } from 'solid-js'
 
 import { WorksheetPeace } from '@interfaces/preview'
 import { createBlockValues } from '@utils/worksheetInitials'
-import PeaceControl from '@view/NewWorksheet/components/PeaceControl'
+import PeaceControl from '@view/WorksheetFormScreen/WorksheetWeekV2/components/PeaceControl'
 
 import EventBlockPreview from './blocks/eventBlock'
 import RestBlockPreview from './blocks/restBlock'

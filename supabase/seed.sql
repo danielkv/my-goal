@@ -1,5 +1,5 @@
-INSERT INTO worksheets (id,name,published) VALUES
-('ae41cf3e-f568-4c13-82ba-773dba2ffb56','Planilha',true);
+INSERT INTO worksheets (id,name,published,amount) VALUES
+('ae41cf3e-f568-4c13-82ba-773dba2ffb56','Planilha',true, 0);
 
 INSERT INTO worksheet_weeks (id,name,published,info,"startDate","endDate",worksheet_id) VALUES
 ('9f445927-869a-44ab-b84f-2ffeed5544d0','Deload Competitivo',false,NULL,'2023-06-12','2023-06-17','ae41cf3e-f568-4c13-82ba-773dba2ffb56'),

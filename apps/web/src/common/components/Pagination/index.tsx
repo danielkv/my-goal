@@ -10,7 +10,7 @@ interface PaginationProps {
 
 const Pagination: Component<PaginationProps> = (props) => {
     return (
-        <Stack flexDirection="row" justifyContent="flex-end">
+        <Stack flexDirection="row" justifyContent="center">
             <IconButton onClick={props.onClickPrev}>
                 <ChevronLeft />
             </IconButton>

@@ -25,7 +25,7 @@ import {
 } from '@suid/material'
 import { saveProgramUseCase } from '@useCases/programs/saveProgram'
 import { getErrorMessage } from '@utils/errors'
-import FileInput from '@view/CreateNewDay/components/FileInput'
+import FileInput from '@view/WorksheetFormScreen/WorksheetWeekV1/components/FileInput'
 
 import { TProgramForm, createEmptySegment, createEmptySession, programFormSchema } from './config'
 import SessionForm from './sessionForm'

@@ -1,5 +1,6 @@
 export * from "./src/getWorkoutResultType";
 export * from "./src/models";
+export * from "./src/modelsV2";
 export * from "./src/numbers";
 export * from "./src/pagination";
 export * from "./src/programs";

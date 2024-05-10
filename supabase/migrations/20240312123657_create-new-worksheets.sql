@@ -8,9 +8,12 @@ create table
     created_at timestamp with time zone not null default now(),
     name character varying not null,
     published boolean not null default false,
+	amount double precision not null,
 	image text,
 	community_url text,
     description text,
+	stripe_product_id character varying null,
+    stripe_payment_link_id character varying null,
     constraint worksheets_pkey primary key (id)
   );
 
@@ -32,6 +35,8 @@ create table
   ) tablespace pg_default;
 alter table public.user_worksheets enable row level security;
 
+
+ALTER TABLE public.worksheet_weeks ADD COLUMN version text default null;
 ALTER TABLE worksheet_weeks ADD COLUMN worksheet_id uuid default null;
 ALTER TABLE worksheet_weeks ADD constraint worksheet_weeks_worksheet_id_fkey foreign key (worksheet_id) references worksheets (id) on update cascade on delete cascade;
 

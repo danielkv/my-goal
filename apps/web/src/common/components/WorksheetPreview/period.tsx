@@ -8,7 +8,7 @@ import { WorksheetPeace } from '@interfaces/preview'
 import { Stack } from '@suid/material'
 import { addToPath, getLastIndex } from '@utils/paths'
 import { createPeriodValues } from '@utils/worksheetInitials'
-import PeaceControl from '@view/NewWorksheet/components/PeaceControl'
+import PeaceControl from '@view/WorksheetFormScreen/WorksheetWeekV2/components/PeaceControl'
 
 import SectionPreview from './section'
 

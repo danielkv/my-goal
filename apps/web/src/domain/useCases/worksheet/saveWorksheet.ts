@@ -4,14 +4,16 @@ import { diff, omit, sort } from 'radash'
 
 import { supabase } from '@common/providers/supabase'
 
-export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<IWorksheet> {
-    const orderdDays = sort(worksheet.days, (item) => dayjs(item.date).unix())
+export async function saveWorksheetWeekUseCase(
+    week: IWorksheetInput | IWorksheetInput<'v2'>
+): Promise<IWorksheet | IWorksheet<'v2'>> {
+    const orderdDays = sort<IDayInput | IDayInput<'v2'>>(week.days, (item) => dayjs(item.date).unix())
 
     const { error, data } = await supabase
         .from('worksheet_weeks')
         .upsert(
             {
-                ...omit(worksheet, ['days']),
+                ...omit(week, ['days']),
                 startDate: orderdDays.at(0)?.date || '',
                 endDate: orderdDays.at(-1)?.date || '',
             },
@@ -21,13 +23,13 @@ export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<
         .single()
     if (error) throw error
 
-    const hidratedDays = orderdDays.map<IDayInput>((day) => ({
-        ...(day.id ? day : omit(day, ['id'])),
+    const hidratedDays = orderdDays.map((day) => ({
+        ...day,
         worksheetId: data.id,
     }))
 
-    if (worksheet.id) {
-        const { error, data } = await supabase.from('days').select('id').eq('worksheetId', worksheet.id)
+    if (week.id) {
+        const { error, data } = await supabase.from('days').select('id').eq('worksheetId', week.id)
         if (error) throw error
 
         const deleteIds = diff(
@@ -47,5 +49,6 @@ export async function saveWorksheetUseCase(worksheet: IWorksheetInput): Promise<
         .select()
     if (daysError) throw daysError
 
+    // @ts-expect-error
     return { ...data, days: insertedDays }
 }

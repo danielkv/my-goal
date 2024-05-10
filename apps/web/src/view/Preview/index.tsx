@@ -7,12 +7,12 @@ import ActivityIndicator from '@components/ActivityIndicator'
 import DashboardContainer from '@components/DashboardContainer'
 import WorksheetPreview from '@components/WorksheetPreview'
 import { useParams } from '@solidjs/router'
-import { getWorksheetByIdUseCase } from '@useCases/worksheet/getWorksheetById'
+import { getWorksheetWeekByIdUseCase } from '@useCases/worksheet/getWorksheetWeekById'
 
 const Preview: Component = () => {
     const params = useParams()
 
-    const [worksheet] = createResource(params.id, getWorksheetByIdUseCase)
+    const [worksheet] = createResource(params.id, getWorksheetWeekByIdUseCase)
 
     function generatePDF() {
         const html = document.querySelectorAll('.period')
