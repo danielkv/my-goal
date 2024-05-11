@@ -1,7 +1,10 @@
+import { createAsaas } from '../_shared/asaas/index.ts'
+import { ChargeEvent, EventName } from '../_shared/asaas/webhook-events.ts'
 import { createSupabaseSuperClient } from '../_shared/client.ts'
 import { createStripe } from '../_shared/stripe.ts'
 import { processProgramPayment } from './processProgramPayment.ts'
 import { processWorksheetPayment } from './processWorksheetPayment.ts'
+import { AdminUserAttributes, User } from 'https://esm.sh/v133/@supabase/supabase-js@2.38.4/dist/module/index.js'
 // @deno-types="npm:@types/cors@2.8.5"
 import cors from 'npm:cors@2.8.5'
 // @deno-types="npm:@types/express@4.17.15"
@@ -33,7 +36,13 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
         const purchaseObject = event.data.object as Stripe.Checkout.Session
         if (!purchaseObject.customer_details) throw new Error('No data found')
 
-        await processProductsObject(purchaseObject)
+        const userEmail = purchaseObject.customer_details?.email
+        if (!userEmail) throw new Error('Invalid user email')
+
+        const user = await retrieveUser(userEmail, purchaseObject.customer_details?.phone || undefined, {
+            displayName: purchaseObject.customer_details?.name,
+        })
+        await processStripeProductsObject(user, purchaseObject)
 
         res.json({ received: true })
     } catch (err) {
@@ -41,11 +50,76 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
     }
 })
 
+app.post('/webhook/asaas', express.json(), async (req, res) => {
+    try {
+        const asaas = createAsaas()
+        const body: ChargeEvent = req.body
+
+        if (body.event !== EventName.PAYMENT_CONFIRMED) return res.status(404).send('Evento indisponível')
+
+        const customer = await asaas.getCustomer(body.payment.customer)
+
+        const user = await retrieveUser(customer.email, customer.phone, {
+            displayName: customer.name,
+        })
+
+        if (!body.payment.paymentLink) throw new Error('Payment Link does not exist')
+        await processAsaasProduct(user, body.payment.paymentLink, body.payment.value)
+
+        res.json({ received: true })
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 app.listen(port, () => {
     console.log('listening on port:', port)
 })
 
-async function processProductsObject(session: Stripe.Checkout.Session) {
+async function retrieveUser(
+    email: string,
+    phone: string | undefined,
+    metadata: AdminUserAttributes['user_metadata']
+): Promise<User> {
+    const supabase = createSupabaseSuperClient()
+
+    const { error: getError, data: retrievedUser } = await supabase
+        .from('users')
+        .select()
+        .eq('email', email)
+        .maybeSingle()
+    if (getError) throw getError
+
+    if (retrievedUser) return retrievedUser
+
+    const { error, data: newUser } = await supabase.auth.admin.createUser({
+        email,
+        phone,
+        user_metadata: metadata,
+    })
+    if (error) throw error
+
+    if (!newUser.user) throw new Error('User not created')
+
+    return newUser.user
+}
+
+async function processAsaasProduct(user: User, paymentLinkId: string, paid_amount: number) {
+    const supabase = createSupabaseSuperClient()
+
+    const { error, data: program } = await supabase
+        .from('programs')
+        .select('*')
+        .eq('asaas_payment_link_id', paymentLinkId)
+        .maybeSingle()
+    if (error) throw error
+
+    if (!program) throw new Error('Program does not exist')
+
+    await processProgramPayment(supabase, user.id, paid_amount, 'asaas', program.id)
+}
+
+async function processStripeProductsObject(user: User, session: Stripe.Checkout.Session) {
     const stripe = createStripe()
 
     const { line_items } = await stripe.checkout.sessions.retrieve(session.id, {
@@ -56,28 +130,6 @@ async function processProductsObject(session: Stripe.Checkout.Session) {
     if (!items?.length) throw new Error('No product in the list')
 
     const supabase = createSupabaseSuperClient()
-
-    // deno-lint-ignore no-explicit-any
-    let user: Record<string, any>
-    const userEmail = session.customer_details?.email
-    if (!userEmail) throw new Error('Invalid user email')
-
-    const { error, data: retrievedUser } = await supabase
-        .from('users')
-        .select()
-        .eq('email', session.customer_details?.email)
-        .maybeSingle()
-    if (error) throw error
-
-    if (!retrievedUser) {
-        const { error, data: newUser } = await supabase.auth.admin.createUser({
-            email: userEmail,
-            phone: session.customer_details?.phone || undefined,
-            user_metadata: { displayName: session.customer_details?.name },
-        })
-        if (error) throw error
-        user = newUser
-    } else user = retrievedUser
 
     const promises = items.map(
         (item) =>
@@ -91,13 +143,21 @@ async function processProductsObject(session: Stripe.Checkout.Session) {
 
                 switch (product.metadata.category) {
                     case 'program': {
-                        await processProgramPayment(supabase, user.id, item, product)
+                        const programId = product.metadata.programId
+                        if (!programId) throw Error('ProductId does not exist')
+
+                        await processProgramPayment(supabase, user.id, item.amount_total / 100, 'stripe', programId)
                         break
                     }
                     case 'worksheet': {
                         const token = session.subscription
                         if (!token || !session.customer) return reject('Data is incomplete')
-                        await processWorksheetPayment(supabase, user.email, token as string, session.customer as string)
+                        await processWorksheetPayment(
+                            supabase,
+                            user.email || '',
+                            token as string,
+                            session.customer as string
+                        )
                         break
                     }
                     default:

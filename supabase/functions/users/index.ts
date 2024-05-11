@@ -82,7 +82,7 @@ app.get('/users', checkIsAdminMiddleware, async (req, res) => {
 
     if (search.length) query.or(`displayName.ilike.%${search}%,email.ilike.%${search}%`)
 
-    const { error, data, count } = await query
+    const { error, program, count } = await query
 
     if (error) return res.status(500).send(error.message)
     if (!count) return res.status(404).send('No users found')
@@ -90,7 +90,7 @@ app.get('/users', checkIsAdminMiddleware, async (req, res) => {
     const lastPage = Math.ceil(count / pageSize)
     const nextPage = page + 1 >= lastPage ? null : page + 1
     const response = {
-        items: data,
+        items: program,
         lastPage,
         nextPage,
         total: count,
@@ -107,7 +107,7 @@ app.get('/users/:id', checkIsAdminMiddleware, async (req, res) => {
 
     const client = createSupabaseSuperClient()
 
-    const { error: userError, data: userData } = await client.from('users').select('*').eq('id', id).single()
+    const { error: userError, program: userData } = await client.from('users').select('*').eq('id', id).single()
     if (userError) throw userError
     if (!userData) throw new Error('Usuário não encontrado')
 

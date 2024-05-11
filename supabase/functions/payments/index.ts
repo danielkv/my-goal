@@ -1,3 +1,5 @@
+import { createAsaas } from '../_shared/asaas/index.ts'
+import { BillingType, ChargeType } from '../_shared/asaas/types.ts'
 import { checkIsAdminMiddleware } from '../_shared/middlewares.ts'
 import { validateSchema } from '../_shared/middlewares.ts'
 import { createStripe } from '../_shared/stripe.ts'
@@ -21,7 +23,7 @@ app.use(
 
 // deno-lint-ignore no-explicit-any
 app.post<any, unknown, CreateProgramProductSchema>(
-    '/stripe/create-program-product',
+    '/payments/stripe/create-program-product',
     checkIsAdminMiddleware,
     validateSchema(createProgramProductSchema),
     async (req, res) => {
@@ -35,6 +37,26 @@ app.post<any, unknown, CreateProgramProductSchema>(
                 product_data: { name, metadata: { programId: programId || '', category: 'program' } },
             })
 
+            const result = await stripe.checkout.sessions.create({
+                line_items: [
+                    {
+                        price: stripePrice.id,
+                        quantity: 3,
+                    },
+                ],
+                mode: 'payment',
+                success_url: 'https://mygoal.app',
+                allow_promotion_codes: true,
+                payment_method_options: {
+                    card: {
+                        installments: {
+                            enabled: true,
+                        },
+                    },
+                },
+            })
+
+            console.log(result.url)
             const paymentLink = await stripe.paymentLinks.create({
                 line_items: [
                     {
@@ -55,7 +77,7 @@ app.post<any, unknown, CreateProgramProductSchema>(
 
 // deno-lint-ignore no-explicit-any
 app.post<any, unknown, UpdateProgramProductSchema>(
-    '/stripe/update-program-product',
+    '/payments/stripe/update-program-product',
     checkIsAdminMiddleware,
     validateSchema(updateProgramProductSchema),
     async (req, res) => {
@@ -87,23 +109,32 @@ app.post<any, unknown, UpdateProgramProductSchema>(
     }
 )
 
-// // deno-lint-ignore no-explicit-any
-// app.post<any, unknown, DeleteProgramProductSchema>(
-//     '/stripe/delete-program-product',
-//     checkIsAdminMiddleware,
-//     validateSchema(deleteProgramProductSchema),
-//     async (req, res) => {
-//         try {
-//             const { productId } = req.body
-//             const stripe = createStripe()
-//             const product = await stripe.products.del(productId)
+// deno-lint-ignore no-explicit-any
+app.post<any, unknown, CreateProgramProductSchema>(
+    '/payments/create-payment-link',
+    checkIsAdminMiddleware,
+    validateSchema(createProgramProductSchema),
+    async (req, res) => {
+        try {
+            const { name, price } = req.body
+            const asaas = createAsaas()
 
-//             res.json(product)
-//         } catch (err) {
-//             res.status(400).send(err)
-//         }
-//     }
-// )
+            const paymentLink = await asaas.createPaymentLink({
+                billingType: BillingType.UNDEFINED,
+                chargeType: ChargeType.DETACHED,
+                name,
+                description: name,
+                maxInstallmentCount: 10,
+                value: price,
+            })
+
+            res.json({ payment_link_id: paymentLink.id, payment_link_url: paymentLink.url })
+        } catch (err) {
+            console.log(err.message)
+            res.status(400).send(err)
+        }
+    }
+)
 
 app.listen(port, () => {
     console.log('listening on port:', port)
