@@ -123,6 +123,8 @@ app.post<any, unknown, SavePaymentLinkSchema>(
 
             let paymentLink: PaymentLink
 
+            console.log('SAVING PAYMENT LINK: ', price, payment_link_id)
+
             if (payment_link_id) {
                 paymentLink = await asaas.updatePaymentLink(payment_link_id, {
                     name,

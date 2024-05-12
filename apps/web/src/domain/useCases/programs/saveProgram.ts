@@ -63,10 +63,12 @@ export async function saveProgramUseCase(data: IProgramInput): Promise<{
         .insert(movementsToSave.map((item) => omit(item, ['id'])))
     if (movementsError) throw movementsError
 
-    try {
-        await _savePaymentLink(programSaved)
-    } catch (err) {
-        return { program: programSaved, error: 'Link de pagamento não foi criado' }
+    if (programSaved.amount > 0 || programSaved.payment_link_id) {
+        try {
+            await _savePaymentLink(programSaved)
+        } catch (err) {
+            return { program: programSaved, error: 'Link de pagamento não foi criado' }
+        }
     }
 
     return { program: programSaved }

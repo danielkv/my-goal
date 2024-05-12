@@ -4,12 +4,13 @@ import { AsaasBuilder } from './types.ts'
 
 export class Asaas {
     static readonly SANDBOX_BASE_URL = 'https://sandbox.asaas.com/api/v3'
-    static readonly PROD_BASE_URL = 'https://api.asaas.com/api/v3'
+    static readonly PROD_BASE_URL = 'https://api.asaas.com/v3'
 
     public sandbox!: boolean
     private readonly access_token!: string
 
     constructor(options: AsaasBuilder) {
+        if (!options.access_token) throw new Error('ASAAS ACCESS TOKEN IS EMPTY')
         this.sandbox = !!options.sandbox
         this.access_token = options.access_token
     }
@@ -50,11 +51,15 @@ export class Asaas {
 
         const response = await fetch(url, { ...options, method, headers })
 
-        const jsonResponse = await response.json()
+        try {
+            const jsonResponse = await response.json()
 
-        if (!response.ok) throw jsonResponse
+            if (!response.ok) throw jsonResponse
 
-        return jsonResponse as R
+            return jsonResponse as R
+        } catch {
+            throw new Error(response.statusText)
+        }
     }
 }
 

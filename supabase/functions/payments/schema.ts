@@ -25,7 +25,7 @@ export type UpdateProgramProductSchema = z.infer<typeof updateProgramProductSche
 export const savePaymentLinkSchema = z.object({
     name: z.string({ required_error: 'Nome é obrigatório' }),
     price: z.number({ required_error: 'Valor é obrigatório' }),
-    payment_link_id: z.string().optional(),
+    payment_link_id: z.string().optional().nullable(),
 })
 
 export type SavePaymentLinkSchema = z.infer<typeof savePaymentLinkSchema>
