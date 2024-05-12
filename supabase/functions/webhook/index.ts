@@ -52,6 +52,10 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
 
 app.post('/webhook/asaas', express.json(), async (req, res) => {
     try {
+        const webhookToken = Deno.env.get('ASAAS_WEBHOOK_ACCESS_TOKEN')!
+        const asaasAcessToken = req.header('asaas-access-token')
+        if (webhookToken !== asaasAcessToken) return res.sendStatus(403)
+
         const asaas = createAsaas()
         const body: ChargeEvent = req.body
 
@@ -68,6 +72,7 @@ app.post('/webhook/asaas', express.json(), async (req, res) => {
 
         res.json({ received: true })
     } catch (err) {
+        console.log(err)
         res.status(400).send(err)
     }
 })
@@ -110,7 +115,7 @@ async function processAsaasProduct(user: User, paymentLinkId: string, paid_amoun
     const { error, data: program } = await supabase
         .from('programs')
         .select('*')
-        .eq('asaas_payment_link_id', paymentLinkId)
+        .eq('payment_link_id', paymentLinkId)
         .maybeSingle()
     if (error) throw error
 

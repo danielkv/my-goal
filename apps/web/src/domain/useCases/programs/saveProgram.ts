@@ -6,17 +6,15 @@ import { uploadFileUseCase } from '@useCases/upload/uploadFile'
 
 const BUCKET_ID = 'programs'
 
-interface IStripeProductResponse {
-    product_id: string
-    payment_url: string
+interface ISavePaymentLinkResponse {
     payment_link_id: string
+    payment_link_url: string
 }
 
 export async function saveProgramUseCase(data: IProgramInput): Promise<{
     program: Models<'programs'>
     error?: string
 }> {
-    const previousProgram = await _getPreviousProgram(data.id)
     const program = _prepareData(data)
 
     await _removeDeletedProgramParts(program)
@@ -66,9 +64,9 @@ export async function saveProgramUseCase(data: IProgramInput): Promise<{
     if (movementsError) throw movementsError
 
     try {
-        await _createUpdateStripeProduct(programSaved, previousProgram, data)
+        await _savePaymentLink(programSaved)
     } catch (err) {
-        return { program: programSaved, error: 'Produto não foi criado no Stripe' }
+        return { program: programSaved, error: 'Link de pagamento não foi criado' }
     }
 
     return { program: programSaved }
@@ -150,72 +148,24 @@ async function _removeDeletedProgramParts(program: IProgramInput) {
     if (movementsError) throw movementsError
 }
 
-async function _createUpdateStripeProduct(
-    programSaved: Models<'programs'>,
-    previousProgram: Models<'programs'> | null,
-    formData: IProgramInput
-) {
-    if (!previousProgram?.stripe_product_id) {
-        const { payment_link_id, payment_url, product_id } = await _createStripeProduct(
-            programSaved.id,
-            programSaved.name,
-            programSaved.amount
-        )
-
-        const { error: programError } = await supabase
-            .from('programs')
-            .update({ stripe_product_id: product_id, stripe_payment_link_id: payment_link_id, payment_url })
-            .eq('id', programSaved.id)
-        if (programError) throw programError
-    } else if (previousProgram && formData.amount !== previousProgram.amount) {
-        const { payment_link_id, payment_url } = await _updateStripeProduct(
-            previousProgram.stripe_product_id,
-            programSaved.amount
-        )
-
-        const { error: programError } = await supabase
-            .from('programs')
-            .update({ stripe_payment_link_id: payment_link_id, payment_url })
-            .eq('id', programSaved.id)
-        if (programError) throw programError
-    }
-}
-
-async function _getPreviousProgram(programId?: string | null): Promise<Models<'programs'> | null> {
-    if (!programId) return null
-    const { error, data } = await supabase.from('programs').select().eq('id', programId).single()
-
-    if (error) throw error
-
-    return data
-}
-
-async function _updateStripeProduct(product_id: string, price: number): Promise<IStripeProductResponse> {
-    const { error, data } = await supabase.functions.invoke<IStripeProductResponse>('/stripe/update-program-product', {
+async function _savePaymentLink(programSaved: Models<'programs'>) {
+    const { error, data } = await supabase.functions.invoke<ISavePaymentLinkResponse>('/payments/save-payment-link', {
         method: 'POST',
-        body: { price: price * 100, product_id },
+        body: {
+            name: programSaved.name,
+            price: programSaved.amount,
+            payment_link_id: programSaved.payment_link_id,
+        },
     })
-
     if (error) throw error
-    if (!data) throw new Error('Produto não alterado')
+    if (!data) throw new Error('Erro ao salvar o link de pagamento')
 
-    return data
-}
+    const { error: programError } = await supabase
+        .from('programs')
+        .update({ payment_link_id: data.payment_link_id, payment_link_url: data.payment_link_url })
+        .eq('id', programSaved.id)
 
-async function _createStripeProduct(
-    programId: string,
-    programName: string,
-    price: number
-): Promise<IStripeProductResponse> {
-    const { error, data } = await supabase.functions.invoke<IStripeProductResponse>('/stripe/create-program-product', {
-        method: 'POST',
-        body: { name: programName, price: price * 100, programId },
-    })
-
-    if (error) throw error
-    if (!data) throw new Error('Produto não criado')
-
-    return data
+    if (programError) throw programError
 }
 
 function _prepareData(program: IProgramInput): IProgramInput {

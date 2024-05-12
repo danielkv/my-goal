@@ -40,7 +40,7 @@ export class Asaas {
         return this.request('/paymentLinks', 'POST', { body: JSON.stringify(data) })
     }
 
-    updatePaymentLink(id: string, data: CreatePaymentLinkInput): Promise<PaymentLink> {
+    updatePaymentLink(id: string, data: Partial<CreatePaymentLinkInput>): Promise<PaymentLink> {
         return this.request(`/paymentLinks/${id}`, 'PUT', { body: JSON.stringify(data) })
     }
 
