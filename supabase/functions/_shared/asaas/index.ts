@@ -1,4 +1,5 @@
 import { Customer } from './customer-types.ts'
+import { Installment } from './installment-types.ts'
 import { CreatePaymentLinkInput, PaymentLink } from './paymentLink-types.ts'
 import { AsaasBuilder } from './types.ts'
 
@@ -43,6 +44,10 @@ export class Asaas {
 
     updatePaymentLink(id: string, data: Partial<CreatePaymentLinkInput>): Promise<PaymentLink> {
         return this.request(`/paymentLinks/${id}`, 'PUT', { body: JSON.stringify(data) })
+    }
+
+    getInstallment(id: string): Promise<Installment> {
+        return this.request(`/installments/${id}`, 'GET')
     }
 
     private async request<R>(path: string, method: string, options?: Omit<RequestInit, 'method'>): Promise<R> {

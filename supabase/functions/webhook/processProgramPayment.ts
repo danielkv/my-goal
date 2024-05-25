@@ -5,13 +5,20 @@ export async function processProgramPayment(
     userId: string,
     paid_amount: number,
     method: string,
-    programId: string
+    programId: string,
+    expiration: number
 ) {
-    const { error: programError, data: program } = await supabase.from('programs').select().eq('id', programId).single()
-    if (programError) throw programError
+    const { error: userProgramError, data: userProgram } = await supabase
+        .from('user_programs')
+        .select('id')
+        .eq('user_id', userId)
+        .eq('program_id', programId)
+        .gte('expires_at', new Date().toISOString())
+    if (userProgramError) throw userProgramError
+    if (userProgram.length) return
 
     const expires_at = new Date()
-    expires_at.setDate(expires_at.getDate() + program.expiration)
+    expires_at.setDate(expires_at.getDate() + expiration)
 
     const { error: createProgramPaymentError } = await supabase.from('user_programs').insert({
         program_id: programId,

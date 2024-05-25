@@ -1,6 +1,7 @@
 import { createAsaas } from '../_shared/asaas/index.ts'
 import { ChargeEvent, EventName } from '../_shared/asaas/webhook-events.ts'
 import { createSupabaseSuperClient } from '../_shared/client.ts'
+import { getErrorMessage } from '../_shared/errors.ts'
 import { createStripe } from '../_shared/stripe.ts'
 import { processProgramPayment } from './processProgramPayment.ts'
 import { processWorksheetPayment } from './processWorksheetPayment.ts'
@@ -21,7 +22,7 @@ app.use(
     })
 )
 
-app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res, next) => {
     try {
         const stripe = createStripe()
         const endpointSecret = Deno.env.get('STRIPE_WEBHOOK_SIGNATURE') || ''
@@ -46,11 +47,11 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
 
         res.json({ received: true })
     } catch (err) {
-        res.status(400).send(err.message)
+        next(err)
     }
 })
 
-app.post('/webhook/asaas', express.json(), async (req, res) => {
+app.post('/webhook/asaas', express.json(), async (req, res, next) => {
     try {
         const webhookToken = Deno.env.get('ASAAS_WEBHOOK_ACCESS_TOKEN')!
         const asaasAcessToken = req.header('asaas-access-token')
@@ -68,13 +69,31 @@ app.post('/webhook/asaas', express.json(), async (req, res) => {
         })
 
         if (!body.payment.paymentLink) throw new Error('Payment Link does not exist')
-        await processAsaasProduct(user, body.payment.paymentLink, body.payment.value)
+
+        let paid_amount = body.payment.value
+        // if (body.payment.installment) {
+        //     const asaas = createAsaas()
+        //     const installment = await asaas.getInstallment(body.payment.installment)
+        //     paid_amount = installment.value
+        // }
+        await processAsaasProduct(user, body.payment.paymentLink, paid_amount)
 
         res.json({ received: true })
     } catch (err) {
-        console.log(err)
-        res.status(400).send(err)
+        next(err)
     }
+})
+
+// deno-lint-ignore no-explicit-any
+app.use((err: any, _: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const errStatus = err.statusCode || 500
+    const errMsg = getErrorMessage(err)
+    res.status(errStatus).json({
+        success: false,
+        status: errStatus,
+        message: errMsg,
+        stack: Deno.env.get('IS_DEV') ? err.stack : {},
+    })
 })
 
 app.listen(port, () => {
@@ -121,7 +140,7 @@ async function processAsaasProduct(user: User, paymentLinkId: string, paid_amoun
 
     if (!program) throw new Error('Program does not exist')
 
-    await processProgramPayment(supabase, user.id, paid_amount, 'asaas', program.id)
+    await processProgramPayment(supabase, user.id, paid_amount, 'asaas', program.id, program.expiration)
 }
 
 async function processStripeProductsObject(user: User, session: Stripe.Checkout.Session) {
@@ -151,7 +170,21 @@ async function processStripeProductsObject(user: User, session: Stripe.Checkout.
                         const programId = product.metadata.programId
                         if (!programId) throw Error('ProductId does not exist')
 
-                        await processProgramPayment(supabase, user.id, item.amount_total / 100, 'stripe', programId)
+                        const { error, data: program } = await supabase
+                            .from('programs')
+                            .select('*')
+                            .eq('id', programId)
+                            .maybeSingle()
+                        if (error) throw error
+
+                        await processProgramPayment(
+                            supabase,
+                            user.id,
+                            item.amount_total / 100,
+                            'stripe',
+                            programId,
+                            program.expiration
+                        )
                         break
                     }
                     case 'worksheet': {
