@@ -51,7 +51,7 @@ const AlertBox = Stack.styleable<IAlertBoxProps>(({ type, text, title, ...props 
         <Stack ref={ref} {...props}>
             <Dialog modal={false}>
                 <Dialog.Content bg={typeObj.bg}>
-                    <XStack jc="flex-start" gap="$2">
+                    <XStack jc="flex-start" gap="$2" pr="$3.5">
                         <Stack mt={title ? 11 : 5}>{typeObj.icon}</Stack>
                         <YStack>
                             {!!title && (
@@ -59,7 +59,7 @@ const AlertBox = Stack.styleable<IAlertBoxProps>(({ type, text, title, ...props 
                                     {title}
                                 </Dialog.Title>
                             )}
-                            <Dialog.Description fontWeight="400" lineHeight="$1" mt="$4" color={typeObj.color}>
+                            <Dialog.Description fontWeight="400" lineHeight="$1" mt="$2" color={typeObj.color}>
                                 {text}
                             </Dialog.Description>
                         </YStack>

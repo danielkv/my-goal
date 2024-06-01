@@ -12,7 +12,12 @@ export const setLoggedUser = async (user: IUser | null): Promise<void> => {
     if (user?.email) {
         await Purchases.logIn(user.email)
         await firebaseProvider.getAnalytics().setUserId(user.id)
-        //        await firebaseProvider.getAnalytics().logLogin({})
+        await firebaseProvider.getCrashlytics().setUserId(user.id)
+        await firebaseProvider.getCrashlytics().setAttributes({
+            name: user.displayName || '',
+            email: user.email || '',
+        })
+
         await firebaseProvider
             .getAnalytics()
             .setUserProperties({ name: user.displayName || '', email: user.email || '' })

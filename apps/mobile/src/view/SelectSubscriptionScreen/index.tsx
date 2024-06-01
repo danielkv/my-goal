@@ -12,6 +12,7 @@ import { Card, Separator, Stack, Text, ToggleGroup, XStack, YStack } from 'tamag
 
 import { firebaseProvider } from '@common/providers/firebase'
 import ActivityIndicator from '@components/ActivityIndicator'
+import AlertBox from '@components/AlertBox'
 import { alert } from '@components/AppAlert/utils'
 import Button from '@components/Button'
 import PaginationDots from '@components/PaginationDots'
@@ -65,6 +66,7 @@ const SelectSubscriptionScreen: React.FC = () => {
     const [loading, setLoading] = useState(false)
 
     const { isLoading, data: offerings } = useSWR('user_subscriptions', getOfferingsUseCase)
+    console.log('offerings', offerings)
 
     const packagesSubscriptions = offerings
         ? Object.values(offerings)
@@ -149,96 +151,115 @@ const SelectSubscriptionScreen: React.FC = () => {
 
     return (
         <YStack f={1} py="$5">
-            <ToggleGroup
-                mx="$5"
-                value={period}
-                disableDeactivation
-                defaultValue="monthly"
-                onValueChange={(value) => setPeriod(value as TPeriods)}
-                type="single"
-                h={40}
-            >
-                <ToggleGroup.Item value="monthly" f={1}>
-                    <Text>Mensal</Text>
-                </ToggleGroup.Item>
-                <ToggleGroup.Item value="annual" f={1}>
-                    <Text>Anual (-15%)</Text>
-                </ToggleGroup.Item>
-            </ToggleGroup>
-            <AnimatedPagerView initialPage={1} style={{ flex: 1 }} onPageScroll={scrollHandler}>
-                {!!offerings &&
-                    offerings.map((offering) => {
-                        const identifier = offering.identifier
-                        const isFree = identifier === APP_OFFERING.APP_FREE_SUBSCRIPTION
-                        const pkg = (isFree ? offering.lifetime : offering[periodToUse]) as PurchasesPackage
+            {!offerings ? (
+                <Stack mx="$5">
+                    <AlertBox
+                        type="warning"
+                        text={'Tente novamente mais tarde.'}
+                        title="Nenhuma assinatura foi encontrada"
+                    />
+                </Stack>
+            ) : (
+                <>
+                    <ToggleGroup
+                        mx="$5"
+                        value={period}
+                        disableDeactivation
+                        defaultValue="monthly"
+                        onValueChange={(value) => setPeriod(value as TPeriods)}
+                        type="single"
+                        h={40}
+                    >
+                        <ToggleGroup.Item value="monthly" f={1}>
+                            <Text>Mensal</Text>
+                        </ToggleGroup.Item>
+                        <ToggleGroup.Item value="annual" f={1}>
+                            <Text>Anual (-15%)</Text>
+                        </ToggleGroup.Item>
+                    </ToggleGroup>
+                    <AnimatedPagerView initialPage={1} style={{ flex: 1 }} onPageScroll={scrollHandler}>
+                        {offerings.map((offering) => {
+                            const identifier = offering.identifier
+                            const isFree = identifier === APP_OFFERING.APP_FREE_SUBSCRIPTION
+                            const pkg = (isFree ? offering.lifetime : offering[periodToUse]) as PurchasesPackage
 
-                        const isActiveSubscription = userHasActiveSubscriptionUseCase(pkg.product.identifier)
-                        const currentIsFree = !hasAnySubscriptionFromOffering && isFree
+                            const isActiveSubscription = userHasActiveSubscriptionUseCase(pkg.product.identifier)
+                            const currentIsFree = !hasAnySubscriptionFromOffering && isFree
 
-                        const isCurrent = isActiveSubscription || currentIsFree
+                            const isCurrent = isActiveSubscription || currentIsFree
 
-                        const metaDescription = (offering.metadata?.description || []) as string[]
+                            const metaDescription = (offering.metadata?.description || []) as string[]
 
-                        return (
-                            <Card elevation={5} key={identifier} f={1} py="$5" gap="$3" m="$5" bg="$gray9">
-                                <Text fontSize="$6" fontWeight="700" ta="center" mt="$2">
-                                    {pkg.product.title}
-                                </Text>
-
-                                <Separator borderColor="$gray6" br={10} width={80} my="$2" bw={3} alignSelf="center" />
-
-                                <Stack gap="$1" mx="$6" f={1}>
-                                    {metaDescription.map((item) => (
-                                        <XStack key={item}>
-                                            <Stack mt={4} mr={3}>
-                                                <Check size={10} />
-                                            </Stack>
-                                            <Text>{item}</Text>
-                                        </XStack>
-                                    ))}
-                                </Stack>
-
-                                <Stack bg="$gray6" h="$7" ai="center" jc="center">
-                                    <Text color={PRICE_COLOR} fontSize="$6" fontWeight="700">
-                                        {displayPrice(pkg.product.price, pkg.packageType)}
+                            return (
+                                <Card elevation={5} key={identifier} f={1} py="$5" gap="$3" m="$5" bg="$gray9">
+                                    <Text fontSize="$6" fontWeight="700" ta="center" mt="$2">
+                                        {pkg.product.title}
                                     </Text>
-                                </Stack>
 
-                                <Stack px="$5">
-                                    {isCurrent ? (
-                                        <XStack ai="center" jc="center" gap="$2">
-                                            <CheckCircle2 size={20} />
-                                            <Text color="$gray1">Assinatura atual</Text>
-                                        </XStack>
-                                    ) : hasAnySubscriptionFromOffering && isFree && managementURL ? (
-                                        <>
-                                            <Button
-                                                mb="$2"
-                                                onPress={() => Linking.openURL(managementURL)}
-                                                icon={<ExternalLink />}
-                                            >
-                                                Gerenciar assinaturas
+                                    <Separator
+                                        borderColor="$gray6"
+                                        br={10}
+                                        width={80}
+                                        my="$2"
+                                        bw={3}
+                                        alignSelf="center"
+                                    />
+
+                                    <Stack gap="$1" mx="$6" f={1}>
+                                        {metaDescription.map((item) => (
+                                            <XStack key={item}>
+                                                <Stack mt={4} mr={3}>
+                                                    <Check size={10} />
+                                                </Stack>
+                                                <Text>{item}</Text>
+                                            </XStack>
+                                        ))}
+                                    </Stack>
+
+                                    <Stack bg="$gray6" h="$7" ai="center" jc="center">
+                                        <Text color={PRICE_COLOR} fontSize="$6" fontWeight="700">
+                                            {displayPrice(pkg.product.price, pkg.packageType)}
+                                        </Text>
+                                    </Stack>
+
+                                    <Stack px="$5">
+                                        {isCurrent ? (
+                                            <XStack ai="center" jc="center" gap="$2">
+                                                <CheckCircle2 size={20} />
+                                                <Text color="$gray1">Assinatura atual</Text>
+                                            </XStack>
+                                        ) : hasAnySubscriptionFromOffering && isFree && managementURL ? (
+                                            <>
+                                                <Button
+                                                    mb="$2"
+                                                    onPress={() => Linking.openURL(managementURL)}
+                                                    icon={<ExternalLink />}
+                                                >
+                                                    Gerenciar assinaturas
+                                                </Button>
+                                                <Text fontSize="$2" ta="center" color="$gray3">
+                                                    Para cancelar sua assinatura paga, clique no botão acima e cancele
+                                                    sua assinatura
+                                                </Text>
+                                            </>
+                                        ) : (
+                                            <Button variant="primary" onPress={handleSelectPackage(pkg)}>
+                                                Assinar
                                             </Button>
-                                            <Text fontSize="$2" ta="center" color="$gray3">
-                                                Para cancelar sua assinatura paga, clique no botão acima e cancele sua
-                                                assinatura
-                                            </Text>
-                                        </>
-                                    ) : (
-                                        <Button variant="primary" onPress={handleSelectPackage(pkg)}>
-                                            Assinar
-                                        </Button>
-                                    )}
-                                </Stack>
-                            </Card>
-                        )
-                    })}
-            </AnimatedPagerView>
-            <PaginationDots
-                length={offerings ? Object.entries(offerings).length : 0}
-                position={position}
-                offset={offset}
-            />
+                                        )}
+                                    </Stack>
+                                </Card>
+                            )
+                        })}
+                    </AnimatedPagerView>
+
+                    <PaginationDots
+                        length={offerings ? Object.entries(offerings).length : 0}
+                        position={position}
+                        offset={offset}
+                    />
+                </>
+            )}
         </YStack>
     )
 }

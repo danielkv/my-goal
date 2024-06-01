@@ -1,6 +1,8 @@
 import analytics from '@react-native-firebase/analytics'
 import firebase from '@react-native-firebase/app'
 import auth from '@react-native-firebase/auth'
+import crashlytics from '@react-native-firebase/crashlytics'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
 type TEmulatorConfig = {
     host: string
@@ -30,6 +32,19 @@ class FirebaseProvider {
 
     getAnalytics() {
         return analytics()
+    }
+
+    getCrashlytics() {
+        return crashlytics()
+    }
+
+    recordError(err: any): void {
+        if (err instanceof Error) return crashlytics().recordError(err)
+
+        const error = new Error(getErrorMessage(err))
+        error.stack = err.stack || ''
+
+        return crashlytics().recordError(error)
     }
 }
 

@@ -1,14 +1,23 @@
-import { Component } from 'react'
+import { Component, PropsWithChildren } from 'react'
 
 import { Stack } from 'tamagui'
 
+import { firebaseProvider } from '@common/providers/firebase'
 import AlertBox from '@components/AlertBox'
+import Button from '@components/Button'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
-export class ErrorBoundary extends Component<any, any> {
+interface ErrorBoundaryState {
+    error: boolean
+    errorInfo: null | string
+}
+
+interface ErrorBoundaryProps extends PropsWithChildren {}
+
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     state = {
         error: false,
-        errorInfo: false,
+        errorInfo: null,
     }
 
     static getDerivedStateFromError() {
@@ -16,7 +25,12 @@ export class ErrorBoundary extends Component<any, any> {
     }
 
     componentDidCatch(error: any, errorInfo: any) {
-        this.setState({ error: true, errorInfo })
+        this.setState({ error, errorInfo })
+        firebaseProvider.recordError(error)
+    }
+
+    handleGoBackHome() {
+        this.setState({ error: false })
     }
 
     render() {
@@ -24,11 +38,10 @@ export class ErrorBoundary extends Component<any, any> {
 
         return (
             <Stack flex={1} bg="$gray9" ai="center" jc="center">
-                <AlertBox
-                    type="error"
-                    text={getErrorMessage(this.state.errorInfo)}
-                    title="Ocorreu um erro na aplicação"
-                />
+                <AlertBox type="error" text={getErrorMessage(this.state.error)} title="Ocorreu um erro na aplicação" />
+                <Button mt="$5" variant="primary" onPress={() => this.handleGoBackHome()}>
+                    Voltar para o início
+                </Button>
             </Stack>
         )
     }
