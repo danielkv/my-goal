@@ -10,6 +10,8 @@ create table
     constraint public_program_interests_program_id_fkey foreign key (program_id) references programs (id)
   ) tablespace pg_default;
 
+alter table public.program_interests enable row level security;
+
 create policy "Only admin can access programs_interests"
   on program_interests for select
   using ( is_claims_admin() );
