@@ -72,7 +72,7 @@ const TextInput: Component<TextInputProps> = (props) => {
                     value={props.value}
                 />
             )}
-            {props.error && <div class="text-red-300">{props.error}</div>}
+            {props.error && <div class="text-red-300 text-sm mt-1">{props.error}</div>}
         </div>
     )
 }

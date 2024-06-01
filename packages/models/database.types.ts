@@ -64,7 +64,7 @@ export interface Database {
             foreignKeyName: "days_worksheetid_fkey"
             columns: ["worksheetId"]
             isOneToOne: false
-            referencedRelation: "worksheets"
+            referencedRelation: "worksheet_weeks"
             referencedColumns: ["id"]
           }
         ]
@@ -224,6 +224,41 @@ export interface Database {
           }
         ]
       }
+      program_interests: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          name: string
+          phone: string
+          program_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          name: string
+          phone: string
+          program_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          name?: string
+          phone?: string
+          program_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_program_interests_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       program_movements: {
         Row: {
           group_id: string
@@ -340,8 +375,8 @@ export interface Database {
           id: string
           image: string
           name: string
+          payment_link_id: string | null
           payment_link_url: string | null
-		  payment_link_id: string | null
         }
         Insert: {
           amount: number
@@ -351,8 +386,8 @@ export interface Database {
           id?: string
           image: string
           name: string
+          payment_link_id?: string | null
           payment_link_url?: string | null
-		  payment_link_id?: string | null
         }
         Update: {
           amount?: number
@@ -362,8 +397,8 @@ export interface Database {
           id?: string
           image?: string
           name?: string
+          payment_link_id?: string | null
           payment_link_url?: string | null
-		  payment_link_id?: string | null
         }
         Relationships: []
       }
@@ -469,6 +504,61 @@ export interface Database {
           }
         ]
       }
+      user_worksheets: {
+        Row: {
+          created_at: string
+          entitlements: string[]
+          expires_at: string
+          id: string
+          method: string | null
+          paid_amount: number
+          user_id: string
+          worksheet_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          entitlements: string[]
+          expires_at: string
+          id?: string
+          method?: string | null
+          paid_amount: number
+          user_id: string
+          worksheet_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          entitlements?: string[]
+          expires_at?: string
+          id?: string
+          method?: string | null
+          paid_amount?: number
+          user_id?: string
+          worksheet_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_worksheets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_worksheets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_worksheets_worksheet_id_fkey"
+            columns: ["worksheet_id"]
+            isOneToOne: false
+            referencedRelation: "worksheets"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       workout_results: {
         Row: {
           created_at: string
@@ -516,7 +606,7 @@ export interface Database {
           }
         ]
       }
-      worksheets: {
+      worksheet_weeks: {
         Row: {
           created_at: string
           endDate: string
@@ -525,6 +615,8 @@ export interface Database {
           name: string
           published: boolean
           startDate: string
+          version: string | null
+          worksheet_id: string | null
         }
         Insert: {
           created_at?: string
@@ -534,6 +626,8 @@ export interface Database {
           name: string
           published?: boolean
           startDate: string
+          version?: string | null
+          worksheet_id?: string | null
         }
         Update: {
           created_at?: string
@@ -543,6 +637,55 @@ export interface Database {
           name?: string
           published?: boolean
           startDate?: string
+          version?: string | null
+          worksheet_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worksheet_weeks_worksheet_id_fkey"
+            columns: ["worksheet_id"]
+            isOneToOne: false
+            referencedRelation: "worksheets"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      worksheets: {
+        Row: {
+          amount: number
+          community_url: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          name: string
+          published: boolean
+          stripe_payment_link_id: string | null
+          stripe_product_id: string | null
+        }
+        Insert: {
+          amount: number
+          community_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          name: string
+          published?: boolean
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
+        }
+        Update: {
+          amount?: number
+          community_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          name?: string
+          published?: boolean
+          stripe_payment_link_id?: string | null
+          stripe_product_id?: string | null
         }
         Relationships: []
       }

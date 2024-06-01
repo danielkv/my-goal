@@ -1,6 +1,7 @@
 import { Component } from 'solid-js'
 
 import { Route, Routes } from '@solidjs/router'
+import BuyProgram from '@view/BuyProgram'
 import CreateNewDay from '@view/CreateNewDay'
 import Home from '@view/Home'
 import LoginPage from '@view/Login'
@@ -25,6 +26,7 @@ const AppRouter: Component = () => {
 
                     <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
                     <Route path="/termos-de-uso" element={<TermsOfUse />} />
+                    <Route path="/buy-program/:programId" element={<BuyProgram />} />
 
                     {/* Dashboard */}
                     <Route path="/dashboard">
