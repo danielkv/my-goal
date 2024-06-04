@@ -84,7 +84,6 @@ create table
   ) tablespace pg_default;
 alter table public.user_programs enable row level security;
 
-
 create table
   public.user_groups_details (
     id uuid not null default gen_random_uuid (),
@@ -101,13 +100,13 @@ alter table public.user_groups_details enable row level security;
 CREATE VIEW program_groups_details WITH(security_invoker=true) AS
 	SELECT program_groups.*, user_groups_details.watched_at as watched_at from
 		public.program_groups
-		LEFT JOIN public.user_groups_details ON user_groups_details.group_id = program_groups.id;
+		LEFT JOIN public.user_groups_details ON user_groups_details.group_id = program_groups.id AND user_groups_details.user_id = auth.uid();
 
 -- PROGRAMS
 
 create policy "Programs are visible by the user who bought it."
   on programs for select
-  using ( is_claims_admin() OR EXISTS(SELECT user_id FROM user_programs WHERE user_programs.program_id = programs.id and user_programs.user_id = auth.uid() AND expires_at >= now()) );
+  using ( true );
 
 create policy "Only admins can insert new programs"
   on programs for insert
