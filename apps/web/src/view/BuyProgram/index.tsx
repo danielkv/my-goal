@@ -1,5 +1,6 @@
 import { Component, Suspense, createEffect, createMemo, createResource, createSignal } from 'solid-js'
 
+import WhatsappIcon from '@assets/svg/whatapp-icon.svg'
 import TextInput from '@components/TextInput'
 import { SubmitHandler, createForm, setValue, zodForm } from '@modular-forms/solid'
 import { useParams } from '@solidjs/router'
@@ -53,10 +54,23 @@ const BuyProgram: Component = () => {
     })
 
     return (
-        <Stack height="100%" justifyContent="center" alignItems="center" width={400} maxWidth="90%" margin="auto">
+        <Stack
+            minHeight="100%"
+            pt={3}
+            pb={10}
+            justifyContent="center"
+            alignItems="center"
+            width={400}
+            maxWidth="90%"
+            margin="auto"
+        >
             <Suspense fallback={<CircularProgress />}>
                 <Box mb={3}>
-                    <img alt="Goal Workout Plan" src={logo} style={{ width: '180px', 'object-fit': 'cover' }} />
+                    <img
+                        alt="Goal Workout Plan"
+                        src={logo}
+                        style={{ width: '180px', height: '60px', 'object-fit': 'cover' }}
+                    />
                 </Box>
                 <Box mb={1} class="bg-red-500 px-2 py-1 rounded-md">
                     <Typography fontSize={18} textTransform="uppercase">
@@ -71,7 +85,7 @@ const BuyProgram: Component = () => {
                         Para continuar para o pagamento confirme seus dados abaixo:
                     </Typography>
                 </Box>
-                <Card sx={{ width: '100%' }}>
+                <Card sx={{ width: '100%', overflow: 'visible' }}>
                     <Form onSubmit={handleSubmit}>
                         <Stack padding={3} gap={2}>
                             <Field name="name">
@@ -127,6 +141,21 @@ const BuyProgram: Component = () => {
                     <Typography fontSize={11} textAlign="center" mt={2}>
                         Todos os direitos reservados
                     </Typography>
+                </Box>
+                <Box position="fixed" bottom={20} right={20}>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                        <Box bgcolor="white" py={0.5} px={1} borderRadius={1}>
+                            <Typography class="!text-[13px] text-gray-500">Ainda com dúvidas?</Typography>
+                        </Box>
+                        <a
+                            href="https://api.whatsapp.com/send/?phone=554835190276&text=Ainda+tenho+algumas+dúvidas+sobre+o+program+Destrava+BMU&type=phone_number&app_absent=0"
+                            target="_blank"
+                        >
+                            <Box bgcolor="#25d366" p={1.5} borderRadius={50}>
+                                <WhatsappIcon />
+                            </Box>
+                        </a>
+                    </Stack>
                 </Box>
             </Suspense>
         </Stack>
