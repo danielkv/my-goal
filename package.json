@@ -19,6 +19,8 @@
 	},
 	"packageManager": "yarn@3.6.2",
 	"dependencies": {
+		"babel-plugin-module-resolver": "^5.0.2",
+		"react-native-svg-transformer": "^1.4.0",
 		"supabase": "^1.142.2"
 	},
 	"resolutions": {

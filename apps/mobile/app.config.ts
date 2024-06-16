@@ -1,12 +1,15 @@
+import * as dotenv from 'dotenv'
 import { ConfigContext, ExpoConfig } from 'expo/config'
+
+dotenv.config()
 
 const APP_VARIANT = process.env.APP_VARIANT
 const IS_PROD = APP_VARIANT === 'production'
 const ID_PREFIX = IS_PROD ? 'app' : APP_VARIANT === 'preview' ? 'prev' : 'dev'
-const BUNDLE_ID = `${ID_PREFIX}.mygoal.goal`
+const BUNDLE_ID = `app.mygoal.goal`
 const APP_NAME = IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`
-const RUNTIME_VERSION = '1.7.0'
-const APP_VERSION = '1.7.42'
+const RUNTIME_VERSION = '1.8.0'
+const APP_VERSION = '1.8.1'
 
 export default ({ config }: ConfigContext): ExpoConfig => {
     return {
@@ -67,6 +70,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 
         runtimeVersion: RUNTIME_VERSION,
         plugins: [
+            'expo-font',
             '@react-native-google-signin/google-signin',
             'expo-apple-authentication',
             '@react-native-firebase/app',

@@ -65,7 +65,11 @@ const SelectSubscriptionScreen: React.FC = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const { isLoading, data: offerings } = useSWR('user_subscriptions', getOfferingsUseCase)
+    const { isLoading, data: offerings } = useSWR('user_subscriptions', getOfferingsUseCase, {
+        onError(err) {
+            console.log(err)
+        },
+    })
     console.log('offerings', offerings)
 
     const packagesSubscriptions = offerings
