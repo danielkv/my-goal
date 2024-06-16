@@ -1,6 +1,6 @@
 import { debounce } from 'radash'
 
-import { Component, For, Show, createEffect, createResource, createSignal } from 'solid-js'
+import { Component, For, Match, Show, Switch, createEffect, createResource, createSignal } from 'solid-js'
 
 import DashboardContainer from '@components/DashboardContainer'
 import Pagination from '@components/Pagination'
@@ -17,6 +17,7 @@ import {
     ToggleOn,
 } from '@suid/icons-material'
 import {
+    Alert,
     Box,
     CircularProgress,
     Container,
@@ -126,6 +127,10 @@ const UsersListScreen: Component = () => {
         setCurrentPage(prevPage)
     }
 
+    createEffect(() => {
+        console.log(listResult())
+    })
+
     return (
         <DashboardContainer>
             <Container maxWidth="lg">
@@ -150,96 +155,105 @@ const UsersListScreen: Component = () => {
                             />
                         </Stack>
                     </Box>
-
-                    <Show when={listResult()?.items.length}>
-                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Nome</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Telefone</TableCell>
-                                    <TableCell>Ações</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <For each={listResult()?.items}>
-                                    {(user) => {
-                                        return (
-                                            <TableRow
-                                                style={{ cursor: 'pointer' }}
-                                                class="hover:bg-gray-800"
-                                                onClick={() => navigate(`/dashboard/users/${user.id}`)}
-                                            >
-                                                <TableCell>
-                                                    <Stack direction="row" spacing={1}>
-                                                        <Box fontWeight="bold">{user.displayName}</Box>
-                                                        <Show when={user.id === loggedUser()?.id}>
-                                                            <Box>(você)</Box>
+                    <Switch>
+                        <Match when={listResult.error}>
+                            {(err) => <Alert severity="error">{getErrorMessage(err())}</Alert>}
+                        </Match>
+                        <Match when={listResult()?.items.length === 0}>
+                            <Typography>Nenhum usuário encontrado</Typography>
+                        </Match>
+                        <Match when={listResult()?.items.length}>
+                            <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Nome</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Telefone</TableCell>
+                                        <TableCell>Ações</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <For each={listResult()?.items}>
+                                        {(user) => {
+                                            return (
+                                                <TableRow
+                                                    style={{ cursor: 'pointer' }}
+                                                    class="hover:bg-gray-800"
+                                                    onClick={() => navigate(`/dashboard/users/${user.id}`)}
+                                                >
+                                                    <TableCell>
+                                                        <Stack direction="row" spacing={1}>
+                                                            <Box fontWeight="bold">{user.displayName}</Box>
+                                                            <Show when={user.id === loggedUser()?.id}>
+                                                                <Box>(você)</Box>
+                                                            </Show>
+                                                            <Show when={user.admin}>
+                                                                <div title="Admin">
+                                                                    <AdminPanelSettings color="info" fontSize="small" />
+                                                                </div>
+                                                            </Show>
+                                                            <Show when={user.emailVerified}>
+                                                                <div title="Email verificado">
+                                                                    <MarkEmailRead color="success" fontSize="small" />
+                                                                </div>
+                                                            </Show>
+                                                        </Stack>
+                                                    </TableCell>
+                                                    <TableCell>{user.email}</TableCell>
+                                                    <TableCell>{user.phone}</TableCell>
+                                                    <TableCell>
+                                                        <Show when={loadinAction() === user.id}>
+                                                            <CircularProgress size={20} color="warning" />
                                                         </Show>
-                                                        <Show when={user.admin}>
-                                                            <div title="Admin">
-                                                                <AdminPanelSettings color="info" fontSize="small" />
-                                                            </div>
+                                                        <Show when={!loadinAction() || loadinAction() !== user.id}>
+                                                            <IconButton
+                                                                title={
+                                                                    user.disabled
+                                                                        ? 'Ativar usuário'
+                                                                        : 'Inativar usuário'
+                                                                }
+                                                                onClick={() =>
+                                                                    handleToggleEnableUser(
+                                                                        user.id,
+                                                                        user.disabled ? 'enable' : 'disable'
+                                                                    )
+                                                                }
+                                                                disabled={user.id === loggedUser()?.id}
+                                                                color={user.disabled ? 'error' : 'success'}
+                                                            >
+                                                                {user.disabled ? <ToggleOn /> : <ToggleOff />}
+                                                            </IconButton>
+                                                            <IconButton
+                                                                title={user.admin ? 'Remover função ADM' : 'Tornar ADM'}
+                                                                onClick={() =>
+                                                                    handleToggleAdminAccess(
+                                                                        user.id,
+                                                                        user.admin ? 'demote' : 'promote'
+                                                                    )
+                                                                }
+                                                                disabled={user.id === loggedUser()?.id}
+                                                            >
+                                                                {user.admin ? <PersonRemove /> : <PersonAdd />}
+                                                            </IconButton>
+                                                            <IconButton
+                                                                title="Excluir usuário"
+                                                                onClick={() => handleRemoveUser(user.id)}
+                                                                disabled={user.id === loggedUser()?.id}
+                                                            >
+                                                                <Delete />
+                                                            </IconButton>
                                                         </Show>
-                                                        <Show when={user.emailVerified}>
-                                                            <div title="Email verificado">
-                                                                <MarkEmailRead color="success" fontSize="small" />
-                                                            </div>
-                                                        </Show>
-                                                    </Stack>
-                                                </TableCell>
-                                                <TableCell>{user.email}</TableCell>
-                                                <TableCell>{user.phone}</TableCell>
-                                                <TableCell>
-                                                    <Show when={loadinAction() === user.id}>
-                                                        <CircularProgress size={20} color="warning" />
-                                                    </Show>
-                                                    <Show when={!loadinAction() || loadinAction() !== user.id}>
-                                                        <IconButton
-                                                            title={
-                                                                user.disabled ? 'Ativar usuário' : 'Inativar usuário'
-                                                            }
-                                                            onClick={() =>
-                                                                handleToggleEnableUser(
-                                                                    user.id,
-                                                                    user.disabled ? 'enable' : 'disable'
-                                                                )
-                                                            }
-                                                            disabled={user.id === loggedUser()?.id}
-                                                            color={user.disabled ? 'error' : 'success'}
-                                                        >
-                                                            {user.disabled ? <ToggleOn /> : <ToggleOff />}
-                                                        </IconButton>
-                                                        <IconButton
-                                                            title={user.admin ? 'Remover função ADM' : 'Tornar ADM'}
-                                                            onClick={() =>
-                                                                handleToggleAdminAccess(
-                                                                    user.id,
-                                                                    user.admin ? 'demote' : 'promote'
-                                                                )
-                                                            }
-                                                            disabled={user.id === loggedUser()?.id}
-                                                        >
-                                                            {user.admin ? <PersonRemove /> : <PersonAdd />}
-                                                        </IconButton>
-                                                        <IconButton
-                                                            title="Excluir usuário"
-                                                            onClick={() => handleRemoveUser(user.id)}
-                                                            disabled={user.id === loggedUser()?.id}
-                                                        >
-                                                            <Delete />
-                                                        </IconButton>
-                                                    </Show>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    }}
-                                </For>
-                            </TableBody>
-                        </Table>
-                        <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
-                    </Show>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }}
+                                    </For>
+                                </TableBody>
+                            </Table>
+                            <Pagination onClickNext={handleNextPage} onClickPrev={handlePrevPage} />
+                        </Match>
+                    </Switch>
                 </Box>
             </Container>
         </DashboardContainer>
