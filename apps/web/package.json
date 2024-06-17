@@ -4,7 +4,7 @@
 	"description": "",
 	"scripts": {
 		"start": "vite",
-		"dev": "vite --open",
+		"dev": "vite --open -d proxy",
 		"build": "vite build",
 		"serve": "vite preview"
 	},
