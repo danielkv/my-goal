@@ -23,6 +23,11 @@ const App: Component = () => {
     const {
         data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY') {
+            navigate('/reset-password')
+            return
+        }
+
         if (!session || ['SIGNED_OUT'].includes(event)) {
             setLoggedUser(null)
             return

@@ -3,7 +3,7 @@ import { Component, Match, Show, Switch, createSignal, onMount } from 'solid-js'
 import TextInput from '@components/TextInput'
 import { loggedUser } from '@contexts/user/user.context'
 import { SubmitHandler, createForm, zodForm } from '@modular-forms/solid'
-import { useNavigate, useSearchParams } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import { Box, Button, Container, Paper, Stack, Typography } from '@suid/material'
 import { resetPasswordUseCase } from '@useCases/user/resetPassoword'
 import { getErrorMessage } from '@utils/errors'
@@ -13,7 +13,7 @@ import { TResetPasswordForm, loginFormSchema, passwordRecoveryFormInitialValues 
 const ResetPasswordPage: Component = () => {
     let input: HTMLInputElement
     const navigate = useNavigate()
-    const [params] = useSearchParams<{ token?: string }>()
+
     const [changed, setChanged] = createSignal(false)
 
     const [_, { Form, Field }] = createForm<TResetPasswordForm>({
@@ -23,9 +23,7 @@ const ResetPasswordPage: Component = () => {
 
     const handleSubmit: SubmitHandler<TResetPasswordForm> = async ({ password }) => {
         try {
-            if (!params.token) return navigate('/login')
-
-            await resetPasswordUseCase(password, params.token)
+            await resetPasswordUseCase(password)
 
             setChanged(true)
         } catch (err) {
@@ -33,8 +31,6 @@ const ResetPasswordPage: Component = () => {
         }
     }
     onMount(() => {
-        if (!params.token) return navigate('/login')
-
         input.focus()
     })
 
@@ -50,6 +46,11 @@ const ResetPasswordPage: Component = () => {
                                         <Typography textAlign="center">Sua senha foi alterada</Typography>
                                         <Show when={loggedUser()?.claims.claims_admin}>
                                             <Button onClick={() => navigate('/dashboard')}>Abrir dashboard</Button>
+                                        </Show>
+                                        <Show when={!loggedUser()?.claims.claims_admin}>
+                                            <Typography textAlign="center" fontWeight="normal" mt={2}>
+                                                Você pode voltar para o app e acessar com usa nova senha
+                                            </Typography>
                                         </Show>
                                     </Stack>
                                 </Match>

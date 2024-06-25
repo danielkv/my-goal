@@ -102,6 +102,9 @@ enable_confirmations = true
 [auth.email.template.confirmation]
 content_path = "./supabase/templates/confirmation.html"
 
+[auth.email.template.recovery]
+content_path = "./supabase/templates/reset-password.html"
+
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

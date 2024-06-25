@@ -15,6 +15,7 @@ export async function processProgramPayment(
         .eq('program_id', programId)
         .gte('expires_at', new Date().toISOString())
     if (userProgramError) throw userProgramError
+    console.log('userPrograms', userProgram.length)
     if (userProgram.length) return
 
     const expires_at = new Date()

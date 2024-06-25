@@ -1,7 +1,7 @@
 import { createAsaas } from '../_shared/asaas/index.ts'
 import { ChargeEvent, EventName } from '../_shared/asaas/webhook-events.ts'
 import { createSupabaseSuperClient } from '../_shared/client.ts'
-import { getErrorMessage } from '../_shared/errors.ts'
+import { handleErrorMiddleware } from '../_shared/errors.ts'
 import { createStripe } from '../_shared/stripe.ts'
 import { processProgramPayment } from './processProgramPayment.ts'
 import { processWorksheetPayment } from './processWorksheetPayment.ts'
@@ -55,7 +55,8 @@ app.post('/webhook/asaas', express.json(), async (req, res, next) => {
     try {
         const webhookToken = Deno.env.get('ASAAS_WEBHOOK_ACCESS_TOKEN')!
         const asaasAcessToken = req.header('asaas-access-token')
-        if (webhookToken !== asaasAcessToken) return res.sendStatus(403)
+
+        if (webhookToken !== asaasAcessToken) throw new Error('Asaas access token invalid')
 
         const asaas = createAsaas()
         const body: ChargeEvent = req.body
@@ -76,6 +77,7 @@ app.post('/webhook/asaas', express.json(), async (req, res, next) => {
         //     const installment = await asaas.getInstallment(body.payment.installment)
         //     paid_amount = installment.value
         // }
+
         await processAsaasProduct(user, body.payment.paymentLink, paid_amount)
 
         res.json({ received: true })
@@ -84,17 +86,7 @@ app.post('/webhook/asaas', express.json(), async (req, res, next) => {
     }
 })
 
-// deno-lint-ignore no-explicit-any
-app.use((err: any, _: express.Request, res: express.Response, _next: express.NextFunction) => {
-    const errStatus = err.statusCode || 500
-    const errMsg = getErrorMessage(err)
-    res.status(errStatus).json({
-        success: false,
-        status: errStatus,
-        message: errMsg,
-        stack: Deno.env.get('IS_DEV') ? err.stack : {},
-    })
-})
+app.use(handleErrorMiddleware)
 
 app.listen(port, () => {
     console.log('listening on port:', port)
@@ -137,6 +129,8 @@ async function processAsaasProduct(user: User, paymentLinkId: string, paid_amoun
         .eq('payment_link_id', paymentLinkId)
         .maybeSingle()
     if (error) throw error
+
+    console.log('program', program.id)
 
     if (!program) throw new Error('Program does not exist')
 

@@ -27,13 +27,13 @@ const AppRouter: Component = () => {
                     <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
                     <Route path="/termos-de-uso" element={<TermsOfUse />} />
                     <Route path="/buy-program/:programId" element={<BuyProgram />} />
+                    <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
 
                     {/* Dashboard */}
                     <Route path="/dashboard">
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
-                        <Route path="/reset-password" element={<ResetPasswordPage />} />
                         <Route path="/" element={<WorksheetList />} />
+                        <Route path="/login" element={<LoginPage />} />
                         <Route path="/worksheet/new" element={<CreateNewDay />} />
                         <Route path="/worksheet/view/:id" element={<Preview />} />
                         <Route path="/worksheet/:id" element={<CreateNewDay />} />
