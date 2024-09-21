@@ -29,8 +29,6 @@ export async function grantPromotionalEntitlementUseCase(
         )
     )
 
-    console.log(responses)
-
     responses.forEach(({ error }) => {
         if (error) throw error
     })

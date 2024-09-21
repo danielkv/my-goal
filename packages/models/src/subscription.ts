@@ -90,7 +90,16 @@ export interface IEntitlementDetails {
     readonly originalPurchaseDateMillis: number
     readonly expirationDate: string | null
     readonly expirationDateMillis: number | null
-    readonly store: 'PLAY_STORE' | 'APP_STORE' | 'STRIPE' | 'MAC_APP_STORE' | 'PROMOTIONAL' | 'AMAZON' | 'UNKNOWN_STORE'
+    readonly store:
+        | 'PLAY_STORE'
+        | 'APP_STORE'
+        | 'STRIPE'
+        | 'MAC_APP_STORE'
+        | 'PROMOTIONAL'
+        | 'AMAZON'
+        | 'RC_BILLING'
+        | 'EXTERNAL'
+        | 'UNKNOWN_STORE'
     readonly productIdentifier: string
     readonly isSandbox: boolean
     readonly unsubscribeDetectedAt: string | null
