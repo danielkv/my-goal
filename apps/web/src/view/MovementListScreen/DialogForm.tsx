@@ -55,7 +55,6 @@ const DialogForm: Component<DialogFormProps> = (props) => {
     }, null)
 
     const handleAddMovement = async (result: TMovementForm) => {
-        console.log(result)
         try {
             setLoading(true)
             await saveMovementUseCase(result)

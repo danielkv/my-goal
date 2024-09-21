@@ -70,7 +70,6 @@ const SelectSubscriptionScreen: React.FC = () => {
             console.log(err)
         },
     })
-    console.log('offerings', offerings)
 
     const packagesSubscriptions = offerings
         ? Object.values(offerings)

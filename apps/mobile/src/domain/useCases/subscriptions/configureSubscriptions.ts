@@ -1,7 +1,6 @@
 import { Platform } from 'react-native'
 import Purchases, { LOG_LEVEL } from 'react-native-purchases'
 
-import * as Application from 'expo-application'
 import { IUserSubscriptionInfo } from 'goal-models'
 
 import { useUserContext } from '@contexts/user/userContext'
@@ -12,7 +11,6 @@ const apiKey = Platform.select<string>({
 })
 
 export function configureSubscriptionsUseCase() {
-    console.log(apiKey, Application.applicationId)
     if (!apiKey) throw new Error('Purchases API_KEY not set')
     if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.INFO)
 
