@@ -10,9 +10,9 @@ const apiKey = Platform.select<string>({
     android: process.env.EXPO_PUBLIC_REVENUE_CAT_GOOGLE_KEY,
 })
 
-export function configureSubscriptionsUseCase() {
+export async function configureSubscriptionsUseCase() {
     if (!apiKey) throw new Error('Purchases API_KEY not set')
-    if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.INFO)
+    if (__DEV__) Purchases.setLogLevel(LOG_LEVEL.VERBOSE)
 
     Purchases.addCustomerInfoUpdateListener((info) => {
         const normalizedInfo: IUserSubscriptionInfo = {
@@ -25,4 +25,5 @@ export function configureSubscriptionsUseCase() {
     })
 
     Purchases.configure({ apiKey })
+    await Purchases.setLogLevel(LOG_LEVEL.ERROR)
 }

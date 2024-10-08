@@ -102,6 +102,8 @@ const SelectSubscriptionScreen: React.FC = () => {
             return
         }
 
+        // console.log('hello', JSON.stringify(pkg, null, 2))
+
         try {
             setLoading(true)
             await firebaseProvider.getAnalytics().logEvent(ANALYTICS_EVENTS.SELECT_SUBSCRIPTION, {

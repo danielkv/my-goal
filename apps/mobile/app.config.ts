@@ -8,8 +8,8 @@ const IS_PROD = APP_VARIANT === 'production'
 const ID_PREFIX = IS_PROD ? 'app' : APP_VARIANT === 'preview' ? 'prev' : 'dev'
 const BUNDLE_ID = `${ID_PREFIX}.mygoal.goal`
 const APP_NAME = IS_PROD ? 'My Goal' : `My Goal (${ID_PREFIX})`
-const RUNTIME_VERSION = '1.8.0'
-const APP_VERSION = '1.8.1'
+const RUNTIME_VERSION = '1.9.0'
+const APP_VERSION = '1.9.0'
 
 export default ({ config }: ConfigContext): ExpoConfig => {
     return {
