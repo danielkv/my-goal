@@ -1,6 +1,8 @@
 # Goal web / My Goal
 A training worksheet , focused on CrossFit athletes. The project had as `goal` to enrich the user experience as an athlete keeping track of the workout plans and gains.
 
+Online website: https://mygoal.app/
+
 ![iphone 5 5 1](https://github.com/danielkv/my-goal/assets/5912401/ab8d56f4-74fe-45ef-8515-039739e8e8b2)
 ![iphone 5 5 2](https://github.com/danielkv/my-goal/assets/5912401/685421f7-1291-40aa-83f4-c65441b5c69d)
 ![iphone 5 5 3](https://github.com/danielkv/my-goal/assets/5912401/adb8837c-c342-4fa3-b722-e66a405b98c0)
